@@ -142,6 +142,44 @@
     width: 100% !important;
     min-width: 0 !important;
   }
+
+  .hero-2026-inner {
+    padding-top: 112px !important;
+    padding-bottom: 40px !important;
+  }
+
+  .hero-2026-headline {
+    font-size: clamp(30px, 7.8vw, 34px) !important;
+    line-height: 1.14 !important;
+  }
+
+  .hero-2026-bottom {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 20px !important;
+  }
+
+  .hero-2026-chip {
+    position: static !important;
+    margin-top: 24px !important;
+  }
+
+  .bento-grid {
+    grid-template-columns: 1fr !important;
+    grid-auto-rows: auto !important;
+  }
+
+  .bento-tile-featured,
+  .bento-tile-tall,
+  .bento-tile-wide {
+    grid-column: span 1 !important;
+    grid-row: span 1 !important;
+  }
+
+  .bento-tile-wide {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+  }
 }
 
 @media (max-width: 480px) {
