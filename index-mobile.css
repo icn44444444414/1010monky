@@ -1,0 +1,175 @@
+@media (max-width: 767px) {
+  html,
+  body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .container,
+  .hero-inner.container,
+  .stack-inner.container,
+  .brief-grid.container,
+  .services-grid.container,
+  .process-section > .container,
+  .proof-section > .container,
+  .footer-grid.container {
+    width: calc(100% - 64px) !important;
+    max-width: none !important;
+    margin-inline: auto !important;
+  }
+
+  .hero-section {
+    min-height: auto !important;
+    overflow: hidden !important;
+  }
+
+  .site-header {
+    inset: 16px auto auto 16px !important;
+    width: calc(100vw - 32px) !important;
+    max-width: 358px !important;
+    min-height: 56px !important;
+    padding: 10px 12px !important;
+    gap: 12px !important;
+    transform: none !important;
+    grid-template-columns: auto 1fr auto !important;
+  }
+
+  .brand-mark {
+    display: inline-flex !important;
+    grid-column: 1 !important;
+    min-width: 96px !important;
+    position: relative !important;
+    z-index: 2 !important;
+  }
+
+  .brand-logo {
+    display: none !important;
+  }
+
+  .brand-mark::after {
+    content: "1010monky";
+    display: inline-flex;
+    align-items: center;
+    min-height: 30px;
+    color: var(--cyan);
+    font-family: var(--font-code);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0;
+    text-shadow: 0 0 12px rgba(141, 235, 255, 0.28);
+  }
+
+  .menu-toggle {
+    display: inline-flex !important;
+    grid-column: 3 !important;
+    justify-self: end !important;
+    position: relative !important;
+    z-index: 3 !important;
+  }
+
+  .hero-inner,
+  .hero-inner.container {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    min-height: auto !important;
+    height: auto !important;
+    gap: 26px !important;
+    padding: 112px 0 54px !important;
+  }
+
+  .hero-copy,
+  .hero-copy > * {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .hero-copy h1,
+  .hero-section h1 {
+    margin-bottom: 20px !important;
+    font-size: clamp(30px, 7.8vw, 34px) !important;
+    line-height: 1.14 !important;
+    letter-spacing: 0 !important;
+    overflow-wrap: normal !important;
+    word-break: normal !important;
+    hyphens: none !important;
+  }
+
+  .hero-lede {
+    max-width: 100% !important;
+    margin-bottom: 26px !important;
+    font-size: 16px !important;
+    line-height: 1.58 !important;
+    overflow-wrap: break-word !important;
+    word-break: normal !important;
+  }
+
+  .hero-section .hero-actions {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    gap: 10px !important;
+  }
+
+  .hero-section .hero-actions > .button {
+    flex: initial !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    padding: 13px 10px !important;
+    font-size: 14px !important;
+  }
+
+  .hero-visual {
+    position: absolute !important;
+    right: -140px !important;
+    bottom: 42px !important;
+    width: 320px !important;
+    opacity: 0.07 !important;
+    pointer-events: none !important;
+  }
+
+  .brief-grid,
+  .services-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .contact-form,
+  .service-cards,
+  .proof-grid {
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .container,
+  .hero-inner.container,
+  .stack-inner.container,
+  .brief-grid.container,
+  .services-grid.container,
+  .process-section > .container,
+  .proof-section > .container,
+  .footer-grid.container {
+    width: min(300px, calc(100vw - 64px)) !important;
+    max-width: calc(100vw - 64px) !important;
+    margin-left: 32px !important;
+    margin-right: auto !important;
+  }
+
+  .hero-section .hero-actions,
+  .contact-form,
+  .service-cards,
+  .proof-grid,
+  .stack-inner {
+    max-width: min(300px, calc(100vw - 64px)) !important;
+  }
+}
+
+@media (max-width: 340px) {
+  .hero-section .hero-actions {
+    grid-template-columns: 1fr !important;
+  }
+}

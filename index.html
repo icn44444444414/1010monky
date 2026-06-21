@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WordPress-hemsidor för företag i Sverige & Finland | 1010monky</title>
+  <meta name="description" content="1010monky bygger moderna WordPress-hemsidor, redesign, SEO-grund, WooCommerce och tekniska integrationer för små och medelstora företag i Sverige och Finland.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./tailwind.css">
+  <link rel="stylesheet" href="./index-mobile.css">
+  <script src="./script.js" defer></script>
+</head>
+<body>
+  <header class="site-header" data-header>
+    <a class="brand-mark" href="./index.html" aria-label="Till startsidan">
+      <img class="brand-logo" src="./assets/logo-1010monky.svg" alt="1010monky">
+    </a>
+
+    <nav class="site-nav" data-nav aria-label="Primary navigation">
+      <a class="nav-link active" href="./index.html">Hem</a>
+      <a class="nav-link " href="./tjanster.html">Tjänster</a>
+      <a class="nav-link " href="./process.html">Process</a>
+      <a class="nav-link " href="./case.html">Case</a>
+      <a class="nav-link " href="./blogg.html">Blogg</a>
+      <a class="nav-link " href="./kontakt.html">Kontakt</a>
+    </nav>
+
+    <a class="button button-small button-light header-cta" href="./kontakt.html">Kontakt</a>
+
+    <button class="menu-toggle" type="button" data-menu-toggle aria-label="Öppna meny" aria-expanded="false">
+      <span></span>
+      <span></span>
+    </button>
+  </header>
+
+  <main id="top">
+    <section class="hero-section">
+      <div class="binary-rain" data-binary-rain aria-hidden="true"></div>
+      <div class="hero-inner container">
+        <div class="hero-copy">
+          <p class="eyebrow">WordPress, SEO & automation</p>
+          <h1>
+            <span>WordPress-hemsidor</span>
+            som hjälper företag att synas, sälja och växa.
+          </h1>
+          <p class="hero-lede">
+            1010monky bygger moderna WordPress-lösningar för små och medelstora företag i Sverige och Finland. Du får design, SEO-grund, snabb teknik och möjlighet till API:er eller Python-automation när webbplatsen behöver göra mer.
+          </p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="./kontakt.html">Boka genomgång</a>
+            <a class="button button-ghost" href="#services">Se tjänster</a>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <div class="binary-cluster" aria-hidden="true">
+            <span class="bit bit-a is-on" data-bit>1</span>
+            <span class="bit bit-b is-off" data-bit>0</span>
+            <span class="bit bit-c is-on" data-bit>1</span>
+            <span class="bit bit-d is-off" data-bit>0</span>
+            <span class="bit bit-e is-on" data-bit>1</span>
+            <span class="bit bit-f is-off" data-bit>0</span>
+            <span class="bit bit-g is-on" data-bit>1</span>
+            <span class="bit bit-h is-off" data-bit>0</span>
+            <span class="bit bit-i is-on" data-bit>1</span>
+            <span class="bit bit-j is-off" data-bit>0</span>
+            <span class="bit bit-k is-on" data-bit>1</span>
+            <span class="bit bit-l is-off" data-bit>0</span>
+            <span class="bit bit-m is-on" data-bit>1</span>
+            <span class="bit bit-n is-off" data-bit>0</span>
+            <span class="bit bit-o is-on" data-bit>1</span>
+            <span class="bit bit-p is-off" data-bit>0</span>
+            <span class="bit bit-q is-on" data-bit>1</span>
+            <span class="bit bit-r is-off" data-bit>0</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="stack-strip" aria-label="Fokusområden">
+      <div class="container stack-inner">
+        <span>WordPress</span>
+        <span>Redesign</span>
+        <span>SEO-grund</span>
+        <span>WooCommerce</span>
+        <span>API & automation</span>
+      </div>
+    </section>
+
+    <section class="brief-section" id="contact">
+      <div class="container brief-grid">
+        <div>
+          <p class="eyebrow eyebrow-dark">Kostnadsfri första genomgång</p>
+          <h2>Vill du veta vad din hemsida behöver?</h2>
+          <p>
+            Skicka din nuvarande hemsida eller beskriv vad du vill bygga. Jag ger en första bedömning av vad som bör förbättras och vilken WordPress-lösning som passar bäst.
+          </p>
+        </div>
+
+        <form class="contact-form" data-contact-form>
+          <div class="form-row">
+            <label for="name">Namn</label>
+            <input id="name" name="name" type="text" placeholder="Namn" required>
+          </div>
+          <div class="form-row">
+            <label for="email">E-post</label>
+            <input id="email" name="email" type="email" placeholder="E-post" required>
+          </div>
+          <div class="form-row">
+            <label for="message">Meddelande</label>
+            <textarea id="message" name="message" rows="3" placeholder="Vilken hemsida eller lösning behöver du?" required></textarea>
+          </div>
+          <label class="consent-row">
+            <input type="checkbox" data-consent>
+            <span>Jag vill bli kontaktad om en WordPress-hemsida eller teknisk lösning.</span>
+          </label>
+          <button class="button button-dark form-submit" type="submit" disabled data-submit>Skicka förfrågan</button>
+          <p class="form-note" data-form-note aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+
+    <a class="scan-strip" href="./process.html">
+      <span>Eller boka en snabb genomgång av din WordPress-idé</span>
+      <span aria-hidden="true">01</span>
+    </a>
+
+    <section class="services-section" id="services">
+      <div class="container services-grid">
+        <div>
+          <p class="eyebrow">Tjänster</p>
+          <h2>WordPress-hjälp för det ditt företag behöver nu.</h2>
+        </div>
+        <div class="service-cards">
+          <article class="service-card">
+            <span>01</span>
+            <h3>WordPress-hemsidor</h3>
+            <p>Nya företagshemsidor med professionell design, tydlig struktur, snabb laddning och enkel administration.</p>
+          </article>
+          <article class="service-card">
+            <span>10</span>
+            <h3>WordPress-redesign</h3>
+            <p>För företag som redan har en sida men vill få den modernare, snabbare, tydligare och mer trovärdig.</p>
+          </article>
+          <article class="service-card">
+            <span>11</span>
+            <h3>SEO-grund & teknisk SEO</h3>
+            <p>Struktur, rubriker, metadata, laddningstid och tekniska förbättringar som hjälper Google förstå sidan.</p>
+          </article>
+          <article class="service-card">
+            <span>00</span>
+            <h3>WooCommerce & företagswebb</h3>
+            <p>E-handel eller företagswebb för verksamheter som behöver sälja, visa tjänster eller ta emot förfrågningar.</p>
+          </article>
+          <article class="service-card">
+            <span>101</span>
+            <h3>API-integrationer</h3>
+            <p>Koppla WordPress till formulär, CRM, bokningssystem, externa tjänster eller interna arbetsflöden.</p>
+          </article>
+          <article class="service-card">
+            <span>010</span>
+            <h3>Python & automation</h3>
+            <p>När manuellt arbete tar tid kan enklare automationer och scripts byggas bakom webbplatsen.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="challenge-section" id="digitala-floden">
+      <div class="container challenge-layout">
+        <div class="challenge-copy">
+          <p class="eyebrow">Känner du igen problemet?</p>
+          <h2>Många företag har en hemsida som finns där, men inte hjälper verksamheten.</h2>
+        </div>
+        <div class="challenge-cards" aria-label="Vanliga problem med hemsidor">
+          <ul class="barrier-list">
+            <li>
+              <span>Gammal sida</span>
+              <p>Designen speglar inte längre företagets kvalitet eller skapar rätt förtroende.</p>
+            </li>
+            <li>
+              <span>Dålig synlighet</span>
+              <p>Sidan saknar tydlig SEO-struktur, metadata eller innehåll som Google kan förstå.</p>
+            </li>
+            <li>
+              <span>Rörig teknik</span>
+              <p>Plugins, teman och långsam laddning gör hemsidan svår att förbättra.</p>
+            </li>
+            <li>
+              <span>Svårt att uppdatera</span>
+              <p>Varje liten ändring känns som ett tekniskt projekt i stället för enkel administration.</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="solution-section">
+      <div class="container solution-layout">
+        <div class="solution-visual">
+          <div class="flow-map" aria-label="WordPress workflow map">
+            <div class="map-grid"></div>
+            <div class="map-track"></div>
+            <div class="map-node node-one">
+              <span>01</span>
+              <strong>Struktur</strong>
+            </div>
+            <div class="map-node node-two">
+              <span>10</span>
+              <strong>WordPress</strong>
+            </div>
+            <div class="map-node node-three">
+              <span>11</span>
+              <strong>SEO</strong>
+            </div>
+            <div class="map-node node-four">
+              <span>00</span>
+              <strong>Automation</strong>
+            </div>
+          </div>
+        </div>
+        <div class="solution-copy">
+          <p class="eyebrow eyebrow-dark">Lösningen</p>
+          <p class="solution-lede">
+            En tydligare WordPress-grund där design, innehåll och teknik arbetar tillsammans.
+          </p>
+          <blockquote>
+            Målet är inte bara en snygg sida, utan en sida som känns trygg, laddar snabbt, är enkel att uppdatera och kan byggas vidare med SEO, API:er eller automation när verksamheten växer.
+          </blockquote>
+        </div>
+      </div>
+    </section>
+
+    <section class="process-section" id="process">
+      <div class="container">
+        <h2>Så går ett projekt till</h2>
+        <div class="process-grid">
+          <article class="process-card">
+            <span class="card-index">1</span>
+            <div class="card-visual"><span>01</span></div>
+            <h3>Genomgång</h3>
+            <p>Vi går igenom nuläget, målet med sidan, målgruppen och vad som behöver förbättras.</p>
+          </article>
+          <article class="process-card">
+            <span class="card-index">2</span>
+            <div class="card-visual"><span>10</span></div>
+            <h3>Struktur & innehåll</h3>
+            <p>Vi skapar en tydlig sidstruktur, rätt budskap och en plan för vad sidan ska få besökaren att göra.</p>
+          </article>
+          <article class="process-card">
+            <span class="card-index">3</span>
+            <div class="card-visual"><span>11</span></div>
+            <h3>Design & WordPress-bygge</h3>
+            <p>Sidan byggs i WordPress med fokus på design, prestanda, SEO-grund och enkel administration.</p>
+          </article>
+          <article class="process-card">
+            <span class="card-index">4</span>
+            <div class="card-visual"><span>00</span></div>
+            <h3>Lansering & förbättring</h3>
+            <p>Vi testar, lanserar och går igenom hur du använder sidan. Vid behov fortsätter vi med support, SEO eller vidareutveckling.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="proof-section" id="proof">
+      <div class="container">
+        <h2>Exempel på lösningar</h2>
+        <div class="proof-grid">
+          <article class="proof-card">
+            <p class="proof-tag">Exempel</p>
+            <h3>WordPress-redesign</h3>
+            <div class="proof-metric">Modernare och tydligare</div>
+            <p>En äldre företagssida kan byggas om med bättre struktur, snabbare laddning, tydligare budskap och en enklare redaktörsupplevelse.</p>
+            <a class="button button-light button-small" href="./kontakt.html">Prata redesign</a>
+          </article>
+          <article class="proof-card proof-card-alt">
+            <p class="proof-tag">Exempel</p>
+            <h3>API + automation</h3>
+            <div class="proof-metric">När sidan ska göra mer</div>
+            <p>Formulär, bokningar, CRM, rapporter eller enklare Python-flöden kan kopplas till WordPress så manuellt arbete minskar.</p>
+            <a class="button button-light button-small" href="./kontakt.html">Prata automation</a>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div>
+        <img class="footer-logo" src="./assets/logo-1010monky.svg" alt="1010monky">
+        <p class="footer-copy">1010monky bygger WordPress-hemsidor, redesign, SEO-grund, WooCommerce och tekniska integrationer för företag i Sverige och Finland.</p>
+      </div>
+      <div>
+        <a href="./tjanster.html">Tjänster</a>
+        <a href="./process.html">Process</a>
+        <a href="./case.html">Case</a>
+        <a href="./blogg.html">Blogg</a>
+        <a href="./kontakt.html">Kontakt</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
