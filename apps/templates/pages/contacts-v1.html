@@ -1,14 +1,13 @@
 {% extends 'layouts/base.html' %}
 
-{% block title %}Contacts v.1{% endblock %}
-
+{% block title %}Kontakta oss | 1010monky Studio{% endblock %}
 
 {% block content %}
 <!-- Page loading spinner -->
 {% include 'partials/loader.html' %}
 <!-- Page wrapper -->
 <main class="page-wrapper">
-    <!-- Navbar. Remove 'fixed-top' class to make the navigation bar scrollable with the page -->
+    <!-- Navbar -->
     {% include "partials/navbar.html" %}
     <!-- Contact details -->
     <section class="bg-secondary py-5">
@@ -16,24 +15,25 @@
             <!-- Breadcrumb -->
             <nav aria-label="breadcrumb">
                 <ol class="pt-lg-3 pb-lg-4 pb-2 breadcrumb">
-                    <li class="breadcrumb-item"><a href="/">Home</a></li>
-                    <li aria-current="page" class="breadcrumb-item active">Contacts v.1</li>
+                    <li class="breadcrumb-item"><a href="/">Hem</a></li>
+                    <li aria-current="page" class="breadcrumb-item active">Kontakt</li>
                 </ol>
             </nav>
             <!-- Page title -->
-            <h1 class="display-2">Contacts</h1>
-            <p class="fs-lg pb-4 mb-2 mb-sm-3">Get in touch with us by completing the below form or call us now</p>
+            <h1 class="display-2">Kontakta oss</h1>
+            <p class="fs-lg pb-4 mb-2 mb-sm-3">Hör av dig via formuläret nedan eller ring, så återkommer jag.</p>
             <!-- Details cards -->
             <div class="row row-cols-1 row-cols-sm-2 row-cols-xl-4 g-4 pb-2 pb-sm-4 pb-lg-5">
                 <!-- Address -->
                 <div class="col">
                     <div class="card border-0 h-100">
                         <div class="card-body">
-                            <h4 class="card-title mb-4">Address</h4>
-                            <p class="fs-lg fw-medium pb-3 mb-3">514 Magnolia St. Orlando, FL 32806</p>
-                            <a class="btn btn-sm btn-outline-primary" href="#">
+                            <h4 class="card-title mb-4">Adress</h4>
+                            <p class="fs-lg fw-medium pb-3 mb-3">Poste restante<br/>Björksgatan 5<br/>632 21 Eskilstuna, Sverige</p>
+                            <a class="btn btn-sm btn-outline-primary" target="_blank" rel="noopener"
+                               href="https://www.google.com/maps/search/?api=1&query=Bj%C3%B6rksgatan%205%2C%20632%2021%20Eskilstuna">
                                 <i class="ai-map-pin me-1"></i>
-                                Get directions
+                                Visa på karta
                             </a>
                         </div>
                     </div>
@@ -42,15 +42,11 @@
                 <div class="col">
                     <div class="card border-0 h-100">
                         <div class="card-body">
-                            <h4 class="card-title mb-4">Phone</h4>
+                            <h4 class="card-title mb-4">Telefon</h4>
                             <ul class="list-unstyled mb-0">
-                                <li class="pb-1 mb-2">
-                                    <span class="d-block fs-sm text-body-secondary mb-1">Main office</span>
-                                    <a class="nav-link fs-lg p-0" href="tel:+178632256033">+1 (786) 322 560 33</a>
-                                </li>
                                 <li>
-                                    <span class="d-block fs-sm text-body-secondary mb-1">Reception room</span>
-                                    <a class="nav-link fs-lg p-0" href="tel:+178630056044">+1 (786) 300 560 44</a>
+                                    <span class="d-block fs-sm text-body-secondary mb-1">Ring eller sms:a</span>
+                                    <a class="nav-link fs-lg p-0" href="tel:+46720274113">+46 72 027 41 13</a>
                                 </li>
                             </ul>
                         </div>
@@ -60,23 +56,27 @@
                 <div class="col">
                     <div class="card border-0 h-100">
                         <div class="card-body">
-                            <h4 class="card-title mb-4">Schedule</h4>
+                            <h4 class="card-title mb-4">Öppettider</h4>
                             <ul class="list-unstyled mb-0">
                                 <li class="pb-1 mb-2">
-                                    <span class="d-block fs-sm text-body-secondary mb-1">Mon - Thu</span>
+                                    <span class="d-block fs-sm text-body-secondary mb-1">Måndag – Torsdag</span>
                                     <div class="d-flex align-items-center">
                                         <span class="text-nav fs-lg fw-medium">10:00</span>
-                                        <span class="border-top mx-4" style="width: 36px; height: 1px;"></span>
+                                        <span class="border-top mx-3" style="width: 28px; height: 1px;"></span>
                                         <span class="text-nav fs-lg fw-medium">22:00</span>
                                     </div>
                                 </li>
-                                <li>
-                                    <span class="d-block fs-sm text-body-secondary mb-1">Fri - Sat</span>
+                                <li class="pb-1 mb-2">
+                                    <span class="d-block fs-sm text-body-secondary mb-1">Fredag</span>
                                     <div class="d-flex align-items-center">
                                         <span class="text-nav fs-lg fw-medium">10:00</span>
-                                        <span class="border-top mx-4" style="width: 36px; height: 1px;"></span>
-                                        <span class="text-nav fs-lg fw-medium">20:00</span>
+                                        <span class="border-top mx-3" style="width: 28px; height: 1px;"></span>
+                                        <span class="text-nav fs-lg fw-medium">16:00</span>
                                     </div>
+                                </li>
+                                <li>
+                                    <span class="d-block fs-sm text-body-secondary mb-1">Lördag – Söndag</span>
+                                    <span class="text-nav fs-lg fw-medium">Stängt</span>
                                 </li>
                             </ul>
                         </div>
@@ -86,16 +86,11 @@
                 <div class="col">
                     <div class="card border-0 h-100">
                         <div class="card-body">
-                            <h4 class="card-title mb-4">Email</h4>
+                            <h4 class="card-title mb-4">E-post</h4>
                             <ul class="list-unstyled mb-0">
-                                <li class="pb-1 mb-2">
-                                    <span class="d-block fs-sm text-body-secondary mb-1">Main office</span>
-                                    <a class="nav-link fs-lg p-0"
-                                       href="mailto:office@example.com">office@example.com</a>
-                                </li>
                                 <li>
-                                    <span class="d-block fs-sm text-body-secondary mb-1">Reception room</span>
-                                    <a class="nav-link fs-lg p-0" href="mailto:reception@example.com">reception@example.com</a>
+                                    <span class="d-block fs-sm text-body-secondary mb-1">Skriv till mig</span>
+                                    <a class="nav-link fs-lg p-0" href="mailto:info@1010monky.se">info@1010monky.se</a>
                                 </li>
                             </ul>
                         </div>
@@ -125,54 +120,53 @@
             </svg>
             <div class="card-body position-relative z-2 py-5">
                 <form class="mx-auto" style="max-width: 800px;">
-                    <h2 class="h1 card-title text-center pb-4">Get a free consultation</h2>
+                    <h2 class="h1 card-title text-center pb-4">Berätta om ditt projekt</h2>
                     <div class="row g-4">
                         <div class="col-sm-6">
-                            <label class="form-label fs-base" for="name">Name</label>
-                            <input class="form-control form-control-lg" id="name" placeholder="Your name" required=""
+                            <label class="form-label fs-base" for="name">Namn</label>
+                            <input class="form-control form-control-lg" id="name" placeholder="Ditt namn" required=""
                                    type="text"/>
                         </div>
                         <div class="col-sm-6">
-                            <label class="form-label fs-base" for="company">Company</label>
-                            <input class="form-control form-control-lg" id="company" placeholder="Your company name"
+                            <label class="form-label fs-base" for="company">Företag</label>
+                            <input class="form-control form-control-lg" id="company" placeholder="Ditt företag"
                                    type="text"/>
                         </div>
                         <div class="col-sm-6">
-                            <label class="form-label fs-base" for="email">Email</label>
-                            <input class="form-control form-control-lg" id="email" placeholder="Email address"
+                            <label class="form-label fs-base" for="email">E-post</label>
+                            <input class="form-control form-control-lg" id="email" placeholder="Din e-postadress"
                                    required="" type="email"/>
                         </div>
                         <div class="col-sm-6">
-                            <label class="form-label fs-base" for="phone">Phone</label>
-                            <input class="form-control form-control-lg" id="phone" placeholder="Phone number"
+                            <label class="form-label fs-base" for="phone">Telefon</label>
+                            <input class="form-control form-control-lg" id="phone" placeholder="Ditt telefonnummer"
                                    type="text"/>
                         </div>
                         <div class="col-sm-12">
-                            <label class="form-label fs-base" for="message">How can we help?</label>
+                            <label class="form-label fs-base" for="message">Vad kan jag hjälpa till med?</label>
                             <textarea class="form-control form-control-lg" id="message"
-                                      placeholder="Enter your message here..." required="" rows="6"></textarea>
+                                      placeholder="Skriv kort om ditt projekt här..." required="" rows="6"></textarea>
                         </div>
                         <div class="col-sm-12">
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" id="seo" type="checkbox"/>
-                                <label class="form-check-label fs-base" for="seo">SEO Website Audit</label>
+                                <input class="form-check-input" id="ny-hemsida" type="checkbox"/>
+                                <label class="form-check-label fs-base" for="ny-hemsida">Ny hemsida</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input checked="" class="form-check-input" id="email-marketing" type="checkbox"/>
-                                <label class="form-check-label fs-base" for="email-marketing">Email Marketing</label>
+                                <input class="form-check-input" id="wordpress" type="checkbox"/>
+                                <label class="form-check-label fs-base" for="wordpress">WordPress</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" id="social" type="checkbox"/>
-                                <label class="form-check-label fs-base" for="social">Social Networks</label>
+                                <input class="form-check-input" id="skraddarsytt" type="checkbox"/>
+                                <label class="form-check-label fs-base" for="skraddarsytt">Skräddarsydd webb</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" id="content-marketing" type="checkbox"/>
-                                <label class="form-check-label fs-base" for="content-marketing">Content
-                                    Marketing</label>
+                                <input class="form-check-input" id="underhall" type="checkbox"/>
+                                <label class="form-check-label fs-base" for="underhall">Underhåll &amp; drift</label>
                             </div>
                         </div>
                         <div class="col-sm-12 text-center pt-4">
-                            <button class="btn btn-lg btn-light" type="submit">Send a request</button>
+                            <button class="btn btn-lg btn-light" type="submit">Skicka förfrågan</button>
                         </div>
                     </div>
                 </form>
@@ -180,74 +174,11 @@
         </div>
     </section>
 </main>
-<!-- Footer -->
-<footer class="footer py-5">
-    <div class="container pt-md-2 pt-lg-3 pt-xl-4">
-        <div class="row pb-5 pt-sm-2 mb-lg-2">
-            <div class="col-md-12 col-lg-3 pb-2 pb-lg-0 mb-4 mb-lg-0">
-                <a class="navbar-brand py-0 mb-3 mb-lg-4" href="/">
-<span class="text-primary flex-shrink-0 me-2">
-<svg height="32" version="1.1" viewbox="0 0 36 33" width="35" xmlns="http://www.w3.org/2000/svg">
-<path d="M35.6,29c-1.1,3.4-5.4,4.4-7.9,1.9c-2.3-2.2-6.1-3.7-9.4-3.7c-3.1,0-7.5,1.8-10,4.1c-2.2,2-5.8,1.5-7.3-1.1c-1-1.8-1.2-4.1,0-6.2l0.6-1.1l0,0c0.6-0.7,4.4-5.2,12.5-5.7c0.5,1.8,2,3.1,3.9,3.1c2.2,0,4.1-1.9,4.1-4.2s-1.8-4.2-4.1-4.2c-2,0-3.6,1.4-4,3.3H7.7c-0.8,0-1.3-0.9-0.9-1.6l5.6-9.8c2.5-4.5,8.8-4.5,11.3,0L35.1,24C36,25.7,36.1,27.5,35.6,29z"
-      fill="currentColor"></path>
-</svg>
-</span>
-                    <span class="text-nav">Around</span>
-                </a>
-                <p class="fs-sm pb-2 pb-lg-3 mb-3">Tellus non diam morbi quam vel venenatis proin sed. Dolor elementum
-                    nunc dictum</p>
-                <div class="d-flex gap-3">
-                    <a aria-label="Facabook" class="btn btn-icon btn-sm btn-secondary btn-facebook rounded-circle"
-                       href="#">
-                        <i class="ai-facebook"></i>
-                    </a>
-                    <a aria-label="Instagram" class="btn btn-icon btn-sm btn-secondary btn-instagram rounded-circle"
-                       href="#">
-                        <i class="ai-instagram"></i>
-                    </a>
-                    <a aria-label="LinkedIn" class="btn btn-icon btn-sm btn-secondary btn-linkedin rounded-circle"
-                       href="#">
-                        <i class="ai-linkedin"></i>
-                    </a>
-                </div>
-            </div>
-            <div class="col-sm-3 col-lg-2 offset-xl-1 mb-4 mb-sm-0">
-                <ul class="nav flex-column">
-                    <li><a class="nav-link py-1 px-0" href="#">Services</a></li>
-                    <li><a class="nav-link py-1 px-0" href="#">Reviews</a></li>
-                    <li><a class="nav-link py-1 px-0" href="#">Case studies</a></li>
-                    <li><a class="nav-link py-1 px-0" href="#">Privacy policy</a></li>
-                </ul>
-            </div>
-            <div class="col-sm-4 col-lg-2 mb-4 mb-sm-0">
-                <ul class="nav flex-column">
-                    <li><a class="nav-link py-1 px-0" href="mailto:contact@example.com">contact@example.com</a></li>
-                    <li><a class="nav-link py-1 px-0" href="tel:+15262200459">+1 526 220 0459</a></li>
-                    <li><a class="nav-link py-1 px-0" href="tel:+15262200444">+1 526 220 0444</a></li>
-                </ul>
-            </div>
-            <div class="col-sm-5 col-lg-4 col-xl-3 offset-lg-1">
-                <h3 class="h6 mb-2">Stay up to date</h3>
-                <p class="fs-sm">Subscribe to our news and case studies</p>
-                <div class="input-group input-group-sm">
-                    <input class="form-control" placeholder="Your email" type="text"/>
-                    <button class="btn btn-primary" type="button">Subscribe</button>
-                </div>
-            </div>
-        </div>
-        <p class="nav fs-sm mb-0">
-            <span class="text-body-secondary">© All rights reserved. Made by</span>
-            <a class="nav-link d-inline fw-normal p-0 ms-1" href="https://coderthemes.com/" rel="noopener"
-               target="_blank">Coderthemes</a>
-        </p>
-    </div>
-</footer>
 
+<!-- Footer -->
+{% include "partials/footer.html" %}
 
 {% include 'partials/back-to-top.html' %}
-
-
-<!-- Bootstrap + Theme scripts -->
 {% endblock content %}
 
 {% block scripts %}
