@@ -838,17 +838,78 @@
 {% endblock content %}
 
 {% block scripts %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "ProfessionalService",
+      "@id": "https://1010monky.se/#business",
+      "name": "1010monky Studio",
+      "url": "https://1010monky.se",
+      "image": "https://1010monky.se/static/img/logo-mark-1010monky.webp",
+      "logo": "https://1010monky.se/static/img/logo-mark-1010monky.webp",
+      "email": "info@1010monky.se",
+      "telephone": "+46720274113",
+      "priceRange": "5 000–28 000 kr",
+      "description": "Liten webbstudio – en utvecklare och en designer. WordPress och skräddarsydd kod för småföretag i Sverige och Finland.",
+      "address": { "@type": "PostalAddress", "addressCountry": "SE" },
+      "areaServed": [
+        { "@type": "Country", "name": "Sverige" },
+        { "@type": "Country", "name": "Finland" }
+      ],
+      "knowsLanguage": ["sv", "fi", "en"],
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Tjänster",
+        "itemListElement": [
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Skräddarsydda webbsidor", "description": "Webbplatser byggda från grunden i modern kod, anpassade efter din verksamhet." } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "WordPress", "description": "WordPress-sidor du själv kan uppdatera, med en struktur och design som håller över tid." } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Design & UX", "description": "Tydlig design som gör innehållet lätt att förstå och vägen till kontakt enkel." } }
+        ]
+      }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://1010monky.se/#website",
+      "url": "https://1010monky.se",
+      "name": "1010monky Studio",
+      "inLanguage": "sv",
+      "publisher": { "@id": "https://1010monky.se/#business" }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        { "@type": "Question", "name": "Kan jag ändra hemsidan själv efteråt?", "acceptedAnswer": { "@type": "Answer", "text": "Ja. Vi bygger sidan så att du själv kan ändra texter, bilder och grundläggande innehåll i WordPress. Vid leveransen går vi igenom hur det fungerar." } },
+        { "@type": "Question", "name": "Jobbar ni med befintliga WordPress-sidor?", "acceptedAnswer": { "@type": "Answer", "text": "Ja. Vi hjälper till med redesign, struktur, prestanda, teknisk SEO och både mindre och större förbättringar." } },
+        { "@type": "Question", "name": "Kan ni hjälpa med SEO?", "acceptedAnswer": { "@type": "Answer", "text": "Ja. Vi lägger en teknisk SEO-grund med tydliga rubriker, metadata, snabbare struktur och bättre innehållsflöde." } },
+        { "@type": "Question", "name": "Bygger ni bara WordPress?", "acceptedAnswer": { "@type": "Answer", "text": "Nej. WordPress passar många, men vi bygger också skräddarsydda funktioner, dashboards, API-integrationer och automationer." } },
+        { "@type": "Question", "name": "Jobbar ni i både Sverige och Finland?", "acceptedAnswer": { "@type": "Answer", "text": "Ja. Sidan och innehållet kan planeras för svenska, finska eller tvåspråkiga företag." } },
+        { "@type": "Question", "name": "Vad är första steget?", "acceptedAnswer": { "@type": "Answer", "text": "Ett kort samtal där vi går igenom vad du har idag, vad du behöver och vilken lösning som passar bäst." } }
+      ]
+    }
+  ]
+}
+</script>
 <script src="{{ config.ASSETS_ROOT }}/js/theme-switcher.js"></script>
 <script>
     (function () {
-      window.onload = function () {
-        const preloader = document.querySelector('.page-loading')
-        preloader.classList.remove('active')
+      function hidePreloader() {
+        var preloader = document.querySelector('.page-loading');
+        if (!preloader) return;
+        preloader.classList.remove('active');
         setTimeout(function () {
-          preloader.remove()
-        }, 1500)
+          if (preloader && preloader.parentNode) preloader.remove();
+        }, 400);
       }
-    })()
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', hidePreloader);
+      } else {
+        hidePreloader();
+      }
+      window.addEventListener('load', hidePreloader);
+      setTimeout(hidePreloader, 2000);
+    })();
 </script>
 <script src="{{ config.ASSETS_ROOT }}/vendor/swiper/swiper-bundle.min.js"></script>
 <script src="{{ config.ASSETS_ROOT }}/js/theme.min.js"></script>
