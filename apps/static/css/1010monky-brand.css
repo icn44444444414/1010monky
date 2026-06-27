@@ -245,7 +245,7 @@
 }
 
 .monky-hero-shell {
-  border-radius: 0 0 2rem 2rem;
+  border-radius: 0;
 }
 
 /* Hero copy + badges */
@@ -378,7 +378,7 @@
   }
 
   .monky-hero-shell {
-    border-radius: 0 0 1.35rem 1.35rem;
+    border-radius: 0;
   }
 }
 
