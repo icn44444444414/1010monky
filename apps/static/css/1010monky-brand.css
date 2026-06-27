@@ -494,3 +494,7 @@
     transition: none !important;
   }
 }
+
+/* Dark mode: garantera vit logga-text (1010 + studio) */
+[data-bs-theme="dark"] .monky-brand__digits { color: #ffffff; }
+[data-bs-theme="dark"] .monky-brand__studio { color: rgba(255,255,255,.72); }
