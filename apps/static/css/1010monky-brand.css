@@ -242,14 +242,14 @@
 /* Hero copy + badges */
 .monky-hero-kicker {
   color: rgba(255, 255, 255, .70);
-  font-size: .78rem;
+  font-size: .8125rem;
   font-weight: 800;
   letter-spacing: .16em;
   text-transform: uppercase;
 }
 
 .monky-hero-title {
-  letter-spacing: -.07em;
+  letter-spacing: -.02em;
   max-width: 9ch;
 }
 
@@ -502,10 +502,11 @@
   --monky-navy-950: #07111f;
   --monky-navy-900: #0d1b2e;
   --monky-navy-800: #102033;
-  --monky-blue: #25c7e8;
-  --monky-blue-soft: #7ab8ff;
-  --monky-yellow: #f5c542;
-  --monky-yellow-hover: #e8b72e;
+  /* Grön palett (accenttokens behåller sina namn men håller gröna värden) */
+  --monky-blue: #34d399;
+  --monky-blue-soft: #34d399;
+  --monky-yellow: #1f9457;
+  --monky-yellow-hover: #19794a;
   --monky-paper: #f7f4ee;
   --monky-card: #fffcf7;
   --monky-line: #ddd8ce;
@@ -528,12 +529,12 @@
 .monky-sales-page h1,
 .monky-sales-page h2,
 .monky-sales-page h3 {
-  letter-spacing: -.035em;
+  letter-spacing: -.018em;
 }
 
 .monky-sales-page h2 {
   font-size: clamp(2rem, 4.5vw, 3.75rem);
-  line-height: 1.05;
+  line-height: 1.1;
 }
 
 .monky-sales-hero {
@@ -541,7 +542,7 @@
   overflow: hidden;
   padding: clamp(8.5rem, 13vw, 12rem) 0 clamp(4.8rem, 8vw, 7rem);
   background:
-    radial-gradient(circle at 78% 28%, rgba(37, 199, 232, .18), transparent 31rem),
+    radial-gradient(circle at 78% 28%, rgba(31, 148, 87, .20), transparent 31rem),
     linear-gradient(rgba(255, 252, 247, .035) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255, 252, 247, .035) 1px, transparent 1px),
     linear-gradient(180deg, var(--monky-navy-950), var(--monky-navy-900));
@@ -551,14 +552,14 @@
 .monky-kicker {
   margin-bottom: 1rem;
   color: var(--monky-blue-soft);
-  font-size: .78rem;
+  font-size: .8125rem;
   font-weight: 850;
   letter-spacing: .12em;
   text-transform: uppercase;
 }
 
 .monky-kicker-dark {
-  color: #2f6b78;
+  color: #2f725f;
 }
 
 .monky-sales-title {
@@ -566,7 +567,7 @@
   margin-bottom: 1.4rem;
   color: #fffcf7;
   font-size: clamp(2.65rem, 6.4vw, 5.4rem);
-  line-height: 1.02;
+  line-height: 1.06;
 }
 
 .monky-sales-lead {
@@ -601,16 +602,16 @@
 
 .monky-btn-primary,
 .btn-primary.monky-btn-primary {
-  --ar-btn-color: #07111f;
+  --ar-btn-color: #ffffff;
   --ar-btn-bg: var(--monky-yellow);
   --ar-btn-border-color: var(--monky-yellow);
-  --ar-btn-hover-color: #07111f;
+  --ar-btn-hover-color: #ffffff;
   --ar-btn-hover-bg: var(--monky-yellow-hover);
   --ar-btn-hover-border-color: var(--monky-yellow-hover);
-  --ar-btn-active-color: #07111f;
+  --ar-btn-active-color: #ffffff;
   --ar-btn-active-bg: var(--monky-yellow-hover);
   --ar-btn-active-border-color: var(--monky-yellow-hover);
-  box-shadow: 0 18px 42px rgba(245, 197, 66, .2);
+  box-shadow: 0 14px 30px rgba(31, 148, 87, .22);
 }
 
 .monky-hero-system {
@@ -656,7 +657,7 @@
   margin-bottom: .75rem;
   color: var(--monky-blue-soft);
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  font-size: .72rem;
+  font-size: .8125rem;
   font-weight: 850;
   letter-spacing: .1em;
   text-transform: uppercase;
@@ -678,11 +679,11 @@
   display: block;
   height: .85rem;
   border-radius: .25rem;
-  background: rgba(37, 199, 232, .16);
+  background: rgba(52, 211, 153, .16);
 }
 
 .monky-wire-lines span:nth-child(2) { width: 76%; }
-.monky-wire-lines span:nth-child(3) { width: 56%; background: rgba(245, 197, 66, .25); }
+.monky-wire-lines span:nth-child(3) { width: 56%; background: rgba(31, 148, 87, .25); }
 
 .monky-browser-row {
   display: grid;
@@ -804,7 +805,7 @@
 
 .monky-sales-card:hover {
   transform: translateY(-3px);
-  border-color: rgba(37, 199, 232, .42);
+  border-color: rgba(52, 211, 153, .42);
   box-shadow: 0 24px 70px rgba(16, 32, 51, .14);
 }
 
@@ -817,7 +818,7 @@
 .monky-binary {
   display: inline-flex;
   margin-bottom: 1.65rem;
-  color: #2f6b78;
+  color: #2f725f;
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   font-size: .8rem;
   font-weight: 900;
@@ -865,11 +866,11 @@
 .monky-label-row span {
   border: 1px solid rgba(16, 32, 51, .14);
   border-radius: .45rem;
-  background: rgba(37, 199, 232, .08);
-  color: #2f6b78;
+  background: rgba(52, 211, 153, .08);
+  color: #2f725f;
   padding: .36rem .55rem;
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  font-size: .75rem;
+  font-size: .8125rem;
   font-weight: 850;
 }
 
@@ -891,8 +892,8 @@
 }
 
 .monky-price-card-featured {
-  border-color: rgba(245, 197, 66, .6);
-  box-shadow: 0 24px 70px rgba(245, 197, 66, .16);
+  border-color: rgba(31, 148, 87, .6);
+  box-shadow: 0 24px 70px rgba(31, 148, 87, .16);
 }
 
 .monky-faq-list {
@@ -929,7 +930,7 @@
 .monky-faq-item button::after {
   content: "+";
   margin-left: 1rem;
-  color: #2f6b78;
+  color: #2f725f;
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 }
 
@@ -967,7 +968,7 @@
 
 .monky-contact-section {
   background:
-    radial-gradient(circle at 86% 22%, rgba(37, 199, 232, .12), transparent 28rem),
+    radial-gradient(circle at 86% 22%, rgba(52, 211, 153, .12), transparent 28rem),
     var(--monky-card);
 }
 
@@ -1049,4 +1050,182 @@
   .monky-why-card {
     padding: 1.25rem;
   }
+}
+/* ===================== DESIGNSYSTEM P1 ===================== */
+/* Radie- och elevation-tokens */
+:root {
+  --r-sm: 8px;
+  --r-md: 12px;
+  --r-lg: 14px;
+  --e-1: 0 1px 2px rgba(17,20,23,.04), 0 8px 24px rgba(17,20,23,.06);
+  --e-2: 0 2px 6px rgba(17,20,23,.05), 0 18px 44px rgba(17,20,23,.10);
+}
+[data-bs-theme="dark"] {
+  --e-1: 0 1px 2px rgba(0,0,0,.20), 0 10px 28px rgba(0,0,0,.28);
+  --e-2: 0 2px 6px rgba(0,0,0,.24), 0 20px 48px rgba(0,0,0,.38);
+}
+/* Tightare hörn (bort med de stora ~3rem-radierna) */
+.rounded-5 { border-radius: var(--r-lg) !important; }
+.rounded-4 { border-radius: var(--r-md) !important; }
+/* Enhetlig, subtil elevation oavsett vilken shadow-klass som anvands */
+.shadow-sm { box-shadow: var(--e-1) !important; }
+.shadow    { box-shadow: var(--e-1) !important; }
+.shadow-lg { box-shadow: var(--e-2) !important; }
+
+/* ===================== DESIGNSYSTEM P2 — lugnare ytor ===================== */
+/* Recensionsåtgärd 1–6: mindre borders, torrare shadows, mer surface + spacing.
+   Behåller borders i mörka hero-visuals och FAQ; tar bort ram på vanliga cards. */
+
+/* 1. Vanliga service-/pris-cards: ram bort, lätt yt-shadow istället för ram */
+.monky-sales-card,
+.monky-price-card {
+  border-color: transparent;
+  box-shadow: 0 8px 24px rgba(16, 32, 51, .06);
+}
+
+/* 2. Torrare hover — mindre lift (3px -> 1px), lugnare shadow, ingen grön ram-blink */
+.monky-sales-card:hover {
+  transform: translateY(-1px);
+  border-color: transparent;
+  box-shadow: 0 12px 30px rgba(16, 32, 51, .09);
+}
+
+/* Featured pris-/kontaktkort: behåller subtil ram + lite mer elevation som accent */
+.monky-price-card-featured {
+  border-color: rgba(31, 148, 87, .45);
+  box-shadow: 0 18px 48px rgba(16, 32, 51, .10);
+}
+.monky-contact-card {
+  border-color: rgba(16, 32, 51, .10);
+  box-shadow: 0 18px 48px rgba(16, 32, 51, .10);
+}
+
+/* FAQ: behåll en lugn ram, men torrare shadow */
+.monky-faq-item {
+  border-color: rgba(16, 32, 51, .10);
+  box-shadow: 0 8px 24px rgba(16, 32, 51, .05);
+}
+
+/* Trust strip: lugnare — ta bort ram runt varje item, använd yt-skillnad */
+.monky-trust-strip span {
+  border-color: transparent;
+  background: #f7f4ee;
+}
+
+/* 3. Line-height upp på rubriker — mindre "design-showcase", mer läsbart */
+.monky-sales-page h2 { line-height: 1.10; }
+.monky-sales-title  { line-height: 1.06; }
+.monky-sales-card h3,
+.monky-price-card h3,
+.monky-dark-card h3,
+.monky-process-card h3 { line-height: 1.2; }
+
+/* 4. Mindre negativ letter-spacing (svenska ord blir långa) */
+.monky-sales-page h1,
+.monky-sales-page h2,
+.monky-sales-page h3 { letter-spacing: -.01em; }
+.monky-sales-title   { letter-spacing: -.02em; }
+
+/* 5. Större småtext — min 13px för labels/eyebrows, läsbarare body på mobil */
+.monky-kicker,
+.monky-card-label,
+.monky-label-row span { font-size: .8125rem; }   /* 13px */
+.monky-proof-list li  { font-size: .95rem; }
+.monky-faq-item button { font-size: 1.15rem; }    /* ~18px frågor */
+.monky-sales-card p,
+.monky-price-card p   { font-size: 1.0625rem; }    /* ~17px card body */
+
+/* ===================== PROOF: leverans + WP-admin ===================== */
+/* "Vad du får vid leverans" — lugn checklista, surface + spacing, inga ramar */
+.monky-deliver-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .85rem;
+}
+
+.monky-deliver-item {
+  display: flex;
+  align-items: flex-start;
+  gap: .7rem;
+  border-radius: .7rem;
+  background: var(--monky-card);
+  box-shadow: 0 8px 24px rgba(16, 32, 51, .05);
+  padding: 1rem 1.15rem;
+  color: var(--monky-navy-800);
+  font-size: 1.0625rem;
+  line-height: 1.45;
+}
+
+.monky-deliver-item i {
+  flex: 0 0 auto;
+  margin-top: .15rem;
+  color: var(--monky-yellow);
+  font-size: 1.15rem;
+}
+
+/* "Det här kan du ändra själv" — faux WordPress-admin panel */
+.monky-admin-panel {
+  border-radius: .9rem;
+  background: var(--monky-card);
+  box-shadow: 0 18px 48px rgba(16, 32, 51, .10);
+  overflow: hidden;
+}
+
+.monky-admin-panel__bar {
+  display: flex;
+  align-items: center;
+  gap: .55rem;
+  background: var(--monky-navy-900);
+  color: rgba(255, 252, 247, .9);
+  padding: .85rem 1.1rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: .8125rem;
+  font-weight: 800;
+  letter-spacing: .04em;
+}
+
+.monky-admin-panel__bar span {
+  width: .55rem;
+  height: .55rem;
+  border-radius: 50%;
+  background: rgba(255, 252, 247, .34);
+}
+
+.monky-admin-panel__bar strong {
+  margin-left: .4rem;
+  color: #fffcf7;
+}
+
+.monky-admin-list {
+  display: grid;
+  gap: 0;
+  margin: 0;
+  padding: .4rem .6rem;
+  list-style: none;
+}
+
+.monky-admin-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: .9rem .75rem;
+  color: var(--monky-navy-800);
+  font-weight: 700;
+}
+
+.monky-admin-list li + li {
+  border-top: 1px solid rgba(16, 32, 51, .07);
+}
+
+.monky-admin-list em {
+  color: var(--monky-yellow);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: .8125rem;
+  font-style: normal;
+  font-weight: 800;
+}
+
+@media (max-width: 575.98px) {
+  .monky-deliver-grid { grid-template-columns: 1fr; }
 }

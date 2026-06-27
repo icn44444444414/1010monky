@@ -149,6 +149,32 @@
     </div>
   </section>
 
+  <section class="monky-section" id="admin">
+    <div class="container">
+      <div class="row g-5 align-items-center">
+        <div class="col-lg-6">
+          <p class="monky-kicker monky-kicker-dark">Du sköter sidan själv</p>
+          <h2>Det här kan du ändra själv i WordPress.</h2>
+          <p class="fs-lg">När jag lämnar över sidan ska du inte behöva ringa mig för små saker. Jag bygger de viktiga sektionerna så att du kan uppdatera dem direkt i WordPress, utan att skriva kod. Vid leveransen går vi igenom hur det fungerar tillsammans.</p>
+          <p class="mb-0">Behöver du något större senare, som en ny sida, ett formulär eller en automation, så bygger jag på det. Men vardagen sköter du själv.</p>
+        </div>
+        <div class="col-lg-6">
+          <div class="monky-admin-panel" aria-label="Exempel på vad du kan redigera i WordPress">
+            <div class="monky-admin-panel__bar"><span></span><span></span><span></span><strong>WordPress · Redigera</strong></div>
+            <ul class="monky-admin-list">
+              <li>Texter och rubriker <em>redigerbar</em></li>
+              <li>Bilder och logotyp <em>redigerbar</em></li>
+              <li>Tjänster och priser <em>redigerbar</em></li>
+              <li>Kontaktuppgifter och öppettider <em>redigerbar</em></li>
+              <li>Nyheter och blogginlägg <em>redigerbar</em></li>
+              <li>Meny och knappar <em>redigerbar</em></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section class="monky-section" id="case">
     <div class="container">
       <div class="monky-section-heading">
@@ -175,6 +201,30 @@
         <div class="col-md-6 col-xl-3"><article class="monky-process-card h-100"><span>10</span><h3>Strukturera</h3><p>Jag skapar sidstruktur, innehållsflöde och tydlig väg till kontakt.</p></article></div>
         <div class="col-md-6 col-xl-3"><article class="monky-process-card h-100"><span>11</span><h3>Bygga</h3><p>Design, WordPress, kod, SEO-grund och responsiv implementation.</p></article></div>
         <div class="col-md-6 col-xl-3"><article class="monky-process-card h-100"><span>00</span><h3>Förbättra</h3><p>Efter lansering kan vi mäta, justera och bygga vidare.</p></article></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="monky-section" id="leverans">
+    <div class="container">
+      <div class="row g-5">
+        <div class="col-lg-5">
+          <p class="monky-kicker monky-kicker-dark">Vid leverans</p>
+          <h2>Vad du får när sidan är klar.</h2>
+          <p class="fs-lg mb-0">Så här ser en grundleverans ut. Exakt innehåll beror på projektet, men det här är vad jag tar med som standard.</p>
+        </div>
+        <div class="col-lg-7">
+          <div class="monky-deliver-grid">
+            <div class="monky-deliver-item"><i class="ai-check-alt"></i>En färdig WordPress-sida som fungerar på mobil, surfplatta och dator</div>
+            <div class="monky-deliver-item"><i class="ai-check-alt"></i>Sidstruktur och innehåll upplagt och klart</div>
+            <div class="monky-deliver-item"><i class="ai-check-alt"></i>Teknisk SEO-grund: rubriker, metadata, sitemap och läsbara länkar</div>
+            <div class="monky-deliver-item"><i class="ai-check-alt"></i>Snabb laddning och optimerade bilder</div>
+            <div class="monky-deliver-item"><i class="ai-check-alt"></i>Kontaktformulär som skickar förfrågningar till din mail</div>
+            <div class="monky-deliver-item"><i class="ai-check-alt"></i>HTTPS och en säker grunduppsättning</div>
+            <div class="monky-deliver-item"><i class="ai-check-alt"></i>En genomgång där jag visar hur du uppdaterar sidan själv</div>
+            <div class="monky-deliver-item"><i class="ai-check-alt"></i>Möjlighet att bygga vidare med fler sidor, formulär eller automation</div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -273,6 +323,62 @@
 {% endblock content %}
 
 {% block scripts %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "ProfessionalService",
+      "@id": "https://1010monky.se/#business",
+      "name": "1010monky Studio",
+      "url": "https://1010monky.se",
+      "image": "https://1010monky.se/static/img/logo-mark-1010monky.webp",
+      "logo": "https://1010monky.se/static/img/logo-mark-1010monky.webp",
+      "email": "info@1010monky.se",
+      "telephone": "+46720274113",
+      "priceRange": "från 5 000 kr",
+      "description": "WordPress-hemsidor, redesign, SEO-grund och skräddarsydda webblösningar för småföretag i Sverige och Finland.",
+      "address": { "@type": "PostalAddress", "addressCountry": "SE" },
+      "areaServed": [
+        { "@type": "Country", "name": "Sverige" },
+        { "@type": "Country", "name": "Finland" }
+      ],
+      "knowsLanguage": ["sv", "fi", "en"],
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Tjänster",
+        "itemListElement": [
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Ny WordPress-hemsida", "description": "För företag som behöver en modern, snabb och lättredigerad webbplats." } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "WordPress redesign", "description": "För dig som redan har en sida men vill göra den tydligare, snabbare och mer professionell." } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "SEO-grund & teknisk SEO", "description": "Struktur, metadata, rubriker, hastighet och teknisk grund så Google förstår sidan bättre." } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "WooCommerce / företagswebb", "description": "För företag som vill sälja, presentera tjänster eller samla förfrågningar bättre." } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Custom funktioner", "description": "Formulär, dashboards, API:er, bokningar, interna verktyg och specialflöden." } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "AI & automation", "description": "När det sparar tid: textflöden, supporthjälp, dokumenthantering eller automatiserade arbetsmoment." } }
+        ]
+      }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://1010monky.se/#website",
+      "url": "https://1010monky.se",
+      "name": "1010monky Studio",
+      "inLanguage": "sv",
+      "publisher": { "@id": "https://1010monky.se/#business" }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        { "@type": "Question", "name": "Kan jag ändra hemsidan själv efteråt?", "acceptedAnswer": { "@type": "Answer", "text": "Ja. Målet är att du ska kunna ändra texter, bilder och grundläggande innehåll själv i WordPress." } },
+        { "@type": "Question", "name": "Jobbar du med befintliga WordPress-sidor?", "acceptedAnswer": { "@type": "Answer", "text": "Ja. Jag kan hjälpa med redesign, struktur, prestanda, teknisk SEO och mindre eller större förbättringar." } },
+        { "@type": "Question", "name": "Kan du hjälpa med SEO?", "acceptedAnswer": { "@type": "Answer", "text": "Ja. Jag bygger en teknisk SEO-grund med tydliga rubriker, metadata, snabbare struktur och bättre innehållsflöde." } },
+        { "@type": "Question", "name": "Bygger du bara WordPress?", "acceptedAnswer": { "@type": "Answer", "text": "Nej. WordPress passar många företag, men jag kan också bygga skräddarsydda funktioner, dashboards, API-integrationer och automationer." } },
+        { "@type": "Question", "name": "Jobbar du med företag i både Sverige och Finland?", "acceptedAnswer": { "@type": "Answer", "text": "Ja. Sidan och innehållet kan planeras för svenska, finska eller tvåspråkiga företag." } },
+        { "@type": "Question", "name": "Vad är första steget?", "acceptedAnswer": { "@type": "Answer", "text": "Första steget är ett kort samtal där vi går igenom vad du har idag, vad du behöver och vilken lösning som passar bäst." } }
+      ]
+    }
+  ]
+}
+</script>
 <script src="{{ config.ASSETS_ROOT }}/js/theme.min.js"></script>
 <script>
   (function () {

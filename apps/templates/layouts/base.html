@@ -136,17 +136,27 @@
       }
     </style>
 
-    <!-- Page loading scripts -->
+    <!-- Page loading scripts: dölj så fort DOM är klar (server-renderad HTML finns
+         redan), med hård fallback så overlayen aldrig kan fastna och sänka upplevd
+         hastighet. -->
     <script>
       (function () {
-        window.onload = function () {
-          const preloader = document.querySelector('.page-loading')
-          preloader.classList.remove('active')
+        function hidePreloader() {
+          var preloader = document.querySelector('.page-loading');
+          if (!preloader) return;
+          preloader.classList.remove('active');
           setTimeout(function () {
-            preloader.remove()
-          }, 1500)
+            if (preloader && preloader.parentNode) preloader.remove();
+          }, 400);
         }
-      })()
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', hidePreloader);
+        } else {
+          hidePreloader();
+        }
+        window.addEventListener('load', hidePreloader);
+        setTimeout(hidePreloader, 2000);
+      })();
     </script>
 
 </head>
