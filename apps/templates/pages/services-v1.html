@@ -215,7 +215,7 @@
             <p class="text-center pb-4 mb-2 mb-lg-3 mx-auto" style="max-width: 640px;">Ett par egna och partnerdrivna projekt som visar hur vi arbetar – från teknik till webbnärvaro.</p>
             <div class="row g-4 justify-content-center">
                 <!-- GhostyMsg -->
-                <div class="col-md-6 col-lg-5">
+                <div class="col-6">
                     <div class="card border-0 h-100">
                         <div class="card-body p-4 p-xl-5">
                             <img class="d-block mb-4" src="{{ config.ASSETS_ROOT }}/img/brands/ghostymsg-logo.png" alt="GhostyMsg" height="56"/>
@@ -234,7 +234,7 @@
                     </div>
                 </div>
                 <!-- AskHackers -->
-                <div class="col-md-6 col-lg-5">
+                <div class="col-6">
                     <div class="card border-0 h-100">
                         <div class="card-body p-4 p-xl-5">
                             <img class="d-block mb-4" src="{{ config.ASSETS_ROOT }}/img/brands/askhackers-logo-dark.svg" alt="AskHackers" height="40"/>
@@ -259,43 +259,27 @@
     <section class="bg-secondary py-sm-2 py-lg-3 py-xl-4 py-xxl-5">
         <div class="container py-5">
             <h2 class="h1 text-center pt-1 pt-sm-2 pt-lg-3 pb-3 pb-lg-4">Vad våra kunder säger</h2>
-            <div class="swiper pb-2 pb-sm-3 pb-lg-4" data-swiper-options='{
-            "spaceBetween": 24,
-            "loop": true,
-            "autoHeight": true,
-            "pagination": { "el": ".swiper-pagination", "clickable": true },
-            "breakpoints": { "576": { "slidesPerView": 2 }, "992": { "slidesPerView": 3 } }
-          }'>
-                <div class="swiper-wrapper">
-                    <!-- Item -->
-                    <div class="swiper-slide">
-                        <div class="card border-0 mb-4">
-                            <div class="card-body">
-                                <div class="d-flex align-items-center mb-3">
-                                    <img alt="Anna Lindberg" class="rounded-circle" src="{{ config.ASSETS_ROOT }}/img/avatar/22.jpg" width="60"/>
-                                    <div class="ps-3">
-                                        <div class="h6 mb-1">Anna Lindberg</div>
-                                        <div class="fs-sm text-body-secondary">Ägare, Café Lyckan</div>
-                                    </div>
-                                </div>
-                                <p class="card-text">Vår nya hemsida laddar blixtsnabbt och ser proffsig ut i mobilen. Bokningarna har ökat märkbart sedan lanseringen. Riktigt nöjd!</p>
-                            </div>
-                        </div>
-                        <div class="card border-0">
-                            <div class="card-body">
-                                <div class="d-flex align-items-center mb-3">
-                                    <img alt="Johan Berg" class="rounded-circle" src="{{ config.ASSETS_ROOT }}/img/avatar/25.jpg" width="60"/>
-                                    <div class="ps-3">
-                                        <div class="h6 mb-1">Johan Berg</div>
-                                        <div class="fs-sm text-body-secondary">VD, Berg Bygg AB</div>
-                                    </div>
-                                </div>
-                                <p class="card-text">Vi fick en WordPress-sajt vi enkelt kan uppdatera själva. Tydlig process, snabba leveranser och ett resultat som verkligen speglar vårt företag. Kan varmt rekommendera 1010monky.</p>
-                            </div>
+            <div class="row g-4 justify-content-center pb-2 pb-sm-3 pb-lg-4">
+                <!-- Item -->
+                <div class="col-6">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body p-4">
+                            <p class="card-text mb-4">Jag kom till Matias med en rörig idé om en sida där man lär sig Python genom att bygga Snake, en bit i taget. Det smartaste är att koden körs direkt i webbläsaren, så man slipper installera något och ser resultatet på en gång. Det blev precis det upplägg jag ville ha, och det som dök upp under vägen löstes utan krångel.</p>
+                            <div class="h6 mb-1">Anthony</div>
+                            <div class="fs-sm text-body-secondary">Grundare, AskHackers</div>
                         </div>
                     </div>
                 </div>
-                <div class="swiper-pagination position-relative bottom-0 mt-2 mt-md-3 mt-lg-4 pt-4"></div>
+                <!-- Item -->
+                <div class="col-6">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body p-4">
+                            <p class="card-text mb-4">Jag ville ha en chatt där det man skriver stannar mellan dem som pratar, inget sparat och inga konton. Det jag gillar är att krypteringen sker i själva webbläsaren, så servern aldrig ser meddelandena. Vi är inte helt klara, det kommer nya delar efter hand, men det funkar och Matias är rak med vad som är på plats och vad som är kvar.</p>
+                            <div class="h6 mb-1">Kristian</div>
+                            <div class="fs-sm text-body-secondary">Beställare, GhostyMsg (Finland)</div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
