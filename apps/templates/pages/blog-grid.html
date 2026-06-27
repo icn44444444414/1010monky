@@ -8,21 +8,42 @@
 <main class="page-wrapper">
     {% include "partials/navbar.html" %}
 
+    <!-- Page header -->
     <section class="container py-5 mt-4 mt-lg-5">
-        <div class="mx-auto text-center mb-5" style="max-width: 640px;">
-            <span class="monky-blogcard__tag d-block mb-3">Blogg</span>
+        <div class="mx-auto text-center mb-5 mb-lg-0" style="max-width: 640px;">
+            <span class="badge text-nav fs-xs border mb-3">Blogg</span>
             <h1 class="display-5 mb-3">Webb, kod och projekten jag bygger</h1>
             <p class="fs-lg text-body-secondary mb-0">Praktiska guider och ärliga erfarenheter från riktiga projekt. Mest om Python, Flask, WordPress och hur man bygger webb som håller.</p>
         </div>
+    </section>
 
-        <div class="row g-4 justify-content-center">
-            <div class="col-md-6 col-lg-5">
-                <a class="monky-blogcard" href="/blogg/chatt-app-python-flask">
-                    <span class="monky-blogcard__tag">Kod &amp; webb</span>
-                    <h2 class="h4 mt-2 mb-2">Hur bygger man en chatt-app i Python Flask?</h2>
-                    <p class="text-body-secondary mb-3">En steg-för-steg-guide från grunden: Flask, realtid med Flask-SocketIO, databas, inloggning och spam-skydd, med exempel från min egen chatt GhostyMsg.</p>
-                    <span class="text-primary fw-medium">Läs guiden <i class="ai-arrow-right ms-1"></i></span>
-                </a>
+    <!-- Posts -->
+    <section class="container pb-5 mb-md-2 mb-lg-4">
+        <div class="row g-4 pt-lg-4 justify-content-center">
+            <!-- Post -->
+            <div class="col-md-6 col-lg-4">
+                <article class="card border-0 bg-secondary h-100">
+                    <a href="/blogg/chatt-app-python-flask">
+                        <img alt="Hur bygger man en chatt-app i Python Flask?" class="card-img-top" src="{{ config.ASSETS_ROOT }}/img/og-default.png"/>
+                    </a>
+                    <div class="card-body pb-4">
+                        <div class="d-flex align-items-center mb-3 mt-n1">
+                            <span class="fs-sm text-body-secondary">Juni 2026</span>
+                            <span class="fs-xs opacity-20 mx-3">|</span>
+                            <span class="badge text-nav fs-xs border">Kod &amp; webb</span>
+                        </div>
+                        <h2 class="h4 card-title">
+                            <a href="/blogg/chatt-app-python-flask">Hur bygger man en chatt-app i Python Flask?</a>
+                        </h2>
+                        <p class="card-text">Går det, hur svårt är det och vad påverkar tid och pris? En ärlig genomgång utifrån att jag byggt en egen realtidschatt.</p>
+                    </div>
+                    <div class="card-footer pt-3 bg-transparent border-0">
+                        <div class="d-flex align-items-center pb-2">
+                            <img alt="1010monky" src="{{ config.ASSETS_ROOT }}/img/monkey-logo.webp" width="28"/>
+                            <span class="h6 ps-2 mb-0">Matias, 1010monky Studio</span>
+                        </div>
+                    </div>
+                </article>
             </div>
         </div>
 
