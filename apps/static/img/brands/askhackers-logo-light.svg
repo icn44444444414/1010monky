@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="520" height="120" viewBox="0 0 520 120" role="img" aria-label="AskHackers">
+  <rect width="520" height="120" fill="none"/>
+  <rect x="4" y="18" width="84" height="84" rx="22" fill="#101820"/>
+  <path d="M28 46l14 14-14 14" fill="none" stroke="#34d399" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M52 76h20" fill="none" stroke="#f8fafc" stroke-width="8" stroke-linecap="round"/>
+  <text x="112" y="70" font-family="ui-monospace, 'Cascadia Code', 'Consolas', monospace" font-size="44" font-weight="700" letter-spacing="-1" fill="#f8fafc">Ask<tspan fill="#34d399">Hackers</tspan></text>
+</svg>

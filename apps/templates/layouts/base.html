@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="sv" {% block html_attribute %}{% endblock html_attribute %}>
+
+<head>
+    <meta charset="utf-8">
+
+    <!-- Viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover">
+    
+    <!-- SEO meta tags -->
+    <title>{% block title %}{% endblock %} | 1010monky Studio</title>
+    <meta name="description" content="1010monky Studio bygger snabba, moderna och sökoptimerade webbsidor med WordPress, Python och JavaScript.">
+    <meta name="keywords" content="1010monky, webbyrå, WordPress, Python, JavaScript, webbutveckling, hemsida, SEO, UI design">
+    <meta name="author" content="1010monky Studio">
+
+    <!-- Webmanifest + Favicon / App icons -->
+    <link rel="manifest" href="{{ config.ASSETS_ROOT }}/js/manifest.json">
+    <link rel="icon" type="image/x-icon" href="{{ config.ASSETS_ROOT }}/app-icons/favicon.ico">
+    <link rel="icon" type="image/png" href="{{ config.ASSETS_ROOT }}/app-icons/icon-32x32.png" sizes="32x32">
+    <link rel="apple-touch-icon" href="{{ config.ASSETS_ROOT }}/app-icons/icon-180x180.png">
+
+    {% block styles %}{% endblock styles %}
+
+    <!-- Theme switcher (color modes) -->
+    <script src="{{ config.ASSETS_ROOT }}/js/theme-switcher.js"></script>
+
+    <!-- Fallback stubs: this theme package shipped without the built AOS / jarallax
+         dist files (404), which made theme.min.js crash on AOS.init() and left the
+         Swiper carousels uninitialised. These no-op stubs prevent the crash so the
+         sliders work. (Scroll-reveal animations + hero parallax stay disabled.) -->
+    <script>
+      window.AOS = window.AOS || { init: function () {}, refresh: function () {}, refreshHard: function () {} };
+      window.jarallax = window.jarallax || function () {};
+      window.jarallaxVideo = window.jarallaxVideo || function () {};
+    </script>
+
+    <!-- Import Google font (Inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"
+      id="google-font">
+
+    <!-- Font icons -->
+    <link rel="stylesheet" href="{{ config.ASSETS_ROOT }}/icons/around-icons.min.css">
+
+    <!-- Theme styles + Bootstrap -->
+    <link rel="stylesheet" media="screen" href="{{ config.ASSETS_ROOT }}/css/theme.min.css">
+    <link rel="stylesheet" media="screen" href="{{ config.ASSETS_ROOT }}/css/1010monky-brand.css">
+
+    <!-- Page loading styles -->
+    <style>
+      .page-loading {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        -webkit-transition: all .4s .2s ease-in-out;
+        transition: all .4s .2s ease-in-out;
+        background-color: #fff;
+        opacity: 0;
+        visibility: hidden;
+        z-index: 9999;
+      }
+      [data-bs-theme="dark"] .page-loading {
+        background-color: #121519;
+      }
+      .page-loading.active {
+        opacity: 1;
+        visibility: visible;
+      }
+      .page-loading-inner {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        -webkit-transform: translateY(-50%);
+        transform: translateY(-50%);
+        -webkit-transition: opacity .2s ease-in-out;
+        transition: opacity .2s ease-in-out;
+        opacity: 0;
+      }
+      .page-loading.active > .page-loading-inner {
+        opacity: 1;
+      }
+      .page-loading-inner > span {
+        display: block;
+        font-family: "Inter", sans-serif;
+        font-size: 1rem;
+        font-weight: normal;
+        color: #6f788b;
+      }
+      [data-bs-theme="dark"] .page-loading-inner > span {
+        color: #fff;
+        opacity: .6;
+      }
+      .page-spinner {
+        display: inline-block;
+        width: 2.75rem;
+        height: 2.75rem;
+        margin-bottom: .75rem;
+        vertical-align: text-bottom;
+        background-color: #d7dde2; 
+        border-radius: 50%;
+        opacity: 0;
+        -webkit-animation: spinner .75s linear infinite;
+        animation: spinner .75s linear infinite;
+      }
+      [data-bs-theme="dark"] .page-spinner {
+        background-color: rgba(255,255,255,.25);
+      }
+      @-webkit-keyframes spinner {
+        0% {
+          -webkit-transform: scale(0);
+          transform: scale(0);
+        }
+        50% {
+          opacity: 1;
+          -webkit-transform: none;
+          transform: none;
+        }
+      }
+      @keyframes spinner {
+        0% {
+          -webkit-transform: scale(0);
+          transform: scale(0);
+        }
+        50% {
+          opacity: 1;
+          -webkit-transform: none;
+          transform: none;
+        }
+      }
+    </style>
+
+    <!-- Page loading scripts -->
+    <script>
+      (function () {
+        window.onload = function () {
+          const preloader = document.querySelector('.page-loading')
+          preloader.classList.remove('active')
+          setTimeout(function () {
+            preloader.remove()
+          }, 1500)
+        }
+      })()
+    </script>
+
+</head>
+<body {% block body_attribute %}{% endblock body_attribute %}>
+
+{% block content %}{% endblock content %}
+
+{% block scripts %}{% endblock scripts %}
+
+</body>
+</html>

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="140" height="48" viewBox="0 0 140 48">
+  <rect x="2" y="11" width="26" height="26" rx="7" fill="#3776AB"/>
+  <rect x="16" y="11" width="26" height="26" rx="7" fill="#FFD43B"/>
+  <circle cx="9.5" cy="18" r="2.4" fill="#FFD43B"/>
+  <circle cx="34.5" cy="30" r="2.4" fill="#3776AB"/>
+  <text x="50" y="32" font-family="'Trebuchet MS', Verdana, sans-serif" font-size="22" font-weight="700" fill="#3776AB">python</text>
+</svg>

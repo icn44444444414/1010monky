@@ -1,0 +1,441 @@
+/* 1010 Monky brand polish
+   Senior UI pass for logo scale, light/dark mode contrast and consistent footer lockup. */
+:root {
+  --monky-green: #448C74;
+  --monky-green-strong: #2f725f;
+  --monky-green-soft: rgba(68, 140, 116, .13);
+  --monky-ink: #111417;
+  --monky-ink-muted: #5f6b66;
+  --monky-surface: rgba(255, 255, 255, .88);
+  --monky-border: rgba(17, 20, 23, .09);
+  --monky-shadow: 0 12px 34px rgba(17, 20, 23, .08);
+  --ar-primary: var(--monky-green);
+  --ar-primary-rgb: 68, 140, 116;
+  --ar-link-color: var(--monky-green);
+  --ar-link-hover-color: var(--monky-green-strong);
+}
+
+[data-bs-theme="dark"] {
+  --monky-ink: #f7faf8;
+  --monky-ink-muted: rgba(247, 250, 248, .68);
+  --monky-surface: rgba(18, 21, 25, .88);
+  --monky-border: rgba(255, 255, 255, .11);
+  --monky-green-soft: rgba(68, 140, 116, .22);
+  --monky-shadow: 0 16px 42px rgba(0, 0, 0, .32);
+}
+
+/* Header */
+.navbar-1010 {
+  min-height: 86px;
+  background: var(--monky-surface) !important;
+  border-top: 0;
+  border-bottom: 1px solid var(--monky-border);
+  border-radius: 0;
+  box-shadow: var(--monky-shadow);
+  -webkit-backdrop-filter: saturate(150%) blur(18px);
+  backdrop-filter: saturate(150%) blur(18px);
+}
+
+.navbar-1010 .navbar-brand {
+  margin-right: 1.1rem;
+}
+
+.monky-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: .72rem;
+  color: var(--monky-ink);
+  line-height: 1;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.monky-brand:hover {
+  color: var(--monky-ink);
+  text-decoration: none;
+}
+
+.monky-brand__mark {
+  display: block;
+  width: 58px;
+  height: auto;
+  flex: 0 0 auto;
+  filter: drop-shadow(0 9px 16px rgba(0, 0, 0, .16));
+}
+
+.navbar-1010 .monky-brand__mark {
+  width: clamp(58px, 5vw, 76px);
+}
+
+.monky-brand__copy {
+  display: grid;
+  gap: .18rem;
+}
+
+.monky-brand__word {
+  display: inline-flex;
+  align-items: baseline;
+  font-weight: 850;
+  font-size: clamp(1.18rem, 2.1vw, 1.62rem);
+  letter-spacing: -.055em;
+}
+
+.monky-brand__digits {
+  color: var(--monky-ink);
+}
+
+.monky-brand__name {
+  color: var(--monky-green);
+}
+
+.monky-brand__studio {
+  color: var(--monky-ink-muted);
+  font-size: .62rem;
+  font-weight: 750;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+}
+
+.navbar-1010 .nav-link {
+  font-weight: 650;
+}
+
+.navbar-1010 .nav-link:hover,
+.navbar-1010 .nav-link:focus,
+.navbar-1010 .nav-link.active {
+  color: var(--monky-green) !important;
+}
+
+.navbar-1010 .btn-primary,
+.monky-btn-primary {
+  --ar-btn-color: #fff;
+  --ar-btn-bg: var(--monky-green);
+  --ar-btn-border-color: var(--monky-green);
+  --ar-btn-hover-color: #fff;
+  --ar-btn-hover-bg: var(--monky-green-strong);
+  --ar-btn-hover-border-color: var(--monky-green-strong);
+  --ar-btn-active-color: #fff;
+  --ar-btn-active-bg: var(--monky-green-strong);
+  --ar-btn-active-border-color: var(--monky-green-strong);
+  box-shadow: 0 10px 20px rgba(68, 140, 116, .22);
+}
+
+.navbar-1010 .form-switch .form-check-input:checked {
+  background-color: var(--monky-green);
+  border-color: var(--monky-green);
+}
+
+/* Translucent glass navbar (light + dark) */
+.monky-navbar-glass {
+  background: rgba(255, 255, 255, .80) !important;
+  -webkit-backdrop-filter: saturate(155%) blur(14px);
+  backdrop-filter: saturate(155%) blur(14px);
+  border-bottom: 1px solid rgba(17, 20, 23, .06);
+  box-shadow: 0 6px 22px rgba(17, 20, 23, .06);
+}
+
+[data-bs-theme="dark"] .monky-navbar-glass {
+  background: rgba(18, 21, 25, .78) !important;
+  border-bottom-color: rgba(255, 255, 255, .08);
+  box-shadow: 0 8px 26px rgba(0, 0, 0, .28);
+}
+
+/* Stacked header brand — "studio" centered under "1010monky" */
+.monky-brand--stacked {
+  gap: .62rem;
+}
+
+.monky-brand--stacked .monky-brand__copy {
+  justify-items: center;
+  text-align: center;
+  gap: .14rem;
+}
+
+/* Footer brand lockup */
+.monky-footer {
+  position: relative;
+  overflow: hidden;
+}
+
+.monky-footer::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 16% 12%, var(--monky-green-soft), transparent 31rem),
+    radial-gradient(circle at 90% 82%, rgba(68, 140, 116, .10), transparent 24rem);
+}
+
+.monky-footer > .container {
+  position: relative;
+  z-index: 1;
+}
+
+.monky-footer .monky-brand {
+  gap: .85rem;
+}
+
+.monky-footer .monky-brand__mark {
+  width: 64px;
+}
+
+.monky-footer .monky-brand__word {
+  font-size: clamp(1.45rem, 2.2vw, 1.9rem);
+}
+
+.monky-footer__text {
+  max-width: 28rem;
+}
+
+[data-bs-theme="dark"] .monky-brand__mark,
+.monky-footer[data-bs-theme="dark"] .monky-brand__mark {
+  filter: drop-shadow(0 10px 20px rgba(68, 140, 116, .20));
+}
+
+@media (max-width: 575.98px) {
+  .navbar-1010 {
+    min-height: 78px;
+  }
+
+  .navbar-1010 .monky-brand {
+    gap: .54rem;
+  }
+
+  .navbar-1010 .monky-brand__mark {
+    width: 52px;
+  }
+
+  .navbar-1010 .monky-brand__word {
+    font-size: 1.08rem;
+  }
+
+  .navbar-1010 .monky-brand__studio {
+    display: none;
+  }
+}
+
+
+/* Brand color alignment */
+.text-primary {
+  color: var(--monky-green) !important;
+}
+
+.bg-primary {
+  background-color: var(--monky-green) !important;
+}
+
+.btn-primary {
+  --ar-btn-color: #fff;
+  --ar-btn-bg: var(--monky-green);
+  --ar-btn-border-color: var(--monky-green);
+  --ar-btn-hover-color: #fff;
+  --ar-btn-hover-bg: var(--monky-green-strong);
+  --ar-btn-hover-border-color: var(--monky-green-strong);
+  --ar-btn-active-color: #fff;
+  --ar-btn-active-bg: var(--monky-green-strong);
+  --ar-btn-active-border-color: var(--monky-green-strong);
+}
+
+.monky-hero-shell {
+  border-radius: 0 0 2rem 2rem;
+}
+
+/* Hero copy + badges */
+.monky-hero-kicker {
+  color: rgba(255, 255, 255, .70);
+  font-size: .78rem;
+  font-weight: 800;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
+.monky-hero-title {
+  letter-spacing: -.07em;
+  max-width: 9ch;
+}
+
+.monky-hero-lead {
+  max-width: 32rem;
+}
+
+.monky-hero-badges {
+  gap: .65rem .75rem;
+}
+
+.monky-hero-badge {
+  max-width: 100%;
+  padding: .56rem .78rem;
+  border: 1px solid rgba(255, 255, 255, .12);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .055);
+  line-height: 1.25;
+  white-space: normal;
+  text-wrap: balance;
+}
+
+/* Technology logo row */
+.monky-tech-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.monky-tech-card {
+  min-height: 98px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: .45rem;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  text-align: center;
+}
+
+.monky-tech-card img {
+  display: block;
+  max-width: 138px;
+  max-height: 64px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 18px rgba(17, 20, 23, .08));
+}
+
+.monky-tech-logo--dark {
+  display: none !important;
+}
+
+[data-bs-theme="dark"] .monky-tech-logo--light {
+  display: none !important;
+}
+
+[data-bs-theme="dark"] .monky-tech-logo--dark {
+  display: block !important;
+}
+
+.monky-tech-card .monky-tech-logo--bth {
+  max-width: 96px;
+  max-height: 86px;
+}
+
+[data-bs-theme="dark"] .monky-tech-card img {
+  filter: drop-shadow(0 8px 18px rgba(0, 0, 0, .28));
+}
+
+[data-bs-theme="dark"] .monky-tech-card .monky-tech-logo--bth {
+  filter: drop-shadow(0 8px 18px rgba(0, 0, 0, .28));
+}
+
+@media (max-width: 991.98px) {
+  .monky-tech-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .monky-hero-title {
+    max-width: none;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .monky-hero-kicker {
+    font-size: .68rem;
+    letter-spacing: .12em;
+  }
+
+  .monky-hero-badge {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .monky-tech-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: .75rem;
+  }
+
+  .monky-tech-card {
+    min-height: 84px;
+  }
+
+  .monky-tech-card img {
+    max-width: 112px;
+    max-height: 52px;
+  }
+
+  .monky-tech-card .monky-tech-logo--bth {
+    max-width: 78px;
+    max-height: 72px;
+  }
+
+  .monky-hero-shell {
+    border-radius: 0 0 1.35rem 1.35rem;
+  }
+}
+
+/* Industries / featured projects polish */
+.monky-industry-accordion .accordion-button {
+  line-height: 1.2;
+}
+
+.monky-industry-accordion .accordion-body {
+  max-width: 34rem;
+}
+
+.monky-industry-media img {
+  width: 100%;
+  aspect-ratio: 636 / 527;
+  object-fit: cover;
+  box-shadow: 0 24px 70px rgba(17, 20, 23, .12);
+}
+
+[data-bs-theme="dark"] .monky-industry-media img {
+  box-shadow: 0 24px 70px rgba(0, 0, 0, .35);
+}
+
+/* Project logos inside the skill carousel */
+.monky-slider-case-card {
+  display: flex;
+  min-height: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.monky-slider-case-logo {
+  display: block;
+  max-width: 190px;
+  max-height: 82px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+.monky-slider-case-logo--ghost {
+  max-width: 108px;
+  max-height: 92px;
+}
+
+.monky-slider-case-card p {
+  max-width: 22rem;
+}
+
+/* Skill carousel copy polish */
+.monky-skill-front p,
+.swiper-wrapper .card-flip-back p {
+  max-width: 13.75rem;
+  line-height: 1.45;
+}
+
+.monky-skill-logo-wordpress {
+  max-width: 138px;
+  max-height: 72px;
+  object-fit: contain;
+}
+
+.monky-slider-case-logo--ghost {
+  padding: .35rem;
+  border-radius: 1.2rem;
+}
