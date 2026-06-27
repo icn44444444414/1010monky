@@ -460,3 +460,37 @@
   opacity: .82;
   transform: translateY(-2px);
 }
+
+/* Grön scroll-progress langst upp (KIKAB-stil, gron) */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: 100%;
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  background: linear-gradient(90deg, #1f9457, #34d399);
+  z-index: 2000;
+  pointer-events: none;
+}
+
+/* Scroll-reveal (avsloja ett i taget) */
+.reveal-ready .monky-reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+.reveal-ready .monky-reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal-ready .monky-reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
