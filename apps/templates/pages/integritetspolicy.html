@@ -1,0 +1,126 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}Integritetspolicy | 1010monky Studio{% endblock %}
+
+{% block content %}
+<!-- Page loading spinner -->
+{% include 'partials/loader.html' %}
+<!-- Page wrapper -->
+<main class="page-wrapper">
+    <!-- Navbar -->
+    {% include "partials/navbar.html" %}
+
+    <!-- Header -->
+    <section class="bg-dark position-relative py-5" style="margin-top: 4.5rem;">
+        <div class="d-none d-dark-mode-block position-absolute top-0 start-0 w-100 h-100"
+             style="background-color: rgba(255,255,255, .03);"></div>
+        <div class="container position-relative z-2 py-4 py-md-5" data-bs-theme="dark">
+            <nav aria-label="breadcrumb">
+                <ol class="pt-lg-3 pb-lg-4 pb-2 breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Hem</a></li>
+                    <li aria-current="page" class="breadcrumb-item active">Integritetspolicy</li>
+                </ol>
+            </nav>
+            <h1 class="display-3 mb-2">Integritetspolicy</h1>
+            <p class="fs-lg text-body mb-0">Senast uppdaterad: 27 juni 2026</p>
+        </div>
+    </section>
+
+    <!-- Body -->
+    <section class="container py-5 my-md-2 my-lg-3">
+        <div class="row justify-content-center">
+            <div class="col-lg-9 col-xl-8">
+                <p class="fs-lg">Den här policyn beskriver hur 1010monky Studio ("vi", "oss") samlar in och
+                    behandlar personuppgifter när du kontaktar oss eller besöker vår webbplats. Vi värnar om din
+                    integritet och följer dataskyddsförordningen (GDPR).</p>
+
+                <h2 class="h4 pt-4 pb-1">1. Personuppgiftsansvarig</h2>
+                <p>1010monky Studio ansvarar för behandlingen av dina personuppgifter. Du når oss på
+                    <a class="monky-livelink" href="mailto:info@1010monky.se">info@1010monky.se</a> eller
+                    <a class="monky-livelink" href="tel:+46720274113">+46 72 027 41 13</a>, Eskilstuna,
+                    Sverige.</p>
+
+                <h2 class="h4 pt-4 pb-1">2. Vilka uppgifter vi samlar in</h2>
+                <ul>
+                    <li>Uppgifter du själv lämnar när du kontaktar oss: namn, e-post, telefonnummer, företag
+                        och det du skriver i ditt meddelande.</li>
+                    <li>Teknisk information när du besöker webbplatsen, till exempel IP-adress, webbläsartyp och
+                        hur du använder sidan (via cookies och analys, se punkt 4).</li>
+                </ul>
+
+                <h2 class="h4 pt-4 pb-1">3. Varför vi behandlar uppgifterna</h2>
+                <ul>
+                    <li>För att svara på din förfrågan och sköta kontakten kring ett möjligt uppdrag (rättslig
+                        grund: berättigat intresse och för att kunna ingå avtal).</li>
+                    <li>För att leverera och fakturera avtalade tjänster (fullgörande av avtal samt rättslig
+                        förpliktelse enligt bokföringslagen).</li>
+                    <li>För att förbättra och hålla webbplatsen säker (berättigat intresse).</li>
+                </ul>
+
+                <h2 class="h4 pt-4 pb-1">4. Cookies och analys</h2>
+                <p>Webbplatsen kan använda nödvändiga cookies för att fungera, och analysverktyg (till exempel
+                    Google Analytics) för att förstå hur sidan används. Analysdata används i aggregerad form. Du
+                    kan blockera eller radera cookies i din webbläsares inställningar.</p>
+
+                <h2 class="h4 pt-4 pb-1">5. Hur länge vi sparar uppgifterna</h2>
+                <p>Vi sparar uppgifter så länge det behövs för ändamålet. Förfrågningar som inte leder till
+                    uppdrag gallras löpande. Kunduppgifter sparas under uppdraget och därefter så länge lagen
+                    kräver, till exempel sju år enligt bokföringslagen för underlag som rör fakturering.</p>
+
+                <h2 class="h4 pt-4 pb-1">6. Vilka vi delar uppgifter med</h2>
+                <p>Vi säljer aldrig dina uppgifter. Vi kan dela dem med leverantörer som hjälper oss att driva
+                    verksamheten, till exempel webbhotell, e-posttjänst och analysverktyg, och då endast i den
+                    utsträckning som behövs. Dessa agerar som personuppgiftsbiträden åt oss.</p>
+
+                <h2 class="h4 pt-4 pb-1">7. Var uppgifterna behandlas</h2>
+                <p>Vi strävar efter att behandla uppgifter inom EU/EES. Om en leverantör behandlar uppgifter
+                    utanför EU/EES sker det med lämpliga skyddsåtgärder enligt GDPR.</p>
+
+                <h2 class="h4 pt-4 pb-1">8. Dina rättigheter</h2>
+                <p>Du har rätt att få veta vilka uppgifter vi har om dig, att få dem rättade eller raderade,
+                    att begränsa eller invända mot behandlingen och att få ut dina uppgifter (dataportabilitet).
+                    Kontakta oss på <a class="monky-livelink" href="mailto:info@1010monky.se">info@1010monky.se</a>
+                    så hjälper vi dig.</p>
+
+                <h2 class="h4 pt-4 pb-1">9. Säkerhet</h2>
+                <p>Vi vidtar rimliga tekniska och organisatoriska åtgärder för att skydda dina uppgifter mot
+                    förlust och obehörig åtkomst.</p>
+
+                <h2 class="h4 pt-4 pb-1">10. Klagomål</h2>
+                <p>Om du anser att vi behandlar dina uppgifter felaktigt kan du vända dig till
+                    Integritetsskyddsmyndigheten (IMY), <a class="monky-livelink" href="https://www.imy.se"
+                        target="_blank" rel="noopener">imy.se</a>.</p>
+
+                <h2 class="h4 pt-4 pb-1">11. Ändringar</h2>
+                <p>Vi kan uppdatera den här policyn. Den senaste versionen finns alltid här på webbplatsen.</p>
+
+                <h2 class="h4 pt-4 pb-1">12. Kontakt</h2>
+                <p class="mb-0">1010monky Studio, Eskilstuna, Sverige.<br/>
+                    E-post: <a class="monky-livelink" href="mailto:info@1010monky.se">info@1010monky.se</a><br/>
+                    Telefon: <a class="monky-livelink" href="tel:+46720274113">+46 72 027 41 13</a></p>
+            </div>
+        </div>
+    </section>
+</main>
+
+<!-- Footer -->
+{% include "partials/footer.html" %}
+
+{% include 'partials/back-to-top.html' %}
+{% endblock content %}
+
+{% block scripts %}
+<script src="{{ config.ASSETS_ROOT }}/js/theme-switcher.js"></script>
+<script>
+    (function () {
+      window.onload = function () {
+        const preloader = document.querySelector('.page-loading')
+        preloader.classList.remove('active')
+        setTimeout(function () {
+          preloader.remove()
+        }, 1500)
+      }
+    })()
+</script>
+<script src="{{ config.ASSETS_ROOT }}/js/theme.min.js"></script>
+{% endblock scripts %}
