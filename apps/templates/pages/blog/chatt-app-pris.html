@@ -1,0 +1,148 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}Vad kostar det att bygga en egen chatt-app 2026?{% endblock %}
+{% block meta_description %}Vad kostar det att bygga en egen chatt-app 2026? Ärliga prisspann för en enkel, en medelstor och en avancerad chatt-app, och vad som faktiskt påverkar priset.{% endblock %}
+
+{% block content %}
+{% include 'partials/loader.html' %}
+<main class="page-wrapper">
+    {% include "partials/navbar.html" %}
+
+    <!-- Header -->
+    <section class="container py-5 mt-5 mb-md-2">
+        <nav aria-label="breadcrumb">
+            <ol class="pt-lg-3 pb-lg-4 pb-2 breadcrumb">
+                <li class="breadcrumb-item"><a href="/">Hem</a></li>
+                <li class="breadcrumb-item"><a href="/blogg">Blogg</a></li>
+                <li aria-current="page" class="breadcrumb-item active">Vad kostar en chatt-app?</li>
+            </ol>
+        </nav>
+        <div class="row">
+            <div class="col-lg-8 pb-2 pb-lg-0 mb-4 mb-lg-0">
+                <h1 class="display-4 pb-2 pb-lg-3">Vad kostar det att bygga en egen chatt-app 2026?</h1>
+                <div class="d-flex flex-wrap align-items-center text-body-secondary fs-sm">
+                    <span>Pris &amp; projekt</span>
+                    <span class="fs-xs opacity-20 mx-3">|</span>
+                    <span>Cirka 4 min läsning</span>
+                </div>
+            </div>
+            <!-- Author -->
+            <div class="col-lg-4 col-xl-3 offset-xl-1">
+                <div class="card border-0 bg-secondary">
+                    <div class="card-body text-center">
+                        <img alt="1010monky" class="d-block mx-auto mb-3" src="{{ config.ASSETS_ROOT }}/img/monkey-logo.webp" width="46"/>
+                        <h2 class="h5 mb-2 pb-1">Matias, 1010monky Studio</h2>
+                        <p class="fs-sm mb-4">Utvecklare i Eskilstuna. Bygger webb i Python, Flask och WordPress.</p>
+                        <a class="btn btn-outline-primary btn-sm" href="/about-agency">Om mig</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cover -->
+    <section class="container mb-5">
+        <img alt="Vad kostar det att bygga en egen chatt-app?" class="rounded-5 w-100" src="{{ config.ASSETS_ROOT }}/img/blog/covers/chatt-app-pris.png"
+             style="max-height: 420px; object-fit: cover;"/>
+    </section>
+
+    <!-- Content -->
+    <section class="container pb-5 mb-md-2 mb-lg-3">
+        <div class="row">
+            <div class="col-lg-8">
+                <p class="fs-lg">Kort svar: en enkel chatt-app brukar grovt räknat landa på runt 15 000 till 40 000 kr, en med inloggning och sparade meddelanden på ungefär 40 000 till 100 000 kr, och en mer avancerad realtidsapp över 100 000 kr. Men det är spann, inte en offert. Priset beror nästan helt på vad chatten ska klara, och det är det jag går igenom här.</p>
+
+                <h2 class="h4 mb-lg-4 pt-3 pt-md-4">Vad som avgör priset</h2>
+                <p class="fs-lg">Det som drar i priset är sällan själva chatt-fönstret. Det är allt runtomkring. Ska användarna ha konton och kunna logga in? Ska meddelandena sparas, eller försvinna när samtalet är slut? Hur höga är säkerhetskraven? Hur mycket egen design ska byggas, eller räcker något enkelt? Och var ska det köras, alltså hosting och drift. Två chattar som ser likadana ut på ytan kan skilja sig rejält i pris beroende på de svaren.</p>
+
+                <div class="card border-0 bg-secondary my-4">
+                    <div class="card-body">
+                        <figure class="mb-0">
+                            <blockquote class="blockquote mb-0">
+                                <p class="mb-0">Det som drar i priset är sällan chatt-fönstret. Det är konton, lagring och säkerhet.</p>
+                            </blockquote>
+                        </figure>
+                    </div>
+                </div>
+
+                <h2 class="h4 mb-lg-4 pt-3 pt-md-4">Tre prisnivåer, grovt räknat</h2>
+                <p class="fs-lg">För att ge en känsla, så här brukar det se ut. Kom ihåg att siffrorna är ungefärliga och beror på kraven.</p>
+                <ul class="fs-lg">
+                    <li class="mb-2">Enkel chatt utan konton, där inget sparas: runt 15 000–40 000 kr.</li>
+                    <li class="mb-2">Chatt med inloggning och sparade meddelanden: ungefär 40 000–100 000 kr.</li>
+                    <li class="mb-2">Mer avancerad realtidsapp med högre krav: från 100 000 kr och uppåt.</li>
+                </ul>
+                <p class="fs-lg">Var en idé hamnar beror alltså på kraven, inte på en prislista. En enkel anonym chatt kan vara förvånansvärt billig. Det är när konton, lagring och säkerhet kommer in som det växer. Min egen chatt <a href="/portfolio-single-v1">GhostyMsg</a> sparar till exempel ingenting, vilket håller den enklare.</p>
+
+                <h2 class="h4 mb-lg-4 pt-3 pt-md-4">När räcker en färdig tjänst?</h2>
+                <p class="fs-lg">Innan man betalar för en egen chatt är det värt att fråga om man verkligen behöver en. För vanlig kundsupport finns färdiga verktyg som Intercom och Crisp, och då är månadskostnaden ofta en bråkdel av att bygga eget. Eget blir motiverat först när du behöver något de inte ger dig, som att data ska stanna hos dig, eller att chatten är en del av din egen produkt. Jag säger hellre det rakt ut än säljer på dig något du inte behöver.</p>
+
+                <h2 class="h4 mb-lg-4 pt-3 pt-md-4">Så sätter jag pris</h2>
+                <p class="fs-lg">Jag ger inte ett pris innan jag vet vad chatten ska göra. Vi tar ett kort samtal, jag frågar om konton, lagring, säkerhet och design, och sen får du ett spann eller ett fast pris att förhålla dig till. Vill du se hur jag tänker kring priser i övrigt finns det på <a href="/pricing">prissidan</a>. Och vill du förstå själva bygget har jag skrivit om <a href="/blogg/chatt-app-python-flask">hur man bygger en chatt-app i Flask</a>.</p>
+
+                <h2 class="h4 mb-lg-4 pt-3 pt-md-4">Vanliga frågor</h2>
+                <h3 class="h6">Vad kostar en enkel chatt-app?</h3>
+                <p class="fs-lg">Grovt räknat runt 15 000–40 000 kr för en enkel chatt utan konton där inget sparas. Det beror på kraven.</p>
+                <h3 class="h6">Varför varierar priset så mycket?</h3>
+                <p class="fs-lg">För att konton, lagring, säkerhet och design påverkar mycket. En enkel anonym chatt är billigare än en med inloggning och sparad historik.</p>
+                <h3 class="h6">Är det billigare att använda en färdig tjänst?</h3>
+                <p class="fs-lg">För vanlig support oftast ja. Eget lönar sig när du behöver något de färdiga verktygen inte ger dig.</p>
+
+                <!-- CTA -->
+                <div class="card border-0 bg-secondary mt-5">
+                    <div class="card-body p-4 p-md-5">
+                        <h2 class="h4 mb-2">Funderar du på en egen chatt-app?</h2>
+                        <p class="mb-4">Berätta kort vad den ska klara så ger jag dig ett ärligt prisspann, utan att sälja på dig mer än du behöver. Jag bygger webb och appar med Python, Flask, WordPress och skräddarsydd frontend.</p>
+                        <a class="btn btn-primary rounded-pill monky-btn-primary me-2" href="/contacts-v1">Begär offert</a>
+                        <a class="btn btn-link px-0" href="/blogg/chatt-app-python-flask">Läs: hur man bygger en chatt-app</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar: dela -->
+            <aside class="col-lg-3 offset-lg-1 pt-4 pt-lg-0">
+                <div class="position-sticky" style="top: 110px;">
+                    <h3 class="h6 mb-3">Dela inlägget</h3>
+                    <div class="d-flex mt-n2 ms-n2">
+                        <a aria-label="Dela på Facebook" class="btn btn-outline-secondary btn-icon btn-sm btn-facebook rounded-circle mt-2 ms-2" href="https://www.facebook.com/sharer/sharer.php?u=https://1010monky.se/blogg/chatt-app-pris" target="_blank" rel="noopener"><i class="ai-facebook"></i></a>
+                        <a aria-label="Dela på LinkedIn" class="btn btn-outline-secondary btn-icon btn-sm btn-linkedin rounded-circle mt-2 ms-2" href="https://www.linkedin.com/sharing/share-offsite/?url=https://1010monky.se/blogg/chatt-app-pris" target="_blank" rel="noopener"><i class="ai-linkedin"></i></a>
+                        <a aria-label="Dela på X" class="btn btn-outline-secondary btn-icon btn-sm btn-x rounded-circle mt-2 ms-2" href="https://twitter.com/intent/tweet?url=https://1010monky.se/blogg/chatt-app-pris" target="_blank" rel="noopener"><i class="ai-x"></i></a>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </section>
+</main>
+
+{% include "partials/footer.html" %}
+{% include 'partials/back-to-top.html' %}
+{% endblock content %}
+
+{% block scripts %}
+<script src="{{ config.ASSETS_ROOT }}/js/theme.min.js"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "headline": "Vad kostar det att bygga en egen chatt-app 2026?",
+      "description": "Ärliga prisspann för en enkel, en medelstor och en avancerad chatt-app, och vad som faktiskt påverkar priset.",
+      "inLanguage": "sv",
+      "author": { "@type": "Person", "name": "Matias", "url": "https://1010monky.se/about-agency" },
+      "publisher": { "@type": "Organization", "name": "1010monky Studio", "logo": { "@type": "ImageObject", "url": "https://1010monky.se/static/img/logo-mark-1010monky.webp" } },
+      "mainEntityOfPage": "https://1010monky.se/blogg/chatt-app-pris",
+      "image": "https://1010monky.se/static/img/blog/covers/chatt-app-pris.png"
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        { "@type": "Question", "name": "Vad kostar en enkel chatt-app?", "acceptedAnswer": { "@type": "Answer", "text": "Grovt räknat runt 15 000–40 000 kr för en enkel chatt utan konton där inget sparas. Det beror på kraven." } },
+        { "@type": "Question", "name": "Varför varierar priset så mycket?", "acceptedAnswer": { "@type": "Answer", "text": "För att konton, lagring, säkerhet och design påverkar mycket. En enkel anonym chatt är billigare än en med inloggning och sparad historik." } },
+        { "@type": "Question", "name": "Är det billigare att använda en färdig tjänst?", "acceptedAnswer": { "@type": "Answer", "text": "För vanlig support oftast ja. Eget lönar sig när du behöver något de färdiga verktygen inte ger dig." } }
+      ]
+    }
+  ]
+}
+</script>
+{% endblock scripts %}

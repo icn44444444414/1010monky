@@ -21,6 +21,7 @@ SITEMAP_PATHS = [
     ('/contacts-v1', '0.8'),
     ('/blogg', '0.7'),
     ('/blogg/chatt-app-python-flask', '0.8'),
+    ('/blogg/chatt-app-pris', '0.8'),
     ('/villkor', '0.3'),
     ('/integritetspolicy', '0.3'),
 ]

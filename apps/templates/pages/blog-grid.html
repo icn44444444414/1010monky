@@ -26,6 +26,7 @@
                 <select class="form-select" id="blogCategory" aria-label="Filtrera på kategori">
                     <option value="all">Alla kategorier</option>
                     <option value="Kod &amp; webb">Kod &amp; webb</option>
+                    <option value="Pris &amp; projekt">Pris &amp; projekt</option>
                 </select>
             </div>
             <div class="col-lg-4 col-sm-7">
@@ -38,11 +39,36 @@
 
         <!-- Posts -->
         <div class="row g-4" id="blogGrid">
-            <!-- Post -->
+            <!-- Post: chatt-app pris -->
+            <div class="col-md-6 col-lg-4" data-post data-category="Pris &amp; projekt">
+                <article class="card border-0 bg-secondary h-100">
+                    <a href="/blogg/chatt-app-pris">
+                        <img alt="Vad kostar det att bygga en egen chatt-app?" class="card-img-top" src="{{ config.ASSETS_ROOT }}/img/blog/covers/chatt-app-pris.png"/>
+                    </a>
+                    <div class="card-body pb-4">
+                        <div class="d-flex align-items-center mb-3 mt-n1">
+                            <span class="fs-sm text-body-secondary">Juni 2026</span>
+                            <span class="fs-xs opacity-20 mx-3">|</span>
+                            <span class="badge text-nav fs-xs border">Pris &amp; projekt</span>
+                        </div>
+                        <h2 class="h4 card-title">
+                            <a href="/blogg/chatt-app-pris">Vad kostar det att bygga en egen chatt-app 2026?</a>
+                        </h2>
+                        <p class="card-text">Ärliga prisspann för en enkel, en medelstor och en avancerad chatt-app, och vad som faktiskt påverkar priset.</p>
+                    </div>
+                    <div class="card-footer pt-3 bg-transparent border-0">
+                        <div class="d-flex align-items-center pb-2">
+                            <img alt="1010monky" src="{{ config.ASSETS_ROOT }}/img/monkey-logo.webp" width="28"/>
+                            <span class="h6 ps-2 mb-0">Matias, 1010monky Studio</span>
+                        </div>
+                    </div>
+                </article>
+            </div>
+            <!-- Post: chatt-app guide -->
             <div class="col-md-6 col-lg-4" data-post data-category="Kod &amp; webb">
                 <article class="card border-0 bg-secondary h-100">
                     <a href="/blogg/chatt-app-python-flask">
-                        <img alt="Hur bygger man en chatt-app i Python Flask?" class="card-img-top" src="{{ config.ASSETS_ROOT }}/img/og-default.png"/>
+                        <img alt="Hur bygger man en chatt-app i Python Flask?" class="card-img-top" src="{{ config.ASSETS_ROOT }}/img/blog/covers/chatt-app-python-flask.png"/>
                     </a>
                     <div class="card-body pb-4">
                         <div class="d-flex align-items-center mb-3 mt-n1">
