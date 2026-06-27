@@ -1,0 +1,134 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}Villkor | 1010monky Studio{% endblock %}
+
+{% block content %}
+<!-- Page loading spinner -->
+{% include 'partials/loader.html' %}
+<!-- Page wrapper -->
+<main class="page-wrapper">
+    <!-- Navbar -->
+    {% include "partials/navbar.html" %}
+
+    <!-- Header -->
+    <section class="bg-dark position-relative py-5" style="margin-top: 4.5rem;">
+        <div class="d-none d-dark-mode-block position-absolute top-0 start-0 w-100 h-100"
+             style="background-color: rgba(255,255,255, .03);"></div>
+        <div class="container position-relative z-2 py-4 py-md-5" data-bs-theme="dark">
+            <nav aria-label="breadcrumb">
+                <ol class="pt-lg-3 pb-lg-4 pb-2 breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Hem</a></li>
+                    <li aria-current="page" class="breadcrumb-item active">Villkor</li>
+                </ol>
+            </nav>
+            <h1 class="display-3 mb-2">Villkor</h1>
+            <p class="fs-lg text-body mb-0">Senast uppdaterad: 27 juni 2026</p>
+        </div>
+    </section>
+
+    <!-- Body -->
+    <section class="container py-5 my-md-2 my-lg-3">
+        <div class="row justify-content-center">
+            <div class="col-lg-9 col-xl-8">
+                <p class="fs-lg">Dessa villkor gäller för uppdrag och tjänster som 1010monky Studio ("vi", "oss")
+                    utför åt dig som kund. Genom att beställa en tjänst eller acceptera en offert godkänner du
+                    villkoren.</p>
+
+                <h2 class="h4 pt-4 pb-1">1. Tjänster</h2>
+                <p>Vi bygger webbplatser i WordPress och skräddarsydd kod, och erbjuder design, underhåll och
+                    relaterade webbtjänster. Vad som ingår i ett uppdrag framgår av den offert eller
+                    överenskommelse vi kommit fram till.</p>
+
+                <h2 class="h4 pt-4 pb-1">2. Offert och pris</h2>
+                <p>Priser anges i svenska kronor exklusive moms om inget annat anges. En offert gäller i 30
+                    dagar från det datum den skickas. Arbete utanför överenskommen omfattning (tillägg)
+                    debiteras enligt gällande timpris eller efter separat överenskommelse.</p>
+
+                <h2 class="h4 pt-4 pb-1">3. Betalning</h2>
+                <p>Om inget annat avtalats faktureras större projekt med 50 % vid start och 50 % vid leverans.
+                    Mindre uppdrag och löpande arbete faktureras efter slutfört arbete. Betalningsvillkor är 14
+                    dagar netto. Vid försenad betalning tillkommer dröjsmålsränta enligt räntelagen.</p>
+
+                <h2 class="h4 pt-4 pb-1">4. Tidsplan och leverans</h2>
+                <p>Vi anger en uppskattad tidsplan för varje projekt. Tidsplanen förutsätter att du levererar
+                    nödvändigt material – texter, bilder, inloggningar och återkoppling – i tid. Förseningar
+                    från din sida kan påverka leveransdatum.</p>
+
+                <h2 class="h4 pt-4 pb-1">5. Ditt ansvar som kund</h2>
+                <p>Du ansvarar för att det material du lämnar (texter, bilder, logotyper med mera) är korrekt
+                    och att du har rätt att använda det. Du ansvarar också för att ge återkoppling inom rimlig
+                    tid så att projektet kan fortskrida.</p>
+
+                <h2 class="h4 pt-4 pb-1">6. Korrektur och ändringar</h2>
+                <p>Antalet korrekturrundor framgår av vald tjänst eller offert. Ändringar utöver det, eller
+                    ändringar av redan godkänt arbete, debiteras enligt timpris.</p>
+
+                <h2 class="h4 pt-4 pb-1">7. Äganderätt</h2>
+                <p>När projektet är fullt betalt övergår nyttjanderätten till det färdiga, levererade materialet
+                    till dig. Vi kan återanvända generella komponenter, kod och kunskap i andra projekt. Vi
+                    förbehåller oss rätten att visa det utförda arbetet i vår portfolio om inget annat
+                    avtalats.</p>
+
+                <h2 class="h4 pt-4 pb-1">8. Tredjepartslicenser</h2>
+                <p>Projekt kan innehålla teman, plugins, typsnitt eller andra komponenter från tredje part.
+                    Sådana omfattas av respektive leverantörs licens, och eventuella löpande kostnader för dem
+                    ansvarar du för.</p>
+
+                <h2 class="h4 pt-4 pb-1">9. Drift, underhåll och support</h2>
+                <p>Webbhotell, domän och löpande underhåll ingår inte automatiskt, utan avtalas separat – till
+                    exempel via ett månadspaket. Efter lansering ingår support i den omfattning som anges för
+                    vald tjänst.</p>
+
+                <h2 class="h4 pt-4 pb-1">10. Ansvarsbegränsning</h2>
+                <p>Vi utför arbetet med omsorg, men kan inte garantera att en webbplats alltid är fri från fel
+                    eller avbrott, eller specifika resultat som placeringar i sökmotorer. Vårt ansvar är
+                    begränsat till det belopp du betalat för det aktuella uppdraget, och vi ansvarar inte för
+                    indirekta skador.</p>
+
+                <h2 class="h4 pt-4 pb-1">11. Personuppgifter (GDPR)</h2>
+                <p>Vi behandlar personuppgifter enligt gällande dataskyddslagstiftning (GDPR) och endast i den
+                    utsträckning som behövs för att utföra uppdraget och hålla kontakt. Uppgifter lämnas inte
+                    vidare till tredje part utan rättslig grund.</p>
+
+                <h2 class="h4 pt-4 pb-1">12. Avbokning</h2>
+                <p>Om ett påbörjat uppdrag avbryts faktureras det arbete som hunnit utföras fram till
+                    avbokningen.</p>
+
+                <h2 class="h4 pt-4 pb-1">13. Ändringar av villkoren</h2>
+                <p>Vi kan uppdatera dessa villkor. Den version som gällde när din offert accepterades är den
+                    som gäller för det uppdraget.</p>
+
+                <h2 class="h4 pt-4 pb-1">14. Tillämplig lag och tvist</h2>
+                <p>Svensk lag gäller. Tvist försöker vi i första hand lösa genom dialog, och i andra hand vid
+                    allmän domstol i Sverige.</p>
+
+                <h2 class="h4 pt-4 pb-1">15. Kontakt</h2>
+                <p class="mb-0">1010monky Studio, Eskilstuna, Sverige.<br/>
+                    E-post: <a class="monky-livelink" href="mailto:info@1010monky.se">info@1010monky.se</a><br/>
+                    Telefon: <a class="monky-livelink" href="tel:+46720274113">+46 72 027 41 13</a></p>
+            </div>
+        </div>
+    </section>
+</main>
+
+<!-- Footer -->
+{% include "partials/footer.html" %}
+
+{% include 'partials/back-to-top.html' %}
+{% endblock content %}
+
+{% block scripts %}
+<script src="{{ config.ASSETS_ROOT }}/js/theme-switcher.js"></script>
+<script>
+    (function () {
+      window.onload = function () {
+        const preloader = document.querySelector('.page-loading')
+        preloader.classList.remove('active')
+        setTimeout(function () {
+          preloader.remove()
+        }, 1500)
+      }
+    })()
+</script>
+<script src="{{ config.ASSETS_ROOT }}/js/theme.min.js"></script>
+{% endblock scripts %}
