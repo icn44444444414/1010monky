@@ -1,0 +1,109 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}AskHackers – lär dig Python genom att bygga | 1010monky Studio{% endblock %}
+
+{% block content %}
+<!-- Page loading spinner -->
+{% include 'partials/loader.html' %}
+<!-- Page wrapper -->
+<main class="page-wrapper">
+    <!-- Navbar -->
+    {% include "partials/navbar.html" %}
+
+    <!-- Hero -->
+    <section class="container overflow-hidden pt-5 mt-5">
+        <nav aria-label="breadcrumb">
+            <ol class="pt-lg-3 pb-2 breadcrumb">
+                <li class="breadcrumb-item"><a href="/">Hem</a></li>
+                <li class="breadcrumb-item"><a href="/portfolio-grid-v1">Portfolio</a></li>
+                <li aria-current="page" class="breadcrumb-item active">AskHackers</li>
+            </ol>
+        </nav>
+        <div class="row align-items-center pb-2 pb-md-3">
+            <div class="col-lg-6 pb-3 pb-lg-0">
+                <span class="badge bg-primary fs-sm mb-3">Webbapp · Utbildning</span>
+                <h1 class="display-5 mb-3">AskHackers</h1>
+                <p class="fs-lg text-body-secondary mb-0" style="max-width: 480px;">
+                    Lär dig Python på svenska genom att bygga spelet Snake, en byggsten i taget.</p>
+            </div>
+            <div class="col-lg-6">
+                <img class="d-block w-100 rounded-5" alt="AskHackers – övningsterminalen" style="cursor: zoom-in;"
+                     data-bs-toggle="modal" data-bs-target="#askhackersImgModal"
+                     src="{{ config.ASSETS_ROOT }}/img/cases/askhackers-terminal.png"/>
+            </div>
+        </div>
+    </section>
+
+    <!-- Body -->
+    <section class="container pb-5 mb-md-3 mb-lg-4 mb-xxl-5">
+        <div class="row justify-content-center pt-4 pt-lg-5">
+            <div class="col-lg-8">
+                <h2 class="h3 pb-1">Om projektet</h2>
+                <p class="fs-lg">AskHackers är en sida för att lära sig Python på svenska genom att bygga
+                    spelet Snake. Jag gjorde den åt Anthony, men egentligen är det kursen jag själv hade velat
+                    ha när jag började koda. Tanken är att man inte ska fastna i tutorial hell, utan ta en
+                    byggsten i taget och faktiskt bygga något.</p>
+
+                <h2 class="h3 pt-4 pb-1">Hur kursen funkar</h2>
+                <p>Varje modul börjar med lite teori om en byggsten, typ variabler, villkor eller loopar. Sen
+                    kommer fem korta övningar där man skriver koden själv. Till sist lägger man in byggstenen i
+                    Snake-spelet, så att man ser varför den behövs. Teori, öva, bygg. Sen nästa byggsten.</p>
+
+                <h2 class="h3 pt-4 pb-1">Python i webbläsaren</h2>
+                <p>Det jag tycker är coolast är att man kör Python direkt i webbläsaren. Man behöver inte
+                    installera något. Du skriver kod i editorn, trycker kör, och ser resultatet i terminalen
+                    på en gång. Det funkar med Pyodide, som kör Python via WebAssembly. Övningarna rättas
+                    automatiskt, så man får direkt besked om det blev rätt.</p>
+
+                <h2 class="h3 pt-4 pb-1">Tekniken</h2>
+                <p>Sidan är byggd i Flask. Editorn är CodeMirror, och Python körs på klienten med Pyodide. Det
+                    finns ett valideringssystem som kollar övningarna, en community-sida där man kan fråga när
+                    man kör fast, samt profiler och progress så man ser var man är. Innehållet är uppdelat i
+                    nivåer, från grunderna och uppåt.</p>
+
+                <h2 class="h3 pt-4 pb-1">Status</h2>
+                <p>Jag bygger fortfarande på den, parallellt med att jag själv lär mig Python. Planen är att
+                    först visa hur Snake byggs med grunderna, sen en mellannivå med bättre struktur, och längre
+                    fram AI-delar. Men grunderna först.</p>
+
+                <div class="pt-4 mt-2">
+                    <a class="btn btn-outline-primary" href="/portfolio-grid-v1">← Tillbaka till portfolio</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Image zoom popup -->
+    <div class="modal fade" id="askhackersImgModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content bg-transparent border-0 shadow-none">
+                <button type="button" class="btn-close btn-close-white position-absolute top-0 end-0 m-3 z-3"
+                        data-bs-dismiss="modal" aria-label="Stäng"></button>
+                <img class="img-fluid rounded-4" alt="AskHackers – övningsterminalen"
+                     src="{{ config.ASSETS_ROOT }}/img/cases/askhackers-terminal.png"/>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- Footer -->
+{% include "partials/footer.html" %}
+
+{% include 'partials/back-to-top.html' %}
+{% endblock content %}
+
+{% block scripts %}
+<script src="{{ config.ASSETS_ROOT }}/js/theme-switcher.js"></script>
+<script>
+    (function () {
+      window.onload = function () {
+        const preloader = document.querySelector('.page-loading')
+        preloader.classList.remove('active')
+        setTimeout(function () {
+          preloader.remove()
+        }, 1500)
+      }
+    })()
+</script>
+<script src="{{ config.ASSETS_ROOT }}/js/theme.min.js"></script>
+{% endblock scripts %}
