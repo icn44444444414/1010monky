@@ -8,20 +8,38 @@
 <main class="page-wrapper">
     {% include "partials/navbar.html" %}
 
-    <!-- Page header -->
-    <section class="container py-5 mt-4 mt-lg-5">
-        <div class="mx-auto text-center mb-5 mb-lg-0" style="max-width: 640px;">
-            <span class="badge text-nav fs-xs border mb-3">Blogg</span>
-            <h1 class="display-5 mb-3">Webb, kod och projekten jag bygger</h1>
-            <p class="fs-lg text-body-secondary mb-0">Praktiska guider och ärliga erfarenheter från riktiga projekt. Mest om Python, Flask, WordPress och hur man bygger webb som håller.</p>
+    <!-- Page container -->
+    <div class="container pt-5 pb-lg-5 pb-md-4 pb-2 my-5">
+        <!-- Breadcrumb -->
+        <nav aria-label="breadcrumb">
+            <ol class="pt-lg-3 pb-lg-4 pb-2 breadcrumb">
+                <li class="breadcrumb-item"><a href="/">Hem</a></li>
+                <li aria-current="page" class="breadcrumb-item active">Blogg</li>
+            </ol>
+        </nav>
+        <!-- Page title + filters -->
+        <div class="row align-items-center gy-2 mb-4 pb-1 pb-sm-2 pb-lg-3">
+            <div class="col-lg-5">
+                <h1 class="mb-lg-0">Blogg</h1>
+            </div>
+            <div class="col-xl-2 offset-xl-1 col-lg-3 col-sm-5">
+                <select class="form-select" id="blogCategory" aria-label="Filtrera på kategori">
+                    <option value="all">Alla kategorier</option>
+                    <option value="Kod &amp; webb">Kod &amp; webb</option>
+                </select>
+            </div>
+            <div class="col-lg-4 col-sm-7">
+                <div class="position-relative">
+                    <i class="ai-search position-absolute top-50 start-0 translate-middle-y ms-3"></i>
+                    <input class="form-control ps-5" id="blogSearch" placeholder="Sök i bloggen" type="search"/>
+                </div>
+            </div>
         </div>
-    </section>
 
-    <!-- Posts -->
-    <section class="container pb-5 mb-md-2 mb-lg-4">
-        <div class="row g-4 pt-lg-4 justify-content-center">
+        <!-- Posts -->
+        <div class="row g-4" id="blogGrid">
             <!-- Post -->
-            <div class="col-md-6 col-lg-4">
+            <div class="col-md-6 col-lg-4" data-post data-category="Kod &amp; webb">
                 <article class="card border-0 bg-secondary h-100">
                     <a href="/blogg/chatt-app-python-flask">
                         <img alt="Hur bygger man en chatt-app i Python Flask?" class="card-img-top" src="{{ config.ASSETS_ROOT }}/img/og-default.png"/>
@@ -47,8 +65,9 @@
             </div>
         </div>
 
-        <p class="text-center text-body-secondary fs-sm mt-5 mb-0">Fler texter är på väg. Kika in igen om ett tag.</p>
-    </section>
+        <p class="text-body-secondary fs-sm mt-5 mb-0" id="blogEmpty" style="display: none;">Inga inlägg matchar din sökning.</p>
+        <p class="text-body-secondary fs-sm mt-5 mb-0" id="blogMore">Fler texter är på väg. Kika in igen om ett tag.</p>
+    </div>
 </main>
 
 {% include "partials/footer.html" %}
@@ -57,4 +76,30 @@
 
 {% block scripts %}
 <script src="{{ config.ASSETS_ROOT }}/js/theme.min.js"></script>
+<script>
+    (function () {
+        var search = document.getElementById('blogSearch');
+        var cat = document.getElementById('blogCategory');
+        var cards = Array.prototype.slice.call(document.querySelectorAll('#blogGrid [data-post]'));
+        var empty = document.getElementById('blogEmpty');
+        var more = document.getElementById('blogMore');
+        if (!search || !cat) return;
+        function apply() {
+            var q = (search.value || '').toLowerCase().trim();
+            var c = cat.value;
+            var shown = 0;
+            cards.forEach(function (el) {
+                var text = el.textContent.toLowerCase();
+                var category = el.getAttribute('data-category');
+                var match = (!q || text.indexOf(q) !== -1) && (c === 'all' || category === c);
+                el.style.display = match ? '' : 'none';
+                if (match) shown++;
+            });
+            if (empty) empty.style.display = shown === 0 ? '' : 'none';
+            if (more) more.style.display = shown === 0 ? 'none' : '';
+        }
+        search.addEventListener('input', apply);
+        cat.addEventListener('change', apply);
+    })();
+</script>
 {% endblock scripts %}
