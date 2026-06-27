@@ -283,18 +283,22 @@
         <!-- Swiper slider -->
         <div class="container-start">
             <div class="swiper" data-swiper-options='{
-            "slidesPerView": "auto",
+            "slidesPerView": 1,
             "spaceBetween": 24,
             "loop": true,
             "navigation": {
               "prevEl": "#prev-skill",
               "nextEl": "#next-skill"
+            },
+            "breakpoints": {
+              "576": { "slidesPerView": 2 },
+              "992": { "slidesPerView": 3 }
             }
           }'>
                 <div class="swiper-wrapper text-center">
                     <!-- Item -->
-                    <div class="swiper-slide w-sm-auto h-auto">
-                        <div class="card card-flip card-hover border-0 w-sm-auto h-100 bg-secondary rounded-5">
+                    <div class="swiper-slide h-auto">
+                        <div class="card card-flip card-hover border-0 w-100 h-100 bg-secondary rounded-5">
                             <div class="card-flip-inner mx-auto" style="max-width: 306px;">
                                 <div class="card-flip-front p-0">
                                     <div class="card-body d-flex flex-column justify-content-center align-items-center position-absolute top-0 start-0 w-100 h-100 opacity-100 monky-skill-front">
@@ -318,8 +322,8 @@
                         </div>
                     </div>
                     <!-- Item -->
-                    <div class="swiper-slide w-sm-auto h-auto">
-                        <div class="card card-flip card-hover border-0 w-sm-auto h-100 bg-secondary rounded-5">
+                    <div class="swiper-slide h-auto">
+                        <div class="card card-flip card-hover border-0 w-100 h-100 bg-secondary rounded-5">
                             <div class="card-flip-inner mx-auto" style="max-width: 306px;">
                                 <div class="card-flip-front p-0">
                                     <div class="card-body d-flex flex-column justify-content-center align-items-center position-absolute top-0 start-0 w-100 h-100 opacity-100 monky-skill-front">
@@ -343,8 +347,8 @@
                         </div>
                     </div>
                     <!-- Item -->
-                    <div class="swiper-slide w-sm-auto h-auto">
-                        <div class="card card-flip card-hover border-0 w-sm-auto h-100 bg-secondary rounded-5">
+                    <div class="swiper-slide h-auto">
+                        <div class="card card-flip card-hover border-0 w-100 h-100 bg-secondary rounded-5">
                             <div class="card-flip-inner mx-auto" style="max-width: 306px;">
                                 <div class="card-flip-front p-0">
                                     <div class="card-body d-flex flex-column justify-content-center align-items-center position-absolute top-0 start-0 w-100 h-100 opacity-100 monky-skill-front">
@@ -374,7 +378,7 @@
                         </div>
                     </div>
                     <!-- Item -->
-                    <div class="swiper-slide w-sm-auto h-auto">
+                    <div class="swiper-slide h-auto">
                         <div class="card border-0 bg-secondary h-100">
                             <div class="card-body mx-auto monky-slider-case-card" style="max-width: 416px;">
                                 <img alt="AskHackers" class="monky-slider-case-logo d-dark-mode-none mx-auto mb-4"
@@ -386,8 +390,8 @@
                         </div>
                     </div>
                     <!-- Item -->
-                    <div class="swiper-slide w-sm-auto h-auto">
-                        <div class="card card-flip card-hover border-0 w-sm-auto h-100 bg-secondary rounded-5">
+                    <div class="swiper-slide h-auto">
+                        <div class="card card-flip card-hover border-0 w-100 h-100 bg-secondary rounded-5">
                             <div class="card-flip-inner mx-auto" style="max-width: 306px;">
                                 <div class="card-flip-front p-0">
                                     <div class="card-body d-flex flex-column justify-content-center align-items-center position-absolute top-0 start-0 w-100 h-100 opacity-100 monky-skill-front">
@@ -411,7 +415,7 @@
                         </div>
                     </div>
                     <!-- Item-->
-                    <div class="swiper-slide w-sm-auto h-auto">
+                    <div class="swiper-slide h-auto">
                         <div class="card border-0 bg-secondary h-100">
                             <div class="card-body mx-auto monky-slider-case-card" style="max-width: 416px;">
                                 <img alt="GhostyMsg" class="monky-slider-case-logo monky-slider-case-logo--ghost mx-auto mb-4"
@@ -730,10 +734,10 @@
     </section>
 </main>
 <!-- Footer -->
-<footer class="footer bg-secondary monky-footer pt-4 pb-2 pb-md-5 pt-sm-5">
-    <div class="container-fluid pb-1 pb-md-0 px-md-5">
-        <div class="bg-dark rounded-5 position-relative overflow-hidden w-100 py-5 px-3 px-sm-4 px-xl-5 mx-auto"
-             data-bs-theme="dark" style="max-width: 1660px;">
+<footer class="footer monky-footer">
+    <div class="container-fluid p-0">
+        <div class="bg-dark position-relative overflow-hidden w-100 py-5 px-3 px-sm-4 px-xl-5"
+             data-bs-theme="dark" style="border-radius: 0;">
             <div class="position-absolute top-50 start-50 translate-middle" style="width: 1664px;">
                 <img alt="Wave" src="{{ config.ASSETS_ROOT }}/img/landing/web-studio/footer-wave.webp"/>
             </div>

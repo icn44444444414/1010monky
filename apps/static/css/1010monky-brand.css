@@ -128,13 +128,13 @@
 /* Translucent glass navbar (light + dark) */
 .monky-navbar-glass {
   background: #ffffff !important;
-  border-bottom: 1px solid rgba(17, 20, 23, .08);
+  border-bottom: 0;
   box-shadow: 0 6px 22px rgba(17, 20, 23, .06);
 }
 
 [data-bs-theme="dark"] .monky-navbar-glass {
   background: #121519 !important;
-  border-bottom-color: rgba(255, 255, 255, .08);
+  border-bottom: 0;
   box-shadow: 0 8px 26px rgba(0, 0, 0, .28);
 }
 
@@ -481,6 +481,23 @@
   left: 0;
   width: 100%;
   z-index: 5;
+}
+
+/* Kontaktformulär: vita, tydliga inmatningsrutor på den gröna kortbakgrunden */
+#contactForm .form-control {
+  background-color: #ffffff;
+  border-color: #ffffff;
+  color: #1a2520;
+}
+#contactForm .form-control::placeholder {
+  color: #6b7c75;
+  opacity: 1;
+}
+#contactForm .form-control:focus {
+  background-color: #ffffff;
+  border-color: #ffffff;
+  box-shadow: 0 0 0 .25rem rgba(255, 255, 255, .35);
+  color: #1a2520;
 }
 
 /* Scroll-reveal (avsloja ett i taget) */
