@@ -9,8 +9,8 @@
 <main class="page-wrapper">
     {% include "partials/navbar.html" %}
 
-    <!-- Header (kept, translated) -->
-    <section class="bg-dark position-relative py-5">
+    <!-- Header (kept, translated) — offset so it starts below the fixed navbar -->
+    <section class="bg-dark position-relative py-5" style="margin-top: 4.5rem;">
         <div class="d-none d-dark-mode-block position-absolute top-0 start-0 w-100 h-100"
              style="background-color: rgba(255,255,255, .03);"></div>
         <div class="container position-relative z-2 py-4 py-md-5" data-bs-theme="dark">
@@ -23,7 +23,8 @@
                             <li aria-current="page" class="breadcrumb-item active">Om oss</li>
                         </ol>
                     </nav>
-                    <h1 class="display-2 mb-0">Vi tror på varje företags framgång</h1>
+                    <h1 class="display-2 mb-3">Vi tror på varje företags framgång</h1>
+                    <p class="fs-lg text-body mb-0">Liten studio i Sverige och Finland.</p>
                 </div>
             </div>
         </div>
@@ -31,13 +32,15 @@
 
     <!-- About: photo + text -->
     <section class="container py-5 my-md-2 my-lg-4 my-xxl-5">
-        <div class="row align-items-center g-4 g-lg-5">
+        <div class="row align-items-center g-4 g-lg-5 g-xl-5">
             <div class="col-lg-6">
                 <img class="d-block w-100 rounded-3 shadow-lg" alt="Matias ute och flugfiskar"
-                     src="{{ config.ASSETS_ROOT }}/img/about/matias-flugfiske.png"/>
+                     style="cursor: zoom-in;" data-bs-toggle="modal" data-bs-target="#aboutImgModal"
+                     src="{{ config.ASSETS_ROOT }}/img/about/matias-flugfiske.webp"/>
             </div>
             <div class="col-lg-6">
                 <div class="ps-lg-3 ps-xl-4">
+                    <div class="fs-sm text-uppercase text-primary fw-semibold mb-2" style="letter-spacing: .12em;">Om mig</div>
                     <h2 class="h1 pb-2">Jag heter Matias</h2>
                     <p class="fs-lg">Jag är sverigefinne och kommer från Eskilstuna. När jag inte jobbar lägger
                         jag en stor del av min fritid på flugfiske. Det är ute vid vattnet jag kopplar av bäst,
@@ -49,10 +52,27 @@
                         det behövs. Jag jobbar med kunder i både Sverige och Finland. Jag är ingen stor byrå utan
                         en liten studio, så det blir personligt och rakt, och du pratar med samma person hela
                         vägen.</p>
+                    <div class="d-flex flex-wrap gap-2 pt-4">
+                        <span class="badge bg-secondary text-body fs-sm fw-normal px-3 py-2">Python</span>
+                        <span class="badge bg-secondary text-body fs-sm fw-normal px-3 py-2">JavaScript</span>
+                        <span class="badge bg-secondary text-body fs-sm fw-normal px-3 py-2">WordPress</span>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
+
+    <!-- Image zoom popup -->
+    <div class="modal fade" id="aboutImgModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content bg-transparent border-0 shadow-none">
+                <button type="button" class="btn-close btn-close-white position-absolute top-0 end-0 m-3 z-3"
+                        data-bs-dismiss="modal" aria-label="Stäng"></button>
+                <img class="img-fluid rounded-3" alt="Matias ute och flugfiskar"
+                     src="{{ config.ASSETS_ROOT }}/img/about/matias-flugfiske.webp"/>
+            </div>
+        </div>
+    </div>
 </main>
 
 <!-- Footer -->
