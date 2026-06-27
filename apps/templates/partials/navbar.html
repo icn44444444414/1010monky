@@ -1,6 +1,7 @@
 <!-- Navbar -->
 <header class="navbar navbar-expand-lg fixed-top bg-light monky-navbar-glass">
   <div class="container">
+    <!-- Brand (logo) -->
     <a class="navbar-brand monky-brand monky-brand--stacked py-1 pe-sm-3" href="/" aria-label="1010monky Studio startsida">
       <img class="monky-brand__mark" src="{{ config.ASSETS_ROOT }}/img/logo-mark-1010monky.webp" alt="" aria-hidden="true"/>
       <span class="monky-brand__copy">
@@ -8,30 +9,32 @@
         <span class="monky-brand__studio">studio</span>
       </span>
     </a>
-
+    <!-- Theme switcher (light/dark) -->
     <div class="form-check form-switch mode-switch order-lg-2 me-3 me-lg-4 ms-auto" data-bs-toggle="mode">
       <input class="form-check-input" id="theme-mode" type="checkbox"/>
       <label class="form-check-label" for="theme-mode"><i class="ai-sun fs-lg"></i></label>
       <label class="form-check-label" for="theme-mode"><i class="ai-moon fs-lg"></i></label>
     </div>
-
-    <a class="btn btn-primary btn-sm fs-sm rounded-pill order-lg-3 d-none d-sm-inline-flex monky-btn-primary" href="/#kontakt">
-      <i class="ai-calendar fs-xl me-2 ms-n1"></i>
-      Boka samtal
+    <!-- Primary CTA -->
+    <a class="btn btn-primary btn-sm fs-sm rounded-pill order-lg-3 d-none d-sm-inline-flex" href="/contacts-v1">
+      <i class="ai-mail fs-xl me-2 ms-n1"></i>
+      Kontakt
     </a>
-
-    <button aria-label="Öppna navigation" aria-controls="navbarNav" aria-expanded="false" class="navbar-toggler ms-sm-3" data-bs-target="#navbarNav" data-bs-toggle="collapse" type="button">
+    <!-- Mobile menu toggler (hamburger) -->
+    <button aria-label="Öppna navigation" class="navbar-toggler ms-sm-3" data-bs-target="#navbarNav"
+            data-bs-toggle="collapse" type="button">
       <span class="navbar-toggler-icon"></span>
     </button>
-
-    <nav class="collapse navbar-collapse" id="navbarNav" aria-label="Huvudnavigation">
+    <!-- Main navigation -->
+    <nav class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav mx-auto">
         <li class="nav-item"><a class="nav-link{% if segment == 'index' %} active{% endif %}" href="/">Hem</a></li>
-        <li class="nav-item"><a class="nav-link" href="/#tjanster">Tjänster</a></li>
-        <li class="nav-item"><a class="nav-link" href="/#case">Case</a></li>
-        <li class="nav-item"><a class="nav-link" href="/#process">Process</a></li>
-        <li class="nav-item"><a class="nav-link" href="/#om">Om</a></li>
-        <li class="nav-item"><a class="nav-link" href="/#kontakt">Kontakt</a></li>
+        <li class="nav-item"><a class="nav-link{% if segment == 'services-v1' %} active{% endif %}" href="/services-v1">Tjänster</a></li>
+        <li class="nav-item"><a class="nav-link{% if segment == 'portfolio-grid-v1' %} active{% endif %}" href="/portfolio-grid-v1">Portfolio</a></li>
+        <li class="nav-item"><a class="nav-link{% if segment == 'about-agency' %} active{% endif %}" href="/about-agency">Om oss</a></li>
+        <li class="nav-item"><a class="nav-link{% if segment == 'blog-grid' %} active{% endif %}" href="/blog-grid">Blogg</a></li>
+        <li class="nav-item"><a class="nav-link{% if segment == 'pricing' %} active{% endif %}" href="/pricing">Priser</a></li>
+        <li class="nav-item"><a class="nav-link{% if segment == 'contacts-v1' %} active{% endif %}" href="/contacts-v1">Kontakt</a></li>
       </ul>
     </nav>
   </div>
