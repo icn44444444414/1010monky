@@ -7,9 +7,14 @@ from apps.pages import blueprint
 from flask import render_template, request, jsonify
 from jinja2 import TemplateNotFound
 
-CONTACT_TO = 'info@1010monky.se'
-CONTACT_MX = 'mx.zoho.eu'
+CONTACT_TO = os.getenv('CONTACT_TO', 'info@1010monky.se')
 CONTACT_LOG = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'contact_submissions.log')
+# Autentiserad SMTP (sätts i .env när vi valt sändmetod: Gmail app-lösenord, Zoho Mail Lite, Brevo, ...)
+SMTP_HOST = os.getenv('SMTP_HOST')
+SMTP_PORT = int(os.getenv('SMTP_PORT', '587'))
+SMTP_USER = os.getenv('SMTP_USER')
+SMTP_PASS = os.getenv('SMTP_PASS')
+SMTP_FROM = os.getenv('SMTP_FROM') or SMTP_USER or CONTACT_TO
 
 
 @blueprint.route('/')
@@ -60,25 +65,26 @@ def api_contact():
     except Exception:
         pass
 
+    # Ingen autentiserad SMTP konfigurerad an -> meddelandet ar sparat i loggen ovan
+    if not (SMTP_HOST and SMTP_USER and SMTP_PASS):
+        return jsonify(ok=True)
+
     msg = EmailMessage()
     msg['Subject'] = f'Webbforfragan fran {name}'
-    msg['From'] = f'1010monky webb <{CONTACT_TO}>'
+    msg['From'] = f'1010monky webb <{SMTP_FROM}>'
     msg['To'] = CONTACT_TO
     msg['Reply-To'] = email
     msg.set_content(body)
 
     try:
-        with smtplib.SMTP(CONTACT_MX, 25, timeout=15) as smtp:
-            smtp.ehlo('1010monky.se')
-            try:
-                smtp.starttls(context=ssl.create_default_context())
-                smtp.ehlo('1010monky.se')
-            except Exception:
-                pass
+        with smtplib.SMTP(SMTP_HOST, SMTP_PORT, timeout=20) as smtp:
+            smtp.ehlo()
+            smtp.starttls(context=ssl.create_default_context())
+            smtp.ehlo()
+            smtp.login(SMTP_USER, SMTP_PASS)
             smtp.send_message(msg)
         return jsonify(ok=True)
     except Exception:
-        # Mejlet gick inte fram, men det ar sparat i loggen ovan
         return jsonify(ok=False, error='Kunde inte skicka just nu, forsok igen eller mejla info@1010monky.se.'), 500
 
 
