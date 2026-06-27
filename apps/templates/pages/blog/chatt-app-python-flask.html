@@ -1,0 +1,158 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}Hur bygger man en chatt-app i Python Flask?{% endblock %}
+{% block meta_description %}En steg-för-steg-guide på svenska för att bygga en chatt-app i Python med Flask och Flask-SocketIO. Realtid, databas, inloggning och spam-skydd, med exempel från min egen chatt GhostyMsg.{% endblock %}
+
+{% block content %}
+{% include 'partials/loader.html' %}
+<main class="page-wrapper">
+    {% include "partials/navbar.html" %}
+
+    <article class="container py-5 mt-4 mt-lg-5">
+        <div class="mx-auto" style="max-width: 720px;">
+            <span class="monky-blogcard__tag d-block mb-3">Kod &amp; webb</span>
+            <h1 class="display-5 mb-4">Hur bygger man en chatt-app i Python Flask?</h1>
+            <p class="text-body-secondary fs-sm mb-4">Skriven av Matias på 1010monky Studio</p>
+        </div>
+
+        <div class="monky-article mx-auto">
+            <p class="monky-article-lead">Kort svar: du bygger själva sidan i Flask och låter Flask-SocketIO sköta realtiden, alltså den öppna kanalen som gör att ett meddelande dyker upp hos alla i rummet direkt utan att sidan laddas om. Databas, inloggning och spam-skydd lägger du på efter behov. Här går jag igenom hela vägen, och drar paralleller till min egen realtidschatt GhostyMsg där det är relevant.</p>
+
+            <div class="monky-article-toc">
+                <strong>Innehåll</strong>
+                <ol>
+                    <li><a href="#vad">Vad en chatt-app egentligen är</a></li>
+                    <li><a href="#realtid">Vanlig chatt mot realtidschatt</a></li>
+                    <li><a href="#flask">Grunden: Flask och Flask-SocketIO</a></li>
+                    <li><a href="#databas">Var meddelandena tar vägen</a></li>
+                    <li><a href="#login">Inloggning eller anonymt</a></li>
+                    <li><a href="#sakerhet">Säkerhet och spam</a></li>
+                    <li><a href="#ghostymsg">Vad jag lärde mig av GhostyMsg</a></li>
+                    <li><a href="#foretag">När ett företag bör bygga egen chatt</a></li>
+                    <li><a href="#misstag">Vanliga misstag</a></li>
+                    <li><a href="#faq">Vanliga frågor</a></li>
+                </ol>
+            </div>
+
+            <h2 id="vad">Vad en chatt-app egentligen är</h2>
+            <p>En chatt är egentligen två delar. Det är en sida som visar meddelanden, och det är en koppling som ser till att nya meddelanden kommer fram till alla som är inne, direkt. Den första delen är vanlig webbutveckling. Den andra delen, att det sker på en gång, är det som gör en chatt till en chatt. Förstår du skillnaden mellan de två har du redan tagit dig förbi det som de flesta fastnar på.</p>
+
+            <h2 id="realtid">Vanlig chatt mot realtidschatt</h2>
+            <p>En vanlig webbsida funkar som en fråga och ett svar. Webbläsaren frågar servern om något, servern svarar, och sen är samtalet slut tills läsaren klickar igen. Det räcker fint för en kontaktsida. Men en chatt vet inte i förväg när nästa meddelande kommer, så modellen med fråga och svar passar dåligt.</p>
+            <p>Ett sätt att lösa det billigt är att låta sidan fråga om och om igen, säg varje sekund, om det kommit något nytt. Det kallas polling och funkar för små saker, men det blir både segt och slösaktigt så fort några personer är inne samtidigt. Det riktiga svaret är en WebSocket. Det är en kanal som hålls öppen mellan webbläsaren och servern, så att servern kan skicka ett meddelande i samma stund det kommer, utan att bli tillfrågad. Det är den tekniken realtidschattar bygger på.</p>
+
+            <h2 id="flask">Grunden: Flask och Flask-SocketIO</h2>
+            <p>Flask sköter sidan. För realtiden använder du tillägget Flask-SocketIO, som lägger WebSockets ovanpå Flask och gör dem hyfsat enkla att jobba med. Du installerar de två med pip:</p>
+            <pre><code>pip install flask flask-socketio</code></pre>
+            <p>En minimal server ser ut ungefär så här. Den serverar en sida, låter en användare gå med i ett rum, och skickar vidare varje meddelande till alla som är i samma rum:</p>
+            <pre><code>from flask import Flask, render_template
+from flask_socketio import SocketIO, join_room, emit
+
+app = Flask(__name__)
+socketio = SocketIO(app)
+
+@app.route("/")
+def index():
+    return render_template("chat.html")
+
+@socketio.on("join")
+def on_join(data):
+    join_room(data["room"])
+
+@socketio.on("message")
+def on_message(data):
+    emit("message", data, to=data["room"])
+
+if __name__ == "__main__":
+    socketio.run(app, debug=True)</code></pre>
+            <p>På sidan laddar du in socket.io-klienten och kopplar upp dig. När någon skriver skickar du ett <code>message</code>, och när servern skickar tillbaka ett ritar du ut det i listan:</p>
+            <pre><code>&lt;script src="https://cdn.socket.io/4.7.5/socket.io.min.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+  const socket = io();
+  socket.emit("join", { room: "demo" });
+
+  socket.on("message", (data) =&gt; {
+    addToList(data.text);
+  });
+
+  function send(text) {
+    socket.emit("message", { room: "demo", text });
+  }
+&lt;/script&gt;</code></pre>
+            <p>Det här är hela kärnan. En användare går med i ett rum, skriver ett meddelande, servern skickar det vidare till rummet, och alla ser det direkt. Allt annat du lägger till är förbättringar ovanpå den här grunden.</p>
+
+            <h2 id="databas">Var meddelandena tar vägen</h2>
+            <p>Nästa fråga är om meddelandena ska sparas. Vill du att man ska kunna komma tillbaka och läsa historiken behöver du en databas. SQLite räcker långt i början, och du byter till Postgres när det växer. Du sparar då varje meddelande med vem som skrev det, i vilket rum och när.</p>
+            <p>Men allt behöver inte sparas. I min egen chatt GhostyMsg sparas ingenting alls. Meddelandena lever bara så länge samtalet pågår och försvinner sen. Det var ett medvetet val, för hela poängen med den är att det man skriver ska stanna mellan dem som pratar. Det är värt att bestämma tidigt, för det påverkar hur du bygger resten.</p>
+
+            <h2 id="login">Inloggning eller anonymt</h2>
+            <p>Du kan kräva konton, eller låta folk skriva anonymt. Konton ger dig en tydlig identitet att hänga meddelanden och regler på, men det är mer att bygga och mer som kan gå sönder. Anonymt är enklare att komma igång med och lägre tröskel för användaren, men då får du jobba mer med att hålla ordning, för du har ingen identitet att luta dig mot.</p>
+            <p>GhostyMsg är byggd kring det anonyma. Du skapar ett rum, delar en länk och ett lösenord med den du vill prata med, och så är ni igång utan att registrera något. Vilket som passar dig beror helt på vad chatten ska användas till.</p>
+
+            <h2 id="sakerhet">Säkerhet och spam</h2>
+            <p>Så fort en sida tar emot text från främlingar måste du tänka på vad de kan skicka. Tre saker är värda att ha koll på från start. Det första är att aldrig lita på texten som kommer in. Visar du den rakt av kan någon skicka in kod som körs hos andra besökare, så du måste alltid behandla inkommande text som text och inte som HTML. Det andra är spam. Utan någon broms kan en bot fylla ett rum på sekunder, så du vill ha en gräns för hur ofta en och samma uppkoppling får skicka. Det tredje är att sätta rimliga tak, på meddelandelängd och på hur många som får vara i ett rum, så att ingen kan välta servern med en enda stor förfrågan.</p>
+            <p>Inget av det här är svårt var för sig. Det jobbiga är att man lätt glömmer det i farten och får bygga in det i efterhand, och då är det krångligare.</p>
+
+            <h2 id="ghostymsg">Vad jag lärde mig av GhostyMsg</h2>
+            <p>En ärlig not: GhostyMsg är faktiskt byggd i Node och inte i Flask. Men allt jag lärde mig av att bygga en riktig realtidschatt gäller precis lika mycket i Python, för det är samma idéer oavsett språk. Det jag tar med mig mest är att kärnan är liten. Att skicka ett meddelande till ett rum är några rader kod. Det är allt runtomkring, att inget ska sparas, att hålla det säkert, att det ska funka lika bra i mobilen, som är det riktiga arbetet.</p>
+            <p>Jag lärde mig också att vara rak med vad som är klart och inte. GhostyMsg är inte färdig, jag lägger till delar efter hand, och det säger jag hellre än att låtsas att allt är på plats. Vill du se projektet ligger det under <a href="/portfolio-single-v1">utvalda projekt</a>.</p>
+
+            <h2 id="foretag">När ett företag bör bygga egen chatt</h2>
+            <p>För ren kundsupport på en hemsida finns färdiga verktyg som Intercom och Crisp, och oftast är de helt rätt val. Du klistrar in en kodsnutt och är igång samma dag. Att bygga eget blir motiverat först när du behöver något de inte ger dig. Det kan vara att data måste stanna hos dig av integritetsskäl, att chatten ska sitta ihop med ditt eget system på ett sätt som inte går med en färdig widget, eller att den är en del av själva produkten och inte bara support. Är det så du har det kan en skräddarsydd lösning vara värd pengarna. Är det inte det, ta det färdiga.</p>
+
+            <h2 id="misstag">Vanliga misstag</h2>
+            <p>Det vanligaste jag ser är att man börjar med det svåra och fina, som design och inställningar, innan den enkla kärnan ens skickar ett meddelande mellan två flikar. Få det att funka först, gör det snyggt sen. Ett annat är att glömma mobilen tills slutet, fast det är där de flesta kommer att använda chatten. Och ett tredje är att skjuta upp säkerheten och spam-skyddet till efter lansering, vilket nästan alltid betyder att det aldrig blir gjort.</p>
+
+            <h2 id="faq">Vanliga frågor</h2>
+            <h3>Behöver man Flask-SocketIO, eller räcker vanliga Flask?</h3>
+            <p>Vanliga Flask räcker för en sida, men inte för realtid. Vill du att meddelanden ska komma fram direkt behöver du WebSockets, och Flask-SocketIO är det enklaste sättet att få det i Flask.</p>
+            <h3>Kan en nybörjare bygga en chatt-app?</h3>
+            <p>Ja. Den minsta versionen är förvånansvärt kort kod. Klarar du en enkel Flask-sida klarar du en första chatt, så länge du tar en sak i taget.</p>
+            <h3>Måste jag spara meddelandena i en databas?</h3>
+            <p>Nej. Vill du ha historik behöver du en databas, men en chatt kan lika gärna låta meddelandena försvinna när samtalet är slut. GhostyMsg sparar inget alls.</p>
+            <h3>Hur många klarar en sån här chatt samtidigt?</h3>
+            <p>En enkel uppsättning klarar fler än man tror för ett litet projekt. När det växer skalar du med en riktig server och en kö i bakgrunden, men det är inget du behöver oroa dig för i början.</p>
+
+            <div class="monky-article-cta">
+                <h3 class="h5 mb-2">Behöver du en egen chatt, kundportal eller skräddarsydd webbsida?</h3>
+                <p class="mb-3">Jag bygger moderna webblösningar med Python, Flask, WordPress och skräddarsydd frontend. Berätta kort om din idé så hör jag av mig med förslag och pris.</p>
+                <a class="btn btn-primary rounded-pill monky-btn-primary" href="/contacts-v1">Kontakta mig för offert</a>
+                <a class="btn btn-link" href="/services-v1">Se vad jag gör</a>
+            </div>
+        </div>
+    </article>
+</main>
+
+{% include "partials/footer.html" %}
+{% include 'partials/back-to-top.html' %}
+{% endblock content %}
+
+{% block scripts %}
+<script src="{{ config.ASSETS_ROOT }}/js/theme.min.js"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "headline": "Hur bygger man en chatt-app i Python Flask?",
+      "description": "En steg-för-steg-guide på svenska för att bygga en chatt-app i Python med Flask och Flask-SocketIO.",
+      "inLanguage": "sv",
+      "author": { "@type": "Person", "name": "Matias", "url": "https://1010monky.se/about-agency" },
+      "publisher": { "@type": "Organization", "name": "1010monky Studio", "logo": { "@type": "ImageObject", "url": "https://1010monky.se/static/img/logo-mark-1010monky.webp" } },
+      "mainEntityOfPage": "https://1010monky.se/blogg/chatt-app-python-flask",
+      "image": "https://1010monky.se/static/img/og-default.png"
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        { "@type": "Question", "name": "Behöver man Flask-SocketIO, eller räcker vanliga Flask?", "acceptedAnswer": { "@type": "Answer", "text": "Vanliga Flask räcker för en sida, men inte för realtid. Vill du att meddelanden ska komma fram direkt behöver du WebSockets, och Flask-SocketIO är det enklaste sättet att få det i Flask." } },
+        { "@type": "Question", "name": "Kan en nybörjare bygga en chatt-app?", "acceptedAnswer": { "@type": "Answer", "text": "Ja. Den minsta versionen är förvånansvärt kort kod. Klarar du en enkel Flask-sida klarar du en första chatt, så länge du tar en sak i taget." } },
+        { "@type": "Question", "name": "Måste jag spara meddelandena i en databas?", "acceptedAnswer": { "@type": "Answer", "text": "Nej. Vill du ha historik behöver du en databas, men en chatt kan lika gärna låta meddelandena försvinna när samtalet är slut. GhostyMsg sparar inget alls." } },
+        { "@type": "Question", "name": "Hur många klarar en sån här chatt samtidigt?", "acceptedAnswer": { "@type": "Answer", "text": "En enkel uppsättning klarar fler än man tror för ett litet projekt. När det växer skalar du med en riktig server och en kö i bakgrunden, men det är inget du behöver oroa dig för i början." } }
+      ]
+    }
+  ]
+}
+</script>
+{% endblock scripts %}

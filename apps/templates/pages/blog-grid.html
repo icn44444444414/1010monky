@@ -1,47 +1,39 @@
 {% extends 'layouts/base.html' %}
 
-{% block title %}Blogg – kommer snart{% endblock %}
+{% block title %}Blogg – webb, kod och projekten jag bygger{% endblock %}
+{% block meta_description %}Texter om webbutveckling, Python, WordPress och de projekt jag bygger på 1010monky Studio. Praktiska guider och ärliga erfarenheter, skrivna på svenska.{% endblock %}
 
 {% block content %}
-<!-- Page loading spinner -->
 {% include 'partials/loader.html' %}
-<!-- Page wrapper -->
 <main class="page-wrapper">
-    <!-- Navbar -->
     {% include "partials/navbar.html" %}
 
-    <!-- Coming soon -->
-    <section class="container d-flex flex-column justify-content-center text-center"
-             style="min-height: 70vh;">
-        <div class="mx-auto" style="max-width: 560px;">
-            <span class="badge bg-secondary text-body fs-sm mb-4">Blogg</span>
-            <h1 class="display-4 mb-3">Bloggen kommer snart</h1>
-            <p class="fs-lg text-body-secondary mb-4">
-                Vi jobbar på den. Här kommer det att dyka upp texter om webb, kod och projekten vi bygger.
-                Kika in igen om ett tag.</p>
-            <a class="btn btn-primary" href="/">Till startsidan</a>
+    <section class="container py-5 mt-4 mt-lg-5">
+        <div class="mx-auto text-center mb-5" style="max-width: 640px;">
+            <span class="monky-blogcard__tag d-block mb-3">Blogg</span>
+            <h1 class="display-5 mb-3">Webb, kod och projekten jag bygger</h1>
+            <p class="fs-lg text-body-secondary mb-0">Praktiska guider och ärliga erfarenheter från riktiga projekt. Mest om Python, Flask, WordPress och hur man bygger webb som håller.</p>
         </div>
+
+        <div class="row g-4 justify-content-center">
+            <div class="col-md-6 col-lg-5">
+                <a class="monky-blogcard" href="/blogg/chatt-app-python-flask">
+                    <span class="monky-blogcard__tag">Kod &amp; webb</span>
+                    <h2 class="h4 mt-2 mb-2">Hur bygger man en chatt-app i Python Flask?</h2>
+                    <p class="text-body-secondary mb-3">En steg-för-steg-guide från grunden: Flask, realtid med Flask-SocketIO, databas, inloggning och spam-skydd, med exempel från min egen chatt GhostyMsg.</p>
+                    <span class="text-primary fw-medium">Läs guiden <i class="ai-arrow-right ms-1"></i></span>
+                </a>
+            </div>
+        </div>
+
+        <p class="text-center text-body-secondary fs-sm mt-5 mb-0">Fler texter är på väg. Kika in igen om ett tag.</p>
     </section>
 </main>
 
-<!-- Footer -->
 {% include "partials/footer.html" %}
-
 {% include 'partials/back-to-top.html' %}
 {% endblock content %}
 
 {% block scripts %}
-<script src="{{ config.ASSETS_ROOT }}/js/theme-switcher.js"></script>
-<script>
-    (function () {
-      window.onload = function () {
-        const preloader = document.querySelector('.page-loading')
-        preloader.classList.remove('active')
-        setTimeout(function () {
-          preloader.remove()
-        }, 1500)
-      }
-    })()
-</script>
 <script src="{{ config.ASSETS_ROOT }}/js/theme.min.js"></script>
 {% endblock scripts %}

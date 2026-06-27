@@ -19,6 +19,8 @@ SITEMAP_PATHS = [
     ('/portfolio-single-askhackers', '0.6'),
     ('/about-agency', '0.6'),
     ('/contacts-v1', '0.8'),
+    ('/blogg', '0.7'),
+    ('/blogg/chatt-app-python-flask', '0.8'),
     ('/villkor', '0.3'),
     ('/integritetspolicy', '0.3'),
 ]
@@ -37,6 +39,19 @@ SMTP_FROM = os.getenv('SMTP_FROM') or SMTP_USER or CONTACT_TO
 def index():
 
     return render_template('pages/landing-web-studio.html', segment='index')
+
+
+@blueprint.route('/blogg')
+def blog_index():
+    return render_template('pages/blog-grid.html', segment='blog')
+
+
+@blueprint.route('/blogg/<slug>')
+def blog_post(slug):
+    try:
+        return render_template('pages/blog/' + slug + '.html', segment='blog')
+    except TemplateNotFound:
+        return render_template('pages/error-404.html'), 404
 
 
 @blueprint.route('/robots.txt')
