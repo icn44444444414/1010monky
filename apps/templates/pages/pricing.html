@@ -1,817 +1,235 @@
 {% extends 'layouts/base.html' %}
 
-{% block title %}Pricing{% endblock %}
-
-{% block styles %}
-
-<link href="{{ config.ASSETS_ROOT }}/vendor/aos/dist/aos.css" media="screen" rel="stylesheet"/>
-<link href="{{ config.ASSETS_ROOT }}/icons/around-icons.min.css" rel="stylesheet"/>
-<link href="{{ config.ASSETS_ROOT }}/css/theme.min.css" media="screen" rel="stylesheet"/>
-{% endblock styles %}
+{% block title %}Priser – WordPress &amp; skräddarsydda webbsidor | 1010monky Studio{% endblock %}
 
 {% block content %}
 <!-- Page loading spinner -->
 {% include 'partials/loader.html' %}
 <!-- Page wrapper -->
 <main class="page-wrapper">
-    <!-- Navbar. Remove 'fixed-top' class to make the navigation bar scrollable with the page -->
+    <!-- Navbar -->
     {% include "partials/navbar.html" %}
-    <!-- Pricing plans -->
-    <section class="container py-5 mt-5 mb-lg-3 mb-xl-4 mb-xxl-5">
-        <!-- Page title -->
-        <div class="text-center pb-3 pt-lg-2 pt-xl-4 my-1 my-sm-3 my-lg-4">
-            <h1 class="display-2">Pricing plans</h1>
-            <p class="fs-lg mb-0">Select a service plan that best suits your business needs</p>
-        </div>
-        <!-- Plans -->
-        <div class="row row-cols-3 flex-nowrap pb-4 overflow-auto">
-            <!-- Plan -->
-            <div class="col" style="min-width: 19rem;">
-                <div class="card h-100 py-lg-4">
-                    <div class="card-body w-100 mx-auto text-center" style="max-width: 23rem;">
-                        <h3>Light</h3>
-                        <div class="display-2 text-primary">$8</div>
-                        <div class="mb-4">per month</div>
-                        <p class="mb-4 pb-4">Phasellus in hendrerit interdum lorem proin pretium dictum urna</p>
-                        <button class="btn btn-primary w-100" type="button">Get this plan now</button>
+
+    <!-- Hero -->
+    <section class="container text-center pt-5 mt-5">
+        <h1 class="display-4 pt-lg-3 pb-2">Priser</h1>
+        <p class="fs-lg text-body-secondary mx-auto mb-2" style="max-width: 620px;">
+            Personlig frilansare med webbyråkänsla. WordPress, design och skräddarsydd kod i samma paket,
+            till fast pris.</p>
+        <p class="fs-sm text-body-secondary mb-0">Alla priser anges ex. moms.</p>
+    </section>
+
+    <!-- Packages -->
+    <section class="container pt-4 pt-lg-5 pb-5 mb-md-2 mb-lg-3">
+        <div class="row g-4 justify-content-center align-items-stretch">
+            <!-- Starter -->
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 border shadow-sm">
+                    <div class="card-body p-4 p-xl-5 d-flex flex-column">
+                        <h2 class="h4 mb-1">Starter Företag</h2>
+                        <p class="fs-sm text-body-secondary">För nystartade företag som behöver en snygg,
+                            seriös första webbnärvaro.</p>
+                        <div class="h2 mb-4">5 000 kr <span class="fs-sm fw-normal text-body-secondary">ex. moms</span></div>
+                        <ul class="list-unstyled fs-sm mb-4">
+                            <li class="d-flex mb-2"><i class="ai-check-alt text-primary me-2"></i>WordPress eller enkel skräddarsydd HTML-sida</li>
+                            <li class="d-flex mb-2"><i class="ai-check-alt text-primary me-2"></i>1 sida / one-page</li>
+                            <li class="d-flex mb-2"><i class="ai-check-alt text-primary me-2"></i>Mobilanpassad design</li>
+                            <li class="d-flex mb-2"><i class="ai-check-alt text-primary me-2"></i>Kontaktformulär</li>
+                            <li class="d-flex mb-2"><i class="ai-check-alt text-primary me-2"></i>Google Analytics</li>
+                            <li class="d-flex mb-2"><i class="ai-check-alt text-primary me-2"></i>Grundläggande SEO</li>
+                            <li class="d-flex mb-2"><i class="ai-check-alt text-primary me-2"></i>Favicon och varumärkesanpassning</li>
+                            <li class="d-flex mb-2"><i class="ai-check-alt text-primary me-2"></i>Bildoptimering</li>
+                            <li class="d-flex mb-2"><i class="ai-check-alt text-primary me-2"></i>Lanseringshjälp</li>
+                            <li class="d-flex"><i class="ai-check-alt text-primary me-2"></i>1 korrekturrunda</li>
+                        </ul>
+                        <a class="btn btn-outline-primary mt-auto" href="/contacts-v1">Få offert</a>
                     </div>
                 </div>
             </div>
-            <!-- Plan -->
-            <div class="col" style="min-width: 19rem;">
-                <div class="card border-primary bg-primary h-100 py-lg-4">
-                    <div class="card-body w-100 mx-auto text-center" style="max-width: 23rem;">
-                        <h3 class="text-light">Premium</h3>
-                        <div class="display-2 text-light">$72</div>
-                        <div class="text-light opacity-70 mb-4">per month</div>
-                        <p class="text-light opacity-70 mb-4 pb-4">Morbi et massa fames ac scelerisque sit commodo
-                            dignissim aucibus</p>
-                        <button class="btn btn-light w-100" type="button">Get this plan now</button>
+            <!-- Business (highlighted) -->
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 border-primary shadow position-relative">
+                    <span class="badge bg-primary position-absolute top-0 start-50 translate-middle">Populärast</span>
+                    <div class="card-body p-4 p-xl-5 d-flex flex-column">
+                        <h2 class="h4 mb-1">Business Medium</h2>
+                        <p class="fs-sm text-body-secondary">För företag som vill ha en komplett WordPress-sida
+                            med flera sidor, SEO-grund och tydlig kontaktväg.</p>
+                        <div class="h2 mb-4">12 000 kr <span class="fs-sm fw-normal text-body-secondary">ex. moms</span></div>
+                        <ul class="list-unstyled fs-sm mb-4">
+                            <li class="d-flex mb-2"><i class="ai-check-alt text-primary me-2"></i>WordPress-hemsida</li>
+                            <li class="d-flex mb-2"><i class="ai-check-alt text-primary me-2"></i>4–6 undersidor (start, tjänster, om oss, kontakt m.m.)</li>
+                            <li class="d-flex mb-2"><i class="ai-check-alt text-primary me-2"></i>Kontaktformulär</li>
+                            <li class="d-flex mb-2"><i class="ai-check-alt text-primary me-2"></i>Google Analytics 4</li>
+                            <li class="d-flex mb-2"><i class="ai-check-alt text-primary me-2"></i>Google Search Console</li>
+                            <li class="d-flex mb-2"><i class="ai-check-alt text-primary me-2"></i>Grundläggande SEO på varje sida</li>
+                            <li class="d-flex mb-2"><i class="ai-check-alt text-primary me-2"></i>Snabbhetsoptimering</li>
+                            <li class="d-flex mb-2"><i class="ai-check-alt text-primary me-2"></i>Säkerhetsplugin + backup-lösning</li>
+                            <li class="d-flex mb-2"><i class="ai-check-alt text-primary me-2"></i>Google Maps / sociala länkar</li>
+                            <li class="d-flex mb-2"><i class="ai-check-alt text-primary me-2"></i>2 korrekturrundor</li>
+                            <li class="d-flex"><i class="ai-check-alt text-primary me-2"></i>14 dagars support efter lansering</li>
+                        </ul>
+                        <a class="btn btn-primary mt-auto" href="/contacts-v1">Få offert</a>
                     </div>
                 </div>
             </div>
-            <!-- Plan -->
-            <div class="col" style="min-width: 19rem;">
-                <div class="card h-100 py-lg-4">
-                    <div class="card-body w-100 mx-auto text-center" style="max-width: 23rem;">
-                        <h3>Medium</h3>
-                        <div class="display-2 text-primary">$36</div>
-                        <div class="mb-4">per month</div>
-                        <p class="mb-4 pb-4">Enim aenean phasellus in hendrerit interdum lorem proin pretium</p>
-                        <button class="btn btn-primary w-100" type="button">Get this plan now</button>
+            <!-- Premium -->
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 border shadow-sm">
+                    <div class="card-body p-4 p-xl-5 d-flex flex-column">
+                        <h2 class="h4 mb-1">Premium Skräddarsydd</h2>
+                        <p class="fs-sm text-body-secondary">För företag som vill ha mer unik design, bättre
+                            struktur, case, konvertering och specialanpassningar.</p>
+                        <div class="h2 mb-4">28 000 kr <span class="fs-sm fw-normal text-body-secondary">ex. moms</span></div>
+                        <ul class="list-unstyled fs-sm mb-4">
+                            <li class="d-flex mb-2"><i class="ai-check-alt text-primary me-2"></i>Skräddarsydd WordPress eller specialbyggd webbsida</li>
+                            <li class="d-flex mb-2"><i class="ai-check-alt text-primary me-2"></i>8–12 sidor</li>
+                            <li class="d-flex mb-2"><i class="ai-check-alt text-primary me-2"></i>Premium UI-design med stark CTA</li>
+                            <li class="d-flex mb-2"><i class="ai-check-alt text-primary me-2"></i>Tjänstesidor optimerade för Google</li>
+                            <li class="d-flex mb-2"><i class="ai-check-alt text-primary me-2"></i>Case/portfolio-sektion</li>
+                            <li class="d-flex mb-2"><i class="ai-check-alt text-primary me-2"></i>Google Analytics 4 + Search Console</li>
+                            <li class="d-flex mb-2"><i class="ai-check-alt text-primary me-2"></i>Teknisk SEO-grund</li>
+                            <li class="d-flex mb-2"><i class="ai-check-alt text-primary me-2"></i>Snabbhets-, bild- och mediaoptimering</li>
+                            <li class="d-flex mb-2"><i class="ai-check-alt text-primary me-2"></i>Säkerhet, backup, SSL och cookie-banner</li>
+                            <li class="d-flex mb-2"><i class="ai-check-alt text-primary me-2"></i>Copy/text-polish</li>
+                            <li class="d-flex mb-2"><i class="ai-check-alt text-primary me-2"></i>3 korrekturrundor</li>
+                            <li class="d-flex"><i class="ai-check-alt text-primary me-2"></i>30 dagars support efter lansering</li>
+                        </ul>
+                        <a class="btn btn-outline-primary mt-auto" href="/contacts-v1">Få offert</a>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- Comparison table -->
-        <div class="text-center pt-md-1 pt-lg-2">
-            <button aria-label="Compare plans" class="btn btn-more btn-link fs-4" data-bs-target="#comparePlans"
-                    data-bs-toggle="collapse" data-hide-label="Compare plans" data-show-label="Compare plans"
-                    type="button"></button>
+
+        <!-- Advanced callout -->
+        <div class="bg-secondary rounded-5 p-4 p-lg-5 mt-4 mt-lg-5 text-center">
+            <h2 class="h4 mb-2">Behöver du något mer avancerat?</h2>
+            <p class="fs-lg text-body-secondary mb-0 mx-auto" style="max-width: 680px;">
+                Webbappar, bokningssystem, kundportaler, dashboards och specialfunktioner offereras separat
+                från 45 000 kr.</p>
         </div>
-        <div class="collapse show" id="comparePlans">
-            <div class="table-responsive pt-sm-2 pt-lg-3">
-                <table class="table text-center text-nowrap">
-                    <thead>
+    </section>
+
+    <!-- Comparison table -->
+    <section class="container pb-5 mb-md-2 mb-lg-3">
+        <h2 class="h3 text-center pb-3 pb-lg-4">Vad ingår i paketen</h2>
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead>
                     <tr>
-                        <th class="border-0 py-3" scope="col"> </th>
-                        <th class="border-0 py-3" scope="col"><span class="h5 mb-0">Light</span></th>
-                        <th class="border-0 py-3" scope="col"><span class="h5 mb-0">Premium</span></th>
-                        <th class="border-0 py-3" scope="col"><span class="h5 mb-0">Medium</span></th>
+                        <th scope="col" style="min-width: 220px;">Funktion</th>
+                        <th scope="col" class="text-center">Starter<br/><span class="fw-normal fs-sm text-body-secondary">5 000 kr</span></th>
+                        <th scope="col" class="text-center">Business<br/><span class="fw-normal fs-sm text-body-secondary">12 000 kr</span></th>
+                        <th scope="col" class="text-center">Premium<br/><span class="fw-normal fs-sm text-body-secondary">28 000 kr</span></th>
                     </tr>
-                    </thead>
+                </thead>
+                <tbody class="fs-sm">
+                    <tr><td>Passar för</td><td class="text-center">Nystartat företag</td><td class="text-center">Växande företag</td><td class="text-center">Seriös företagssatsning</td></tr>
+                    <tr><td>Antal sidor</td><td class="text-center">1 / one-page</td><td class="text-center">4–6 sidor</td><td class="text-center">8–12 sidor</td></tr>
+                    <tr><td>WordPress</td><td class="text-center">Ja</td><td class="text-center">Ja</td><td class="text-center">Ja / skräddarsytt</td></tr>
+                    <tr><td>Skräddarsydd design</td><td class="text-center">Enkel anpassning</td><td class="text-center">Mer anpassad</td><td class="text-center">Tydlig premiumdesign</td></tr>
+                    <tr><td>Mobilanpassning</td><td class="text-center">Ja</td><td class="text-center">Ja</td><td class="text-center">Ja</td></tr>
+                    <tr><td>Kontaktformulär</td><td class="text-center">Ja</td><td class="text-center">Ja</td><td class="text-center">Avancerat vid behov</td></tr>
+                    <tr><td>Google Analytics 4</td><td class="text-center">Ja</td><td class="text-center">Ja</td><td class="text-center">Ja</td></tr>
+                    <tr><td>Google Search Console</td><td class="text-center text-body-secondary">Tillval</td><td class="text-center">Ja</td><td class="text-center">Ja</td></tr>
+                    <tr><td>Grundläggande SEO</td><td class="text-center">Ja</td><td class="text-center">Ja</td><td class="text-center">Ja</td></tr>
+                    <tr><td>Sökordsstruktur</td><td class="text-center">Enkel</td><td class="text-center">Medium</td><td class="text-center">Fördjupad</td></tr>
+                    <tr><td>Snabbhetsoptimering</td><td class="text-center">Grund</td><td class="text-center">Ja</td><td class="text-center">Ja, noggrant</td></tr>
+                    <tr><td>Bildoptimering</td><td class="text-center">Ja</td><td class="text-center">Ja</td><td class="text-center">Ja</td></tr>
+                    <tr><td>Säkerhetsplugin</td><td class="text-center">Ja</td><td class="text-center">Ja</td><td class="text-center">Ja</td></tr>
+                    <tr><td>Backup-lösning</td><td class="text-center">Enkel</td><td class="text-center">Ja</td><td class="text-center">Ja</td></tr>
+                    <tr><td>SSL-kontroll</td><td class="text-center">Ja</td><td class="text-center">Ja</td><td class="text-center">Ja</td></tr>
+                    <tr><td>Cookie-banner</td><td class="text-center text-body-secondary">Tillval</td><td class="text-center">Ja</td><td class="text-center">Ja</td></tr>
+                    <tr><td>Google Maps</td><td class="text-center text-body-secondary">Tillval</td><td class="text-center">Ja</td><td class="text-center">Ja</td></tr>
+                    <tr><td>Sociala medier-länkar</td><td class="text-center">Ja</td><td class="text-center">Ja</td><td class="text-center">Ja</td></tr>
+                    <tr><td>Favicon</td><td class="text-center">Ja</td><td class="text-center">Ja</td><td class="text-center">Ja</td></tr>
+                    <tr><td>404-sida</td><td class="text-center text-body-secondary">–</td><td class="text-center">Enkel</td><td class="text-center">Anpassad</td></tr>
+                    <tr><td>Blogg/nyheter</td><td class="text-center text-body-secondary">–</td><td class="text-center text-body-secondary">Tillval</td><td class="text-center">Vid behov</td></tr>
+                    <tr><td>Portfolio/case-sektion</td><td class="text-center text-body-secondary">–</td><td class="text-center text-body-secondary">Tillval</td><td class="text-center">Ja</td></tr>
+                    <tr><td>Copy/text-polish</td><td class="text-center">Lätt</td><td class="text-center">Medium</td><td class="text-center">Genomarbetad</td></tr>
+                    <tr><td>Designförslag</td><td class="text-center">1</td><td class="text-center">1–2</td><td class="text-center">2–3</td></tr>
+                    <tr><td>Revisionsrundor</td><td class="text-center">1</td><td class="text-center">2</td><td class="text-center">3</td></tr>
+                    <tr><td>Lanseringshjälp</td><td class="text-center">Ja</td><td class="text-center">Ja</td><td class="text-center">Ja</td></tr>
+                    <tr><td>Genomgång med kund</td><td class="text-center">15 min</td><td class="text-center">30 min</td><td class="text-center">60 min</td></tr>
+                    <tr><td>Support efter lansering</td><td class="text-center">7 dagar</td><td class="text-center">14 dagar</td><td class="text-center">30 dagar</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Hourly + monthly -->
+    <section class="container pb-5 mb-md-3 mb-lg-4 mb-xxl-5">
+        <div class="row g-4 g-lg-5">
+            <!-- Hourly -->
+            <div class="col-lg-5">
+                <h2 class="h4 pb-2">Timpris för extraarbete</h2>
+                <p class="fs-sm text-body-secondary">För ändringar och tillägg efter att projektet är klart.</p>
+                <table class="table fs-sm">
                     <tbody>
-                    <tr>
-                        <th class="border-0 bg-secondary rounded-3 rounded-end-0 text-start py-3 ps-4" scope="row">
-                            <span class="text-body fw-medium">Billed monthly</span>
-                        </th>
-                        <td class="border-0 bg-secondary py-3"><span class="text-dark">$18</span></td>
-                        <td class="border-0 bg-secondary py-3"><span class="text-dark">$72</span></td>
-                        <td class="border-0 rounded-3 rounded-start-0 bg-secondary py-3"><span
-                                class="text-dark">$36</span></td>
-                    </tr>
-                    <tr>
-                        <th class="border-0 text-start py-3 ps-4" scope="row">
-<span class="d-flex align-items-center text-body fw-medium">
-                      Members
-                      <i class="ai-circle-info fs-lg ms-2" data-bs-content="Feature description text"
-                         data-bs-html="true" data-bs-placement="right" data-bs-toggle="popover"
-                         data-bs-trigger="hover"></i>
-</span>
-                        </th>
-                        <td class="border-0 py-3"><span class="text-dark">Just you</span></td>
-                        <td class="border-0 py-3"><span class="text-dark">Unlimited</span></td>
-                        <td class="border-0 py-3"><span class="text-dark">3 members</span></td>
-                    </tr>
-                    <tr>
-                        <th class="border-0 bg-secondary rounded-3 rounded-end-0 text-start py-3 ps-4" scope="row">
-<span class="d-flex align-items-center text-body fw-medium">
-                      Guest access
-                      <i class="ai-circle-info fs-lg ms-2" data-bs-content="Feature description text"
-                         data-bs-html="true" data-bs-placement="right" data-bs-toggle="popover"
-                         data-bs-trigger="hover"></i>
-</span>
-                        </th>
-                        <td class="border-0 bg-secondary py-3"><span class="text-dark">Just you</span></td>
-                        <td class="border-0 bg-secondary py-3"><span class="text-dark">Unlimited</span></td>
-                        <td class="border-0 rounded-3 rounded-start-0 bg-secondary py-3"><span class="text-dark">3 members</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th class="border-0 text-start py-3 ps-4" scope="row">
-<span class="d-flex align-items-center text-body fw-medium">
-                      File uploads
-                      <i class="ai-circle-info fs-lg ms-2" data-bs-content="Feature description text"
-                         data-bs-html="true" data-bs-placement="right" data-bs-toggle="popover"
-                         data-bs-trigger="hover"></i>
-</span>
-                        </th>
-                        <td class="border-0 py-3"><span class="text-dark">2 GB</span></td>
-                        <td class="border-0 py-3"><span class="text-dark">30 GB</span></td>
-                        <td class="border-0 py-3"><span class="text-dark">10 GB</span></td>
-                    </tr>
-                    <tr>
-                        <th class="border-0 text-start pt-4 pb-3 ps-4" scope="col">
-                            <div class="h5 pt-1 mb-0">Collaboration</div>
-                        </th>
-                        <th class="border-0 py-3" scope="col"> </th>
-                        <th class="border-0 py-3" scope="col"> </th>
-                        <th class="border-0 py-3" scope="col"> </th>
-                    </tr>
-                    <tr>
-                        <th class="border-0 bg-secondary rounded-3 rounded-end-0 text-start py-3 ps-4" scope="row">
-                            <span class="text-body fw-medium">Real-time collaboration</span>
-                        </th>
-                        <td class="border-0 bg-secondary py-3"><i class="ai-check fs-xl text-success"></i></td>
-                        <td class="border-0 bg-secondary py-3"><i class="ai-check fs-xl text-success"></i></td>
-                        <td class="border-0 rounded-3 rounded-start-0 bg-secondary py-3"><i
-                                class="ai-check fs-xl text-success"></i></td>
-                    </tr>
-                    <tr>
-                        <th class="border-0 text-start py-3 ps-4" scope="row">
-<span class="d-flex align-items-center text-body fw-medium">
-                      Link sharing
-                      <i class="ai-circle-info fs-lg ms-2" data-bs-content="Feature description text"
-                         data-bs-html="true" data-bs-placement="right" data-bs-toggle="popover"
-                         data-bs-trigger="hover"></i>
-</span>
-                        </th>
-                        <td class="border-0 py-3"><i class="ai-check fs-xl text-success"></i></td>
-                        <td class="border-0 py-3"><i class="ai-check fs-xl text-success"></i></td>
-                        <td class="border-0 py-3"><i class="ai-check fs-xl text-success"></i></td>
-                    </tr>
-                    <tr>
-                        <th class="border-0 bg-secondary rounded-3 rounded-end-0 text-start py-3 ps-4" scope="row">
-<span class="d-flex align-items-center text-body fw-medium">
-                      Collaborative workspace
-                      <i class="ai-circle-info fs-lg ms-2" data-bs-content="Feature description text"
-                         data-bs-html="true" data-bs-placement="right" data-bs-toggle="popover"
-                         data-bs-trigger="hover"></i>
-</span>
-                        </th>
-                        <td class="border-0 bg-secondary py-3"><i class="ai-cross fs-xl text-danger"></i></td>
-                        <td class="border-0 bg-secondary py-3"><i class="ai-check fs-xl text-success"></i></td>
-                        <td class="border-0 rounded-3 rounded-start-0 bg-secondary py-3"><i
-                                class="ai-check fs-xl text-success"></i></td>
-                    </tr>
-                    <tr>
-                        <th class="border-0 text-start py-3 ps-4" scope="row">
-<span class="d-flex align-items-center text-body fw-medium">
-                      Filter views
-                      <i class="ai-circle-info fs-lg ms-2" data-bs-content="Feature description text"
-                         data-bs-html="true" data-bs-placement="right" data-bs-toggle="popover"
-                         data-bs-trigger="hover"></i>
-</span>
-                        </th>
-                        <td class="border-0 py-3"><span class="text-dark">3</span></td>
-                        <td class="border-0 py-3"><span class="text-dark">Unlimited</span></td>
-                        <td class="border-0 py-3"><span class="text-dark">12</span></td>
-                    </tr>
-                    <tr>
-                        <th class="border-0 bg-secondary rounded-3 rounded-end-0 text-start py-3 ps-4" scope="row">
-<span class="d-flex align-items-center text-body fw-medium">
-                      Teams
-                      <i class="ai-circle-info fs-lg ms-2" data-bs-content="Feature description text"
-                         data-bs-html="true" data-bs-placement="right" data-bs-toggle="popover"
-                         data-bs-trigger="hover"></i>
-</span>
-                        </th>
-                        <td class="border-0 bg-secondary py-3"><i class="ai-cross fs-xl text-danger"></i></td>
-                        <td class="border-0 bg-secondary py-3"><i class="ai-check fs-xl text-success"></i></td>
-                        <td class="border-0 rounded-3 rounded-start-0 bg-secondary py-3"><i
-                                class="ai-check fs-xl text-success"></i></td>
-                    </tr>
-                    <tr>
-                        <th class="border-0 text-start pt-4 pb-3 ps-4" scope="col">
-                            <div class="h5 pt-3 mb-0">Features</div>
-                        </th>
-                        <th class="border-0 py-3" scope="col"> </th>
-                        <th class="border-0 py-3" scope="col"> </th>
-                        <th class="border-0 py-3" scope="col"> </th>
-                    </tr>
-                    <tr>
-                        <th class="border-0 bg-secondary rounded-3 rounded-end-0 text-start py-3 ps-4" scope="row">
-                            <span class="text-body fw-medium">Web, desktop, &amp; mobile apps</span>
-                        </th>
-                        <td class="border-0 bg-secondary py-3"><i class="ai-cross fs-xl text-danger"></i></td>
-                        <td class="border-0 bg-secondary py-3"><i class="ai-check fs-xl text-success"></i></td>
-                        <td class="border-0 rounded-3 rounded-start-0 bg-secondary py-3"><i
-                                class="ai-check fs-xl text-success"></i></td>
-                    </tr>
-                    <tr>
-                        <th class="border-0 text-start py-3 ps-4" scope="row">
-<span class="d-flex align-items-center text-body fw-medium">
-                      Reminders
-                      <i class="ai-circle-info fs-lg ms-2" data-bs-content="Feature description text"
-                         data-bs-html="true" data-bs-placement="right" data-bs-toggle="popover"
-                         data-bs-trigger="hover"></i>
-</span>
-                        </th>
-                        <td class="border-0 py-3"><i class="ai-check fs-xl text-success"></i></td>
-                        <td class="border-0 py-3"><i class="ai-check fs-xl text-success"></i></td>
-                        <td class="border-0 py-3"><i class="ai-check fs-xl text-success"></i></td>
-                    </tr>
-                    <tr>
-                        <th class="border-0 bg-secondary rounded-3 rounded-end-0 text-start py-3 ps-4" scope="row">
-                            <span class="text-body fw-medium">Priorities</span>
-                        </th>
-                        <td class="border-0 bg-secondary py-3"><i class="ai-cross fs-xl text-danger"></i></td>
-                        <td class="border-0 bg-secondary py-3"><i class="ai-check fs-xl text-success"></i></td>
-                        <td class="border-0 rounded-3 rounded-start-0 bg-secondary py-3"><i
-                                class="ai-check fs-xl text-success"></i></td>
-                    </tr>
-                    <tr>
-                        <th class="border-0 text-start py-3 ps-4" scope="row">
-<span class="d-flex align-items-center text-body fw-medium">
-                      Comments
-                      <i class="ai-circle-info fs-lg ms-2" data-bs-content="Feature description text"
-                         data-bs-html="true" data-bs-placement="right" data-bs-toggle="popover"
-                         data-bs-trigger="hover"></i>
-</span>
-                        </th>
-                        <td class="border-0 py-3"><i class="ai-check fs-xl text-success"></i></td>
-                        <td class="border-0 py-3"><i class="ai-check fs-xl text-success"></i></td>
-                        <td class="border-0 py-3"><i class="ai-check fs-xl text-success"></i></td>
-                    </tr>
-                    <tr>
-                        <th class="border-0 bg-secondary rounded-3 rounded-end-0 text-start py-3 ps-4" scope="row">
-                            <span class="text-body fw-medium">Integrations</span>
-                        </th>
-                        <td class="border-0 bg-secondary py-3"><span class="text-dark">5</span></td>
-                        <td class="border-0 bg-secondary py-3"><span class="text-dark">Unlimited</span></td>
-                        <td class="border-0 rounded-3 rounded-start-0 bg-secondary py-3"><span
-                                class="text-dark">15</span></td>
-                    </tr>
-                    <tr>
-                        <th class="border-0 text-start pt-4 pb-3 ps-4" scope="col">
-                            <div class="h5 pt-3 mb-0">Admin &amp; security</div>
-                        </th>
-                        <th class="border-0 py-3" scope="col"> </th>
-                        <th class="border-0 py-3" scope="col"> </th>
-                        <th class="border-0 py-3" scope="col"> </th>
-                    </tr>
-                    <tr>
-                        <th class="border-0 bg-secondary rounded-3 rounded-end-0 text-start py-3 ps-4" scope="row">
-<span class="d-flex align-items-center text-body fw-medium">
-                      Admin &amp; member roles
-                      <i class="ai-circle-info fs-lg ms-2" data-bs-content="Feature description text"
-                         data-bs-html="true" data-bs-placement="right" data-bs-toggle="popover"
-                         data-bs-trigger="hover"></i>
-</span>
-                        </th>
-                        <td class="border-0 bg-secondary py-3"><i class="ai-cross fs-xl text-danger"></i></td>
-                        <td class="border-0 bg-secondary py-3"><i class="ai-check fs-xl text-success"></i></td>
-                        <td class="border-0 rounded-3 rounded-start-0 bg-secondary py-3"><i
-                                class="ai-cross fs-xl text-danger"></i></td>
-                    </tr>
-                    <tr>
-                        <th class="border-0 text-start py-3 ps-4" scope="row"><span class="text-body fw-medium">Team billing</span>
-                        </th>
-                        <td class="border-0 py-3"><i class="ai-cross fs-xl text-danger"></i></td>
-                        <td class="border-0 py-3"><i class="ai-check fs-xl text-success"></i></td>
-                        <td class="border-0 py-3"><i class="ai-cross fs-xl text-danger"></i></td>
-                    </tr>
-                    <tr>
-                        <th class="border-0 bg-secondary rounded-3 rounded-end-0 text-start py-3 ps-4" scope="row">
-<span class="d-flex align-items-center text-body fw-medium">
-                      Priority support
-                      <i class="ai-circle-info fs-lg ms-2" data-bs-content="Feature description text"
-                         data-bs-html="true" data-bs-placement="right" data-bs-toggle="popover"
-                         data-bs-trigger="hover"></i>
-</span>
-                        </th>
-                        <td class="border-0 bg-secondary py-3"><i class="ai-cross fs-xl text-danger"></i></td>
-                        <td class="border-0 bg-secondary py-3"><i class="ai-check fs-xl text-success"></i></td>
-                        <td class="border-0 rounded-3 rounded-start-0 bg-secondary py-3"><i
-                                class="ai-cross fs-xl text-danger"></i></td>
-                    </tr>
-                    <tr>
-                        <td class="border-0 pt-4"> </td>
-                        <td class="border-0 pt-4">
-                            <button class="btn btn-outline-primary mt-3" type="button">Get started $18</button>
-                        </td>
-                        <td class="border-0 pt-4">
-                            <button class="btn btn-outline-primary mt-3" type="button">Get started $72</button>
-                        </td>
-                        <td class="border-0 pt-4">
-                            <button class="btn btn-outline-primary mt-3" type="button">Get started $36</button>
-                        </td>
-                    </tr>
+                        <tr><td>Mindre text- och bildändringar</td><td class="text-end text-nowrap">650–750 kr/h</td></tr>
+                        <tr><td>WordPress-fix och felsökning</td><td class="text-end text-nowrap">750–950 kr/h</td></tr>
+                        <tr><td>Design/UI-arbete</td><td class="text-end text-nowrap">750–950 kr/h</td></tr>
+                        <tr><td>Skräddarsydd PHP/JS/Python</td><td class="text-end text-nowrap">900–1 200 kr/h</td></tr>
+                        <tr><td>Akut hjälp / snabb leverans</td><td class="text-end text-nowrap">1 200 kr/h+</td></tr>
                     </tbody>
                 </table>
             </div>
-        </div>
-    </section>
-    <!-- Testimonials (tabs) -->
-    <section class="container mt-n3 mt-sm-0 py-md-3 py-lg-4">
-        <h2 class="text-center pb-3 mb-lg-4">More than 2,000 clients using Around to analyze data</h2>
-        <!-- Nav tabs -->
-        <div class="overflow-auto pb-3 pb-xl-4 mb-3 mb-lg-4">
-            <ul class="nav nav-tabs justify-content-between flex-nowrap text-nowrap p-0 m-0" role="tablist"
-                style="min-width: 1000px;">
-                <li class="nav-item mb-0">
-                    <a class="nav-link active" data-bs-toggle="tab" href="#foster" role="tab">
-                        <div class="swap-image">
-                            <img alt="Foster" class="swap-to"
-                                 src="{{ config.ASSETS_ROOT }}/img/landing/saas-1/brands/foster-color.svg" width="140"/>
-                            <div class="swap-from">
-                                <img alt="Foster" class="d-dark-mode-none"
-                                     src="{{ config.ASSETS_ROOT }}/img/landing/saas-1/brands/foster-gray.svg"
-                                     width="140"/>
-                                <img alt="Foster" class="d-none d-dark-mode-block"
-                                     src="{{ config.ASSETS_ROOT }}/img/landing/saas-1/brands/foster-light.svg"
-                                     width="140"/>
+            <!-- Monthly -->
+            <div class="col-lg-7">
+                <h2 class="h4 pb-2">Månadspaket efter lansering</h2>
+                <p class="fs-sm text-body-secondary">Löpande drift och underhåll så att sidan hålls snabb,
+                    säker och uppdaterad.</p>
+                <div class="row g-3">
+                    <div class="col-sm-4">
+                        <div class="card h-100 border shadow-sm">
+                            <div class="card-body p-4">
+                                <h3 class="h6 mb-1">Care Basic</h3>
+                                <div class="h5 mb-3">690 kr<span class="fs-sm fw-normal text-body-secondary">/mån</span></div>
+                                <p class="fs-sm text-body-secondary mb-0">Uppdateringar, säkerhetskoll,
+                                    backup-kontroll och enklare support.</p>
                             </div>
-                        </div>
-                    </a>
-                </li>
-                <li class="nav-item mb-0">
-                    <a class="nav-link" data-bs-toggle="tab" href="#klinos" role="tab">
-                        <div class="swap-image">
-                            <img alt="Klinos" class="swap-to"
-                                 src="{{ config.ASSETS_ROOT }}/img/landing/saas-1/brands/klinos-color.svg" width="131"/>
-                            <div class="swap-from">
-                                <img alt="Klinos" class="d-dark-mode-none"
-                                     src="{{ config.ASSETS_ROOT }}/img/landing/saas-1/brands/klinos-gray.svg"
-                                     width="131"/>
-                                <img alt="Klinos" class="d-none d-dark-mode-block"
-                                     src="{{ config.ASSETS_ROOT }}/img/landing/saas-1/brands/klinos-light.svg"
-                                     width="131"/>
-                            </div>
-                        </div>
-                    </a>
-                </li>
-                <li class="nav-item mb-0">
-                    <a class="nav-link" data-bs-toggle="tab" href="#champion" role="tab">
-                        <div class="swap-image">
-                            <img alt="Champion" class="swap-to"
-                                 src="{{ config.ASSETS_ROOT }}/img/landing/saas-1/brands/champion-color.svg"
-                                 width="162"/>
-                            <div class="swap-from">
-                                <img alt="Champion" class="d-dark-mode-none"
-                                     src="{{ config.ASSETS_ROOT }}/img/landing/saas-1/brands/champion-gray.svg"
-                                     width="162"/>
-                                <img alt="Champion" class="d-none d-dark-mode-block"
-                                     src="{{ config.ASSETS_ROOT }}/img/landing/saas-1/brands/champion-light.svg"
-                                     width="162"/>
-                            </div>
-                        </div>
-                    </a>
-                </li>
-                <li class="nav-item mb-0">
-                    <a class="nav-link" data-bs-toggle="tab" href="#airbnb" role="tab">
-                        <div class="swap-image">
-                            <img alt="Airbnb" class="swap-to"
-                                 src="{{ config.ASSETS_ROOT }}/img/landing/saas-1/brands/airbnb-color.svg" width="132"/>
-                            <div class="swap-from">
-                                <img alt="Airbnb" class="d-dark-mode-none"
-                                     src="{{ config.ASSETS_ROOT }}/img/landing/saas-1/brands/airbnb-gray.svg"
-                                     width="132"/>
-                                <img alt="Airbnb" class="d-none d-dark-mode-block"
-                                     src="{{ config.ASSETS_ROOT }}/img/landing/saas-1/brands/airbnb-light.svg"
-                                     width="132"/>
-                            </div>
-                        </div>
-                    </a>
-                </li>
-                <li class="nav-item mb-0">
-                    <a class="nav-link" data-bs-toggle="tab" href="#starcraft" role="tab">
-                        <div class="swap-image">
-                            <img alt="StarCraft" class="swap-to"
-                                 src="{{ config.ASSETS_ROOT }}/img/landing/saas-1/brands/starcraft-color.svg"
-                                 width="158"/>
-                            <div class="swap-from">
-                                <img alt="StarCraft" class="d-dark-mode-none"
-                                     src="{{ config.ASSETS_ROOT }}/img/landing/saas-1/brands/starcraft-gray.svg"
-                                     width="158"/>
-                                <img alt="StarCraft" class="d-none d-dark-mode-block"
-                                     src="{{ config.ASSETS_ROOT }}/img/landing/saas-1/brands/starcraft-light.svg"
-                                     width="158"/>
-                            </div>
-                        </div>
-                    </a>
-                </li>
-                <li class="nav-item mb-0">
-                    <a class="nav-link" data-bs-toggle="tab" href="#alpine" role="tab">
-                        <div class="swap-image">
-                            <img alt="Alpine" class="swap-to"
-                                 src="{{ config.ASSETS_ROOT }}/img/landing/saas-1/brands/alpine-color.svg" width="146"/>
-                            <div class="swap-from">
-                                <img alt="Alpine" class="d-dark-mode-none"
-                                     src="{{ config.ASSETS_ROOT }}/img/landing/saas-1/brands/alpine-gray.svg"
-                                     width="146"/>
-                                <img alt="Alpine" class="d-none d-dark-mode-block"
-                                     src="{{ config.ASSETS_ROOT }}/img/landing/saas-1/brands/alpine-light.svg"
-                                     width="146"/>
-                            </div>
-                        </div>
-                    </a>
-                </li>
-            </ul>
-        </div>
-        <!-- Tabs content -->
-        <div class="card border-0 bg-secondary">
-            <div class="tab-content card-body px-lg-0 py-lg-5">
-                <!-- Testimonial (active tab) -->
-                <div class="tab-pane fade show active" id="foster" role="tabpanel">
-                    <div class="row py-2 py-sm-1 py-md-3 py-lg-4 py-xl-5">
-                        <div class="col-md-4 col-lg-3 offset-lg-1 mb-3 mb-md-0">
-                            <img alt="Lilianna Bocouse" class="d-block rounded-circle mb-3"
-                                 src="{{ config.ASSETS_ROOT }}/img/avatar/13.jpg" width="86"/>
-                            <h4 class="mb-0">Lilianna Bocouse</h4>
-                            <p class="fs-lg text-body-secondary mb-0">Head of Marketing</p>
-                        </div>
-                        <div class="col-md-8 col-lg-7">
-                            <p class="text-dark lead mb-0">“Around provides us with the detailed and accurate data we
-                                need to make strategic decisions. All tools are constantly being improved and contain a
-                                lot of useful and interesting information. Thanks to Around, we can constantly analyze
-                                our big data quickly and efficiently.”</p>
                         </div>
                     </div>
-                </div>
-                <!-- Testimonial (tab) -->
-                <div class="tab-pane fade" id="klinos" role="tabpanel">
-                    <div class="row py-2 py-sm-1 py-md-3 py-lg-4 py-xl-5">
-                        <div class="col-md-4 col-lg-3 offset-lg-1 mb-3 mb-md-0">
-                            <img alt="Darell Steward" class="d-block rounded-circle mb-3"
-                                 src="{{ config.ASSETS_ROOT }}/img/avatar/14.jpg" width="86"/>
-                            <h4 class="mb-0">Darell Steward</h4>
-                            <p class="fs-lg text-body-secondary mb-0">Project Manager</p>
-                        </div>
-                        <div class="col-md-8 col-lg-7">
-                            <p class="text-dark lead mb-0">“Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                Integer ac pretium dui. Aliquam rutrum justo lorem, in efficitur odio efficitur vel.
-                                Integer mattis, neque malesuada sagittis porttitor, enim tortor ullamcorper diam, id
-                                eleifend sem mauris at turpis. Curabitur sed nisi nec ligula dictum maximus eu ut
-                                ante.”</p>
+                    <div class="col-sm-4">
+                        <div class="card h-100 border shadow-sm">
+                            <div class="card-body p-4">
+                                <h3 class="h6 mb-1">Care Growth</h3>
+                                <div class="h5 mb-3">1 200 kr<span class="fs-sm fw-normal text-body-secondary">/mån</span></div>
+                                <p class="fs-sm text-body-secondary mb-0">Allt i Basic plus mindre
+                                    text-/bildändringar, Analytics-koll och prioriterad support.</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <!-- Testimonial (tab) -->
-                <div class="tab-pane fade" id="champion" role="tabpanel">
-                    <div class="row py-2 py-sm-1 py-md-3 py-lg-4 py-xl-5">
-                        <div class="col-md-4 col-lg-3 offset-lg-1 mb-3 mb-md-0">
-                            <img alt="Annette Black" class="d-block rounded-circle mb-3"
-                                 src="{{ config.ASSETS_ROOT }}/img/avatar/15.jpg" width="86"/>
-                            <h4 class="mb-0">Annette Black</h4>
-                            <p class="fs-lg text-body-secondary mb-0">Lead Designer</p>
-                        </div>
-                        <div class="col-md-8 col-lg-7">
-                            <p class="text-dark lead mb-0">“Quisque rutrum sit amet magna sit amet tristique. Vivamus
-                                rhoncus ac purus vitae convallis. Aliquam erat volutpat. Proin egestas, mauris ut semper
-                                semper, ipsum felis mattis ligula, et porttitor ante arcu nec ante. Aliquam congue est
-                                eu turpis sollicitudin, et ullamcorper tortor aliquam.”</p>
-                        </div>
-                    </div>
-                </div>
-                <!-- Testimonial (tab) -->
-                <div class="tab-pane fade" id="airbnb" role="tabpanel">
-                    <div class="row py-2 py-sm-1 py-md-3 py-lg-4 py-xl-5">
-                        <div class="col-md-4 col-lg-3 offset-lg-1 mb-3 mb-md-0">
-                            <img alt="Ralph Edwards" class="d-block rounded-circle mb-3"
-                                 src="{{ config.ASSETS_ROOT }}/img/avatar/16.jpg" width="86"/>
-                            <h4 class="mb-0">Ralph Edwards</h4>
-                            <p class="fs-lg text-body-secondary mb-0">CEO, Co-Founder</p>
-                        </div>
-                        <div class="col-md-8 col-lg-7">
-                            <p class="text-dark lead mb-0">“Vestibulum faucibus lectus eget augue pharetra, quis semper
-                                lectus gravida. Vestibulum pretium in elit sed iaculis. Curabitur elementum turpis at
-                                ipsum molestie, id maximus odio tincidunt. Praesent id lacinia orci. Phasellus at varius
-                                arcu. Ut nec lobortis velit. Mauris vel risus quis lacus placerat fringilla.”</p>
-                        </div>
-                    </div>
-                </div>
-                <!-- Testimonial (tab) -->
-                <div class="tab-pane fade" id="starcraft" role="tabpanel">
-                    <div class="row py-2 py-sm-1 py-md-3 py-lg-4 py-xl-5">
-                        <div class="col-md-4 col-lg-3 offset-lg-1 mb-3 mb-md-0">
-                            <img alt="Jane Cooper" class="d-block rounded-circle mb-3"
-                                 src="{{ config.ASSETS_ROOT }}/img/avatar/17.jpg" width="86"/>
-                            <h4 class="mb-0">Jane Cooper</h4>
-                            <p class="fs-lg text-body-secondary mb-0">Strategic Advisor</p>
-                        </div>
-                        <div class="col-md-8 col-lg-7">
-                            <p class="text-dark lead mb-0">“Morbi at fermentum enim, pulvinar malesuada quam. Morbi sit
-                                amet tellus luctus, vulputate arcu nec, consectetur diam. Proin est lacus, interdum ac
-                                aliquam sit amet, aliquam eget leo. Donec condimentum erat quam, tincidunt tempus augue
-                                consectetur a. Donec quis purus dictum, iaculis mi fringilla.”</p>
-                        </div>
-                    </div>
-                </div>
-                <!-- Testimonial (tab) -->
-                <div class="tab-pane fade" id="alpine" role="tabpanel">
-                    <div class="row py-2 py-sm-1 py-md-3 py-lg-4 py-xl-5">
-                        <div class="col-md-4 col-lg-3 offset-lg-1 mb-3 mb-md-0">
-                            <img alt="Albert Flores" class="d-block rounded-circle mb-3"
-                                 src="{{ config.ASSETS_ROOT }}/img/avatar/18.jpg" width="86"/>
-                            <h4 class="mb-0">Albert Flores</h4>
-                            <p class="fs-lg text-body-secondary mb-0">Business Analyst</p>
-                        </div>
-                        <div class="col-md-8 col-lg-7">
-                            <p class="text-dark lead mb-0">“Phasellus at varius arcu. Ut nec lobortis velit. Mauris vel
-                                risus quis lacus placerat fringilla. Aliquam congue risus tortor, sed posuere leo
-                                faucibus sed. Orci varius natoque penatibus et magnis dis parturient montes, nascetur
-                                ridiculus mus. Ut dui ante, rutrum eget vehicula sed.”</p>
+                    <div class="col-sm-4">
+                        <div class="card h-100 border shadow-sm">
+                            <div class="card-body p-4">
+                                <h3 class="h6 mb-1">Care Premium</h3>
+                                <div class="h5 mb-3">2 000 kr<span class="fs-sm fw-normal text-body-secondary">/mån</span></div>
+                                <p class="fs-sm text-body-secondary mb-0">Allt i Growth plus månatlig
+                                    förbättring, SEO-koll, konverteringsförslag och mer support.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    <!-- Tools -->
-    <section class="container overflow-hidden py-5 mt-2 mt-sm-3 my-2 my-lg-4 my-xl-5">
-        <div class="row align-items-center pb-1 pb-sm-3 pb-md-4">
-            <div class="col-md-5 text-center text-md-start pe-md-5 pe-lg-0 pe-xxl-4 ps-xl-5 mb-5 mb-md-0">
-                <h2 class="h1 pb-3 pb-xl-2 mb-lg-4 mb-xl-5">Join Around with your favorite tools that you use daily and
-                    keep things on track</h2>
-                <a class="btn btn-primary" href="#">See all integrations</a>
-            </div>
-            <div class="col-md-7 col-lg-6 offset-lg-1">
-                <div class="position-relative mx-auto" style="max-width: 510px;">
-                    <img alt="Circle" class="d-block d-dark-mode-none"
-                         src="{{ config.ASSETS_ROOT }}/img/landing/saas-2/tools/circle-gray-1.png"
-                         style="animation: rotate-cw 100s linear infinite;"/>
-                    <img alt="Circle" class="d-none d-dark-mode-block"
-                         src="{{ config.ASSETS_ROOT }}/img/landing/saas-2/tools/circle-light-1.png"
-                         style="animation: rotate-cw 100s linear infinite;"/>
-                    <img alt="Circle" class="d-block d-dark-mode-none position-absolute top-0 start-0"
-                         src="{{ config.ASSETS_ROOT }}/img/landing/saas-2/tools/circle-gray-2.png"
-                         style="animation: rotate-ccw 50s linear infinite;"/>
-                    <img alt="Circle" class="d-none d-dark-mode-block position-absolute top-0 start-0"
-                         src="{{ config.ASSETS_ROOT }}/img/landing/saas-2/tools/circle-light-2.png"
-                         style="animation: rotate-ccw 50s linear infinite;"/>
-                    <img alt="Icon" class="position-absolute top-0 start-0 z-2" data-aos="fade" data-aos-delay="1200"
-                         data-aos-duration="600" data-aos-offset="250"
-                         src="{{ config.ASSETS_ROOT }}/img/landing/saas-2/tools/icon-1.png"/>
-                    <img alt="Icon" class="position-absolute top-0 start-0 z-2" data-aos="fade" data-aos-delay="450"
-                         data-aos-duration="600" data-aos-offset="250"
-                         src="{{ config.ASSETS_ROOT }}/img/landing/saas-2/tools/icon-2.png"/>
-                    <img alt="Icon" class="position-absolute top-0 start-0 z-2" data-aos="fade" data-aos-delay="600"
-                         data-aos-duration="600" data-aos-offset="250"
-                         src="{{ config.ASSETS_ROOT }}/img/landing/saas-2/tools/icon-3.png"/>
-                    <img alt="Icon" class="position-absolute top-0 start-0 z-2" data-aos="fade" data-aos-delay="750"
-                         data-aos-duration="600" data-aos-offset="250"
-                         src="{{ config.ASSETS_ROOT }}/img/landing/saas-2/tools/icon-4.png"/>
-                    <img alt="Icon" class="position-absolute top-0 start-0 z-2" data-aos="fade" data-aos-delay="900"
-                         data-aos-duration="600" data-aos-offset="250"
-                         src="{{ config.ASSETS_ROOT }}/img/landing/saas-2/tools/icon-5.png"/>
-                    <img alt="Icon" class="position-absolute top-0 start-0 z-2" data-aos="fade" data-aos-delay="1050"
-                         data-aos-duration="600" data-aos-offset="250"
-                         src="{{ config.ASSETS_ROOT }}/img/landing/saas-2/tools/icon-6.png"/>
-                    <img alt="Icon" class="position-absolute top-0 start-0 z-2" data-aos="zoom-in"
-                         data-aos-duration="600" data-aos-offset="250"
-                         src="{{ config.ASSETS_ROOT }}/img/landing/saas-2/tools/icon-7.png"/>
-                    <img alt="Icon" class="position-absolute top-0 start-0 z-2" data-aos="zoom-in" data-aos-delay="150"
-                         data-aos-duration="600" data-aos-offset="250"
-                         src="{{ config.ASSETS_ROOT }}/img/landing/saas-2/tools/icon-8.png"/>
-                    <img alt="Icon" class="position-absolute top-0 start-0 z-2" data-aos="zoom-in" data-aos-delay="300"
-                         data-aos-duration="600" data-aos-offset="250"
-                         src="{{ config.ASSETS_ROOT }}/img/landing/saas-2/tools/icon-9.png"/>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- FAQ (Accordion) -->
-    <section class="bg-secondary py-5">
-        <div class="container py-lg-3 py-xl-5">
-            <div class="row pt-1 pb-2 py-sm-4">
-                <div class="col-md-4 text-center text-md-start">
-                    <h2 class="h1">Any questions? Check out the FAQ</h2>
-                    <p class="pb-3 pb-sm-4">Et felis vitae ac venenatis lacus cras etiam risus scelerisque auctor
-                        adipiscing in a porta</p>
-                    <div class="d-none d-md-flex justify-content-center">
-                        <svg class="text-warning ms-n4" fill="none" height="211" viewbox="0 0 200 211" width="200"
-                             xmlns="http://www.w3.org/2000/svg">
-                            <path d="M198.804 194.488C189.279 189.596 179.529 185.52 169.407 182.07L169.384 182.049C169.227 181.994 169.07 181.939 168.912 181.884C166.669 181.139 165.906 184.546 167.669 185.615C174.053 189.473 182.761 191.837 189.146 195.695C156.603 195.912 119.781 196.591 91.266 179.049C62.5221 161.368 48.1094 130.695 56.934 98.891C84.5539 98.7247 112.556 84.0176 129.508 62.667C136.396 53.9724 146.193 35.1448 129.773 30.2717C114.292 25.6624 93.7109 41.8875 83.1971 51.3147C70.1109 63.039 59.63 78.433 54.2039 95.0087C52.1221 94.9842 50.0776 94.8683 48.0703 94.6608C30.1803 92.8027 11.2197 83.6338 5.44902 65.1074C-1.88449 41.5699 14.4994 19.0183 27.9202 1.56641C28.6411 0.625793 27.2862 -0.561638 26.5419 0.358501C13.4588 16.4098 -0.221091 34.5242 0.896608 56.5659C1.8218 74.6941 14.221 87.9401 30.4121 94.2058C37.7076 97.0203 45.3454 98.5003 53.0334 98.8449C47.8679 117.532 49.2961 137.487 60.7729 155.283C87.7615 197.081 139.616 201.147 184.786 201.155L174.332 206.827C172.119 208.033 174.345 211.287 176.537 210.105C182.06 207.125 187.582 204.122 193.084 201.144C193.346 201.147 195.161 199.887 195.423 199.868C197.08 198.548 193.084 201.144 195.528 199.81C196.688 199.192 197.846 198.552 199.006 197.935C200.397 197.167 200.007 195.087 198.804 194.488ZM60.8213 88.0427C67.6894 72.648 78.8538 59.1566 92.1207 49.0388C98.8475 43.9065 106.334 39.2953 114.188 36.1439C117.295 34.8947 120.798 33.6609 124.168 33.635C134.365 33.5511 136.354 42.9911 132.638 51.031C120.47 77.4222 86.8639 93.9837 58.0983 94.9666C58.8971 92.6666 59.783 90.3603 60.8213 88.0427Z"
-                                  fill="currentColor"></path>
-                        </svg>
-                    </div>
-                </div>
-                <div class="col-md-8 col-lg-7 offset-lg-1">
-                    <div class="accordion" id="faq">
-                        <div class="accordion-item bg-light">
-                            <h3 class="accordion-header" id="headingOne">
-                                <button aria-controls="questionOne" aria-expanded="true" class="accordion-button"
-                                        data-bs-target="#questionOne" data-bs-toggle="collapse" type="button">Is there a
-                                    free trial?
-                                </button>
-                            </h3>
-                            <div aria-labelledby="headingOne" class="accordion-collapse collapse show"
-                                 data-bs-parent="#faq" id="questionOne">
-                                <div class="accordion-body fs-sm">Adipiscing sagittis neque egestas id platea accumsan.
-                                    Morbi inpa platea urna curabitur habitant pulvinar lacinia neque. Netus gravida
-                                    amet, aliquam quam turpis aliquet cras. Find aute irure dolor in reprehenderit
-                                    voluptate velit esse cillum dolore eu nulla pariatur. Sit amet, adipiscing elit.
-                                </div>
-                            </div>
-                        </div>
-                        <div class="accordion-item bg-light">
-                            <h3 class="accordion-header" id="headingTwo">
-                                <button aria-controls="questionTwo" aria-expanded="false"
-                                        class="accordion-button collapsed" data-bs-target="#questionTwo"
-                                        data-bs-toggle="collapse" type="button">How do refunds work?
-                                </button>
-                            </h3>
-                            <div aria-labelledby="headingTwo" class="accordion-collapse collapse" data-bs-parent="#faq"
-                                 id="questionTwo">
-                                <div class="accordion-body fs-sm">Quisque rutrum sit amet magna sit amet tristique.
-                                    Vivamus rhoncus ac purus vitae convallis. Aliquam erat volutpat. Proin egestas,
-                                    mauris ut semper semper, ipsum felis mattis ligula, et porttitor ante arcu nec ante.
-                                    Aliquam congue est eu turpis sollicitudin, et ullamcorper tortor aliquam.
-                                </div>
-                            </div>
-                        </div>
-                        <div class="accordion-item bg-light">
-                            <h3 class="accordion-header" id="headingThree">
-                                <button aria-controls="questionThree" aria-expanded="false"
-                                        class="accordion-button collapsed" data-bs-target="#questionThree"
-                                        data-bs-toggle="collapse" type="button">Do you offer student discounts?
-                                </button>
-                            </h3>
-                            <div aria-labelledby="headingThree" class="accordion-collapse collapse"
-                                 data-bs-parent="#faq" id="questionThree">
-                                <div class="accordion-body fs-sm">Proin ac quam eget velit luctus tincidunt vel in nunc.
-                                    Maecenas cursus erat lacus, id interdum elit accumsan in. Mauris placerat dapibus
-                                    sem, condimentum interdum nulla varius ac. Mauris quam mauris, rhoncus et tortor
-                                    vel, tempus dignissim libero. Curabitur sed odio in odio elementum cursus.
-                                </div>
-                            </div>
-                        </div>
-                        <div class="accordion-item bg-light">
-                            <h3 class="accordion-header" id="headingFour">
-                                <button aria-controls="questionFour" aria-expanded="false"
-                                        class="accordion-button collapsed" data-bs-target="#questionFour"
-                                        data-bs-toggle="collapse" type="button">What happens if I run out of credit?
-                                </button>
-                            </h3>
-                            <div aria-labelledby="headingFour" class="accordion-collapse collapse" data-bs-parent="#faq"
-                                 id="questionFour">
-                                <div class="accordion-body fs-sm">Lorem ipsum dolor sit amet, consectetur adipiscing
-                                    elit. Integer ac pretium dui. Aliquam rutrum justo lorem, in efficitur odio
-                                    efficitur vel. Integer mattis, neque malesuada sagittis porttitor, enim tortor
-                                    ullamcorper diam, id eleifend sem mauris at turpis. Curabitur sed nisi nec ligula
-                                    dictum.
-                                </div>
-                            </div>
-                        </div>
-                        <div class="accordion-item bg-light">
-                            <h3 class="accordion-header" id="headingFive">
-                                <button aria-controls="questionFive" aria-expanded="false"
-                                        class="accordion-button collapsed" data-bs-target="#questionFive"
-                                        data-bs-toggle="collapse" type="button">Do you have monthly and yearly billing
-                                    options?
-                                </button>
-                            </h3>
-                            <div aria-labelledby="headingFive" class="accordion-collapse collapse" data-bs-parent="#faq"
-                                 id="questionFive">
-                                <div class="accordion-body fs-sm">Vestibulum faucibus lectus eget augue pharetra, quis
-                                    semper lectus gravida. Vestibulum pretium in elit sed iaculis. Curabitur elementum
-                                    turpis at ipsum molestie, id maximus odio tincidunt. Praesent id lacinia orci.
-                                    Phasellus at varius arcu. Ut nec lobortis velit.
-                                </div>
-                            </div>
-                        </div>
-                        <div class="accordion-item bg-light">
-                            <h3 class="accordion-header" id="headingSix">
-                                <button aria-controls="questionSix" aria-expanded="false"
-                                        class="accordion-button collapsed" data-bs-target="#questionSix"
-                                        data-bs-toggle="collapse" type="button">What happens when I change plans?
-                                </button>
-                            </h3>
-                            <div aria-labelledby="headingSix" class="accordion-collapse collapse" data-bs-parent="#faq"
-                                 id="questionSix">
-                                <div class="accordion-body fs-sm">Nunc non placerat mi, sit amet hendrerit lacus.
-                                    Quisque cursus lorem vitae placerat ultrices. Morbi ut orci sit amet quam vulputate
-                                    lobortis. Donec vulputate mi nec nisi tincidunt commodo. Nullam efficitur tincidunt
-                                    tellus accumsan pellentesque. Suspendisse elementum blandit orci.
-                                </div>
-                            </div>
-                        </div>
-                        <div class="accordion-item bg-light">
-                            <h3 class="accordion-header" id="headingSeven">
-                                <button aria-controls="questionSeven" aria-expanded="false"
-                                        class="accordion-button collapsed" data-bs-target="#questionSeven"
-                                        data-bs-toggle="collapse" type="button">How do I cancel my paid plan?
-                                </button>
-                            </h3>
-                            <div aria-labelledby="headingSeven" class="accordion-collapse collapse"
-                                 data-bs-parent="#faq" id="questionSeven">
-                                <div class="accordion-body fs-sm">Morbi a consequat diam. Fusce sit amet faucibus erat.
-                                    Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos
-                                    himenaeos. Quisque id est dictum, suscipit neque id, ornare nibh. Cras lacinia, est
-                                    non ultrices porttitor, arcu orci rhoncus leo, egestas condimentum lorem.
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
+    <!-- CTA -->
+    <section class="bg-primary py-5" data-bs-theme="dark">
+        <div class="container text-center py-lg-2 py-xl-4">
+            <h2 class="display-5 mb-3">Osäker på vilket paket som passar?</h2>
+            <p class="fs-lg text-body pb-4 mb-2 mx-auto" style="max-width: 560px;">
+                Berätta kort om ditt projekt så hör jag av mig med ett förslag och fast pris. Kostnadsfritt
+                och utan förpliktelser.</p>
+            <a class="btn btn-lg btn-warning" href="/contacts-v1">Boka ett samtal</a>
         </div>
     </section>
 </main>
-<!-- Footer -->
-<footer class="footer bg-dark py-5" data-bs-theme="dark">
-    <div class="container pt-md-2 pt-lg-3 pt-xl-4">
-        <div class="row pb-5 pt-sm-2 mb-lg-2">
-            <div class="col-md-4 col-lg-3 pb-2 pb-md-0 mb-4 mb-md-0">
-                <a class="navbar-brand py-0 mb-3 mb-md-4" href="/">
-<span class="text-primary flex-shrink-0 me-2">
-<svg height="32" version="1.1" viewbox="0 0 36 33" width="35" xmlns="http://www.w3.org/2000/svg">
-<path d="M35.6,29c-1.1,3.4-5.4,4.4-7.9,1.9c-2.3-2.2-6.1-3.7-9.4-3.7c-3.1,0-7.5,1.8-10,4.1c-2.2,2-5.8,1.5-7.3-1.1c-1-1.8-1.2-4.1,0-6.2l0.6-1.1l0,0c0.6-0.7,4.4-5.2,12.5-5.7c0.5,1.8,2,3.1,3.9,3.1c2.2,0,4.1-1.9,4.1-4.2s-1.8-4.2-4.1-4.2c-2,0-3.6,1.4-4,3.3H7.7c-0.8,0-1.3-0.9-0.9-1.6l5.6-9.8c2.5-4.5,8.8-4.5,11.3,0L35.1,24C36,25.7,36.1,27.5,35.6,29z"
-      fill="currentColor"></path>
-</svg>
-</span>
-                    <span class="text-white opacity-90">Around</span>
-                </a>
-                <p class="text-body fs-sm pb-2 pb-md-3 mb-3">Tellus non diam morbi quam vel venenatis proin sed. Dolor
-                    elementum nunc dictum interdum amet arcu aenean eu integer</p>
-                <div class="d-flex gap-3">
-                    <a aria-label="Facebook" class="btn btn-icon btn-sm btn-secondary btn-facebook rounded-circle"
-                       href="#">
-                        <i class="ai-facebook"></i>
-                    </a>
-                    <a aria-label="Instagram" class="btn btn-icon btn-sm btn-secondary btn-instagram rounded-circle"
-                       href="#">
-                        <i class="ai-instagram"></i>
-                    </a>
-                    <a aria-label="LinkedIn" class="btn btn-icon btn-sm btn-secondary btn-linkedin rounded-circle"
-                       href="#">
-                        <i class="ai-linkedin"></i>
-                    </a>
-                </div>
-            </div>
-            <div class="col-md-8 col-lg-7 col-xl-6 offset-lg-2 offset-xl-3">
-                <div class="row row-cols-1 row-cols-sm-3">
-                    <div class="col mb-4 mb-md-0">
-                        <h4 class="h6 fw-bold pb-lg-1">Company</h4>
-                        <ul class="nav flex-column">
-                            <li><a class="nav-link fw-normal py-1 px-0" href="#">Features</a></li>
-                            <li><a class="nav-link fw-normal py-1 px-0" href="#">Reviews</a></li>
-                            <li><a class="nav-link fw-normal py-1 px-0" href="#">How it works</a></li>
-                            <li><a class="nav-link fw-normal py-1 px-0" href="#">Pricing</a></li>
-                        </ul>
-                    </div>
-                    <div class="col mb-4 mb-md-0">
-                        <h4 class="h6 fw-bold pb-lg-1">Support</h4>
-                        <ul class="nav flex-column">
-                            <li><a class="nav-link fw-normal py-1 px-0" href="#">Help center</a></li>
-                            <li><a class="nav-link fw-normal py-1 px-0" href="#">Terms of service</a></li>
-                            <li><a class="nav-link fw-normal py-1 px-0" href="#">Legal</a></li>
-                            <li><a class="nav-link fw-normal py-1 px-0" href="#">Privacy policy</a></li>
-                        </ul>
-                    </div>
-                    <div class="col">
-                        <h4 class="h6 fw-bold pb-2 mb-0 mb-lg-1">Install App</h4>
-                        <a class="btn btn-secondary px-3 py-2 mt-3 me-3 me-md-0" href="#">
-                            <img alt="App Store" class="mx-1 d-dark-mode-none"
-                                 src="{{ config.ASSETS_ROOT }}/img/market/appstore-dark.svg" width="120"/>
-                            <img alt="App Store" class="mx-1 d-none d-dark-mode-block"
-                                 src="{{ config.ASSETS_ROOT }}/img/market/appstore-light.svg" width="120"/>
-                        </a>
-                        <a class="btn btn-secondary px-3 py-2 mt-3 me-3 me-md-0" href="#">
-                            <img alt="Google Play" class="mx-1 d-dark-mode-none"
-                                 src="{{ config.ASSETS_ROOT }}/img/market/googleplay-dark.svg" width="119"/>
-                            <img alt="Google Play" class="mx-1 d-none d-dark-mode-block"
-                                 src="{{ config.ASSETS_ROOT }}/img/market/googleplay-light.svg" width="119"/>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <p class="nav fs-sm mb-0">
-            <span class="text-body-secondary">© All rights reserved. Made by</span>
-            <a class="nav-link fw-normal p-0 ms-1" href="https://coderthemes.com/" rel="noopener" target="_blank">Coderthemes</a>
-        </p>
-    </div>
-</footer>
 
+<!-- Footer -->
+{% include "partials/footer.html" %}
 
 {% include 'partials/back-to-top.html' %}
-
-
-<!-- Vendor scripts: JS libraries and plugins -->
-
-<!-- Bootstrap + Theme scripts -->
 {% endblock content %}
 
 {% block scripts %}
@@ -827,6 +245,5 @@
       }
     })()
 </script>
-<script src="{{ config.ASSETS_ROOT }}/vendor/aos/dist/aos.js"></script>
 <script src="{{ config.ASSETS_ROOT }}/js/theme.min.js"></script>
 {% endblock scripts %}
