@@ -22,14 +22,15 @@
         <div class="row align-items-center pb-2 pb-md-3">
             <div class="col-lg-6 pb-3 pb-lg-0">
                 <span class="badge bg-primary fs-sm mb-3">Webbapp · Utbildning</span>
-                <h1 class="display-5 mb-3">AskHackers</h1>
+                <h1 class="display-5 mb-3"><a class="monky-livelink" href="https://askhackers.se" target="_blank" rel="noopener">AskHackers</a></h1>
                 <p class="fs-lg text-body-secondary mb-0" style="max-width: 480px;">
                     Lär dig Python på svenska genom att bygga spelet Snake, en byggsten i taget.</p>
             </div>
             <div class="col-lg-6">
-                <img class="d-block w-100 rounded-5" alt="AskHackers – övningsterminalen" style="cursor: zoom-in;"
-                     data-bs-toggle="modal" data-bs-target="#askhackersImgModal"
-                     src="{{ config.ASSETS_ROOT }}/img/cases/askhackers-terminal.webp"/>
+                <a class="monky-loghover d-block" href="https://askhackers.se" target="_blank" rel="noopener" aria-label="Öppna AskHackers live i ny flik">
+                    <img class="d-block w-100 rounded-5" alt="AskHackers – övningsterminalen"
+                         src="{{ config.ASSETS_ROOT }}/img/cases/askhackers-terminal.webp"/>
+                </a>
             </div>
         </div>
     </section>
@@ -61,24 +62,14 @@
                     man kör fast, samt profiler och progress så man ser var man är. Innehållet är uppdelat i
                     nivåer, från grunderna och uppåt.</p>
 
-                <div class="pt-4 mt-2">
+                <div class="pt-4 mt-2 d-flex flex-wrap gap-3">
+                    <a class="btn btn-primary" href="https://askhackers.se" target="_blank" rel="noopener">Besök sidan live ↗</a>
                     <a class="btn btn-outline-primary" href="/portfolio-grid-v1">← Tillbaka till portfolio</a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Image zoom popup -->
-    <div class="modal fade" id="askhackersImgModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-xl modal-dialog-centered">
-            <div class="modal-content bg-transparent border-0 shadow-none">
-                <button type="button" class="btn-close btn-close-white position-absolute top-0 end-0 m-3 z-3"
-                        data-bs-dismiss="modal" aria-label="Stäng"></button>
-                <img class="img-fluid rounded-4" alt="AskHackers – övningsterminalen"
-                     src="{{ config.ASSETS_ROOT }}/img/cases/askhackers-terminal.webp"/>
-            </div>
-        </div>
-    </div>
 </main>
 
 <!-- Footer -->

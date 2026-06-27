@@ -439,3 +439,24 @@
   padding: .35rem;
   border-radius: 1.2rem;
 }
+
+/* Klickbara projekt-lankar till live-sidor + hover-kansla */
+.monky-livelink {
+  color: inherit;
+  text-decoration: none;
+  transition: color .15s ease;
+}
+.monky-livelink:hover,
+.monky-livelink:focus {
+  color: #1f9457;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.monky-loghover {
+  display: inline-block;
+  transition: opacity .15s ease, transform .15s ease;
+}
+.monky-loghover:hover {
+  opacity: .82;
+  transform: translateY(-2px);
+}
