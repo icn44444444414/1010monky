@@ -459,7 +459,7 @@
   transform: translateY(-2px);
 }
 
-/* Grön scroll-progress langst upp (KIKAB-stil, gron) */
+/* Grön scroll-progress (KIKAB-stil, gron) */
 .scroll-progress {
   position: fixed;
   top: 0;
@@ -471,6 +471,16 @@
   background: linear-gradient(90deg, #1f9457, #34d399);
   z-index: 2000;
   pointer-events: none;
+}
+
+/* När baren ligger i navbaren: sitt vid navbarens UNDERKANT, inte över den */
+.scroll-progress--in-nav {
+  position: absolute;
+  top: auto;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 5;
 }
 
 /* Scroll-reveal (avsloja ett i taget) */

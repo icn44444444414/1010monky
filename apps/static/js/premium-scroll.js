@@ -51,11 +51,17 @@
     els.forEach(function (el) { io.observe(el); });
   }
 
-  // Grön scroll-progress längst upp
+  // Grön scroll-progress — fäst vid navbarens underkant (under headern), inte över
   var bar = document.createElement("div");
   bar.className = "scroll-progress";
   bar.setAttribute("aria-hidden", "true");
-  document.body.appendChild(bar);
+  var navbar = document.querySelector(".navbar.fixed-top") || document.querySelector("header.navbar");
+  if (navbar) {
+    bar.classList.add("scroll-progress--in-nav");
+    navbar.appendChild(bar);
+  } else {
+    document.body.appendChild(bar);
+  }
 
   var ticking = false;
   function onScroll() {
