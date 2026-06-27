@@ -4,8 +4,24 @@ import smtplib
 from email.message import EmailMessage
 
 from apps.pages import blueprint
-from flask import render_template, request, jsonify
+from flask import render_template, request, jsonify, Response
 from jinja2 import TemplateNotFound
+
+SITE_URL = 'https://1010monky.se'
+
+# Indexerbara sidor for sitemap (utan tema-skrap/felsidor/tom blogg)
+SITEMAP_PATHS = [
+    ('/', '1.0'),
+    ('/services-v1', '0.9'),
+    ('/pricing', '0.9'),
+    ('/portfolio-grid-v1', '0.7'),
+    ('/portfolio-single-v1', '0.6'),
+    ('/portfolio-single-askhackers', '0.6'),
+    ('/about-agency', '0.6'),
+    ('/contacts-v1', '0.8'),
+    ('/villkor', '0.3'),
+    ('/integritetspolicy', '0.3'),
+]
 
 CONTACT_TO = os.getenv('CONTACT_TO', 'info@1010monky.se')
 CONTACT_LOG = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'contact_submissions.log')
@@ -21,6 +37,31 @@ SMTP_FROM = os.getenv('SMTP_FROM') or SMTP_USER or CONTACT_TO
 def index():
 
     return render_template('pages/landing-web-studio.html', segment='index')
+
+
+@blueprint.route('/robots.txt')
+def robots_txt():
+    body = (
+        "User-agent: *\n"
+        "Allow: /\n"
+        f"Sitemap: {SITE_URL}/sitemap.xml\n"
+    )
+    return Response(body, mimetype='text/plain')
+
+
+@blueprint.route('/sitemap.xml')
+def sitemap_xml():
+    urls = "".join(
+        f"  <url><loc>{SITE_URL}{path}</loc><priority>{prio}</priority></url>\n"
+        for path, prio in SITEMAP_PATHS
+    )
+    xml = (
+        '<?xml version="1.0" encoding="UTF-8"?>\n'
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+        f"{urls}"
+        "</urlset>\n"
+    )
+    return Response(xml, mimetype='application/xml')
 
 
 @blueprint.route('/api/contact', methods=['POST'])

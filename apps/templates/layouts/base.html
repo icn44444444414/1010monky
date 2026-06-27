@@ -4,14 +4,29 @@
 <head>
     <meta charset="utf-8">
 
-    <!-- Viewport -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover">
-    
+    <!-- Viewport (tillåt zoom: ingen maximum-scale = bättre a11y + Googles mobilkrav) -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
     <!-- SEO meta tags -->
     <title>{% block title %}{% endblock %} | 1010monky Studio</title>
-    <meta name="description" content="1010monky Studio bygger snabba, moderna och sökoptimerade webbsidor med WordPress, Python och JavaScript.">
-    <meta name="keywords" content="1010monky, webbyrå, WordPress, Python, JavaScript, webbutveckling, hemsida, SEO, UI design">
+    <meta name="description" content="{% block meta_description %}1010monky Studio är en webbyrå i Eskilstuna som bygger snabba, sökoptimerade hemsidor i WordPress och skräddarsydd kod – för företag i Sverige och Finland.{% endblock %}">
     <meta name="author" content="1010monky Studio">
+
+    <!-- Canonical -->
+    <link rel="canonical" href="https://1010monky.se{{ request.path }}">
+
+    <!-- Open Graph / Twitter (titel + beskrivning ärvs per sida från blocken ovan) -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="1010monky Studio">
+    <meta property="og:locale" content="sv_SE">
+    <meta property="og:title" content="{{ self.title() }} | 1010monky Studio">
+    <meta property="og:description" content="{{ self.meta_description() }}">
+    <meta property="og:url" content="https://1010monky.se{{ request.path }}">
+    <meta property="og:image" content="https://1010monky.se{{ config.ASSETS_ROOT }}/img/og-default.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ self.title() }} | 1010monky Studio">
+    <meta name="twitter:description" content="{{ self.meta_description() }}">
+    <meta name="twitter:image" content="https://1010monky.se{{ config.ASSETS_ROOT }}/img/og-default.png">
 
     <!-- Webmanifest + Favicon / App icons -->
     <link rel="manifest" href="{{ config.ASSETS_ROOT }}/js/manifest.json">
