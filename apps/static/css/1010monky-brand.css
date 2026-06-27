@@ -127,15 +127,13 @@
 
 /* Translucent glass navbar (light + dark) */
 .monky-navbar-glass {
-  background: rgba(255, 255, 255, .80) !important;
-  -webkit-backdrop-filter: saturate(155%) blur(14px);
-  backdrop-filter: saturate(155%) blur(14px);
-  border-bottom: 1px solid rgba(17, 20, 23, .06);
+  background: #ffffff !important;
+  border-bottom: 1px solid rgba(17, 20, 23, .08);
   box-shadow: 0 6px 22px rgba(17, 20, 23, .06);
 }
 
 [data-bs-theme="dark"] .monky-navbar-glass {
-  background: rgba(18, 21, 25, .78) !important;
+  background: #121519 !important;
   border-bottom-color: rgba(255, 255, 255, .08);
   box-shadow: 0 8px 26px rgba(0, 0, 0, .28);
 }
