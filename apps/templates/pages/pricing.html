@@ -1,250 +1,201 @@
-{% extends 'layouts/base.html' %}
+{% extends 'layouts/clean.html' %}
 
-{% block title %}Priser – vad kostar en hemsida?{% endblock %}
+{% block title %}Priser – vad kostar en hemsida? Fasta paket från 5 000 kr{% endblock %}
+{% block meta_description %}Vad kostar en hemsida 2026? Fasta paket: enkel sida 5 000 kr, företagssida 12 000 kr, premium skräddarsydd 28 000 kr (ex moms). Se vad som ingår och räkna ut ditt pris.{% endblock %}
+
+{% block styles %}
+<style>
+  .pkg { display: flex; flex-direction: column; height: 100%; }
+  .pkg--popular { border: 2px solid var(--accent); position: relative; }
+  .pkg-badge { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--accent); color: #fff; font-size: var(--text-xs); font-weight: var(--fw-semibold); padding: 3px 12px; border-radius: var(--radius-pill); }
+  .pkg-price { font-family: var(--font-display); font-size: var(--text-3xl); font-weight: var(--fw-bold); margin-block: var(--space-3) var(--space-4); }
+  .pkg-price small { font-size: var(--text-sm); font-weight: var(--fw-regular); color: var(--text-muted); }
+  .pkg-list { list-style: none; padding: 0; margin: 0 0 var(--space-5); display: flex; flex-direction: column; gap: var(--space-2); font-size: var(--text-sm); }
+  .pkg-list li { display: flex; gap: .5rem; color: var(--text-secondary); }
+  .pkg-list li::before { content: "✓"; color: var(--accent); font-weight: var(--fw-bold); flex: 0 0 auto; }
+</style>
+{% endblock %}
+
+{% block jsonld %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    { "@type": "BreadcrumbList", "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Hem", "item": "https://1010monky.se/" },
+      { "@type": "ListItem", "position": 2, "name": "Priser", "item": "https://1010monky.se/pricing" }
+    ]},
+    { "@type": "OfferCatalog", "name": "Webbpaket – 1010monky Studio", "itemListElement": [
+      { "@type": "Offer", "name": "Starter Företag", "price": "5000", "priceCurrency": "SEK", "description": "Enkel sida / one-page, WordPress eller skräddarsydd HTML." },
+      { "@type": "Offer", "name": "Business Medium", "price": "12000", "priceCurrency": "SEK", "description": "Komplett WordPress-sida, 4–6 sidor, SEO-grund." },
+      { "@type": "Offer", "name": "Premium Skräddarsydd", "price": "28000", "priceCurrency": "SEK", "description": "Skräddarsydd webb, 8–12 sidor, premiumdesign." }
+    ]},
+    { "@type": "FAQPage", "mainEntity": [
+      { "@type": "Question", "name": "Vad kostar en hemsida?", "acceptedAnswer": { "@type": "Answer", "text": "Hos mig börjar en enkel sida på 5 000 kr, en företagssida på 12 000 kr och en premium skräddarsydd på 28 000 kr, alla ex moms. Du får alltid ett fast pris innan vi börjar." } },
+      { "@type": "Question", "name": "Vad ingår i priset?", "acceptedAnswer": { "@type": "Answer", "text": "WordPress eller skräddarsydd kod, mobilanpassad design, grundläggande SEO, Google Analytics och lanseringshjälp. Exakt vad som ingår per paket ser du i jämförelsetabellen." } },
+      { "@type": "Question", "name": "Hur lång tid tar det att bygga en hemsida?", "acceptedAnswer": { "@type": "Answer", "text": "En enkel sida tar oftast 1–2 veckor, en företagssida 2–4 veckor. Vi sätter en tidsplan tillsammans." } },
+      { "@type": "Question", "name": "Kan jag ändra på sidan själv efteråt?", "acceptedAnswer": { "@type": "Answer", "text": "Ja. WordPress-sidor kan du uppdatera själv, och jag erbjuder månadspaket (Care) om du vill att jag sköter drift och underhåll." } }
+    ]}
+  ]
+}
+</script>
+{% endblock %}
 
 {% block content %}
-<!-- Page loading spinner -->
-{% include 'partials/loader.html' %}
-<!-- Page wrapper -->
-<main class="page-wrapper">
-    <!-- Navbar -->
-    {% include "partials/navbar.html" %}
+<section class="section section-alt">
+  <div class="container" style="max-width: 60ch;">
+    <span class="eyebrow">Priser</span>
+    <h1 style="margin-block: var(--space-3);">Vad kostar <span class="text-gradient">din hemsida?</span></h1>
+    <p class="lead">Personlig frilansare med webbyråkänsla – WordPress, design och skräddarsydd kod i samma paket, till fast pris. Alla priser ex. moms.</p>
+    <div class="cluster" style="margin-top: var(--space-5);">
+      <a class="btn btn-primary" href="/priskalkylator">Räkna ut ditt pris</a>
+      <a class="btn btn-ghost" href="/contacts-v1">Få offert</a>
+    </div>
+  </div>
+</section>
 
-    <!-- Hero -->
-    <section class="container text-center pt-5 mt-5">
-        <h1 class="page-title pt-lg-3 pb-2">Priser</h1>
-        <p class="fs-lg text-body-secondary mx-auto mb-2" style="max-width: 620px;">
-            Personlig frilansare med webbyråkänsla. WordPress, design och skräddarsydd kod i samma paket,
-            till fast pris.</p>
-        <p class="fs-sm text-body-secondary mb-0">Alla priser anges ex. moms.</p>
-    </section>
+<!-- Paket -->
+<section class="section">
+  <div class="container">
+    <div class="grid grid-3">
+      <div class="card pkg">
+        <h2 class="h4">Starter Företag</h2>
+        <p class="text-secondary text-sm">För nystartade företag som behöver en snygg första webbnärvaro.</p>
+        <div class="pkg-price">5 000 kr <small>ex. moms</small></div>
+        <ul class="pkg-list">
+          <li>WordPress eller enkel skräddarsydd sida</li><li>1 sida / one-page</li><li>Mobilanpassad design</li>
+          <li>Kontaktformulär</li><li>Google Analytics</li><li>Grundläggande SEO</li><li>Favicon &amp; varumärke</li>
+          <li>Bildoptimering</li><li>Lanseringshjälp</li><li>1 korrekturrunda</li>
+        </ul>
+        <a class="btn btn-outline" style="margin-top:auto;" href="/contacts-v1">Få offert</a>
+      </div>
 
-    <!-- Packages -->
-    <section class="container pt-4 pt-lg-5 pb-5 mb-md-2 mb-lg-3">
-        <div class="row g-4 justify-content-center align-items-stretch">
-            <!-- Starter -->
-            <div class="col-md-6 col-lg-4">
-                <div class="card h-100 border shadow-sm">
-                    <div class="card-body p-4 p-xl-5 d-flex flex-column">
-                        <h2 class="h4 mb-1">Starter Företag</h2>
-                        <p class="fs-sm text-body-secondary">För nystartade företag som behöver en snygg,
-                            seriös första webbnärvaro.</p>
-                        <div class="h2 mb-4">5 000 kr <span class="fs-sm fw-normal text-body-secondary">ex. moms</span></div>
-                        <ul class="list-unstyled fs-sm mb-4">
-                            <li class="d-flex mb-2"><i class="ai-check-alt text-primary me-2"></i>WordPress eller enkel skräddarsydd HTML-sida</li>
-                            <li class="d-flex mb-2"><i class="ai-check-alt text-primary me-2"></i>1 sida / one-page</li>
-                            <li class="d-flex mb-2"><i class="ai-check-alt text-primary me-2"></i>Mobilanpassad design</li>
-                            <li class="d-flex mb-2"><i class="ai-check-alt text-primary me-2"></i>Kontaktformulär</li>
-                            <li class="d-flex mb-2"><i class="ai-check-alt text-primary me-2"></i>Google Analytics</li>
-                            <li class="d-flex mb-2"><i class="ai-check-alt text-primary me-2"></i>Grundläggande SEO</li>
-                            <li class="d-flex mb-2"><i class="ai-check-alt text-primary me-2"></i>Favicon och varumärkesanpassning</li>
-                            <li class="d-flex mb-2"><i class="ai-check-alt text-primary me-2"></i>Bildoptimering</li>
-                            <li class="d-flex mb-2"><i class="ai-check-alt text-primary me-2"></i>Lanseringshjälp</li>
-                            <li class="d-flex"><i class="ai-check-alt text-primary me-2"></i>1 korrekturrunda</li>
-                        </ul>
-                        <a class="btn btn-outline-primary mt-auto" href="/contacts-v1">Få offert</a>
-                    </div>
-                </div>
-            </div>
-            <!-- Business (highlighted) -->
-            <div class="col-md-6 col-lg-4">
-                <div class="card h-100 border-primary shadow position-relative">
-                    <span class="badge bg-primary position-absolute top-0 start-50 translate-middle">Populärast</span>
-                    <div class="card-body p-4 p-xl-5 d-flex flex-column">
-                        <h2 class="h4 mb-1">Business Medium</h2>
-                        <p class="fs-sm text-body-secondary">För företag som vill ha en komplett WordPress-sida
-                            med flera sidor, SEO-grund och tydlig kontaktväg.</p>
-                        <div class="h2 mb-4">12 000 kr <span class="fs-sm fw-normal text-body-secondary">ex. moms</span></div>
-                        <ul class="list-unstyled fs-sm mb-4">
-                            <li class="d-flex mb-2"><i class="ai-check-alt text-primary me-2"></i>WordPress-hemsida</li>
-                            <li class="d-flex mb-2"><i class="ai-check-alt text-primary me-2"></i>4–6 undersidor (start, tjänster, om oss, kontakt m.m.)</li>
-                            <li class="d-flex mb-2"><i class="ai-check-alt text-primary me-2"></i>Kontaktformulär</li>
-                            <li class="d-flex mb-2"><i class="ai-check-alt text-primary me-2"></i>Google Analytics 4</li>
-                            <li class="d-flex mb-2"><i class="ai-check-alt text-primary me-2"></i>Google Search Console</li>
-                            <li class="d-flex mb-2"><i class="ai-check-alt text-primary me-2"></i>Grundläggande SEO på varje sida</li>
-                            <li class="d-flex mb-2"><i class="ai-check-alt text-primary me-2"></i>Snabbhetsoptimering</li>
-                            <li class="d-flex mb-2"><i class="ai-check-alt text-primary me-2"></i>Säkerhetsplugin + backup-lösning</li>
-                            <li class="d-flex mb-2"><i class="ai-check-alt text-primary me-2"></i>Google Maps / sociala länkar</li>
-                            <li class="d-flex mb-2"><i class="ai-check-alt text-primary me-2"></i>2 korrekturrundor</li>
-                            <li class="d-flex"><i class="ai-check-alt text-primary me-2"></i>14 dagars support efter lansering</li>
-                        </ul>
-                        <a class="btn btn-primary mt-auto" href="/contacts-v1">Få offert</a>
-                    </div>
-                </div>
-            </div>
-            <!-- Premium -->
-            <div class="col-md-6 col-lg-4">
-                <div class="card h-100 border shadow-sm">
-                    <div class="card-body p-4 p-xl-5 d-flex flex-column">
-                        <h2 class="h4 mb-1">Premium Skräddarsydd</h2>
-                        <p class="fs-sm text-body-secondary">För företag som vill ha mer unik design, bättre
-                            struktur, case, konvertering och specialanpassningar.</p>
-                        <div class="h2 mb-4">28 000 kr <span class="fs-sm fw-normal text-body-secondary">ex. moms</span></div>
-                        <ul class="list-unstyled fs-sm mb-4">
-                            <li class="d-flex mb-2"><i class="ai-check-alt text-primary me-2"></i>Skräddarsydd WordPress eller specialbyggd webbsida</li>
-                            <li class="d-flex mb-2"><i class="ai-check-alt text-primary me-2"></i>8–12 sidor</li>
-                            <li class="d-flex mb-2"><i class="ai-check-alt text-primary me-2"></i>Premium UI-design med stark CTA</li>
-                            <li class="d-flex mb-2"><i class="ai-check-alt text-primary me-2"></i>Tjänstesidor optimerade för Google</li>
-                            <li class="d-flex mb-2"><i class="ai-check-alt text-primary me-2"></i>Case/portfolio-sektion</li>
-                            <li class="d-flex mb-2"><i class="ai-check-alt text-primary me-2"></i>Google Analytics 4 + Search Console</li>
-                            <li class="d-flex mb-2"><i class="ai-check-alt text-primary me-2"></i>Teknisk SEO-grund</li>
-                            <li class="d-flex mb-2"><i class="ai-check-alt text-primary me-2"></i>Snabbhets-, bild- och mediaoptimering</li>
-                            <li class="d-flex mb-2"><i class="ai-check-alt text-primary me-2"></i>Säkerhet, backup, SSL och cookie-banner</li>
-                            <li class="d-flex mb-2"><i class="ai-check-alt text-primary me-2"></i>Copy/text-polish</li>
-                            <li class="d-flex mb-2"><i class="ai-check-alt text-primary me-2"></i>3 korrekturrundor</li>
-                            <li class="d-flex"><i class="ai-check-alt text-primary me-2"></i>30 dagars support efter lansering</li>
-                        </ul>
-                        <a class="btn btn-outline-primary mt-auto" href="/contacts-v1">Få offert</a>
-                    </div>
-                </div>
-            </div>
+      <div class="card pkg pkg--popular">
+        <span class="pkg-badge">Populärast</span>
+        <h2 class="h4">Business Medium</h2>
+        <p class="text-secondary text-sm">Komplett WordPress-sida med flera sidor, SEO-grund och tydlig kontaktväg.</p>
+        <div class="pkg-price">12 000 kr <small>ex. moms</small></div>
+        <ul class="pkg-list">
+          <li>WordPress-hemsida</li><li>4–6 undersidor</li><li>Kontaktformulär</li><li>Google Analytics 4</li>
+          <li>Google Search Console</li><li>SEO på varje sida</li><li>Snabbhetsoptimering</li>
+          <li>Säkerhetsplugin + backup</li><li>Google Maps / sociala länkar</li><li>2 korrekturrundor</li><li>14 dagars support</li>
+        </ul>
+        <a class="btn btn-primary" style="margin-top:auto;" href="/contacts-v1">Få offert</a>
+      </div>
+
+      <div class="card pkg">
+        <h2 class="h4">Premium Skräddarsydd</h2>
+        <p class="text-secondary text-sm">Unik design, bättre struktur, case och konvertering.</p>
+        <div class="pkg-price">28 000 kr <small>ex. moms</small></div>
+        <ul class="pkg-list">
+          <li>Skräddarsydd WordPress eller specialbyggd</li><li>8–12 sidor</li><li>Premium UI med stark CTA</li>
+          <li>Tjänstesidor optimerade för Google</li><li>Case/portfolio-sektion</li><li>GA4 + Search Console</li>
+          <li>Teknisk SEO-grund</li><li>Snabbhets- &amp; mediaoptimering</li><li>Säkerhet, backup, SSL, cookie-banner</li>
+          <li>Copy/text-polish</li><li>3 korrekturrundor</li><li>30 dagars support</li>
+        </ul>
+        <a class="btn btn-outline" style="margin-top:auto;" href="/contacts-v1">Få offert</a>
+      </div>
+    </div>
+
+    <div class="surface-2 rounded-lg" style="padding: var(--space-6); margin-top: var(--space-6); text-align:center; border-radius: var(--radius-lg);">
+      <h2 class="h4" style="margin-bottom: var(--space-2);">Behöver du något mer avancerat?</h2>
+      <p class="text-secondary" style="max-width: 680px; margin-inline:auto;">Webbappar, bokningssystem, kundportaler, dashboards och specialfunktioner offereras separat från 45 000 kr.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Jämförelse -->
+<section class="section section-alt">
+  <div class="container">
+    <h2 class="h3 text-center" style="margin-bottom: var(--space-6);">Vad ingår i paketen</h2>
+    <div class="table-wrap">
+      <table class="table">
+        <thead>
+          <tr><th>Funktion</th><th class="center">Starter<br><span class="text-muted">5 000 kr</span></th><th class="center">Business<br><span class="text-muted">12 000 kr</span></th><th class="center">Premium<br><span class="text-muted">28 000 kr</span></th></tr>
+        </thead>
+        <tbody>
+          {% set rows = [
+            ('Passar för','Nystartat företag','Växande företag','Seriös satsning'),
+            ('Antal sidor','1 / one-page','4–6 sidor','8–12 sidor'),
+            ('WordPress','Ja','Ja','Ja / skräddarsytt'),
+            ('Skräddarsydd design','Enkel','Mer anpassad','Premiumdesign'),
+            ('Mobilanpassning','Ja','Ja','Ja'),
+            ('Kontaktformulär','Ja','Ja','Avancerat vid behov'),
+            ('Google Analytics 4','Ja','Ja','Ja'),
+            ('Search Console','Tillval','Ja','Ja'),
+            ('Grundläggande SEO','Ja','Ja','Ja'),
+            ('Sökordsstruktur','Enkel','Medium','Fördjupad'),
+            ('Snabbhetsoptimering','Grund','Ja','Ja, noggrant'),
+            ('Säkerhetsplugin','Ja','Ja','Ja'),
+            ('Backup-lösning','Enkel','Ja','Ja'),
+            ('Cookie-banner','Tillval','Ja','Ja'),
+            ('Blogg/nyheter','–','Tillval','Vid behov'),
+            ('Portfolio/case','–','Tillval','Ja'),
+            ('Copy/text-polish','Lätt','Medium','Genomarbetad'),
+            ('Revisionsrundor','1','2','3'),
+            ('Support efter lansering','7 dagar','14 dagar','30 dagar')
+          ] %}
+          {% for f, a, b, c in rows %}
+          <tr><td>{{ f }}</td><td class="center">{{ a }}</td><td class="center">{{ b }}</td><td class="center">{{ c }}</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- Timpris + månad -->
+<section class="section">
+  <div class="container">
+    <div class="grid grid-2" style="gap: var(--space-7);">
+      <div>
+        <h2 class="h4" style="margin-bottom: var(--space-2);">Timpris för extraarbete</h2>
+        <p class="text-secondary text-sm" style="margin-bottom: var(--space-4);">För ändringar och tillägg efter att projektet är klart.</p>
+        <table class="table">
+          <tbody>
+            <tr><td>Mindre text- och bildändringar</td><td class="num">650–750 kr/h</td></tr>
+            <tr><td>WordPress-fix och felsökning</td><td class="num">750–950 kr/h</td></tr>
+            <tr><td>Design/UI-arbete</td><td class="num">750–950 kr/h</td></tr>
+            <tr><td>Skräddarsydd PHP/JS/Python</td><td class="num">900–1 200 kr/h</td></tr>
+            <tr><td>Akut hjälp / snabb leverans</td><td class="num">1 200 kr/h+</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <h2 class="h4" style="margin-bottom: var(--space-2);">Månadspaket efter lansering</h2>
+        <p class="text-secondary text-sm" style="margin-bottom: var(--space-4);">Löpande drift och underhåll – snabb, säker och uppdaterad sida.</p>
+        <div class="stack-sm">
+          <div class="card"><div class="cluster" style="justify-content:space-between;"><strong>Care Basic</strong><span class="text-accent fw-semibold">690 kr/mån</span></div><p class="text-secondary text-sm" style="margin-top:var(--space-2);">Uppdateringar, säkerhetskoll, backup-kontroll och enklare support.</p></div>
+          <div class="card"><div class="cluster" style="justify-content:space-between;"><strong>Care Growth</strong><span class="text-accent fw-semibold">1 200 kr/mån</span></div><p class="text-secondary text-sm" style="margin-top:var(--space-2);">Allt i Basic plus mindre ändringar, Analytics-koll och prioriterad support.</p></div>
+          <div class="card"><div class="cluster" style="justify-content:space-between;"><strong>Care Premium</strong><span class="text-accent fw-semibold">2 000 kr/mån</span></div><p class="text-secondary text-sm" style="margin-top:var(--space-2);">Allt i Growth plus månatlig förbättring, SEO-koll och konverteringsförslag.</p></div>
         </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-        <!-- Advanced callout -->
-        <div class="bg-secondary rounded-5 p-4 p-lg-5 mt-4 mt-lg-5 text-center">
-            <h2 class="h4 mb-2">Behöver du något mer avancerat?</h2>
-            <p class="fs-lg text-body-secondary mb-0 mx-auto" style="max-width: 680px;">
-                Webbappar, bokningssystem, kundportaler, dashboards och specialfunktioner offereras separat
-                från 45 000 kr.</p>
-        </div>
-    </section>
+<!-- FAQ -->
+<section class="section section-alt">
+  <div class="container" style="max-width: 760px;">
+    <h2 class="h3" style="margin-bottom: var(--space-5);">Vanliga frågor om pris</h2>
+    <div class="stack">
+      <div><h3 class="h5">Vad kostar en hemsida?</h3><p class="text-secondary">Enkel sida börjar på 5 000 kr, företagssida 12 000 kr och premium skräddarsydd 28 000 kr (ex moms). Du får alltid ett fast pris innan vi börjar.</p></div>
+      <div><h3 class="h5">Vad ingår i priset?</h3><p class="text-secondary">WordPress eller skräddarsydd kod, mobilanpassad design, grundläggande SEO, Google Analytics och lanseringshjälp. Se exakt per paket i tabellen ovan.</p></div>
+      <div><h3 class="h5">Hur lång tid tar det?</h3><p class="text-secondary">En enkel sida tar oftast 1–2 veckor, en företagssida 2–4 veckor. Vi sätter en tidsplan tillsammans.</p></div>
+      <div><h3 class="h5">Kan jag ändra själv efteråt?</h3><p class="text-secondary">Ja. WordPress-sidor kan du uppdatera själv, och jag erbjuder månadspaket (Care) om du vill att jag sköter drift och underhåll.</p></div>
+    </div>
+  </div>
+</section>
 
-    <!-- Comparison table -->
-    <section class="container pb-5 mb-md-2 mb-lg-3">
-        <h2 class="h3 text-center pb-3 pb-lg-4">Vad ingår i paketen</h2>
-        <div class="table-responsive">
-            <table class="table table-hover align-middle">
-                <thead>
-                    <tr>
-                        <th scope="col" style="min-width: 220px;">Funktion</th>
-                        <th scope="col" class="text-center">Starter<br/><span class="fw-normal fs-sm text-body-secondary">5 000 kr</span></th>
-                        <th scope="col" class="text-center">Business<br/><span class="fw-normal fs-sm text-body-secondary">12 000 kr</span></th>
-                        <th scope="col" class="text-center">Premium<br/><span class="fw-normal fs-sm text-body-secondary">28 000 kr</span></th>
-                    </tr>
-                </thead>
-                <tbody class="fs-sm">
-                    <tr><td>Passar för</td><td class="text-center">Nystartat företag</td><td class="text-center">Växande företag</td><td class="text-center">Seriös företagssatsning</td></tr>
-                    <tr><td>Antal sidor</td><td class="text-center">1 / one-page</td><td class="text-center">4–6 sidor</td><td class="text-center">8–12 sidor</td></tr>
-                    <tr><td>WordPress</td><td class="text-center">Ja</td><td class="text-center">Ja</td><td class="text-center">Ja / skräddarsytt</td></tr>
-                    <tr><td>Skräddarsydd design</td><td class="text-center">Enkel anpassning</td><td class="text-center">Mer anpassad</td><td class="text-center">Tydlig premiumdesign</td></tr>
-                    <tr><td>Mobilanpassning</td><td class="text-center">Ja</td><td class="text-center">Ja</td><td class="text-center">Ja</td></tr>
-                    <tr><td>Kontaktformulär</td><td class="text-center">Ja</td><td class="text-center">Ja</td><td class="text-center">Avancerat vid behov</td></tr>
-                    <tr><td>Google Analytics 4</td><td class="text-center">Ja</td><td class="text-center">Ja</td><td class="text-center">Ja</td></tr>
-                    <tr><td>Google Search Console</td><td class="text-center text-body-secondary">Tillval</td><td class="text-center">Ja</td><td class="text-center">Ja</td></tr>
-                    <tr><td>Grundläggande SEO</td><td class="text-center">Ja</td><td class="text-center">Ja</td><td class="text-center">Ja</td></tr>
-                    <tr><td>Sökordsstruktur</td><td class="text-center">Enkel</td><td class="text-center">Medium</td><td class="text-center">Fördjupad</td></tr>
-                    <tr><td>Snabbhetsoptimering</td><td class="text-center">Grund</td><td class="text-center">Ja</td><td class="text-center">Ja, noggrant</td></tr>
-                    <tr><td>Bildoptimering</td><td class="text-center">Ja</td><td class="text-center">Ja</td><td class="text-center">Ja</td></tr>
-                    <tr><td>Säkerhetsplugin</td><td class="text-center">Ja</td><td class="text-center">Ja</td><td class="text-center">Ja</td></tr>
-                    <tr><td>Backup-lösning</td><td class="text-center">Enkel</td><td class="text-center">Ja</td><td class="text-center">Ja</td></tr>
-                    <tr><td>SSL-kontroll</td><td class="text-center">Ja</td><td class="text-center">Ja</td><td class="text-center">Ja</td></tr>
-                    <tr><td>Cookie-banner</td><td class="text-center text-body-secondary">Tillval</td><td class="text-center">Ja</td><td class="text-center">Ja</td></tr>
-                    <tr><td>Google Maps</td><td class="text-center text-body-secondary">Tillval</td><td class="text-center">Ja</td><td class="text-center">Ja</td></tr>
-                    <tr><td>Sociala medier-länkar</td><td class="text-center">Ja</td><td class="text-center">Ja</td><td class="text-center">Ja</td></tr>
-                    <tr><td>Favicon</td><td class="text-center">Ja</td><td class="text-center">Ja</td><td class="text-center">Ja</td></tr>
-                    <tr><td>404-sida</td><td class="text-center text-body-secondary">–</td><td class="text-center">Enkel</td><td class="text-center">Anpassad</td></tr>
-                    <tr><td>Blogg/nyheter</td><td class="text-center text-body-secondary">–</td><td class="text-center text-body-secondary">Tillval</td><td class="text-center">Vid behov</td></tr>
-                    <tr><td>Portfolio/case-sektion</td><td class="text-center text-body-secondary">–</td><td class="text-center text-body-secondary">Tillval</td><td class="text-center">Ja</td></tr>
-                    <tr><td>Copy/text-polish</td><td class="text-center">Lätt</td><td class="text-center">Medium</td><td class="text-center">Genomarbetad</td></tr>
-                    <tr><td>Designförslag</td><td class="text-center">1</td><td class="text-center">1–2</td><td class="text-center">2–3</td></tr>
-                    <tr><td>Revisionsrundor</td><td class="text-center">1</td><td class="text-center">2</td><td class="text-center">3</td></tr>
-                    <tr><td>Lanseringshjälp</td><td class="text-center">Ja</td><td class="text-center">Ja</td><td class="text-center">Ja</td></tr>
-                    <tr><td>Genomgång med kund</td><td class="text-center">15 min</td><td class="text-center">30 min</td><td class="text-center">60 min</td></tr>
-                    <tr><td>Support efter lansering</td><td class="text-center">7 dagar</td><td class="text-center">14 dagar</td><td class="text-center">30 dagar</td></tr>
-                </tbody>
-            </table>
-        </div>
-    </section>
-
-    <!-- Hourly + monthly -->
-    <section class="container pb-5 mb-md-3 mb-lg-4 mb-xxl-5">
-        <div class="row g-4 g-lg-5">
-            <!-- Hourly -->
-            <div class="col-lg-5">
-                <h2 class="h4 pb-2">Timpris för extraarbete</h2>
-                <p class="fs-sm text-body-secondary">För ändringar och tillägg efter att projektet är klart.</p>
-                <table class="table fs-sm">
-                    <tbody>
-                        <tr><td>Mindre text- och bildändringar</td><td class="text-end text-nowrap">650–750 kr/h</td></tr>
-                        <tr><td>WordPress-fix och felsökning</td><td class="text-end text-nowrap">750–950 kr/h</td></tr>
-                        <tr><td>Design/UI-arbete</td><td class="text-end text-nowrap">750–950 kr/h</td></tr>
-                        <tr><td>Skräddarsydd PHP/JS/Python</td><td class="text-end text-nowrap">900–1 200 kr/h</td></tr>
-                        <tr><td>Akut hjälp / snabb leverans</td><td class="text-end text-nowrap">1 200 kr/h+</td></tr>
-                    </tbody>
-                </table>
-            </div>
-            <!-- Monthly -->
-            <div class="col-lg-7">
-                <h2 class="h4 pb-2">Månadspaket efter lansering</h2>
-                <p class="fs-sm text-body-secondary">Löpande drift och underhåll så att sidan hålls snabb,
-                    säker och uppdaterad.</p>
-                <div class="row g-3">
-                    <div class="col-sm-4">
-                        <div class="card h-100 border shadow-sm">
-                            <div class="card-body p-4">
-                                <h3 class="h6 mb-1">Care Basic</h3>
-                                <div class="h5 mb-3">690 kr<span class="fs-sm fw-normal text-body-secondary">/mån</span></div>
-                                <p class="fs-sm text-body-secondary mb-0">Uppdateringar, säkerhetskoll,
-                                    backup-kontroll och enklare support.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="card h-100 border shadow-sm">
-                            <div class="card-body p-4">
-                                <h3 class="h6 mb-1">Care Growth</h3>
-                                <div class="h5 mb-3">1 200 kr<span class="fs-sm fw-normal text-body-secondary">/mån</span></div>
-                                <p class="fs-sm text-body-secondary mb-0">Allt i Basic plus mindre
-                                    text-/bildändringar, Analytics-koll och prioriterad support.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="card h-100 border shadow-sm">
-                            <div class="card-body p-4">
-                                <h3 class="h6 mb-1">Care Premium</h3>
-                                <div class="h5 mb-3">2 000 kr<span class="fs-sm fw-normal text-body-secondary">/mån</span></div>
-                                <p class="fs-sm text-body-secondary mb-0">Allt i Growth plus månatlig
-                                    förbättring, SEO-koll, konverteringsförslag och mer support.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA -->
-    <section class="bg-primary py-5" data-bs-theme="dark">
-        <div class="container text-center py-lg-2 py-xl-4">
-            <h2 class="display-5 mb-3">Osäker på vilket paket som passar?</h2>
-            <p class="fs-lg text-body pb-4 mb-2 mx-auto" style="max-width: 560px;">
-                Berätta kort om ditt projekt så hör jag av mig med ett förslag och fast pris. Kostnadsfritt
-                och utan förpliktelser.</p>
-            <a class="btn btn-lg btn-warning" href="/contacts-v1">Boka ett samtal</a>
-            <a class="btn btn-lg btn-outline-light ms-sm-2 mt-3 mt-sm-0" href="/priskalkylator">Räkna ut ditt pris</a>
-        </div>
-    </section>
-</main>
-
-<!-- Footer -->
-{% include "partials/footer.html" %}
-
-{% include 'partials/back-to-top.html' %}
-{% endblock content %}
-
-{% block scripts %}
-<script src="{{ config.ASSETS_ROOT }}/js/theme-switcher.js"></script>
-<script>
-    (function () {
-      window.onload = function () {
-        const preloader = document.querySelector('.page-loading')
-        preloader.classList.remove('active')
-        setTimeout(function () {
-          preloader.remove()
-        }, 1500)
-      }
-    })()
-</script>
-<script src="{{ config.ASSETS_ROOT }}/js/theme.min.js"></script>
-{% endblock scripts %}
+<!-- CTA -->
+<section class="section">
+  <div class="container" style="text-align:center; max-width: 640px;">
+    <h2 class="h3" style="margin-bottom: var(--space-3);">Osäker på vilket paket som passar?</h2>
+    <p class="lead" style="margin-bottom: var(--space-5);">Berätta kort om ditt projekt så hör jag av mig med ett förslag och fast pris. Kostnadsfritt.</p>
+    <div class="cluster" style="justify-content:center;">
+      <a class="btn btn-primary btn-lg" href="/contacts-v1">Boka ett samtal</a>
+      <a class="btn btn-ghost" href="/priskalkylator">Räkna ut ditt pris</a>
+    </div>
+  </div>
+</section>
+{% endblock %}
