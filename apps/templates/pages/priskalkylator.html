@@ -1,82 +1,33 @@
 {% extends 'layouts/clean.html' %}
+{% set fi = lang == 'fi' %}
 
-{% block title %}Prisförslag på 2 minuter – vad kostar din hemsida?{% endblock %}
-{% block meta_description %}Räkna ut ungefär vad din hemsida kostar. Välj typ och tillval så får du ett prisspann direkt – och ett exakt förslag om du vill.{% endblock %}
+{% block title %}{{ 'Hinta-arvio 2 minuutissa – paljonko sivustosi maksaa?' if fi else 'Prisförslag på 2 minuter – vad kostar din hemsida?' }}{% endblock %}
+{% block meta_description %}{{ 'Laske suunnilleen mitä sivustosi maksaa. Vastaa muutamaan kysymykseen niin saat hintahaarukan heti – ja tarkan ehdotuksen jos haluat.' if fi else 'Räkna ut ungefär vad din hemsida kostar. Svara på några frågor så får du ett prisspann direkt – och ett exakt förslag om du vill.' }}{% endblock %}
+{% block alternates %}
+  <link rel="alternate" hreflang="sv" href="{{ sv_url }}">
+  <link rel="alternate" hreflang="fi" href="{{ fi_url }}">
+  <link rel="alternate" hreflang="x-default" href="{{ sv_url }}">
+{% endblock %}
 
 {% block content %}
 <section class="section section-alt">
   <div class="container" style="max-width: 60ch;">
-    <span class="eyebrow">Prisförslag</span>
-    <h1 style="margin-block: var(--space-3);">Vad kostar <span class="text-gradient">din hemsida?</span></h1>
-    <p class="lead">Välj vad du behöver så räknar vi fram ett ungefärligt pris direkt. Vill du ha en exakt offert lämnar du dina uppgifter – inget köp, bara ett förslag.</p>
+    <span class="eyebrow">{{ 'Hinta-arvio' if fi else 'Prisförslag' }}</span>
+    <h1 style="margin-block: var(--space-3);">{{ 'Paljonko ' if fi else 'Vad kostar ' }}<span class="text-gradient">{{ 'sivustosi maksaa?' if fi else 'din hemsida?' }}</span></h1>
+    <p class="lead">{{ 'Vastaa muutamaan kysymykseen niin laskemme suuntaa-antavan hinnan heti. Haluatko tarkan tarjouksen? Jätä yhteystietosi – ei ostopakkoa, vain ehdotus.' if fi else 'Svara på några frågor så räknar vi fram ett ungefärligt pris direkt. Vill du ha en exakt offert lämnar du dina uppgifter – inget köp, bara ett förslag.' }}</p>
   </div>
 </section>
 
 <section class="section">
-  <div class="container" style="max-width: 820px;">
-    <form id="calc" novalidate>
-      <!-- Steg 1: typ -->
-      <h2 class="h4" style="margin-bottom: var(--space-4);">1. Vilken typ av webbplats?</h2>
-      <div class="calc-grid" data-group="type">
-        <label class="calc-opt"><input type="radio" name="type" value="enkel" checked><span class="calc-opt-body"><span class="calc-opt-title">Enkel sida</span><span class="calc-opt-sub">One-page, 1 sida</span><span class="calc-opt-price">5 000 kr</span></span></label>
-        <label class="calc-opt"><input type="radio" name="type" value="foretag"><span class="calc-opt-body"><span class="calc-opt-title">Företagssida <em class="calc-tag">Populärast</em></span><span class="calc-opt-sub">4–6 sidor, WordPress</span><span class="calc-opt-price">12 000 kr</span></span></label>
-        <label class="calc-opt"><input type="radio" name="type" value="premium"><span class="calc-opt-body"><span class="calc-opt-title">Premium skräddarsydd</span><span class="calc-opt-sub">8–12 sidor, unik design</span><span class="calc-opt-price">28 000 kr</span></span></label>
-        <label class="calc-opt"><input type="radio" name="type" value="avancerat"><span class="calc-opt-body"><span class="calc-opt-title">Webbapp / avancerat</span><span class="calc-opt-sub">Bokning, portal, dashboard</span><span class="calc-opt-price">från 45 000 kr</span></span></label>
-      </div>
-
-      <!-- Steg 2: tillval -->
-      <h2 class="h4" style="margin-block: var(--space-7) var(--space-4);">2. Något extra?</h2>
-      <div class="calc-grid" data-group="addons">
-        <label class="calc-opt"><input type="checkbox" name="addon" value="shop"><span class="calc-opt-body"><span class="calc-opt-title">Webbshop / e-handel</span><span class="calc-opt-price">+15 000–30 000</span></span></label>
-        <label class="calc-opt"><input type="checkbox" name="addon" value="bokning"><span class="calc-opt-body"><span class="calc-opt-title">Bokningssystem</span><span class="calc-opt-price">+8 000–20 000</span></span></label>
-        <label class="calc-opt"><input type="checkbox" name="addon" value="portal"><span class="calc-opt-body"><span class="calc-opt-title">Inloggning / kundportal</span><span class="calc-opt-price">+10 000–25 000</span></span></label>
-        <label class="calc-opt"><input type="checkbox" name="addon" value="flersprak"><span class="calc-opt-body"><span class="calc-opt-title">Flerspråkig (sv + fi)</span><span class="calc-opt-price">+4 000–8 000</span></span></label>
-        <label class="calc-opt"><input type="checkbox" name="addon" value="blogg"><span class="calc-opt-body"><span class="calc-opt-title">Blogg / nyheter</span><span class="calc-opt-price">+3 000–6 000</span></span></label>
-        <label class="calc-opt"><input type="checkbox" name="addon" value="seo"><span class="calc-opt-body"><span class="calc-opt-title">Fördjupad SEO</span><span class="calc-opt-price">+3 000–8 000</span></span></label>
-        <label class="calc-opt"><input type="checkbox" name="addon" value="copy"><span class="calc-opt-body"><span class="calc-opt-title">Copywriting / text</span><span class="calc-opt-price">+3 000–7 000</span></span></label>
-      </div>
-
-      <!-- Steg 3: underhåll -->
-      <h2 class="h4" style="margin-block: var(--space-7) var(--space-4);">3. Månadsunderhåll efter lansering?</h2>
-      <div class="calc-grid" data-group="care">
-        <label class="calc-opt"><input type="radio" name="care" value="none" checked><span class="calc-opt-body"><span class="calc-opt-title">Inget</span><span class="calc-opt-sub">Jag sköter det själv</span></span></label>
-        <label class="calc-opt"><input type="radio" name="care" value="basic"><span class="calc-opt-body"><span class="calc-opt-title">Care Basic</span><span class="calc-opt-price">690 kr/mån</span></span></label>
-        <label class="calc-opt"><input type="radio" name="care" value="growth"><span class="calc-opt-body"><span class="calc-opt-title">Care Growth</span><span class="calc-opt-price">1 200 kr/mån</span></span></label>
-        <label class="calc-opt"><input type="radio" name="care" value="premium"><span class="calc-opt-body"><span class="calc-opt-title">Care Premium</span><span class="calc-opt-price">2 000 kr/mån</span></span></label>
-      </div>
-
-      <!-- Estimat -->
-      <div class="calc-estimate">
-        <div>
-          <span class="calc-est-label">Ungefärligt pris</span>
-          <span class="calc-est-value" id="calc-est">5 000 kr</span>
-          <span class="calc-est-note">ex. moms <span id="calc-monthly"></span></span>
-        </div>
-      </div>
-
-      <!-- Lead-capture -->
-      <div class="card" style="margin-top: var(--space-6);">
-        <h2 class="h4" style="margin-bottom: var(--space-2);">Få ett exakt prisförslag</h2>
-        <p class="text-secondary" style="margin-bottom: var(--space-5);">Lämna dina uppgifter så återkommer jag med ett skarpt förslag. Inget köp.</p>
-        <div class="grid grid-2" style="gap: var(--space-4);">
-          <div class="field"><label class="label" for="c-name">Namn</label><input class="input" id="c-name" name="name" required></div>
-          <div class="field"><label class="label" for="c-email">E-post</label><input class="input" id="c-email" name="email" type="email" required></div>
-        </div>
-        <div class="field" style="margin-top: var(--space-4);"><label class="label" for="c-phone">Telefon (valfritt)</label><input class="input" id="c-phone" name="phone" type="tel"></div>
-        <div class="field" style="margin-top: var(--space-4);"><label class="label" for="c-msg">Något mer jag bör veta? (valfritt)</label><textarea class="textarea" id="c-msg" name="extra" rows="3"></textarea></div>
-        <input type="text" name="website" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true">
-        <div style="margin-top: var(--space-5);">
-          <button class="btn btn-primary btn-lg" type="submit" id="calc-submit">Få exakt prisförslag</button>
-        </div>
-        <p id="calc-status" class="text-secondary" style="margin-top: var(--space-4); display:none;"></p>
-      </div>
-    </form>
-
-    <p class="text-muted text-sm" style="margin-top: var(--space-5);">Priserna är ungefärliga och ex. moms. Du får alltid ett fast pris innan vi börjar.</p>
+  <div class="container" style="max-width: 760px;">
+    {# Quiz-modulen renderar sig själv från config (apps/static/js/price-calculator.js).
+       Sprak foljer <html lang>. data-lead="false" ger bara fragorna utan formular. #}
+    <div data-price-calculator></div>
+    <p class="text-muted text-sm" style="margin-top: var(--space-5);">{{ 'Hinnat ovat suuntaa-antavia ja ilman alv:ia. Saat aina kiinteän hinnan ennen kuin aloitamme.' if fi else 'Priserna är ungefärliga och ex. moms. Du får alltid ett fast pris innan vi börjar.' }}</p>
   </div>
 </section>
 {% endblock %}
 
 {% block scripts %}
-<script src="{{ config.ASSETS_ROOT }}/js/calculator.js?v=1" defer></script>
+<script src="{{ config.ASSETS_ROOT }}/js/price-calculator.js?v=1" defer></script>
 {% endblock %}

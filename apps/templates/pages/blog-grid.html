@@ -1,36 +1,20 @@
-{% extends 'layouts/base.html' %}
+{% extends 'layouts/clean.html' %}
+{% set fi = lang == 'fi' %}
 
-{% block title %}Blogg – under byggnad{% endblock %}
-{% block meta_description %}Bloggen är under uppbyggnad. Snart fylls den med texter om webb, kod och projekten jag bygger på 1010monky Studio.{% endblock %}
+{% block title %}{{ 'Blogi – rakenteilla' if fi else 'Blogg – under byggnad' }}{% endblock %}
+{% block meta_description %}{{ 'Blogi on rakenteilla. Pian täällä on tekstejä webistä, koodista ja projekteista joita rakennan 1010monky Studiossa.' if fi else 'Bloggen är under uppbyggnad. Snart fylls den med texter om webb, kod och projekten jag bygger på 1010monky Studio.' }}{% endblock %}
+{% block robots %}noindex, follow{% endblock %}
 
 {% block content %}
-{% include 'partials/loader.html' %}
-<main class="page-wrapper">
-    {% include "partials/navbar.html" %}
-
-    <section class="container py-5 my-5">
-        <div class="row justify-content-center text-center py-lg-5">
-            <div class="col-lg-7 col-md-9 pt-lg-5 pt-4">
-                <span class="d-inline-flex align-items-center justify-content-center rounded-circle bg-secondary mb-4" style="width: 88px; height: 88px;">
-                    <i class="ai-tool fs-1 text-primary"></i>
-                </span>
-                <h1 class="page-title mb-3">Bloggen är under byggnad</h1>
-                <p class="fs-lg text-body-secondary mb-4 mx-auto" style="max-width: 34rem;">
-                    Jag håller på att fylla bloggen med texter om webb, kod och projekten jag bygger. Den är snart igång – tills dess hittar du mig gärna via kontaktsidan.
-                </p>
-                <div class="d-flex flex-wrap justify-content-center gap-3">
-                    <a class="btn btn-primary rounded-pill monky-btn-primary" href="/contacts-v1">Hör av dig</a>
-                    <a class="btn btn-link px-1" href="/">Till startsidan</a>
-                </div>
-            </div>
-        </div>
-    </section>
-</main>
-
-{% include "partials/footer.html" %}
-{% include 'partials/back-to-top.html' %}
-{% endblock content %}
-
-{% block scripts %}
-<script src="{{ config.ASSETS_ROOT }}/js/theme.min.js"></script>
-{% endblock scripts %}
+<section class="section">
+  <div class="container" style="max-width: 44rem; text-align: center;">
+    <span class="eyebrow">{{ 'Blogi' if fi else 'Blogg' }}</span>
+    <h1 style="margin-block: var(--space-3);">{{ 'Blogi on ' if fi else 'Bloggen är ' }}<span class="text-gradient">{{ 'rakenteilla' if fi else 'under byggnad' }}</span></h1>
+    <p class="lead" style="margin-inline: auto;">{{ 'Täytän blogia teksteillä webistä, koodista ja projekteista joita rakennan. Se on pian käynnissä – siihen asti tavoitat minut yhteystietojen kautta.' if fi else 'Jag håller på att fylla bloggen med texter om webb, kod och projekten jag bygger. Den är snart igång – tills dess hittar du mig gärna via kontaktsidan.' }}</p>
+    <div class="cluster" style="justify-content: center; margin-top: var(--space-6);">
+      <a class="btn btn-primary btn-lg" href="{{ nav_url('contact') }}">{{ 'Ota yhteyttä' if fi else 'Hör av dig' }}</a>
+      <a class="btn btn-ghost btn-lg" href="{{ nav_url('home') }}">{{ 'Etusivulle' if fi else 'Till startsidan' }}</a>
+    </div>
+  </div>
+</section>
+{% endblock %}
