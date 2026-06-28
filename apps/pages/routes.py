@@ -48,6 +48,18 @@ SITEMAP_PATHS = [
     ('/portfolio-single-askhackers', '0.6'),
     ('/about-agency', '0.6'),
     ('/contacts-v1', '0.8'),
+    ('/villkor', '0.3'),
+    ('/integritetspolicy', '0.3'),
+    # Finska versioner (sv/fi kopplas via hreflang i sidhuvudet)
+    ('/fi', '0.9'),
+    ('/fi/palvelut', '0.8'),
+    ('/fi/hinnasto', '0.8'),
+    ('/fi/hintalaskuri', '0.7'),
+    ('/fi/portfolio', '0.6'),
+    ('/fi/meista', '0.5'),
+    ('/fi/yhteystiedot', '0.7'),
+    ('/fi/ehdot', '0.3'),
+    ('/fi/tietosuoja', '0.3'),
     ('/blogg', '0.7'),
     ('/blogg/chatt-app-python-flask', '0.8'),
     ('/blogg/chatt-app-pris', '0.8'),
@@ -61,8 +73,6 @@ SITEMAP_PATHS = [
     ('/blogg/snabb-mobilsajt', '0.7'),
     ('/blogg/fran-besokare-till-kund', '0.7'),
     ('/blogg/vad-kostar-en-webbplats', '0.7'),
-    ('/villkor', '0.3'),
-    ('/integritetspolicy', '0.3'),
 ]
 
 CONTACT_TO = os.getenv('CONTACT_TO', 'info@1010monky.se')
