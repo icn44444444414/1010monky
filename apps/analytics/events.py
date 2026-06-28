@@ -15,6 +15,7 @@ from flask import request, jsonify
 from apps import db
 from apps.analytics import blueprint
 from apps.analytics.models import VisitorSession, VisitorEvent, EVENT_TYPES, _new_token
+from apps.analytics.scoring import score_session
 from apps.chat.security import client_ip, rate_limit
 
 
@@ -77,6 +78,8 @@ def track_event():
         element_text=_clean(data.get('text'), 200),
         value=_clean(data.get('value'), 60),
     ))
+    db.session.flush()
+    sess.lead_score = score_session(sess)  # rakna om lead score
     db.session.commit()
 
     return jsonify(ok=True, token=sess.session_token)

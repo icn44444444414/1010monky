@@ -52,11 +52,12 @@
             var flow = (s.flow || []).map(function (p) { return '<span class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-md">' + esc(p) + '</span>'; })
                 .join('<i class="fa-solid fa-arrow-right text-gray-300 text-[10px] mx-1"></i>');
             var dev = s.device === 'mobil' ? 'fa-mobile-screen' : s.device === 'surfplatta' ? 'fa-tablet-screen-button' : 'fa-desktop';
+            var badge = { red: 'bg-red-50 text-red-600', amber: 'bg-amber-50 text-amber-700', blue: 'bg-blue-50 text-blue-600', gray: 'bg-gray-100 text-gray-600' }[s.status_cls] || 'bg-gray-100 text-gray-600';
             return '' +
             '<div class="bg-white rounded-2xl border border-gray-50 shadow-[0_2px_10px_-3px_rgba(20,23,26,0.06)] p-5">' +
                 '<div class="flex justify-between items-center mb-4">' +
                     '<span class="font-bold text-gray-900">' + esc(s.id) + '</span>' +
-                    '<span class="text-xs font-medium bg-green-50 text-green-600 px-2 py-1 rounded-md">Aktiv</span>' +
+                    '<span class="text-xs font-medium ' + badge + ' px-2 py-1 rounded-md">' + esc(s.status) + ' · ' + esc(s.score) + '</span>' +
                 '</div>' +
                 '<div class="text-sm text-gray-500 mb-1"><i class="fa-regular fa-file w-5"></i> Sida: <span class="text-gray-800 font-medium">' + esc(s.page) + '</span></div>' +
                 '<div class="text-sm text-gray-500 mb-1"><i class="fa-solid fa-bolt w-5"></i> ' + esc(s.last) + '</div>' +

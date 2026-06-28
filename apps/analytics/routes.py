@@ -72,3 +72,9 @@ def live():
 def live_data():
     sessions = [stats.session_view(s) for s in stats.live_sessions()]
     return jsonify(count=len(sessions), sessions=sessions)
+
+
+@blueprint.route('/admin/leads')
+@admin_required
+def leads():
+    return render_template('analytics/leads.html', leads=stats.lead_list())

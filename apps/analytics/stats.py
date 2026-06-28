@@ -8,6 +8,7 @@ from sqlalchemy import func
 
 from apps import db
 from apps.analytics.models import VisitorSession, VisitorEvent
+from apps.analytics.scoring import status_label
 
 
 def fmt_duration(secs):
@@ -54,6 +55,7 @@ def session_view(s):
             last_txt = 'Fyller i formulär'
         elif la.event_type == 'chat_open':
             last_txt = 'Öppnade chatten'
+    label, cls = status_label(s.lead_score)
     return {
         'id': anon_id(s),
         'device': s.device or '–',
@@ -62,6 +64,8 @@ def session_view(s):
         'time': fmt_duration((now - since).total_seconds()),
         'flow': s.page_flow,
         'score': s.lead_score,
+        'status': label,
+        'status_cls': cls,
     }
 
 
@@ -127,6 +131,16 @@ def daily_series(days=14):
         clicks.append(n('click'))
         leads.append(n('form_submit'))
     return {'labels': labels, 'visits': visits, 'clicks': clicks, 'leads': leads}
+
+
+def lead_list(limit=60):
+    """Besokare sorterade efter lead score (hetast forst) for Leads-vyn."""
+    rows = (VisitorSession.query
+            .filter(VisitorSession.lead_score > 0)
+            .order_by(VisitorSession.lead_score.desc(),
+                      VisitorSession.last_seen.desc())
+            .limit(limit).all())
+    return [session_view(s) for s in rows]
 
 
 def recent_sessions(limit=8):
