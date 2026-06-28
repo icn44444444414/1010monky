@@ -178,10 +178,10 @@ h6, .h6 { font-size: var(--text-lg);  letter-spacing: var(--tracking-normal); }
 .surface { background: var(--surface); border: var(--border); border-radius: var(--radius-lg); }
 .surface-2 { background: var(--surface-2); }
 .card {
-  background: var(--surface); border-radius: var(--radius-lg);
+  background: var(--surface); border-radius: 0;
   padding: var(--space-5);
-  /* Helt utan ram - bara mjuk skugga definierar kortet (i morkt lage skiljer
-     ytfargen kortet fran bakgrunden). Maximalt lugn, premium SaaS-kansla. */
+  /* Fyrkantiga kort, helt utan ram - bara en ren, mjuk premium-skugga definierar
+     kortet (i morkt lage skiljer ytfargen kortet fran bakgrunden). Lugnt, premium. */
   box-shadow: var(--shadow-md);
 }
 .card-hover { transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease); }

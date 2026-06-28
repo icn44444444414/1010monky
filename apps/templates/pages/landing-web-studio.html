@@ -21,7 +21,8 @@
   .hero-badges { list-style:none; padding:0; margin: var(--space-5) 0 0; display:flex; flex-wrap:wrap; gap: var(--space-3); }
   .hero-badges li { font-size: var(--text-sm); color: rgba(255,255,255,.82); background: rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12); border-radius: var(--radius-pill); padding: .5rem 1rem; }
   .tech-row { display:flex; flex-wrap:wrap; gap: var(--space-6) var(--space-7); align-items:center; justify-content:center; }
-  .tech-row img { height: 30px; width:auto; opacity:.85; }
+  .tech-row img { height: 46px; width:auto; opacity:1; }
+  @media (max-width: 560px) { .tech-row img { height: 38px; } }
   .svc-icon { width: 46px; height: 46px; border-radius: var(--radius-md); display: grid; place-items: center; background: var(--accent-soft); color: var(--accent); margin-bottom: var(--space-3); }
 </style>
 {% endblock %}

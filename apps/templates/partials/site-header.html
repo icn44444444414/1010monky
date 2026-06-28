@@ -9,7 +9,7 @@
 
     <nav class="main-nav" id="main-nav" aria-label="{{ 'Huvudmeny' if lang != 'fi' else 'Päävalikko' }}">
       <ul class="nav-list">
-        {% for key in ['services','portfolio','pricing','about','blog'] %}
+        {% for key in ['services','portfolio','pricing','about','blog','contact'] %}
         {% set href = nav_url(key) %}
         <li><a class="nav-link {{ 'is-active' if here == href.rstrip('/') }}" href="{{ href }}">{{ tr('nav_' + key) }}</a></li>
         {% endfor %}
@@ -18,7 +18,7 @@
 
     <div class="header-actions">
       {% include 'partials/lang-switch.html' %}
-      <a class="btn btn-primary btn-sm header-cta" href="{{ nav_url('contact') }}">{{ tr('nav_contact') }}</a>
+      <a class="btn btn-primary btn-sm header-cta" href="{{ nav_url('contact') }}">{{ tr('start_project') }}</a>
       <button class="menu-toggle" type="button" data-menu-toggle
               aria-label="{{ 'Öppna meny' if lang != 'fi' else 'Avaa valikko' }}" aria-expanded="false" aria-controls="main-nav">
         <span></span><span></span><span></span>
