@@ -1,98 +1,63 @@
-{% extends 'layouts/base.html' %}
+{% extends 'layouts/clean.html' %}
+{% set fi = lang == 'fi' %}
 
-{% block title %}Om oss – webbyrå i Eskilstuna{% endblock %}
+{% block title %}{{ 'Meistä – verkkotoimisto Eskilstunassa' if fi else 'Om oss – webbyrå i Eskilstuna' }}{% endblock %}
+{% block meta_description %}{{ 'Olen Matias, ruotsinsuomalainen kehittäjä Eskilstunasta. 1010monky on pieni studio joka rakentaa sivustoja yrityksille Ruotsissa ja Suomessa – WordPress ja räätälöity koodi.' if fi else 'Jag heter Matias, sverigefinsk utvecklare från Eskilstuna. 1010monky är en liten studio som bygger hemsidor åt företag i Sverige och Finland – WordPress och skräddarsydd kod.' }}{% endblock %}
+{% block alternates %}
+  <link rel="alternate" hreflang="sv" href="{{ sv_url }}">
+  <link rel="alternate" hreflang="fi" href="{{ fi_url }}">
+  <link rel="alternate" hreflang="x-default" href="{{ sv_url }}">
+{% endblock %}
+
+{% block jsonld %}
+<script type="application/ld+json">
+{ "@context":"https://schema.org","@graph":[
+  { "@type":"BreadcrumbList","itemListElement":[
+    {"@type":"ListItem","position":1,"name":"{{ tr('home') }}","item":"https://1010monky.se{{ nav_url('home') }}"},
+    {"@type":"ListItem","position":2,"name":"{{ tr('nav_about') }}","item":"https://1010monky.se{{ request.path }}"}]},
+  { "@type":"AboutPage","mainEntity":{ "@type":"Person","name":"Matias","jobTitle":"Webbutvecklare",
+    "worksFor":{"@type":"ProfessionalService","name":"1010monky Studio"},
+    "knowsAbout":["WordPress","Python","JavaScript","Webbutveckling","SEO"],
+    "address":{"@type":"PostalAddress","addressLocality":"Eskilstuna","addressCountry":"SE"} } }]}
+</script>
+{% endblock %}
 
 {% block content %}
-<!-- Page loading spinner -->
-{% include 'partials/loader.html' %}
-<!-- Page wrapper -->
-<main class="page-wrapper">
-    {% include "partials/navbar.html" %}
+<section class="section section-alt">
+  <div class="container" style="max-width: 60ch;">
+    <span class="eyebrow">{{ tr('nav_about') }}</span>
+    <h1 style="margin-block: var(--space-3);">{{ 'Uskomme jokaisen yrityksen ' if fi else 'Vi tror på varje företags ' }}<span class="text-gradient">{{ 'menestykseen' if fi else 'framgång' }}</span></h1>
+    <p class="lead">{{ 'Pieni studio Ruotsissa ja Suomessa.' if fi else 'Liten studio i Sverige och Finland.' }}</p>
+  </div>
+</section>
 
-    <!-- Header (kept, translated) — offset so it starts below the fixed navbar -->
-    <section class="bg-dark position-relative py-5" style="margin-top: 4.5rem;">
-        <div class="d-none d-dark-mode-block position-absolute top-0 start-0 w-100 h-100"
-             style="background-color: rgba(255,255,255, .03);"></div>
-        <div class="container position-relative z-2 py-4 py-md-5" data-bs-theme="dark">
-            <div class="row py-md-3">
-                <div class="col-lg-9">
-                    <!-- Breadcrumb -->
-                    <nav aria-label="breadcrumb">
-                        <ol class="pt-lg-3 pb-lg-4 pb-2 breadcrumb">
-                            <li class="breadcrumb-item"><a href="/">Hem</a></li>
-                            <li aria-current="page" class="breadcrumb-item active">Om oss</li>
-                        </ol>
-                    </nav>
-                    <h1 class="page-title mb-3">Vi tror på varje företags framgång</h1>
-                    <p class="fs-lg text-body mb-0">Liten studio i Sverige och Finland.</p>
-                </div>
-            </div>
+<section class="section">
+  <div class="container">
+    <div class="media">
+      <a href="{{ config.ASSETS_ROOT }}/img/about/matias-flugfiske.webp" target="_blank" rel="noopener">
+        <img class="rounded-lg shadow-lg" alt="{{ 'Matias perhokalastamassa' if fi else 'Matias ute och flugfiskar' }}" src="{{ config.ASSETS_ROOT }}/img/about/matias-flugfiske.webp" loading="lazy" style="width:100%">
+      </a>
+      <div>
+        <span class="eyebrow">{{ 'Minusta' if fi else 'Om mig' }}</span>
+        <h2 style="margin-block: var(--space-2) var(--space-4);">{{ 'Olen Matias' if fi else 'Jag heter Matias' }}</h2>
+        {% if fi %}
+        <p class="lead" style="font-size: var(--text-lg);">Olen ruotsinsuomalainen ja kotoisin Eskilstunasta. Kun en ole töissä, vietän ison osan vapaa-ajastani perhokalastuksen parissa. Veden äärellä rentoudun parhaiten, ja siellä tulee vietettyä monta tuntia kun kausi on käynnissä.</p>
+        <p class="text-secondary">Muuten aikani menee 1010monkyn parissa. Olen opiskellut sekä Pythonia että JavaScriptiä Blekingen teknillisessä korkeakoulussa ja koodannut useita vuosia. JavaScriptiä käytän lähinnä verkkoon ja Pythonia melkein kaikkeen muuhun.</p>
+        <p class="text-secondary">1010monkyssä rakennan sivustoja yrityksille, WordPressillä ja räätälöitynä kun tarpeen. Teen töitä asiakkaiden kanssa sekä Ruotsissa että Suomessa. En ole iso toimisto vaan pieni studio, joten homma on henkilökohtaista ja suoraa, ja puhut saman ihmisen kanssa koko matkan.</p>
+        {% else %}
+        <p class="lead" style="font-size: var(--text-lg);">Jag är sverigefinne och kommer från Eskilstuna. När jag inte jobbar lägger jag en stor del av min fritid på flugfiske. Det är ute vid vattnet jag kopplar av bäst, och det blir många timmar där när säsongen väl är igång.</p>
+        <p class="text-secondary">Annars är det 1010monky som gäller. Jag har läst kurser i både Python och JavaScript på Blekinge Tekniska Högskola och har hållit på med kod i flera år. JavaScript använder jag mest till webben, och Python till det mesta annat.</p>
+        <p class="text-secondary">I 1010monky bygger jag hemsidor åt företag, i WordPress och skräddarsytt när det behövs. Jag jobbar med kunder i både Sverige och Finland. Jag är ingen stor byrå utan en liten studio, så det blir personligt och rakt, och du pratar med samma person hela vägen.</p>
+        {% endif %}
+        <div class="cluster" style="margin-top: var(--space-4);">
+          <span class="badge">Python</span><span class="badge">JavaScript</span><span class="badge">WordPress</span>
         </div>
-    </section>
-
-    <!-- About: photo + text -->
-    <section class="container py-5 my-md-2 my-lg-4 my-xxl-5">
-        <div class="row align-items-center g-4 g-lg-5 g-xl-5">
-            <div class="col-lg-6">
-                <img class="d-block w-100 rounded-3 shadow-lg" alt="Matias ute och flugfiskar"
-                     style="cursor: zoom-in;" data-bs-toggle="modal" data-bs-target="#aboutImgModal"
-                     src="{{ config.ASSETS_ROOT }}/img/about/matias-flugfiske.webp"/>
-            </div>
-            <div class="col-lg-6">
-                <div class="ps-lg-3 ps-xl-4">
-                    <div class="fs-sm text-uppercase text-primary fw-semibold mb-2" style="letter-spacing: .12em;">Om mig</div>
-                    <h2 class="h1 pb-2">Jag heter Matias</h2>
-                    <p class="fs-lg">Jag är sverigefinne och kommer från Eskilstuna. När jag inte jobbar lägger
-                        jag en stor del av min fritid på flugfiske. Det är ute vid vattnet jag kopplar av bäst,
-                        och det blir många timmar där när säsongen väl är igång.</p>
-                    <p>Annars är det 1010monky som gäller. Jag har läst kurser i både Python och JavaScript på
-                        Blekinge Tekniska Högskola och har hållit på med kod i flera år. JavaScript använder jag
-                        mest till webben, och Python till det mesta annat.</p>
-                    <p class="mb-0">I 1010monky bygger jag hemsidor åt företag, i WordPress och skräddarsytt när
-                        det behövs. Jag jobbar med kunder i både Sverige och Finland. Jag är ingen stor byrå utan
-                        en liten studio, så det blir personligt och rakt, och du pratar med samma person hela
-                        vägen.</p>
-                    <div class="d-flex flex-wrap gap-2 pt-4">
-                        <span class="badge bg-secondary text-body fs-sm fw-normal px-3 py-2">Python</span>
-                        <span class="badge bg-secondary text-body fs-sm fw-normal px-3 py-2">JavaScript</span>
-                        <span class="badge bg-secondary text-body fs-sm fw-normal px-3 py-2">WordPress</span>
-                    </div>
-                </div>
-            </div>
+        <div class="cluster" style="margin-top: var(--space-5);">
+          <a class="btn btn-primary" href="{{ nav_url('contact') }}">{{ 'Ota yhteyttä' if fi else 'Hör av dig' }}</a>
+          <a class="btn btn-ghost" href="{{ nav_url('services') }}">{{ 'Katso palvelut' if fi else 'Se tjänster' }}</a>
         </div>
-    </section>
-
-    <!-- Image zoom popup -->
-    <div class="modal fade" id="aboutImgModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-xl modal-dialog-centered">
-            <div class="modal-content bg-transparent border-0 shadow-none">
-                <button type="button" class="btn-close btn-close-white position-absolute top-0 end-0 m-3 z-3"
-                        data-bs-dismiss="modal" aria-label="Stäng"></button>
-                <img class="img-fluid rounded-3" alt="Matias ute och flugfiskar"
-                     src="{{ config.ASSETS_ROOT }}/img/about/matias-flugfiske.webp"/>
-            </div>
-        </div>
+      </div>
     </div>
-</main>
-
-<!-- Footer -->
-{% include "partials/footer.html" %}
-
-{% include 'partials/back-to-top.html' %}
-{% endblock content %}
-
-{% block scripts %}
-<script src="{{ config.ASSETS_ROOT }}/js/theme-switcher.js"></script>
-<script>
-    (function () {
-      window.onload = function () {
-        const preloader = document.querySelector('.page-loading')
-        preloader.classList.remove('active')
-        setTimeout(function () {
-          preloader.remove()
-        }, 1500)
-      }
-    })()
-</script>
-<script src="{{ config.ASSETS_ROOT }}/js/theme.min.js"></script>
-{% endblock scripts %}
+  </div>
+</section>
+{% endblock %}

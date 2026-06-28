@@ -1,95 +1,37 @@
-{% extends 'layouts/base.html' %}
-
+{% extends 'layouts/clean.html' %}
 {% block title %}AskHackers – lär dig Python genom att bygga{% endblock %}
+{% block meta_description %}AskHackers – lär dig Python på svenska genom att bygga spelet Snake, en byggsten i taget. Python körs i webbläsaren via Pyodide. Byggd i Flask av 1010monky.{% endblock %}
 
 {% block content %}
-<!-- Page loading spinner -->
-{% include 'partials/loader.html' %}
-<!-- Page wrapper -->
-<main class="page-wrapper">
-    <!-- Navbar -->
-    {% include "partials/navbar.html" %}
-
-    <!-- Hero -->
-    <section class="container overflow-hidden pt-5 mt-5">
-        <nav aria-label="breadcrumb">
-            <ol class="pt-lg-3 pb-2 breadcrumb">
-                <li class="breadcrumb-item"><a href="/">Hem</a></li>
-                <li class="breadcrumb-item"><a href="/portfolio-grid-v1">Portfolio</a></li>
-                <li aria-current="page" class="breadcrumb-item active">AskHackers</li>
-            </ol>
-        </nav>
-        <div class="row align-items-center pb-2 pb-md-3">
-            <div class="col-lg-6 pb-3 pb-lg-0">
-                <span class="badge bg-primary fs-sm mb-3">Webbapp · Utbildning</span>
-                <h1 class="page-title mb-3"><a class="monky-livelink" href="https://askhackers.se" target="_blank" rel="noopener">AskHackers</a></h1>
-                <p class="fs-lg text-body-secondary mb-0" style="max-width: 480px;">
-                    Lär dig Python på svenska genom att bygga spelet Snake, en byggsten i taget.</p>
-            </div>
-            <div class="col-lg-6">
-                <a class="monky-loghover d-block" href="https://askhackers.se" target="_blank" rel="noopener" aria-label="Öppna AskHackers live i ny flik">
-                    <img class="d-block w-100 rounded-5" alt="AskHackers – övningsterminalen"
-                         src="{{ config.ASSETS_ROOT }}/img/cases/askhackers-terminal.webp"/>
-                </a>
-            </div>
+<section class="section section-alt">
+  <div class="container">
+    <nav class="text-sm text-muted" style="margin-bottom: var(--space-4);"><a href="{{ nav_url('home') }}">Hem</a> / <a href="{{ nav_url('portfolio') }}">Portfolio</a> / AskHackers</nav>
+    <div class="media">
+      <div>
+        <span class="badge badge-accent" style="margin-bottom: var(--space-3);">Webbapp · Utbildning</span>
+        <h1 style="margin-bottom: var(--space-3);"><a href="https://askhackers.se" target="_blank" rel="noopener" class="text-gradient">AskHackers</a></h1>
+        <p class="lead">Lär dig Python på svenska genom att bygga spelet Snake, en byggsten i taget.</p>
+        <div class="cluster" style="margin-top: var(--space-5);">
+          <a class="btn btn-primary" href="https://askhackers.se" target="_blank" rel="noopener">Besök sidan live ↗</a>
+          <a class="btn btn-ghost" href="{{ nav_url('portfolio') }}">← Tillbaka</a>
         </div>
-    </section>
+      </div>
+      <a href="https://askhackers.se" target="_blank" rel="noopener"><img class="rounded-lg" alt="AskHackers – övningsterminalen" src="{{ config.ASSETS_ROOT }}/img/cases/askhackers-terminal.webp" loading="lazy" style="width:100%"></a>
+    </div>
+  </div>
+</section>
 
-    <!-- Body -->
-    <section class="container pb-5 mb-md-3 mb-lg-4 mb-xxl-5">
-        <div class="row justify-content-center pt-4 pt-lg-5">
-            <div class="col-lg-8">
-                <h2 class="h3 pb-1">Om projektet</h2>
-                <p class="fs-lg">AskHackers är en sida för att lära sig Python på svenska genom att bygga
-                    spelet Snake. Jag gjorde den åt Anthony, men egentligen är det kursen jag själv hade velat
-                    ha när jag började koda. Tanken är att man inte ska fastna i tutorial hell, utan ta en
-                    byggsten i taget och faktiskt bygga något.</p>
-
-                <h2 class="h3 pt-4 pb-1">Hur kursen funkar</h2>
-                <p>Varje modul börjar med lite teori om en byggsten, typ variabler, villkor eller loopar. Sen
-                    kommer fem korta övningar där man skriver koden själv. Till sist lägger man in byggstenen i
-                    Snake-spelet, så att man ser varför den behövs. Teori, öva, bygg. Sen nästa byggsten.</p>
-
-                <h2 class="h3 pt-4 pb-1">Python i webbläsaren</h2>
-                <p>Det jag tycker är coolast är att man kör Python direkt i webbläsaren. Man behöver inte
-                    installera något. Du skriver kod i editorn, trycker kör, och ser resultatet i terminalen
-                    på en gång. Det funkar med Pyodide, som kör Python via WebAssembly. Övningarna rättas
-                    automatiskt, så man får direkt besked om det blev rätt.</p>
-
-                <h2 class="h3 pt-4 pb-1">Tekniken</h2>
-                <p>Sidan är byggd i Flask. Editorn är CodeMirror, och Python körs på klienten med Pyodide. Det
-                    finns ett valideringssystem som kollar övningarna, en community-sida där man kan fråga när
-                    man kör fast, samt profiler och progress så man ser var man är. Innehållet är uppdelat i
-                    nivåer, från grunderna och uppåt.</p>
-
-                <div class="pt-4 mt-2 d-flex flex-wrap gap-3">
-                    <a class="btn btn-primary" href="https://askhackers.se" target="_blank" rel="noopener">Besök sidan live ↗</a>
-                    <a class="btn btn-outline-primary" href="/portfolio-grid-v1">← Tillbaka till portfolio</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-</main>
-
-<!-- Footer -->
-{% include "partials/footer.html" %}
-
-{% include 'partials/back-to-top.html' %}
-{% endblock content %}
-
-{% block scripts %}
-<script src="{{ config.ASSETS_ROOT }}/js/theme-switcher.js"></script>
-<script>
-    (function () {
-      window.onload = function () {
-        const preloader = document.querySelector('.page-loading')
-        preloader.classList.remove('active')
-        setTimeout(function () {
-          preloader.remove()
-        }, 1500)
-      }
-    })()
-</script>
-<script src="{{ config.ASSETS_ROOT }}/js/theme.min.js"></script>
-{% endblock scripts %}
+<section class="section">
+  <div class="container prose" style="margin-inline:auto;">
+    <h2>Om projektet</h2>
+    <p class="text-secondary">AskHackers är en sida för att lära sig Python på svenska genom att bygga spelet Snake. Jag gjorde den åt Anthony, men egentligen är det kursen jag själv hade velat ha när jag började koda. Tanken är att man inte ska fastna i tutorial hell, utan ta en byggsten i taget och faktiskt bygga något.</p>
+    <h2>Hur kursen funkar</h2>
+    <p class="text-secondary">Varje modul börjar med lite teori om en byggsten, typ variabler, villkor eller loopar. Sen kommer fem korta övningar där man skriver koden själv. Till sist lägger man in byggstenen i Snake-spelet, så att man ser varför den behövs. Teori, öva, bygg. Sen nästa byggsten.</p>
+    <h2>Python i webbläsaren</h2>
+    <p class="text-secondary">Det jag tycker är coolast är att man kör Python direkt i webbläsaren. Man behöver inte installera något. Du skriver kod i editorn, trycker kör, och ser resultatet i terminalen på en gång. Det funkar med Pyodide, som kör Python via WebAssembly. Övningarna rättas automatiskt, så man får direkt besked om det blev rätt.</p>
+    <h2>Tekniken</h2>
+    <p class="text-secondary">Sidan är byggd i Flask. Editorn är CodeMirror, och Python körs på klienten med Pyodide. Det finns ett valideringssystem som kollar övningarna, en community-sida där man kan fråga när man kör fast, samt profiler och progress så man ser var man är. Innehållet är uppdelat i nivåer, från grunderna och uppåt.</p>
+    <div class="cluster" style="margin-top: var(--space-6);"><span class="badge">Flask</span><span class="badge">Python</span><span class="badge">Pyodide</span><span class="badge">CodeMirror</span></div>
+  </div>
+</section>
+{% endblock %}

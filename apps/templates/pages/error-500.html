@@ -1,7 +1,17 @@
-{% extends 'layouts/base.html' %}
-
-{% block title %}Error 500{% endblock %}
-
+{% extends 'layouts/clean.html' %}
+{% set fi = lang == 'fi' %}
+{% block title %}{{ 'Jokin meni pieleen (500)' if fi else 'Något gick fel (500)' }}{% endblock %}
+{% block robots %}noindex, follow{% endblock %}
 {% block content %}
-Error 500
-{% endblock content %}
+<section class="section" style="text-align:center; min-height: 50vh; display:grid; place-content:center;">
+  <div class="container" style="max-width: 48ch;">
+    <div class="text-gradient" style="font-family: var(--font-display); font-size: clamp(4rem, 12vw, 7rem); font-weight: var(--fw-bold); line-height: 1;">500</div>
+    <h1 style="margin-block: var(--space-3);">{{ 'Jokin meni pieleen' if fi else 'Något gick fel' }}</h1>
+    <p class="lead" style="margin-bottom: var(--space-5);">{{ 'Vika on meidän päässämme, ei sinun. Yritä hetken kuluttua uudelleen tai ota yhteyttä.' if fi else 'Felet ligger hos oss, inte hos dig. Försök igen om en stund eller hör av dig.' }}</p>
+    <div class="cluster" style="justify-content:center;">
+      <a class="btn btn-primary" href="{{ nav_url('home') }}">{{ 'Etusivulle' if fi else 'Till startsidan' }}</a>
+      <a class="btn btn-ghost" href="{{ nav_url('contact') }}">{{ 'Ota yhteyttä' if fi else 'Kontakta oss' }}</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

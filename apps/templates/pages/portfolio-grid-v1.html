@@ -1,92 +1,44 @@
-{% extends 'layouts/base.html' %}
-
-{% block title %}Portfolio – utvalda webbprojekt{% endblock %}
-
+{% extends 'layouts/clean.html' %}
+{% set fi = lang == 'fi' %}
+{% block title %}{{ 'Portfolio – valittuja verkkoprojekteja' if fi else 'Portfolio – utvalda webbprojekt' }}{% endblock %}
+{% block meta_description %}{{ 'Valittuja projekteja joita olemme rakentaneet 1010monky Studiossa – GhostyMsg ja AskHackers. Tekniikasta verkkonäkyvyyteen.' if fi else 'Utvalda projekt vi byggt på 1010monky Studio – GhostyMsg och AskHackers. Från teknik till webbnärvaro.' }}{% endblock %}
+{% block alternates %}
+  <link rel="alternate" hreflang="sv" href="{{ sv_url }}">
+  <link rel="alternate" hreflang="fi" href="{{ fi_url }}">
+  <link rel="alternate" hreflang="x-default" href="{{ sv_url }}">
+{% endblock %}
 
 {% block content %}
-<!-- Page loading spinner -->
-{% include 'partials/loader.html' %}
-<!-- Page wrapper -->
-<main class="page-wrapper">
-    <!-- Navbar. Remove 'fixed-top' class to make the navigation bar scrollable with the page -->
-    {% include "partials/navbar.html" %}
-    <!-- Page content -->
-    <section class="container overflow-hidden py-5 mt-5 mb-2 mb-md-3 mb-lg-4 mb-xxl-5">
-        <!-- Breadcrumb -->
-        <nav aria-label="breadcrumb">
-            <ol class="pt-lg-3 pb-lg-4 pb-2 breadcrumb">
-                <li class="breadcrumb-item"><a href="/">Hem</a></li>
-                <li aria-current="page" class="breadcrumb-item active">Portfolio</li>
-            </ol>
-        </nav>
-        <!-- Page title -->
-        <h1 class="page-title text-center pb-1">Utvalda projekt</h1>
-        <p class="text-center fs-lg text-body-secondary pb-4 mb-2 mb-md-3 mx-auto" style="max-width: 560px;">
-            Två projekt vi byggt och fortsätter att utveckla. Klicka för att läsa mer.</p>
-        <!-- Projects -->
-        <div class="row g-4 g-lg-5 justify-content-center">
-            <!-- GhostyMsg -->
-            <article class="col-md-6">
-                <a class="card-hover zoom-effect d-block text-decoration-none" href="/portfolio-single-v1">
-                    <div class="zoom-effect-wrapper rounded-5">
-                        <div class="zoom-effect-img">
-                            <img class="w-100" style="aspect-ratio: 16 / 10; object-fit: cover;"
-                                 alt="GhostyMsg – anonym chatt i realtid"
-                                 src="{{ config.ASSETS_ROOT }}/img/cases/ghostymsg.webp"/>
-                        </div>
-                    </div>
-                    <div class="pt-4">
-                        <h2 class="h5 mb-1 text-nav">GhostyMsg</h2>
-                        <span class="fs-sm text-body-secondary">Anonym chatt i realtid</span>
-                    </div>
-                </a>
-            </article>
-            <!-- AskHackers -->
-            <article class="col-md-6">
-                <a class="card-hover zoom-effect d-block text-decoration-none" href="/portfolio-single-askhackers">
-                    <div class="zoom-effect-wrapper rounded-5">
-                        <div class="zoom-effect-img">
-                            <img class="w-100" style="aspect-ratio: 16 / 10; object-fit: cover;"
-                                 alt="AskHackers – lär dig Python genom att bygga"
-                                 src="{{ config.ASSETS_ROOT }}/img/cases/askhackers-terminal.webp"/>
-                        </div>
-                    </div>
-                    <div class="pt-4">
-                        <h2 class="h5 mb-1 text-nav">AskHackers</h2>
-                        <span class="fs-sm text-body-secondary">Lär dig Python genom att bygga</span>
-                    </div>
-                </a>
-            </article>
-        </div>
-    </section>
-</main>
-<!-- Footer -->
-{% include "partials/footer.html" %}
+<section class="section section-alt">
+  <div class="container" style="text-align:center; max-width: 56ch; margin-inline:auto;">
+    <span class="eyebrow">Portfolio</span>
+    <h1 style="margin-block: var(--space-3);">{{ 'Valittuja ' if fi else 'Utvalda ' }}<span class="text-gradient">{{ 'projekteja' if fi else 'projekt' }}</span></h1>
+    <p class="lead">{{ 'Kaksi projektia jotka olemme rakentaneet ja joita kehitämme edelleen. Klikkaa lukeaksesi lisää.' if fi else 'Två projekt vi byggt och fortsätter att utveckla. Klicka för att läsa mer.' }}</p>
+  </div>
+</section>
 
-
-{% include 'partials/back-to-top.html' %}
-
-
-<!-- Vendor scripts: JS libraries and plugins -->
-
-
-<!-- Bootstrap + Theme scripts -->
-{% endblock content %}
-
-{% block scripts %}
-<script src="{{ config.ASSETS_ROOT }}/js/theme-switcher.js"></script>
-<script>
-    (function () {
-      window.onload = function () {
-        const preloader = document.querySelector('.page-loading')
-        preloader.classList.remove('active')
-        setTimeout(function () {
-          preloader.remove()
-        }, 1500)
-      }
-    })()
-</script>
-<script src="{{ config.ASSETS_ROOT }}/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
-<script src="{{ config.ASSETS_ROOT }}/vendor/shufflejs/dist/shuffle.min.js"></script>
-<script src="{{ config.ASSETS_ROOT }}/js/theme.min.js"></script>
-{% endblock scripts %}
+<section class="section">
+  <div class="container">
+    <div class="grid grid-2">
+      <article>
+        <a class="card-hover" style="display:block; text-decoration:none;" href="/portfolio-single-v1">
+          <img src="{{ config.ASSETS_ROOT }}/img/cases/ghostymsg.webp" alt="GhostyMsg" loading="lazy" class="rounded-lg" style="width:100%; aspect-ratio:16/10; object-fit:cover;">
+          <div style="padding-top: var(--space-4);">
+            <h2 class="h5" style="margin-bottom:2px;">GhostyMsg</h2>
+            <span class="text-secondary text-sm">{{ 'Anonyymi chat reaaliajassa' if fi else 'Anonym chatt i realtid' }}</span>
+          </div>
+        </a>
+      </article>
+      <article>
+        <a class="card-hover" style="display:block; text-decoration:none;" href="/portfolio-single-askhackers">
+          <img src="{{ config.ASSETS_ROOT }}/img/cases/askhackers-terminal.webp" alt="AskHackers" loading="lazy" class="rounded-lg" style="width:100%; aspect-ratio:16/10; object-fit:cover;">
+          <div style="padding-top: var(--space-4);">
+            <h2 class="h5" style="margin-bottom:2px;">AskHackers</h2>
+            <span class="text-secondary text-sm">{{ 'Opi Pythonia rakentamalla' if fi else 'Lär dig Python genom att bygga' }}</span>
+          </div>
+        </a>
+      </article>
+    </div>
+  </div>
+</section>
+{% endblock %}

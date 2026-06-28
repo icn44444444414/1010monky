@@ -1,126 +1,61 @@
-{% extends 'layouts/base.html' %}
-
-{% block title %}Integritetspolicy{% endblock %}
+{% extends 'layouts/clean.html' %}
+{% set fi = lang == 'fi' %}
+{% block title %}{{ 'Tietosuojaseloste' if fi else 'Integritetspolicy' }}{% endblock %}
+{% block meta_description %}{{ 'Näin 1010monky Studio kerää ja käsittelee henkilötietoja GDPR:n mukaisesti, kun otat yhteyttä tai vierailet sivustolla.' if fi else 'Så samlar och behandlar 1010monky Studio personuppgifter enligt GDPR när du kontaktar oss eller besöker webbplatsen.' }}{% endblock %}
+{% block alternates %}
+  <link rel="alternate" hreflang="sv" href="{{ sv_url }}">
+  <link rel="alternate" hreflang="fi" href="{{ fi_url }}">
+  <link rel="alternate" hreflang="x-default" href="{{ sv_url }}">
+{% endblock %}
 
 {% block content %}
-<!-- Page loading spinner -->
-{% include 'partials/loader.html' %}
-<!-- Page wrapper -->
-<main class="page-wrapper">
-    <!-- Navbar -->
-    {% include "partials/navbar.html" %}
+<section class="section section-alt">
+  <div class="container" style="max-width: 760px;">
+    <span class="eyebrow">GDPR</span>
+    <h1 style="margin-block: var(--space-3) var(--space-2);">{{ 'Tietosuojaseloste' if fi else 'Integritetspolicy' }}</h1>
+    <p class="text-muted">{{ 'Päivitetty viimeksi: 27. kesäkuuta 2026' if fi else 'Senast uppdaterad: 27 juni 2026' }}</p>
+  </div>
+</section>
 
-    <!-- Header -->
-    <section class="bg-dark position-relative py-5" style="margin-top: 4.5rem;">
-        <div class="d-none d-dark-mode-block position-absolute top-0 start-0 w-100 h-100"
-             style="background-color: rgba(255,255,255, .03);"></div>
-        <div class="container position-relative z-2 py-4 py-md-5" data-bs-theme="dark">
-            <nav aria-label="breadcrumb">
-                <ol class="pt-lg-3 pb-lg-4 pb-2 breadcrumb">
-                    <li class="breadcrumb-item"><a href="/">Hem</a></li>
-                    <li aria-current="page" class="breadcrumb-item active">Integritetspolicy</li>
-                </ol>
-            </nav>
-            <h1 class="page-title mb-2">Integritetspolicy</h1>
-            <p class="fs-lg text-body mb-0">Senast uppdaterad: 27 juni 2026</p>
-        </div>
-    </section>
+<section class="section">
+  <div class="container prose" style="margin-inline:auto;">
+    <p class="lead">{{ 'Tämä seloste kuvaa, miten 1010monky Studio ("me") kerää ja käsittelee henkilötietoja, kun otat yhteyttä tai vierailet sivustollamme. Kunnioitamme yksityisyyttäsi ja noudatamme tietosuoja-asetusta (GDPR).' if fi else 'Den här policyn beskriver hur 1010monky Studio ("vi", "oss") samlar in och behandlar personuppgifter när du kontaktar oss eller besöker vår webbplats. Vi värnar om din integritet och följer dataskyddsförordningen (GDPR).' }}</p>
 
-    <!-- Body -->
-    <section class="container py-5 my-md-2 my-lg-3">
-        <div class="row justify-content-center">
-            <div class="col-lg-9 col-xl-8">
-                <p class="fs-lg">Den här policyn beskriver hur 1010monky Studio ("vi", "oss") samlar in och
-                    behandlar personuppgifter när du kontaktar oss eller besöker vår webbplats. Vi värnar om din
-                    integritet och följer dataskyddsförordningen (GDPR).</p>
+    {% if fi %}{% set secs = [
+      ('1. Rekisterinpitäjä','1010monky Studio vastaa henkilötietojesi käsittelystä. Tavoitat meidät osoitteesta <a href="mailto:info@1010monky.se">info@1010monky.se</a> tai numerosta <a href="tel:+46720274113">+46 72 027 41 13</a>, Eskilstuna, Ruotsi.'),
+      ('2. Mitä tietoja keräämme','<ul><li>Tiedot jotka itse annat ottaessasi yhteyttä: nimi, sähköposti, puhelinnumero, yritys ja viestisi sisältö.</li><li>Tekniset tiedot kun vierailet sivustolla, esimerkiksi IP-osoite, selaintyyppi ja miten käytät sivua (evästeiden ja analytiikan kautta, ks. kohta 4).</li></ul>'),
+      ('3. Miksi käsittelemme tietoja','<ul><li>Vastataksemme yhteydenottoosi ja hoitaaksemme mahdolliseen toimeksiantoon liittyvän yhteydenpidon (oikeusperuste: oikeutettu etu ja sopimuksen tekeminen).</li><li>Toimittaaksemme ja laskuttaaksemme sovitut palvelut (sopimuksen täyttäminen sekä kirjanpitolain mukainen velvoite).</li><li>Parantaaksemme sivustoa ja pitääksemme sen turvallisena (oikeutettu etu).</li></ul>'),
+      ('4. Evästeet ja analytiikka','Sivusto voi käyttää välttämättömiä evästeitä toimiakseen, ja analytiikkatyökaluja (esimerkiksi Google Analytics) ymmärtääkseen miten sivua käytetään. Analytiikkadataa käytetään koostetussa muodossa. Voit estää tai poistaa evästeitä selaimesi asetuksista.'),
+      ('5. Kuinka kauan säilytämme tietoja','Säilytämme tietoja niin kauan kuin se on tarpeen käyttötarkoitusta varten. Yhteydenotot jotka eivät johda toimeksiantoon poistetaan säännöllisesti. Asiakastiedot säilytetään toimeksiannon ajan ja sen jälkeen niin kauan kuin laki vaatii, esimerkiksi seitsemän vuotta kirjanpitolain mukaan laskutukseen liittyvistä aineistoista.'),
+      ('6. Kenelle jaamme tietoja','Emme koskaan myy tietojasi. Voimme jakaa niitä toimittajille jotka auttavat meitä pyörittämään toimintaa, esimerkiksi webhotelli, sähköpostipalvelu ja analytiikkatyökalut, ja vain siinä laajuudessa kuin tarpeen. Nämä toimivat henkilötietojen käsittelijöinä puolestamme.'),
+      ('7. Missä tietoja käsitellään','Pyrimme käsittelemään tietoja EU:n/ETA:n sisällä. Jos toimittaja käsittelee tietoja EU:n/ETA:n ulkopuolella, se tapahtuu GDPR:n mukaisin asianmukaisin suojatoimin.'),
+      ('8. Oikeutesi','Sinulla on oikeus saada tietää mitä tietoja meillä on sinusta, saada ne oikaistuiksi tai poistetuiksi, rajoittaa tai vastustaa käsittelyä ja saada tietosi siirretyiksi (siirrettävyys). Ota yhteyttä osoitteeseen <a href="mailto:info@1010monky.se">info@1010monky.se</a> niin autamme.'),
+      ('9. Tietoturva','Toteutamme kohtuulliset tekniset ja organisatoriset toimet suojataksemme tietojasi katoamiselta ja luvattomalta pääsyltä.'),
+      ('10. Valitukset','Jos katsot että käsittelemme tietojasi virheellisesti, voit kääntyä tietosuojaviranomaisen puoleen. Suomessa se on Tietosuojavaltuutettu, <a href="https://tietosuoja.fi" target="_blank" rel="noopener">tietosuoja.fi</a>.'),
+      ('11. Muutokset','Voimme päivittää tätä selostetta. Uusin versio löytyy aina täältä sivustolta.')
+    ] %}{% else %}{% set secs = [
+      ('1. Personuppgiftsansvarig','1010monky Studio ansvarar för behandlingen av dina personuppgifter. Du når oss på <a href="mailto:info@1010monky.se">info@1010monky.se</a> eller <a href="tel:+46720274113">+46 72 027 41 13</a>, Eskilstuna, Sverige.'),
+      ('2. Vilka uppgifter vi samlar in','<ul><li>Uppgifter du själv lämnar när du kontaktar oss: namn, e-post, telefonnummer, företag och det du skriver i ditt meddelande.</li><li>Teknisk information när du besöker webbplatsen, till exempel IP-adress, webbläsartyp och hur du använder sidan (via cookies och analys, se punkt 4).</li></ul>'),
+      ('3. Varför vi behandlar uppgifterna','<ul><li>För att svara på din förfrågan och sköta kontakten kring ett möjligt uppdrag (rättslig grund: berättigat intresse och för att kunna ingå avtal).</li><li>För att leverera och fakturera avtalade tjänster (fullgörande av avtal samt rättslig förpliktelse enligt bokföringslagen).</li><li>För att förbättra och hålla webbplatsen säker (berättigat intresse).</li></ul>'),
+      ('4. Cookies och analys','Webbplatsen kan använda nödvändiga cookies för att fungera, och analysverktyg (till exempel Google Analytics) för att förstå hur sidan används. Analysdata används i aggregerad form. Du kan blockera eller radera cookies i din webbläsares inställningar.'),
+      ('5. Hur länge vi sparar uppgifterna','Vi sparar uppgifter så länge det behövs för ändamålet. Förfrågningar som inte leder till uppdrag gallras löpande. Kunduppgifter sparas under uppdraget och därefter så länge lagen kräver, till exempel sju år enligt bokföringslagen för underlag som rör fakturering.'),
+      ('6. Vilka vi delar uppgifter med','Vi säljer aldrig dina uppgifter. Vi kan dela dem med leverantörer som hjälper oss att driva verksamheten, till exempel webbhotell, e-posttjänst och analysverktyg, och då endast i den utsträckning som behövs. Dessa agerar som personuppgiftsbiträden åt oss.'),
+      ('7. Var uppgifterna behandlas','Vi strävar efter att behandla uppgifter inom EU/EES. Om en leverantör behandlar uppgifter utanför EU/EES sker det med lämpliga skyddsåtgärder enligt GDPR.'),
+      ('8. Dina rättigheter','Du har rätt att få veta vilka uppgifter vi har om dig, att få dem rättade eller raderade, att begränsa eller invända mot behandlingen och att få ut dina uppgifter (dataportabilitet). Kontakta oss på <a href="mailto:info@1010monky.se">info@1010monky.se</a> så hjälper vi dig.'),
+      ('9. Säkerhet','Vi vidtar rimliga tekniska och organisatoriska åtgärder för att skydda dina uppgifter mot förlust och obehörig åtkomst.'),
+      ('10. Klagomål','Om du anser att vi behandlar dina uppgifter felaktigt kan du vända dig till Integritetsskyddsmyndigheten (IMY), <a href="https://www.imy.se" target="_blank" rel="noopener">imy.se</a>.'),
+      ('11. Ändringar','Vi kan uppdatera den här policyn. Den senaste versionen finns alltid här på webbplatsen.')
+    ] %}{% endif %}
 
-                <h2 class="h4 pt-4 pb-1">1. Personuppgiftsansvarig</h2>
-                <p>1010monky Studio ansvarar för behandlingen av dina personuppgifter. Du når oss på
-                    <a class="monky-livelink" href="mailto:info@1010monky.se">info@1010monky.se</a> eller
-                    <a class="monky-livelink" href="tel:+46720274113">+46 72 027 41 13</a>, Eskilstuna,
-                    Sverige.</p>
+    {% for h, b in secs %}
+    <h2>{{ h }}</h2>
+    <div class="text-secondary">{{ b|safe }}</div>
+    {% endfor %}
 
-                <h2 class="h4 pt-4 pb-1">2. Vilka uppgifter vi samlar in</h2>
-                <ul>
-                    <li>Uppgifter du själv lämnar när du kontaktar oss: namn, e-post, telefonnummer, företag
-                        och det du skriver i ditt meddelande.</li>
-                    <li>Teknisk information när du besöker webbplatsen, till exempel IP-adress, webbläsartyp och
-                        hur du använder sidan (via cookies och analys, se punkt 4).</li>
-                </ul>
-
-                <h2 class="h4 pt-4 pb-1">3. Varför vi behandlar uppgifterna</h2>
-                <ul>
-                    <li>För att svara på din förfrågan och sköta kontakten kring ett möjligt uppdrag (rättslig
-                        grund: berättigat intresse och för att kunna ingå avtal).</li>
-                    <li>För att leverera och fakturera avtalade tjänster (fullgörande av avtal samt rättslig
-                        förpliktelse enligt bokföringslagen).</li>
-                    <li>För att förbättra och hålla webbplatsen säker (berättigat intresse).</li>
-                </ul>
-
-                <h2 class="h4 pt-4 pb-1">4. Cookies och analys</h2>
-                <p>Webbplatsen kan använda nödvändiga cookies för att fungera, och analysverktyg (till exempel
-                    Google Analytics) för att förstå hur sidan används. Analysdata används i aggregerad form. Du
-                    kan blockera eller radera cookies i din webbläsares inställningar.</p>
-
-                <h2 class="h4 pt-4 pb-1">5. Hur länge vi sparar uppgifterna</h2>
-                <p>Vi sparar uppgifter så länge det behövs för ändamålet. Förfrågningar som inte leder till
-                    uppdrag gallras löpande. Kunduppgifter sparas under uppdraget och därefter så länge lagen
-                    kräver, till exempel sju år enligt bokföringslagen för underlag som rör fakturering.</p>
-
-                <h2 class="h4 pt-4 pb-1">6. Vilka vi delar uppgifter med</h2>
-                <p>Vi säljer aldrig dina uppgifter. Vi kan dela dem med leverantörer som hjälper oss att driva
-                    verksamheten, till exempel webbhotell, e-posttjänst och analysverktyg, och då endast i den
-                    utsträckning som behövs. Dessa agerar som personuppgiftsbiträden åt oss.</p>
-
-                <h2 class="h4 pt-4 pb-1">7. Var uppgifterna behandlas</h2>
-                <p>Vi strävar efter att behandla uppgifter inom EU/EES. Om en leverantör behandlar uppgifter
-                    utanför EU/EES sker det med lämpliga skyddsåtgärder enligt GDPR.</p>
-
-                <h2 class="h4 pt-4 pb-1">8. Dina rättigheter</h2>
-                <p>Du har rätt att få veta vilka uppgifter vi har om dig, att få dem rättade eller raderade,
-                    att begränsa eller invända mot behandlingen och att få ut dina uppgifter (dataportabilitet).
-                    Kontakta oss på <a class="monky-livelink" href="mailto:info@1010monky.se">info@1010monky.se</a>
-                    så hjälper vi dig.</p>
-
-                <h2 class="h4 pt-4 pb-1">9. Säkerhet</h2>
-                <p>Vi vidtar rimliga tekniska och organisatoriska åtgärder för att skydda dina uppgifter mot
-                    förlust och obehörig åtkomst.</p>
-
-                <h2 class="h4 pt-4 pb-1">10. Klagomål</h2>
-                <p>Om du anser att vi behandlar dina uppgifter felaktigt kan du vända dig till
-                    Integritetsskyddsmyndigheten (IMY), <a class="monky-livelink" href="https://www.imy.se"
-                        target="_blank" rel="noopener">imy.se</a>.</p>
-
-                <h2 class="h4 pt-4 pb-1">11. Ändringar</h2>
-                <p>Vi kan uppdatera den här policyn. Den senaste versionen finns alltid här på webbplatsen.</p>
-
-                <h2 class="h4 pt-4 pb-1">12. Kontakt</h2>
-                <p class="mb-0">1010monky Studio, Eskilstuna, Sverige.<br/>
-                    E-post: <a class="monky-livelink" href="mailto:info@1010monky.se">info@1010monky.se</a><br/>
-                    Telefon: <a class="monky-livelink" href="tel:+46720274113">+46 72 027 41 13</a></p>
-            </div>
-        </div>
-    </section>
-</main>
-
-<!-- Footer -->
-{% include "partials/footer.html" %}
-
-{% include 'partials/back-to-top.html' %}
-{% endblock content %}
-
-{% block scripts %}
-<script src="{{ config.ASSETS_ROOT }}/js/theme-switcher.js"></script>
-<script>
-    (function () {
-      window.onload = function () {
-        const preloader = document.querySelector('.page-loading')
-        preloader.classList.remove('active')
-        setTimeout(function () {
-          preloader.remove()
-        }, 1500)
-      }
-    })()
-</script>
-<script src="{{ config.ASSETS_ROOT }}/js/theme.min.js"></script>
-{% endblock scripts %}
+    <h2>{{ '12. Yhteystiedot' if fi else '12. Kontakt' }}</h2>
+    <p class="text-secondary">1010monky Studio, Eskilstuna, {{ 'Ruotsi' if fi else 'Sverige' }}.<br>
+      {{ 'Sähköposti' if fi else 'E-post' }}: <a href="mailto:info@1010monky.se">info@1010monky.se</a><br>
+      {{ 'Puhelin' if fi else 'Telefon' }}: <a href="tel:+46720274113">+46 72 027 41 13</a></p>
+  </div>
+</section>
+{% endblock %}

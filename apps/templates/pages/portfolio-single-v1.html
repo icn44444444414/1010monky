@@ -1,105 +1,40 @@
-{% extends 'layouts/base.html' %}
-
+{% extends 'layouts/clean.html' %}
 {% block title %}GhostyMsg – anonym chatt i realtid{% endblock %}
+{% block meta_description %}GhostyMsg – anonym chatt i realtid byggd av 1010monky. Inga konton, ingen historik, end-to-end-kryptering i webbläsaren. Node.js + WebSockets.{% endblock %}
 
 {% block content %}
-<!-- Page loading spinner -->
-{% include 'partials/loader.html' %}
-<!-- Page wrapper -->
-<main class="page-wrapper">
-    <!-- Navbar -->
-    {% include "partials/navbar.html" %}
-
-    <!-- Hero -->
-    <section class="container overflow-hidden pt-5 mt-5">
-        <nav aria-label="breadcrumb">
-            <ol class="pt-lg-3 pb-2 breadcrumb">
-                <li class="breadcrumb-item"><a href="/">Hem</a></li>
-                <li class="breadcrumb-item"><a href="/portfolio-grid-v1">Portfolio</a></li>
-                <li aria-current="page" class="breadcrumb-item active">GhostyMsg</li>
-            </ol>
-        </nav>
-        <div class="row align-items-center pb-2 pb-md-3">
-            <div class="col-lg-6 pb-3 pb-lg-0">
-                <span class="badge bg-primary fs-sm mb-3">Webbapp · Realtid</span>
-                <h1 class="page-title mb-3"><a class="monky-livelink" href="https://ghostymsg.com" target="_blank" rel="noopener">GhostyMsg</a></h1>
-                <p class="fs-lg text-body-secondary mb-0" style="max-width: 480px;">
-                    Anonym chatt i realtid. Du skapar ett rum, delar en länk, och pratar.
-                    När alla gått är rummet borta.</p>
-            </div>
-            <div class="col-lg-6">
-                <a class="monky-loghover d-block" href="https://ghostymsg.com" target="_blank" rel="noopener" aria-label="Öppna GhostyMsg live i ny flik">
-                    <img class="d-block w-100 rounded-5" alt="GhostyMsg – chattvy"
-                         src="{{ config.ASSETS_ROOT }}/img/cases/ghostymsg.webp"/>
-                </a>
-            </div>
+<section class="section section-alt">
+  <div class="container">
+    <nav class="text-sm text-muted" style="margin-bottom: var(--space-4);"><a href="{{ nav_url('home') }}">Hem</a> / <a href="{{ nav_url('portfolio') }}">Portfolio</a> / GhostyMsg</nav>
+    <div class="media">
+      <div>
+        <span class="badge badge-accent" style="margin-bottom: var(--space-3);">Webbapp · Realtid</span>
+        <h1 style="margin-bottom: var(--space-3);"><a href="https://ghostymsg.com" target="_blank" rel="noopener" class="text-gradient">GhostyMsg</a></h1>
+        <p class="lead">Anonym chatt i realtid. Du skapar ett rum, delar en länk, och pratar. När alla gått är rummet borta.</p>
+        <div class="cluster" style="margin-top: var(--space-5);">
+          <a class="btn btn-primary" href="https://ghostymsg.com" target="_blank" rel="noopener">Besök sidan live ↗</a>
+          <a class="btn btn-ghost" href="{{ nav_url('portfolio') }}">← Tillbaka</a>
         </div>
-    </section>
+      </div>
+      <a href="https://ghostymsg.com" target="_blank" rel="noopener"><img class="rounded-lg" alt="GhostyMsg – chattvy" src="{{ config.ASSETS_ROOT }}/img/cases/ghostymsg.webp" loading="lazy" style="width:100%"></a>
+    </div>
+  </div>
+</section>
 
-    <!-- Body -->
-    <section class="container pb-5 mb-md-3 mb-lg-4 mb-xxl-5">
-        <div class="row justify-content-center pt-4 pt-lg-5">
-            <div class="col-lg-8">
-                <h2 class="h3 pb-1">Om projektet</h2>
-                <p class="fs-lg">Jag byggde GhostyMsg åt Kristian i Finland. Han ville ha ett ställe där man
-                    kan snacka utan att något sparas. Inga konton, ingen historik. Man skapar ett rum, delar
-                    en länk och ett lösenord, sen pratar man. När alla har lämnat rummet finns det inte kvar.</p>
-                <p>Den är inte färdig. Jag jobbar fortfarande på den och lägger till saker efter hand. Men
-                    grunden står: rummen funkar, chatten går i realtid och krypteringen är på plats.</p>
-
-                <h2 class="h3 pt-4 pb-1">Hur det funkar</h2>
-                <p>Du skapar ett privat rum med ett namn, ett smeknamn och ett lösenord. Du väljer också hur
-                    länge det ska leva, allt från fem minuter till ett dygn. Sen skickar du länken till dem du
-                    vill ha med. Inne i rummet går meddelandena direkt, och varje meddelande ligger bara framme
-                    en liten stund innan det tonas bort. Det finns ingen historik att scrolla i, för det är ju
-                    hela grejen.</p>
-
-                <h2 class="h3 pt-4 pb-1">Krypteringen</h2>
-                <p>Det här är den delen jag la absolut mest tid på. Jag ville inte att man bara ska behöva lita
-                    på mitt ord, utan att det ska vara privat på riktigt.</p>
-                <p>Allt krypteras i webbläsaren innan det skickas. För nyckelutbytet använder jag ECDH, P-256
-                    som grund och X25519 när webbläsaren klarar det. Nycklarna räknas fram med HKDF (SHA-256),
-                    och själva meddelandena krypteras med AES-256-GCM. I grupprum kör jag sender keys, så att
-                    ett meddelande bara krypteras en gång istället för en gång per person.</p>
-                <p>Jag har inte byggt någon egen krypto, utan använt webbläsarens eget Web Crypto som redan är
-                    beprövat. Servern ser aldrig vad som skrivs, bara sådant som vilket rum det gäller.
-                    Nycklarna finns bara i minnet medan du är inne, inget skrivs till disk. Och när någon går
-                    med eller lämnar byts nycklarna ut, så att gamla meddelanden inte går att låsa upp i
-                    efterhand.</p>
-
-                <h2 class="h3 pt-4 pb-1">Tekniken</h2>
-                <p>Servern är i Node.js med Express, och realtiden går via WebSockets. Jag använder helmet för
-                    säkerhetsheaders, rate limiting för att hålla borta skräp, och korta slumpade id:n för
-                    rummen.</p>
-
-                <div class="pt-4 mt-2 d-flex flex-wrap gap-3">
-                    <a class="btn btn-primary" href="https://ghostymsg.com" target="_blank" rel="noopener">Besök sidan live ↗</a>
-                    <a class="btn btn-outline-primary" href="/portfolio-grid-v1">← Tillbaka till portfolio</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-</main>
-
-<!-- Footer -->
-{% include "partials/footer.html" %}
-
-{% include 'partials/back-to-top.html' %}
-{% endblock content %}
-
-{% block scripts %}
-<script src="{{ config.ASSETS_ROOT }}/js/theme-switcher.js"></script>
-<script>
-    (function () {
-      window.onload = function () {
-        const preloader = document.querySelector('.page-loading')
-        preloader.classList.remove('active')
-        setTimeout(function () {
-          preloader.remove()
-        }, 1500)
-      }
-    })()
-</script>
-<script src="{{ config.ASSETS_ROOT }}/js/theme.min.js"></script>
-{% endblock scripts %}
+<section class="section">
+  <div class="container prose" style="margin-inline:auto;">
+    <h2>Om projektet</h2>
+    <p class="text-secondary">Jag byggde GhostyMsg åt Kristian i Finland. Han ville ha ett ställe där man kan snacka utan att något sparas. Inga konton, ingen historik. Man skapar ett rum, delar en länk och ett lösenord, sen pratar man. När alla har lämnat rummet finns det inte kvar.</p>
+    <p class="text-secondary">Den är inte färdig. Jag jobbar fortfarande på den och lägger till saker efter hand. Men grunden står: rummen funkar, chatten går i realtid och krypteringen är på plats.</p>
+    <h2>Hur det funkar</h2>
+    <p class="text-secondary">Du skapar ett privat rum med ett namn, ett smeknamn och ett lösenord. Du väljer också hur länge det ska leva, allt från fem minuter till ett dygn. Sen skickar du länken till dem du vill ha med. Inne i rummet går meddelandena direkt, och varje meddelande ligger bara framme en liten stund innan det tonas bort. Det finns ingen historik att scrolla i, för det är ju hela grejen.</p>
+    <h2>Krypteringen</h2>
+    <p class="text-secondary">Det här är den delen jag la absolut mest tid på. Jag ville inte att man bara ska behöva lita på mitt ord, utan att det ska vara privat på riktigt.</p>
+    <p class="text-secondary">Allt krypteras i webbläsaren innan det skickas. För nyckelutbytet använder jag ECDH, P-256 som grund och X25519 när webbläsaren klarar det. Nycklarna räknas fram med HKDF (SHA-256), och själva meddelandena krypteras med AES-256-GCM. I grupprum kör jag sender keys, så att ett meddelande bara krypteras en gång istället för en gång per person.</p>
+    <p class="text-secondary">Jag har inte byggt någon egen krypto, utan använt webbläsarens eget Web Crypto som redan är beprövat. Servern ser aldrig vad som skrivs, bara sådant som vilket rum det gäller. Nycklarna finns bara i minnet medan du är inne, inget skrivs till disk. Och när någon går med eller lämnar byts nycklarna ut, så att gamla meddelanden inte går att låsa upp i efterhand.</p>
+    <h2>Tekniken</h2>
+    <p class="text-secondary">Servern är i Node.js med Express, och realtiden går via WebSockets. Jag använder helmet för säkerhetsheaders, rate limiting för att hålla borta skräp, och korta slumpade id:n för rummen.</p>
+    <div class="cluster" style="margin-top: var(--space-6);"><span class="badge">Node.js</span><span class="badge">Express</span><span class="badge">WebSockets</span><span class="badge">Web Crypto</span></div>
+  </div>
+</section>
+{% endblock %}
