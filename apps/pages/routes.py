@@ -21,7 +21,7 @@ def wip_protected(view):
         if not auth or not hmac.compare_digest(auth.password or '', WIP_PASSWORD):
             return Response(
                 'Inloggning kravs.', 401,
-                {'WWW-Authenticate': 'Basic realm="1010monky – under arbete"'})
+                {'WWW-Authenticate': 'Basic realm="1010monky under arbete"'})
         return view(*args, **kwargs)
     return wrapper
 
