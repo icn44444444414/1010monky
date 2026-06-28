@@ -62,12 +62,12 @@
             <!-- Metric-kort -->
             <div class="grid grid-cols-4 gap-6 mb-6">
                 {% set cards = [
-                    ('fa-solid fa-signal', 'Live besökare nu', d.live_now, none, true),
-                    ('fa-solid fa-users', 'Besökare idag', d.today, d.today_delta, d.today_up),
-                    ('fa-solid fa-fire', 'Heta leads', d.hot_leads, d.hot_delta, d.hot_up),
-                    ('fa-solid fa-user-plus', 'Nya leads (30 d)', d.new_leads, d.new_delta, d.new_up)
+                    ('fa-solid fa-signal', 'Live besökare nu', d.live_now, true),
+                    ('fa-solid fa-users', 'Besökare idag', d.today, false),
+                    ('fa-solid fa-fire', 'Heta leads', d.hot_leads, false),
+                    ('fa-solid fa-user-plus', 'Nya leads (30 d)', d.new_leads, false)
                 ] %}
-                {% for icon, label, value, delta, up in cards %}
+                {% for icon, label, value, is_live in cards %}
                 <div class="bg-white p-5 rounded-2xl shadow-[0_2px_10px_-3px_rgba(20,23,26,0.06)] border border-gray-50">
                     <div class="flex justify-between items-center mb-4">
                         <div class="flex items-center text-gray-500 text-sm"><i class="{{ icon }} mr-2"></i> {{ label }}</div>
@@ -75,12 +75,8 @@
                     </div>
                     <div class="flex items-end justify-between">
                         <span class="text-3xl font-bold text-gray-900">{{ value }}</span>
-                        {% if delta %}
-                        <span class="text-xs font-medium {{ 'bg-green-100 text-green-700' if up else 'bg-red-50 text-red-600' }} px-2 py-1 rounded-md flex items-center">
-                            <i class="fa-solid {{ 'fa-arrow-trend-up' if up else 'fa-arrow-trend-down' }} mr-1 text-[10px]"></i> {{ delta }}
-                        </span>
-                        {% else %}
-                        <span class="flex items-center text-xs font-medium text-brand-500"><span class="w-2 h-2 rounded-full bg-brand-500 mr-1.5 animate-pulse"></span>aktiva nu</span>
+                        {% if is_live %}
+                        <span class="flex items-center text-xs font-medium text-brand-500"><span class="w-2 h-2 rounded-full bg-brand-500 mr-1.5 animate-pulse"></span>just nu</span>
                         {% endif %}
                     </div>
                 </div>
@@ -92,7 +88,7 @@
                 <div class="col-span-6 bg-white p-6 rounded-2xl shadow-[0_2px_10px_-3px_rgba(20,23,26,0.06)] border border-gray-50">
                     <div class="flex justify-between items-start mb-6">
                         <div>
-                            <h2 class="text-lg font-bold text-gray-900">Besök senaste 30 dagarna</h2>
+                            <h2 class="text-lg font-bold text-gray-900">Besök senaste 14 dagarna</h2>
                             <p class="text-sm text-gray-500">Besökare, klick och leads</p>
                         </div>
                         <div class="flex space-x-4 text-xs font-medium text-gray-500">
@@ -110,8 +106,8 @@
                     <div class="h-48 relative flex justify-center items-center">
                         <canvas id="devicesChart"></canvas>
                         <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-                            <span class="text-xs text-gray-500">Mobil</span>
-                            <span class="text-xl font-bold text-gray-900">{{ d.devices.Mobil }}%</span>
+                            <span class="text-xs text-gray-500">{{ d.top_device_name }}</span>
+                            <span class="text-xl font-bold text-gray-900">{{ d.top_device_pct }}%</span>
                         </div>
                     </div>
                 </div>
@@ -134,6 +130,8 @@
                                 <div class="bg-brand-500 h-1.5 rounded-full" style="width: {{ cta.pct }}%"></div>
                             </div>
                         </div>
+                        {% else %}
+                        <p class="text-sm text-gray-400">Inga klick än.</p>
                         {% endfor %}
                     </div>
                 </div>
@@ -142,34 +140,35 @@
             <!-- Nedre rad -->
             <div class="grid grid-cols-12 gap-6 pb-8">
                 <div class="col-span-4 bg-white p-6 rounded-2xl shadow-[0_2px_10px_-3px_rgba(20,23,26,0.06)] border border-gray-50">
-                    <h2 class="text-lg font-bold text-gray-900 mb-6">Leads per månad</h2>
-                    <div class="h-64 relative"><canvas id="leadsChart"></canvas></div>
+                    <h2 class="text-lg font-bold text-gray-900 mb-6">Topp-sidor</h2>
+                    <div class="h-64 relative"><canvas id="pagesChart"></canvas></div>
                 </div>
 
                 <div class="col-span-5 bg-white p-6 rounded-2xl shadow-[0_2px_10px_-3px_rgba(20,23,26,0.06)] border border-gray-50">
                     <div class="flex justify-between items-start mb-6">
-                        <h2 class="text-lg font-bold text-gray-900">Senaste leads</h2>
-                        <a href="#" class="text-sm font-medium text-brand-500 hover:text-brand-600">Visa alla</a>
+                        <h2 class="text-lg font-bold text-gray-900">Senaste besökare</h2>
+                        <a href="/admin/live" class="text-sm font-medium text-brand-500 hover:text-brand-600">Live-vy</a>
                     </div>
                     <div class="overflow-x-auto">
                         <table class="w-full text-left border-collapse">
                             <thead>
                                 <tr class="text-xs text-gray-500 border-b border-gray-100 bg-gray-50">
-                                    <th class="py-3 px-4 font-medium rounded-tl-lg">Namn</th>
-                                    <th class="py-3 px-4 font-medium">Tjänst</th>
-                                    <th class="py-3 px-4 font-medium">Lead-score</th>
-                                    <th class="py-3 px-4 font-medium rounded-tr-lg">Status</th>
+                                    <th class="py-3 px-4 font-medium rounded-tl-lg">Besökare</th>
+                                    <th class="py-3 px-4 font-medium">Enhet</th>
+                                    <th class="py-3 px-4 font-medium">Sida</th>
+                                    <th class="py-3 px-4 font-medium rounded-tr-lg">Lead-score</th>
                                 </tr>
                             </thead>
                             <tbody class="text-sm">
-                                {% set badge = {'green':'bg-green-50 text-green-600','blue':'bg-blue-50 text-blue-600','purple':'bg-purple-50 text-purple-600','gray':'bg-gray-100 text-gray-600'} %}
-                                {% for l in d.recent_leads %}
+                                {% for v in d.recent %}
                                 <tr class="border-b border-gray-50 hover:bg-gray-50/50">
-                                    <td class="py-4 px-4 font-medium text-gray-800">{{ l.name }}</td>
-                                    <td class="py-4 px-4 text-gray-500">{{ l.service }}</td>
-                                    <td class="py-4 px-4"><span class="font-bold {{ 'text-brand-500' if l.score >= 70 else 'text-gray-700' }}">{{ l.score }}</span><span class="text-gray-400">/100</span></td>
-                                    <td class="py-4 px-4"><span class="{{ badge[l.cls] }} px-2 py-1 rounded-md text-xs font-medium">{{ l.status }}</span></td>
+                                    <td class="py-4 px-4 font-medium text-gray-800">{{ v.id }}</td>
+                                    <td class="py-4 px-4 text-gray-500">{{ v.device }}</td>
+                                    <td class="py-4 px-4 text-gray-500">{{ v.page }}</td>
+                                    <td class="py-4 px-4"><span class="font-bold {{ 'text-brand-500' if v.score >= 70 else 'text-gray-700' }}">{{ v.score }}</span><span class="text-gray-400">/100</span></td>
                                 </tr>
+                                {% else %}
+                                <tr><td colspan="4" class="py-8 px-4 text-center text-gray-400">Inga besökare än.</td></tr>
                                 {% endfor %}
                             </tbody>
                         </table>
@@ -223,15 +222,15 @@
             options: { responsive: true, maintainAspectRatio: false, cutout: '75%', plugins: { legend: { display: false } } }
         });
 
-        const ctxLeads = document.getElementById('leadsChart').getContext('2d');
-        const grad = ctxLeads.createLinearGradient(0, 0, 0, 400);
+        const ctxPages = document.getElementById('pagesChart').getContext('2d');
+        const grad = ctxPages.createLinearGradient(0, 0, 0, 400);
         grad.addColorStop(0, GREEN); grad.addColorStop(1, '#a7d3c4');
-        const leadsData = {{ d.leads_per_month|tojson }};
-        const maxIdx = leadsData.indexOf(Math.max(...leadsData));
-        new Chart(ctxLeads, {
+        const pagesData = {{ d.top_pages.data|tojson }};
+        const maxIdx = pagesData.length ? pagesData.indexOf(Math.max(...pagesData)) : -1;
+        new Chart(ctxPages, {
             type: 'bar',
-            data: { labels: {{ d.months|tojson }},
-                datasets: [{ data: leadsData, backgroundColor: leadsData.map((_, i) => i === maxIdx ? grad : '#f3f4f6'), borderRadius: 8, barPercentage: 0.6 }] },
+            data: { labels: {{ d.top_pages.labels|tojson }},
+                datasets: [{ data: pagesData, backgroundColor: pagesData.map((_, i) => i === maxIdx ? grad : '#f3f4f6'), borderRadius: 8, barPercentage: 0.6 }] },
             options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } },
                 scales: { y: { beginAtZero: true, grid: { display: false }, border: { display: false } }, x: { grid: { display: false }, border: { display: false } } } }
         });

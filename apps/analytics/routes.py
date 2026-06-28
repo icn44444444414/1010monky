@@ -24,44 +24,6 @@ def admin_required(view):
     return wrapper
 
 
-# Demodata tills analytics-modulen lagrar riktiga siffror.
-DEMO = {
-    'live_now': 3,
-    'today': 247, 'today_delta': '+12%', 'today_up': True,
-    'hot_leads': 5, 'hot_delta': '+2', 'hot_up': True,
-    'new_leads': 18, 'new_delta': '+23%', 'new_up': True,
-    'conversion': '4,2%', 'conv_delta': '-0,4%', 'conv_up': False,
-    # linjediagram: senaste 30 dagarna
-    'days': ['1 jun', '5 jun', '10 jun', '15 jun', '20 jun', '25 jun', '30 jun'],
-    'visits': [120, 210, 190, 260, 240, 300, 280],
-    'clicks': [40, 80, 70, 110, 95, 130, 120],
-    'leads': [2, 4, 3, 6, 5, 8, 7],
-    # enheter (donut)
-    'devices': {'Mobil': 62, 'Dator': 33, 'Surfplatta': 5},
-    # topp-CTA
-    'top_cta': [
-        {'text': 'Begär offert', 'clicks': 71, 'pct': 100},
-        {'text': 'Se priser', 'clicks': 34, 'pct': 48},
-        {'text': 'Boka samtal', 'clicks': 12, 'pct': 17},
-    ],
-    # leads per månad (stapel)
-    'months': ['Jan', 'Feb', 'Mar', 'Apr', 'Maj', 'Jun'],
-    'leads_per_month': [6, 9, 7, 12, 10, 14],
-    # senaste leads
-    'recent_leads': [
-        {'name': 'Erik Lundgren', 'service': 'Ny hemsida', 'score': 82, 'status': 'Ny', 'cls': 'green'},
-        {'name': 'Sara Holm', 'service': 'WordPress', 'score': 64, 'status': 'Kontaktad', 'cls': 'blue'},
-        {'name': 'Johan Ek', 'service': 'Webbshop', 'score': 91, 'status': 'Offert skickad', 'cls': 'purple'},
-        {'name': 'Anna Berg', 'service': 'SEO', 'score': 38, 'status': 'Ny', 'cls': 'green'},
-    ],
-    # insikter
-    'insights': [
-        {'icon': 'fa-fire', 'title': 'Het lead', 'text': 'Johan Ek (91) tittade på priser och kontakt.'},
-        {'icon': 'fa-arrow-trend-down', 'title': 'Tapp i tratten', 'text': 'Många når kontakt men få skickar formuläret.'},
-    ],
-}
-
-
 @blueprint.route('/admin')
 @admin_required
 def admin_home():
@@ -71,11 +33,31 @@ def admin_home():
 @blueprint.route('/admin/dashboard')
 @admin_required
 def dashboard():
-    # Live-siffrorna ar redan riktiga; ovriga paneler kor demodata tills
-    # resten kopplas in (nasta steg).
-    d = dict(DEMO)
-    d['live_now'] = len(stats.live_sessions())
-    d['today'] = stats.count_today()
+    series = stats.daily_series(14)
+    devices = stats.device_breakdown()
+    cta = stats.top_cta(5)
+    top_dev = max(devices.items(), key=lambda kv: kv[1]) if devices else ('–', 0)
+
+    insights = []
+    if cta:
+        insights.append({'icon': 'fa-hand-pointer', 'title': 'Mest klickade',
+                         'text': f"\"{cta[0]['text']}\" – {cta[0]['clicks']} klick."})
+    insights.append({'icon': 'fa-signal', 'title': 'Live just nu',
+                     'text': f"{len(stats.live_sessions())} besökare på sajten."})
+
+    d = {
+        'live_now': len(stats.live_sessions()),
+        'today': stats.count_today(),
+        'hot_leads': stats.hot_leads(),
+        'new_leads': stats.form_submits(30),
+        'days': series['labels'], 'visits': series['visits'],
+        'clicks': series['clicks'], 'leads': series['leads'],
+        'devices': devices, 'top_device_name': top_dev[0], 'top_device_pct': top_dev[1],
+        'top_cta': cta,
+        'top_pages': stats.top_pages(6),
+        'recent': stats.recent_sessions(8),
+        'insights': insights,
+    }
     return render_template('analytics/dashboard.html', d=d)
 
 
