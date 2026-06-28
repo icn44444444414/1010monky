@@ -11,7 +11,10 @@
 
 {% block styles %}
 <style>
-  .home-hero { background: linear-gradient(160deg, #14171a 0%, #1f2a26 100%); color: #fff; border-radius: var(--radius-xl); padding: clamp(2.5rem, 6vw, 5rem); position: relative; overflow: hidden; }
+  /* Full bredd, kant till kant – ingen container, inga rundade horn */
+  .home-hero { position: relative; isolation: isolate; background: linear-gradient(160deg, #14171a 0%, #1f2a26 100%); color: #fff; padding-block: clamp(3rem, 8vw, 6.5rem); overflow: hidden; }
+  /* Wave-bilden ligger som en mjuk overlay over gradienten */
+  .home-hero::before { content: ""; position: absolute; inset: 0; z-index: -1; background: url("{{ config.ASSETS_ROOT }}/img/landing/web-studio/hero-wave.webp") center bottom / cover no-repeat; opacity: .45; pointer-events: none; }
   .home-hero h1 { color: #fff; font-size: clamp(2.5rem, 6vw, 4.5rem); }
   .home-hero .lead { color: rgba(255,255,255,.78); }
   .hero-kicker { display:inline-block; font-size: var(--text-xs); font-weight: var(--fw-semibold); letter-spacing: var(--tracking-widest); text-transform: uppercase; color: var(--green-400); margin-bottom: var(--space-4); }
@@ -33,21 +36,19 @@
 {% endblock %}
 
 {% block content %}
-<section class="section">
+<section class="home-hero">
   <div class="container">
-    <div class="home-hero">
-      <span class="hero-kicker">{{ 'Verkkostudio · Ruotsi & Suomi' if fi else 'Webbstudio · Sverige & Finland' }}</span>
-      <h1 style="max-width: 16ch;">{{ 'Sivustoja jotka ' if fi else 'Hemsidor som ' }}<span class="text-gradient">{{ 'tuovat asiakkaita' if fi else 'ger kunder' }}</span></h1>
-      <p class="lead" style="max-width: 54ch; margin-top: var(--space-4);">{{ '1010monky on pieni verkkostudio – yksi kehittäjä ja yksi suunnittelija. Rakennamme sivustoja WordPressillä ja räätälöidyllä koodilla, selkeys, nopeus ja ylläpidettävä koodi edellä.' if fi else '1010monky är en liten webbstudio – en utvecklare och en designer. Vi bygger webbplatser i WordPress och skräddarsydd kod, med fokus på tydlighet, hastighet och kod som går att underhålla.' }}</p>
-      <div class="cluster" style="margin-top: var(--space-6);">
-        <a class="btn btn-primary btn-lg" href="{{ nav_url('contact') }}">{{ 'Aloita projekti' if fi else 'Starta ett projekt' }}</a>
-        <a class="btn btn-ghost btn-lg" style="color:#fff;" href="#cases">{{ 'Katso projektit' if fi else 'Se utvalda projekt' }} →</a>
-      </div>
-      <ul class="hero-badges">
-        <li>{{ 'Kehittäjä ja suunnittelija – luonnoksesta julkaisuun' if fi else 'En utvecklare och en designer – från skiss till lansering' }}</li>
-        <li>{{ 'Nopeat sivut, rakennettu kestämään' if fi else 'Snabba sidor, byggda för att hålla' }}</li>
-      </ul>
+    <span class="hero-kicker">{{ 'Verkkostudio · Ruotsi & Suomi' if fi else 'Webbstudio · Sverige & Finland' }}</span>
+    <h1 style="max-width: 16ch;">{{ 'Sivustoja jotka ' if fi else 'Hemsidor som ' }}<span class="text-gradient">{{ 'tuovat asiakkaita' if fi else 'ger kunder' }}</span></h1>
+    <p class="lead" style="max-width: 54ch; margin-top: var(--space-4);">{{ '1010monky on pieni verkkostudio – yksi kehittäjä ja yksi suunnittelija. Rakennamme sivustoja WordPressillä ja räätälöidyllä koodilla, selkeys, nopeus ja ylläpidettävä koodi edellä.' if fi else '1010monky är en liten webbstudio – en utvecklare och en designer. Vi bygger webbplatser i WordPress och skräddarsydd kod, med fokus på tydlighet, hastighet och kod som går att underhålla.' }}</p>
+    <div class="cluster" style="margin-top: var(--space-6);">
+      <a class="btn btn-primary btn-lg" href="{{ nav_url('contact') }}">{{ 'Aloita projekti' if fi else 'Starta ett projekt' }}</a>
+      <a class="btn btn-ghost btn-lg" style="color:#fff;" href="#cases">{{ 'Katso projektit' if fi else 'Se utvalda projekt' }} →</a>
     </div>
+    <ul class="hero-badges">
+      <li>{{ 'Kehittäjä ja suunnittelija – luonnoksesta julkaisuun' if fi else 'En utvecklare och en designer – från skiss till lansering' }}</li>
+      <li>{{ 'Nopeat sivut, rakennettu kestämään' if fi else 'Snabba sidor, byggda för att hålla' }}</li>
+    </ul>
   </div>
 </section>
 
