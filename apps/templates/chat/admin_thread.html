@@ -32,6 +32,7 @@
             </div>
             <div class="card-footer bg-white">
                 <form method="post" action="{{ url_for('chat_blueprint.admin_reply', conversation_id=conv.id) }}">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                     <div class="input-group">
                         <input class="form-control" name="body" placeholder="Svara som Matias..." autocomplete="off" required>
                         <button class="btn btn-monky px-4" type="submit">Skicka</button>
@@ -60,6 +61,7 @@
             <div class="card-body">
                 <h2 class="h6 text-uppercase text-body-secondary fs-xs mb-3">Status</h2>
                 <form method="post" action="{{ url_for('chat_blueprint.admin_status', conversation_id=conv.id) }}" class="d-flex flex-wrap gap-2">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                     {% for s in statuses %}
                     <button name="status" value="{{ s }}" type="submit"
                             class="btn btn-sm {{ 'btn-monky' if conv.status == s else 'btn-outline-secondary' }}">{{ s }}</button>

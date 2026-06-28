@@ -8,6 +8,7 @@
                 <h1 class="h4 mb-1">Admin · chatt</h1>
                 <p class="text-body-secondary fs-sm mb-4">Logga in for att se konversationerna.</p>
                 <form method="post">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                     <div class="mb-3">
                         <label class="form-label" for="password">Losenord</label>
                         <input class="form-control" type="password" id="password" name="password" autofocus required>

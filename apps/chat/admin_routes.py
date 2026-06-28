@@ -14,9 +14,7 @@ Routes:
   POST /admin/chat/<id>/reply    svara som admin
   POST /admin/chat/<id>/status   byt status (open/closed/spam/new)
 """
-import os
 from functools import wraps
-from datetime import datetime
 
 from flask import (render_template, request, redirect, url_for,
                    session, abort, flash)
@@ -24,8 +22,9 @@ from flask import (render_template, request, redirect, url_for,
 from apps import db
 from apps.chat import blueprint
 from apps.chat.models import ChatConversation, ChatMessage, CONV_STATUSES
-
-ADMIN_PASSWORD = os.getenv('ADMIN_PASSWORD', 'monky-dev-2026')
+from apps.chat.security import (
+    verify_admin_password, rate_limit, validate_csrf, client_ip, log_suspicious,
+)
 
 
 def admin_required(view):
@@ -42,11 +41,24 @@ def admin_required(view):
 @blueprint.route('/admin/login', methods=['GET', 'POST'])
 def admin_login():
     if request.method == 'POST':
-        if (request.form.get('password') or '') == ADMIN_PASSWORD:
+        # Brute force-skydd: max 8 forsok per IP och 10 minuter.
+        if not rate_limit(f'login:{client_ip()}', 8, 600):
+            log_suspicious('login_throttle')
+            flash('For manga forsok. Vanta nagra minuter.', 'danger')
+            return render_template('chat/admin_login.html'), 429
+
+        if verify_admin_password(request.form.get('password')):
+            # Forhindra session fixation: nollstall innan vi satter admin-flagga.
+            session.clear()
             session['chat_admin'] = True
             session.permanent = True
             nxt = request.args.get('next') or url_for('chat_blueprint.admin_inbox')
+            # Oppen-redirect-skydd: bara interna sokvagar tillats.
+            if not (nxt.startswith('/') and not nxt.startswith('//')):
+                nxt = url_for('chat_blueprint.admin_inbox')
             return redirect(nxt)
+
+        log_suspicious('login_fail')
         flash('Fel losenord.', 'danger')
     return render_template('chat/admin_login.html')
 
@@ -99,6 +111,8 @@ def admin_thread(conversation_id):
 @blueprint.route('/admin/chat/<int:conversation_id>/reply', methods=['POST'])
 @admin_required
 def admin_reply(conversation_id):
+    if not validate_csrf():
+        abort(400)
     conv = ChatConversation.query.get_or_404(conversation_id)
     body = (request.form.get('body') or '').strip()
     if body:
@@ -115,6 +129,8 @@ def admin_reply(conversation_id):
 @blueprint.route('/admin/chat/<int:conversation_id>/status', methods=['POST'])
 @admin_required
 def admin_status(conversation_id):
+    if not validate_csrf():
+        abort(400)
     conv = ChatConversation.query.get_or_404(conversation_id)
     new_status = request.form.get('status')
     if new_status not in CONV_STATUSES:

@@ -27,21 +27,28 @@ from apps.chat.validators import (
     clean_text, valid_message, valid_email_optional,
     MAX_NAME_LEN, MAX_EMAIL_LEN, MAX_PHONE_LEN,
 )
+from apps.chat.security import (
+    client_ip, rate_limit, apply_security_headers, csrf_token, log_suspicious,
+)
 
 # Mjuk grans: max antal nya konversationer per IP per timme.
 MAX_NEW_CONV_PER_IP_PER_HOUR = 8
 
 
+# Sakerhetsheaders pa ALLA chatt-svar (admin + API).
+@blueprint.after_request
+def _secure(resp):
+    return apply_security_headers(resp)
+
+
+# Gor csrf_token() tillganglig i admin-templates.
+@blueprint.context_processor
+def _inject_csrf():
+    return {'csrf_token': csrf_token}
+
+
 def _payload():
     return request.form if request.form else (request.get_json(silent=True) or {})
-
-
-def _client_ip():
-    # Bakom nginx ar remote_addr 127.0.0.1 -> las forsta IP i X-Forwarded-For.
-    fwd = request.headers.get('X-Forwarded-For', '')
-    if fwd:
-        return fwd.split(',')[0].strip()[:64]
-    return (request.remote_addr or '')[:64]
 
 
 def _is_bot(data):
@@ -52,10 +59,17 @@ def _is_bot(data):
 @blueprint.route('/api/chat/start', methods=['POST'])
 def chat_start():
     data = _payload()
+    ip = client_ip()
 
     # Honeypot -> latsas lyckas, spara inget.
     if _is_bot(data):
+        log_suspicious('honeypot', 'start')
         return jsonify(success=True, conversation_token=None)
+
+    # Burst-skydd: max 5 startforsok per IP och minut.
+    if not rate_limit(f'start:{ip}', 5, 60):
+        log_suspicious('rate_limit', 'start')
+        return jsonify(success=False, error='For manga forsok. Forsok igen senare.'), 429
 
     message = clean_text(data.get('message'), 4000)
     if not valid_message(message):
@@ -65,7 +79,6 @@ def chat_start():
     if not valid_email_optional(email):
         return jsonify(success=False, error='Ogiltig e-postadress.'), 400
 
-    ip = _client_ip()
     if ip:
         since = datetime.utcnow() - timedelta(hours=1)
         recent = ChatConversation.query.filter(
@@ -98,9 +111,16 @@ def chat_start():
 @blueprint.route('/api/chat/message', methods=['POST'])
 def chat_message():
     data = _payload()
+    ip = client_ip()
 
     if _is_bot(data):
+        log_suspicious('honeypot', 'message')
         return jsonify(success=True)
+
+    # Max 20 meddelanden per IP och minut.
+    if not rate_limit(f'msg:{ip}', 20, 60):
+        log_suspicious('rate_limit', 'message')
+        return jsonify(success=False, error='For manga meddelanden. Sakta ner lite.'), 429
 
     token = (data.get('conversation_token') or data.get('token') or '').strip()
     conv = ChatConversation.query.filter_by(public_token=token).first()
@@ -126,6 +146,10 @@ def chat_message():
 
 @blueprint.route('/api/chat/messages/<token>', methods=['GET'])
 def chat_messages(token):
+    # Polling-skydd: generost men inte obegransat (120 anrop/IP/minut).
+    if not rate_limit(f'poll:{client_ip()}', 120, 60):
+        return jsonify(success=False, error='For manga anrop.'), 429
+
     conv = ChatConversation.query.filter_by(public_token=(token or '').strip()).first()
     if not conv:
         return jsonify(success=False, error='Konversationen hittades inte.'), 404

@@ -1,4 +1,5 @@
 import os, random, string
+from datetime import timedelta
 
 class Config(object):
 
@@ -55,6 +56,9 @@ class ProductionConfig(Config):
 
     # Security
     SESSION_COOKIE_HTTPONLY = True
+    SESSION_COOKIE_SECURE = True          # cookies bara over HTTPS (prod kor HTTPS)
+    SESSION_COOKIE_SAMESITE = 'Lax'       # blockerar cross-site cookie-skick (CSRF-djupforsvar)
+    PERMANENT_SESSION_LIFETIME = timedelta(hours=8)
     REMEMBER_COOKIE_HTTPONLY = True
     REMEMBER_COOKIE_DURATION = 3600
 
