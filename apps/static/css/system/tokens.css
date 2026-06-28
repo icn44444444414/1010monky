@@ -49,9 +49,9 @@
   --accent:         var(--green-500);
   --accent-hover:   var(--green-600);
   --accent-soft:    var(--green-50);
-  --border-color:        rgba(20, 23, 26, .07);
-  --border-color-strong: rgba(20, 23, 26, .14);
-  --hairline:            rgba(20, 23, 26, .06);
+  --border-color:        rgba(20, 23, 26, .05);
+  --border-color-strong: rgba(20, 23, 26, .11);
+  --hairline:            rgba(20, 23, 26, .04);
 
   /* ---------- Glas (anvands pa flytande element, ej platta innehallskort) ---------- */
   --glass-bg:     rgba(255, 255, 255, .62);

@@ -173,6 +173,14 @@ def api_contact():
         return jsonify(ok=False, error='Kunde inte skicka just nu, forsok igen eller mejla info@1010monky.se.'), 500
 
 
+@blueprint.route('/bygg')
+@wip_protected
+def bygg():
+    # Upplasningsdorr under under-byggnad-laget: lyckad inloggning -> hela sajten.
+    from flask import redirect
+    return redirect('/')
+
+
 @blueprint.route('/styleguide')
 @wip_protected
 def styleguide():

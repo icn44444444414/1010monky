@@ -1,7 +1,8 @@
 import os
 import sqlite3
+import hmac
 
-from flask import Flask
+from flask import Flask, request, render_template, Response
 from flask_sqlalchemy import SQLAlchemy
 from importlib import import_module
 from sqlalchemy import event
@@ -9,6 +10,29 @@ from sqlalchemy.engine import Engine
 
 
 db = SQLAlchemy()
+
+
+def register_maintenance(app):
+    """Under-byggnad-lage: nar MAINTENANCE_MODE=true ser allmanheten en
+    under-byggnad-sida (HTTP 503, SEO-sakert). Bara den som angett WIP-losenordet
+    via /bygg ser den riktiga sajten. Stang av genom att ta bort flaggan i .env."""
+    maintenance_on = os.getenv('MAINTENANCE_MODE', 'false').lower() == 'true'
+    wip_password = os.getenv('WIP_PASSWORD', 'monky-wip-2026')
+
+    @app.before_request
+    def gate():
+        if not maintenance_on:
+            return
+        path = request.path
+        # Slapp igenom statiska filer + upplasningsdorren sa de fungerar
+        if path.startswith('/static') or path in ('/favicon.ico', '/bygg'):
+            return
+        auth = request.authorization
+        if auth and hmac.compare_digest(auth.password or '', wip_password):
+            return  # byggaren ar inloggad -> ser hela sajten
+        # Alla andra -> under byggnad (utan losenordsruta)
+        return Response(render_template('pages/under-construction.html'),
+                        status=503, headers={'Retry-After': '86400'})
 
 
 @event.listens_for(Engine, "connect")
@@ -63,4 +87,5 @@ def create_app(config):
     register_extensions(app)
     register_blueprints(app)
     configure_database(app)
+    register_maintenance(app)
     return app
