@@ -113,7 +113,14 @@
     els.hp = $("mc-hp");
     if (!els.launcher) return;
 
+    els.hint = $("mc-hint");
     els.launcher.addEventListener("click", open);
+    if (els.hint) {
+      els.hint.addEventListener("click", open);
+      els.hint.addEventListener("keydown", function (e) {
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(); }
+      });
+    }
     els.close.addEventListener("click", close);
     els.send.addEventListener("click", function () { sendMessage(els.input.value); });
     els.input.addEventListener("input", autoGrow);

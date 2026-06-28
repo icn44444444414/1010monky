@@ -28,6 +28,22 @@
   background: #ff5d5d; border: 2px solid var(--mc-ink); border-radius: 50%;
 }
 
+/* Label-bubbla som visar att det ar chatt */
+.mc-hint {
+  position: fixed; right: 100px; bottom: 40px; z-index: 1050;
+  background: #fff; color: var(--mc-ink); cursor: pointer;
+  font: 600 13.5px/1 'Inter', system-ui, sans-serif;
+  padding: 11px 16px; border-radius: 14px; white-space: nowrap;
+  box-shadow: 0 10px 26px rgba(20,23,26,.20);
+  animation: mc-bob-y 3.2s ease-in-out infinite;
+}
+.mc-hint::after {
+  content: ''; position: absolute; right: -6px; top: 50%; transform: translateY(-50%);
+  border: 7px solid transparent; border-left-color: #fff; border-right: 0;
+}
+@keyframes mc-bob-y { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+#monky-chat-launcher.mc-hidden + .mc-hint { display: none; }
+
 /* ---------- Panel ---------- */
 #monky-chat-panel {
   position: fixed; right: 24px; bottom: 24px; z-index: 1051;
@@ -96,4 +112,5 @@
   .mc-shell { border-radius: 0; }
   .mc-monkey-hang { right: 16px; top: -30px; width: 58px; height: 58px; }
   #monky-chat-launcher { right: 16px; bottom: 16px; }
+  .mc-hint { display: none; }
 }
