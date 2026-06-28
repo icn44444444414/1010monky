@@ -1,243 +1,129 @@
-{% extends 'layouts/base.html' %}
+{% extends 'layouts/clean.html' %}
 
 {% block title %}Kontakt – begär offert på din hemsida{% endblock %}
+{% block meta_description %}Hör av dig till 1010monky Studio i Eskilstuna. Berätta om ditt projekt via formuläret, ring +46 72 027 41 13 eller mejla info@1010monky.se.{% endblock %}
+
+{% block jsonld %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ContactPage",
+  "name": "Kontakta 1010monky Studio",
+  "url": "https://1010monky.se/contacts-v1",
+  "mainEntity": {
+    "@type": "ProfessionalService",
+    "name": "1010monky Studio",
+    "email": "info@1010monky.se",
+    "telephone": "+46720274113",
+    "address": { "@type": "PostalAddress", "streetAddress": "Björksgatan 5", "postalCode": "632 21", "addressLocality": "Eskilstuna", "addressCountry": "SE" },
+    "areaServed": ["SE", "FI"]
+  }
+}
+</script>
+{% endblock %}
 
 {% block content %}
-<!-- Page loading spinner -->
-{% include 'partials/loader.html' %}
-<!-- Page wrapper -->
-<main class="page-wrapper">
-    <!-- Navbar -->
-    {% include "partials/navbar.html" %}
-    <!-- Contact details -->
-    <section class="bg-secondary py-5">
-        <div class="container pt-5 pb-lg-2 pb-xl-4 py-xxl-5">
-            <!-- Breadcrumb -->
-            <nav aria-label="breadcrumb">
-                <ol class="pt-lg-3 pb-lg-4 pb-2 breadcrumb">
-                    <li class="breadcrumb-item"><a href="/">Hem</a></li>
-                    <li aria-current="page" class="breadcrumb-item active">Kontakt</li>
-                </ol>
-            </nav>
-            <!-- Page title -->
-            <h1 class="page-title">Kontakta oss</h1>
-            <p class="fs-lg pb-4 mb-2 mb-sm-3">Hör av dig via formuläret nedan eller ring, så återkommer jag.</p>
-            <!-- Details cards -->
-            <div class="row row-cols-1 row-cols-sm-2 row-cols-xl-4 g-4 pb-2 pb-sm-4 pb-lg-5">
-                <!-- Address -->
-                <div class="col">
-                    <div class="card border-0 h-100">
-                        <div class="card-body">
-                            <h4 class="card-title mb-4">Adress</h4>
-                            <p class="fs-lg fw-medium pb-3 mb-3">Poste restante<br/>Björksgatan 5<br/>632 21 Eskilstuna, Sverige</p>
-                            <a class="btn btn-sm btn-outline-primary" target="_blank" rel="noopener"
-                               href="https://www.google.com/maps/search/?api=1&query=Bj%C3%B6rksgatan%205%2C%20632%2021%20Eskilstuna">
-                                <i class="ai-map-pin me-1"></i>
-                                Visa på karta
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <!-- Phone -->
-                <div class="col">
-                    <div class="card border-0 h-100">
-                        <div class="card-body">
-                            <h4 class="card-title mb-4">Telefon</h4>
-                            <ul class="list-unstyled mb-0">
-                                <li>
-                                    <span class="d-block fs-sm text-body-secondary mb-1">Ring eller sms:a</span>
-                                    <a class="nav-link fs-lg p-0" href="tel:+46720274113">+46 72 027 41 13</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <!-- Schedule -->
-                <div class="col">
-                    <div class="card border-0 h-100">
-                        <div class="card-body">
-                            <h4 class="card-title mb-4">Öppettider</h4>
-                            <ul class="list-unstyled mb-0">
-                                <li class="pb-1 mb-2">
-                                    <span class="d-block fs-sm text-body-secondary mb-1">Måndag – Torsdag</span>
-                                    <div class="d-flex align-items-center">
-                                        <span class="text-nav fs-lg fw-medium">10:00</span>
-                                        <span class="border-top mx-3" style="width: 28px; height: 1px;"></span>
-                                        <span class="text-nav fs-lg fw-medium">22:00</span>
-                                    </div>
-                                </li>
-                                <li class="pb-1 mb-2">
-                                    <span class="d-block fs-sm text-body-secondary mb-1">Fredag</span>
-                                    <div class="d-flex align-items-center">
-                                        <span class="text-nav fs-lg fw-medium">10:00</span>
-                                        <span class="border-top mx-3" style="width: 28px; height: 1px;"></span>
-                                        <span class="text-nav fs-lg fw-medium">16:00</span>
-                                    </div>
-                                </li>
-                                <li>
-                                    <span class="d-block fs-sm text-body-secondary mb-1">Lördag – Söndag</span>
-                                    <span class="text-nav fs-lg fw-medium">Stängt</span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <!-- Email -->
-                <div class="col">
-                    <div class="card border-0 h-100">
-                        <div class="card-body">
-                            <h4 class="card-title mb-4">E-post</h4>
-                            <ul class="list-unstyled mb-0">
-                                <li>
-                                    <span class="d-block fs-sm text-body-secondary mb-1">Skriv till mig</span>
-                                    <a class="nav-link fs-lg p-0" href="mailto:info@1010monky.se">info@1010monky.se</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div style="height: 250px;"></div>
-    </section>
-    <!-- Contact form -->
-    <section class="container" data-bs-theme="dark" style="margin-top: -260px;">
-        <div class="card border-0 bg-primary position-relative py-lg-4 py-xl-5">
-            <!-- Decorative shapes -->
-            <svg class="position-absolute end-0 mt-n2" fill="none" height="331" viewbox="0 0 242 331" width="242"
-                 xmlns="http://www.w3.org/2000/svg">
-                <path d="M172.014 250.127C137.236 227.74 112.349 192.144 144.586 153.591C157.686 137.932 176.759 127.973 196.524 122.046C234.647 110.639 277.027 113.361 313.349 129.576C338.19 140.666 361.129 159.183 369.934 184.502C383.476 223.496 359.75 260.161 321.569 273.118C288.832 284.223 247.685 279.513 214.885 269.837C201.003 265.743 185.745 258.966 172.014 250.127Z"
-                      fill="#121519" fill-opacity=".07"></path>
-                <path d="M20.3265 69.264C19.7064 43.0736 29.8071 17.1878 62.3851 19.8622C75.6229 20.9505 87.9525 27.2066 98.3563 35.3132C118.426 50.9253 132.424 73.896 136.952 98.6413C140.044 115.562 138.424 134.218 127.978 148C111.901 169.236 83.4531 170.283 62.5246 155.209C44.5807 142.281 32.0983 119.217 25.3391 98.6799C22.4836 89.9885 20.5616 79.6021 20.3265 69.264Z"
-                      fill="#121519" fill-opacity=".07"></path>
-            </svg>
-            <svg class="position-absolute start-0 bottom-0 ms-3" fill="none" height="217" viewbox="0 0 169 217"
-                 width="169" xmlns="http://www.w3.org/2000/svg">
-                <path d="M34.2574 90.0177C29.666 97.6253 26.6254 106.591 24.9502 114.96C19.9522 140.043 26.4112 168.792 49.6162 181.885C66.0705 191.17 91.0017 189.904 108.062 183.692C125.725 177.266 135.045 168.04 142.29 150.389C151.409 128.174 150.912 99.6904 125.93 91.6429C115.423 88.254 104.723 86.5065 94.2249 82.5889C84.6622 79.0248 74.8545 72.1766 64.4411 71.6149C50.8011 70.8777 40.9122 79.0146 34.2574 90.0177Z"
-                      fill="#121519" fill-opacity="0.07"></path>
-                <path d="M147.005 75.6331C152.135 70.7783 156.106 64.2374 159.153 57.9073C166.014 43.6372 174.127 22.1368 160.207 9.68505C152.924 3.17188 139.243 3.86644 130.324 5.29774C118.428 7.20428 107.295 8.85077 96.5031 14.783C85.8056 20.6599 79.0155 33.6997 77.0014 45.6686C75.4978 54.5776 79.63 63.6672 84.7391 70.7453C91.8208 80.5571 103.503 84.2003 114.817 84.3975C121.101 84.5081 127.716 84.0527 133.89 82.8121C138.932 81.7962 143.273 79.1597 147.005 75.6331Z"
-                      fill="#121519" fill-opacity="0.07"></path>
-            </svg>
-            <div class="card-body position-relative z-2 py-5">
-                <form class="mx-auto" id="contactForm" style="max-width: 800px;">
-                    <h2 class="h1 card-title text-center pb-4">Berätta om ditt projekt</h2>
-                    <!-- Notis (visas av JS efter skickat) -->
-                    <div id="contactNotice" class="alert d-none mb-4" role="alert"></div>
-                    <!-- Honeypot (dolt för bottar) -->
-                    <input type="text" name="website" tabindex="-1" autocomplete="off"
-                           class="position-absolute" style="left:-9999px;top:-9999px;" aria-hidden="true"/>
-                    <div class="row g-4">
-                        <div class="col-sm-6">
-                            <label class="form-label fs-base" for="name">Namn</label>
-                            <input class="form-control form-control-lg" id="name" name="name" placeholder="Ditt namn"
-                                   required="" type="text"/>
-                        </div>
-                        <div class="col-sm-6">
-                            <label class="form-label fs-base" for="company">Företag</label>
-                            <input class="form-control form-control-lg" id="company" name="company"
-                                   placeholder="Ditt företag" type="text"/>
-                        </div>
-                        <div class="col-sm-6">
-                            <label class="form-label fs-base" for="email">E-post</label>
-                            <input class="form-control form-control-lg" id="email" name="email"
-                                   placeholder="Din e-postadress" required="" type="email"/>
-                        </div>
-                        <div class="col-sm-6">
-                            <label class="form-label fs-base" for="phone">Telefon</label>
-                            <input class="form-control form-control-lg" id="phone" name="phone"
-                                   placeholder="Ditt telefonnummer" type="text"/>
-                        </div>
-                        <div class="col-sm-12">
-                            <label class="form-label fs-base" for="message">Vad kan jag hjälpa till med?</label>
-                            <textarea class="form-control form-control-lg" id="message" name="message"
-                                      placeholder="Skriv kort om ditt projekt här..." required="" rows="6"></textarea>
-                        </div>
-                        <div class="col-sm-12">
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" id="ny-hemsida" name="services" value="Ny hemsida" type="checkbox"/>
-                                <label class="form-check-label fs-base" for="ny-hemsida">Ny hemsida</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" id="wordpress" name="services" value="WordPress" type="checkbox"/>
-                                <label class="form-check-label fs-base" for="wordpress">WordPress</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" id="skraddarsytt" name="services" value="Skräddarsydd webb" type="checkbox"/>
-                                <label class="form-check-label fs-base" for="skraddarsytt">Skräddarsydd webb</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" id="underhall" name="services" value="Underhåll &amp; drift" type="checkbox"/>
-                                <label class="form-check-label fs-base" for="underhall">Underhåll &amp; drift</label>
-                            </div>
-                        </div>
-                        <div class="col-sm-12 text-center pt-4">
-                            <button class="btn btn-lg btn-light" id="contactSubmit" type="submit">Skicka förfrågan</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </section>
-</main>
+<section class="section section-alt">
+  <div class="container">
+    <nav aria-label="Brödsmulor" class="text-sm text-muted" style="margin-bottom: var(--space-4);">
+      <a href="/">Hem</a> <span aria-hidden="true">/</span> Kontakt
+    </nav>
+    <span class="eyebrow">Kontakt</span>
+    <h1 style="margin-block: var(--space-3) var(--space-4); max-width: 18ch;">Berätta om ditt <span class="text-gradient">projekt</span></h1>
+    <p class="lead" style="max-width: 52ch;">Hör av dig via formuläret nedan, ring eller mejla. Jag svarar oftast samma dag – och du får alltid ett fast pris innan vi börjar.</p>
 
-<!-- Footer -->
-{% include "partials/footer.html" %}
+    <div class="features" style="margin-top: var(--space-7);">
+      <div class="feature">
+        <div class="feature-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-5.7-7-11a7 7 0 0 1 14 0c0 5.3-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></div>
+        <div class="feature-title">Adress</div>
+        <p class="feature-text">Björksgatan 5<br>632 21 Eskilstuna, Sverige</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 7a2 2 0 0 1 2-3z"/></svg></div>
+        <div class="feature-title">Telefon</div>
+        <p class="feature-text"><a href="tel:+46720274113">+46 72 027 41 13</a><br><span class="text-muted text-sm">Ring eller sms:a</span></p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></div>
+        <div class="feature-title">E-post</div>
+        <p class="feature-text"><a href="mailto:info@1010monky.se">info@1010monky.se</a><br><span class="text-muted text-sm">Skriv när som helst</span></p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+        <div class="feature-title">Öppettider</div>
+        <p class="feature-text">Mån–Tor 10–22<br>Fre 10–16 · Helg stängt</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-{% include 'partials/back-to-top.html' %}
-{% endblock content %}
+<section class="section">
+  <div class="container" style="max-width: 760px;">
+    <div class="card">
+      <h2 class="h4" style="margin-bottom: var(--space-2);">Skicka en förfrågan</h2>
+      <p class="text-secondary" style="margin-bottom: var(--space-5);">Kort om ditt projekt räcker – jag återkommer med förslag och pris.</p>
+
+      <div id="contactNotice" role="alert" style="display:none; margin-bottom: var(--space-4); padding: var(--space-3) var(--space-4); border-radius: var(--radius);"></div>
+
+      <form id="contactForm">
+        <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute; left:-9999px">
+        <div class="grid grid-2" style="gap: var(--space-4);">
+          <div class="field"><label class="label" for="name">Namn</label><input class="input" id="name" name="name" required></div>
+          <div class="field"><label class="label" for="company">Företag</label><input class="input" id="company" name="company"></div>
+          <div class="field"><label class="label" for="email">E-post</label><input class="input" id="email" name="email" type="email" required></div>
+          <div class="field"><label class="label" for="phone">Telefon</label><input class="input" id="phone" name="phone" type="tel"></div>
+        </div>
+        <div class="field" style="margin-top: var(--space-4);">
+          <label class="label" for="message">Vad kan jag hjälpa till med?</label>
+          <textarea class="textarea" id="message" name="message" rows="5" required placeholder="Skriv kort om ditt projekt här…"></textarea>
+        </div>
+        <div class="field" style="margin-top: var(--space-4);">
+          <span class="label">Vad gäller det?</span>
+          <div class="cluster" style="gap: var(--space-2);">
+            {% for s in ['Ny hemsida','WordPress','Skräddarsydd webb','Underhåll & drift'] %}
+            <label class="badge" style="cursor:pointer; padding:.5em 1em; border:1px solid var(--border-color);">
+              <input type="checkbox" name="services" value="{{ s }}" style="margin-right:.4em;">{{ s }}
+            </label>
+            {% endfor %}
+          </div>
+        </div>
+        <div style="margin-top: var(--space-5);">
+          <button class="btn btn-primary btn-lg" id="contactSubmit" type="submit">Skicka förfrågan</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+{% endblock %}
 
 {% block scripts %}
-<script src="{{ config.ASSETS_ROOT }}/js/theme-switcher.js"></script>
 <script>
-    (function () {
-      window.onload = function () {
-        const preloader = document.querySelector('.page-loading')
-        preloader.classList.remove('active')
-        setTimeout(function () {
-          preloader.remove()
-        }, 1500)
-      }
-    })()
+(function () {
+  var form = document.getElementById('contactForm');
+  if (!form) return;
+  var notice = document.getElementById('contactNotice');
+  var btn = document.getElementById('contactSubmit');
+
+  function show(ok, text) {
+    notice.style.display = 'block';
+    notice.textContent = text;
+    notice.style.background = ok ? 'var(--c-success-bg)' : 'var(--c-danger-bg)';
+    notice.style.color = ok ? 'var(--c-success)' : 'var(--c-danger)';
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var original = btn.textContent;
+    btn.disabled = true; btn.textContent = 'Skickar…';
+    fetch('/api/contact', { method: 'POST', body: new FormData(form) })
+      .then(function (r) { return r.json().catch(function () { return { ok: r.ok }; }); })
+      .then(function (d) {
+        if (d && d.ok) { show(true, '✓ Tack! Din förfrågan är skickad – jag återkommer så snart jag kan.'); form.reset(); }
+        else { show(false, (d && d.error) || 'Något gick fel. Mejla gärna info@1010monky.se direkt.'); }
+      })
+      .catch(function () { show(false, 'Något gick fel. Mejla gärna info@1010monky.se direkt.'); })
+      .finally(function () { btn.disabled = false; btn.textContent = original; });
+  });
+})();
 </script>
-<script src="{{ config.ASSETS_ROOT }}/js/theme.min.js"></script>
-<script>
-    (function () {
-      var form = document.getElementById('contactForm');
-      if (!form) return;
-      var notice = document.getElementById('contactNotice');
-      var btn = document.getElementById('contactSubmit');
-
-      function showNotice(kind, text) {
-        notice.className = 'alert mb-4 ' + (kind === 'ok' ? 'alert-light' : 'alert-danger');
-        notice.textContent = text;
-        notice.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }
-
-      form.addEventListener('submit', function (e) {
-        e.preventDefault();
-        var original = btn.textContent;
-        btn.disabled = true;
-        btn.textContent = 'Skickar…';
-        notice.className = 'alert d-none';
-
-        fetch('/api/contact', { method: 'POST', body: new FormData(form) })
-          .then(function (r) { return r.json().catch(function () { return { ok: r.ok }; }); })
-          .then(function (data) {
-            if (data && data.ok) {
-              showNotice('ok', '✓ Tack! Ditt meddelande har skickats – jag återkommer så snart jag kan.');
-              form.reset();
-            } else {
-              showNotice('err', (data && data.error) || 'Något gick fel. Mejla gärna info@1010monky.se direkt.');
-            }
-          })
-          .catch(function () {
-            showNotice('err', 'Något gick fel. Mejla gärna info@1010monky.se direkt.');
-          })
-          .finally(function () {
-            btn.disabled = false;
-            btn.textContent = original;
-          });
-      });
-    })();
-</script>
-{% endblock scripts %}
+{% endblock %}

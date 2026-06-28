@@ -23,10 +23,13 @@
   {# --- Rätt adress till Google (en kanonisk URL per sida) --- #}
   <link rel="canonical" href="https://1010monky.se{{ request.path }}">
 
-  {# --- Tvåspråkigt: berätta för Google vilken sida som är vilket språk --- #}
+  {# --- Tvåspråkigt: bara sidor som FAKTISKT har en finsk version lägger till
+         hreflang fi (via {% block alternates %}). Annars sv + x-default, så vi
+         aldrig pekar Google mot en /fi/-sida som inte finns. --- #}
+  {% block alternates %}
   <link rel="alternate" hreflang="sv" href="{{ sv_url }}">
-  <link rel="alternate" hreflang="fi" href="{{ fi_url }}">
   <link rel="alternate" hreflang="x-default" href="{{ sv_url }}">
+  {% endblock %}
 
   {# --- Delning i sociala medier --- #}
   <meta property="og:type" content="{% block og_type %}website{% endblock %}">
