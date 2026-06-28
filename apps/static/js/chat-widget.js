@@ -136,6 +136,8 @@
         setSending(false);
         if (j.success && j.conversation_token) {
           token = j.conversation_token;
+          // Hoppa fram forbi vart eget meddelande sa pollningen inte ekar det.
+          if (j.last_id && j.last_id > lastId) lastId = j.last_id;
           try { localStorage.setItem(KEY, token); } catch (e) {}
           schedule();
         } else {
@@ -147,6 +149,8 @@
         conversation_token: token, message: text, website: els.hp.value
       }) }).then(function (j) {
         setSending(false);
+        // Hoppa fram forbi vart eget meddelande sa pollningen inte ekar det.
+        if (j.success && j.message_id && j.message_id > lastId) lastId = j.message_id;
         if (!j.success && (j.error || j.network)) {
           addMessage({ sender_type: "system", body: j.network ? "Ingen anslutning. Forsok igen." : j.error });
         }

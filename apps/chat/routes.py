@@ -102,13 +102,16 @@ def chat_start():
     )
     db.session.add(conv)
     db.session.flush()  # ger conv.id + public_token
-    db.session.add(ChatMessage(conversation_id=conv.id,
-                               sender_type='visitor', body=message))
+    first = ChatMessage(conversation_id=conv.id, sender_type='visitor', body=message)
+    db.session.add(first)
     db.session.commit()
 
     maybe_bot_reply(conv, message)  # AI-som (inert tills M11)
 
-    return jsonify(success=True, conversation_token=conv.public_token)
+    # last_id = besokarens eget meddelande-id. Widgeten satter sin lastId till
+    # detta sa forsta pollningen inte hamtar tillbaka och dubbelrenderar det.
+    return jsonify(success=True, conversation_token=conv.public_token,
+                   last_id=first.id)
 
 
 @blueprint.route('/api/chat/message', methods=['POST'])
@@ -138,15 +141,16 @@ def chat_message():
     if conv.status == 'spam':
         return jsonify(success=True)
 
-    db.session.add(ChatMessage(conversation_id=conv.id,
-                               sender_type='visitor', body=message))
+    msg = ChatMessage(conversation_id=conv.id, sender_type='visitor', body=message)
+    db.session.add(msg)
     conv.touch()
     conv.last_seen_at = datetime.utcnow()
     db.session.commit()
 
     maybe_bot_reply(conv, message)  # AI-som (inert tills M11)
 
-    return jsonify(success=True)
+    # message_id sa widgeten kan flytta fram sin lastId och inte dubbelrendera.
+    return jsonify(success=True, message_id=msg.id)
 
 
 @blueprint.route('/api/chat/messages/<token>', methods=['GET'])
