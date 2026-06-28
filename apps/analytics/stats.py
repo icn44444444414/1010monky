@@ -103,6 +103,35 @@ def top_pages(limit=6):
     return {'labels': [p for p, _ in rows], 'data': [n for _, n in rows]}
 
 
+def _prettify(path):
+    slug = (path or '').rstrip('/').split('/')[-1]
+    if not slug:
+        return path or '–'
+    words = slug.replace('-', ' ').strip()
+    return words[:1].upper() + words[1:]
+
+
+def top_blog_posts(limit=10):
+    """Mest lasta blogginlagg (sidvisningar av /blogg/<slug>)."""
+    rows = (db.session.query(VisitorEvent.page_url, func.count().label('n'))
+            .filter(VisitorEvent.event_type == 'pageview',
+                    VisitorEvent.page_url.like('/blogg/%'))
+            .group_by(VisitorEvent.page_url)
+            .order_by(func.count().desc()).limit(limit).all())
+    top = rows[0][1] if rows else 1
+    return [{'url': p, 'title': _prettify(p), 'views': n, 'pct': round(n / top * 100)}
+            for p, n in rows]
+
+
+def top_visited_pages(limit=10):
+    rows = (db.session.query(VisitorEvent.page_url, func.count().label('n'))
+            .filter(VisitorEvent.event_type == 'pageview', VisitorEvent.page_url.isnot(None))
+            .group_by(VisitorEvent.page_url)
+            .order_by(func.count().desc()).limit(limit).all())
+    top = rows[0][1] if rows else 1
+    return [{'url': p, 'views': n, 'pct': round(n / top * 100)} for p, n in rows]
+
+
 def device_breakdown():
     rows = (db.session.query(VisitorSession.device, func.count())
             .group_by(VisitorSession.device).all())

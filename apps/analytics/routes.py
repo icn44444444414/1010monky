@@ -78,3 +78,11 @@ def live_data():
 @admin_required
 def leads():
     return render_template('analytics/leads.html', leads=stats.lead_list())
+
+
+@blueprint.route('/admin/innehall')
+@admin_required
+def content():
+    return render_template('analytics/content.html',
+                           posts=stats.top_blog_posts(10),
+                           pages=stats.top_visited_pages(10))

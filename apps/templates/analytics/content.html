@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>1010monky · Innehåll</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = { theme: { extend: {
+            fontFamily: { sans: ['Inter', 'sans-serif'] },
+            colors: { brand: { 500: '#448C74', 600: '#3a7a64' } }
+        }}}
+    </script>
+    <style>body { background-color: #f6f8f9; } ::-webkit-scrollbar { width: 0; }</style>
+</head>
+<body class="flex h-screen overflow-hidden text-gray-800 antialiased">
+
+    {% set active = 'content' %}
+    {% include 'analytics/_sidebar.html' %}
+
+    <main class="flex-1 flex flex-col h-full overflow-y-auto">
+        <header class="h-20 flex items-center justify-between px-8">
+            <div class="text-gray-500 font-medium">Innehåll</div>
+            <div class="text-xs text-gray-400">Vad folk läser mest</div>
+        </header>
+
+        <div class="p-8 pt-0">
+            <div class="mb-6">
+                <h1 class="text-2xl font-bold text-gray-900 mb-1">Mest lästa innehåll</h1>
+                <p class="text-gray-500 text-sm">Se vad besökarna läser mest – bra underlag för fler inlägg och SEO.</p>
+            </div>
+
+            {% macro bars(rows, title, icon, empty) %}
+            <div class="bg-white rounded-2xl border border-gray-50 shadow-[0_2px_10px_-3px_rgba(20,23,26,0.06)] p-6">
+                <h2 class="text-lg font-bold text-gray-900 mb-5"><i class="fa-solid {{ icon }} text-brand-500 mr-2"></i>{{ title }}</h2>
+                <div class="space-y-4">
+                    {% for r in rows %}
+                    <div>
+                        <div class="flex justify-between items-end mb-1 gap-4">
+                            <a href="{{ r.url }}" class="text-sm font-medium text-gray-800 hover:text-brand-500 truncate">{{ r.title if r.title is defined else r.url }}</a>
+                            <span class="text-sm font-bold text-gray-900 flex-shrink-0">{{ r.views }}</span>
+                        </div>
+                        <div class="w-full bg-gray-100 rounded-full h-1.5"><div class="bg-brand-500 h-1.5 rounded-full" style="width: {{ r.pct }}%"></div></div>
+                    </div>
+                    {% else %}
+                    <p class="text-sm text-gray-400 py-6 text-center">{{ empty }}</p>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endmacro %}
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                {{ bars(posts, 'Mest lästa blogginlägg', 'fa-book-open', 'Inga blogginlägg lästa än.') }}
+                {{ bars(pages, 'Mest besökta sidor', 'fa-file-lines', 'Inga sidvisningar än.') }}
+            </div>
+        </div>
+    </main>
+</body>
+</html>
