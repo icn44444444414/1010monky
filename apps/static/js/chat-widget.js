@@ -183,7 +183,6 @@
     els.hint = $("mc-hint");
     els.live = $("mc-live");
     if (!els.launcher) return;
-    els.avatarSrc = els.launcher.getAttribute("data-avatar") || "";
 
     els.launcher.addEventListener("click", open);
     if (els.hint) {

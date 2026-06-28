@@ -6,22 +6,32 @@ from functools import wraps
 from email.message import EmailMessage
 
 from apps.pages import blueprint
-from flask import render_template, request, jsonify, Response
+from flask import render_template, request, jsonify, Response, redirect, session
 from jinja2 import TemplateNotFound
 
 # Losenord for sidor under arbete (styleguide m.m.). Satt i .env pa servern.
 WIP_PASSWORD = os.getenv('WIP_PASSWORD', 'monky-wip-2026')
 
 
+def wip_unlocked():
+    """Sant om besokaren last upp WIP-laget (via session eller Basic Auth)."""
+    if session.get('wip_unlocked'):
+        return True
+    auth = request.authorization
+    return bool(auth and hmac.compare_digest(auth.password or '', WIP_PASSWORD))
+
+
 def wip_protected(view):
-    """HTTP Basic Auth-grind for sidor som inte ska visas for kund an."""
+    """Grind for sidor som inte ska visas for kund an. En lyckad inloggning
+    sparas i sessionen sa man slipper forlita sig pa att webblasaren skickar
+    Basic Auth-headern vidare till alla sokvagar."""
     @wraps(view)
     def wrapper(*args, **kwargs):
-        auth = request.authorization
-        if not auth or not hmac.compare_digest(auth.password or '', WIP_PASSWORD):
+        if not wip_unlocked():
             return Response(
                 'Inloggning kravs.', 401,
                 {'WWW-Authenticate': 'Basic realm="1010monky under arbete"'})
+        session['wip_unlocked'] = True
         return view(*args, **kwargs)
     return wrapper
 
@@ -177,7 +187,6 @@ def api_contact():
 @wip_protected
 def bygg():
     # Upplasningsdorr under under-byggnad-laget: lyckad inloggning -> hela sajten.
-    from flask import redirect
     return redirect('/')
 
 

@@ -2,7 +2,7 @@ import os
 import sqlite3
 import hmac
 
-from flask import Flask, request, render_template, Response
+from flask import Flask, request, render_template, Response, session
 from flask_sqlalchemy import SQLAlchemy
 from importlib import import_module
 from sqlalchemy import event
@@ -26,8 +26,11 @@ def register_maintenance(app):
         if not maintenance_on:
             return
         path = request.path
-        # Slapp igenom statiska filer + upplasningsdorren sa de fungerar
-        if path.startswith('/static') or path in ('/favicon.ico', '/bygg'):
+        # Slapp igenom statiska filer, robots.txt + upplasningsdorren
+        if path.startswith('/static') or path in ('/favicon.ico', '/bygg', '/robots.txt'):
+            return
+        # Upplast via session (robust) eller Basic Auth
+        if session.get('wip_unlocked'):
             return
         auth = request.authorization
         if auth and hmac.compare_digest(auth.password or '', wip_password):
