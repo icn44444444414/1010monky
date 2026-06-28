@@ -262,6 +262,16 @@
   max-width: 9ch;
 }
 
+/* Enhetlig sidrubrik (H1) for alla inre sidor.
+   Startsidans hero behaller sin egen .monky-hero-title.
+   En klass = en plats att andra storleken pa i framtiden. */
+.page-title {
+  font-size: clamp(2.25rem, 1.55rem + 2.6vw, 3.25rem);
+  font-weight: 700;
+  line-height: 1.12;
+  letter-spacing: -.03em;
+}
+
 .monky-hero-lead {
   max-width: 32rem;
 }
