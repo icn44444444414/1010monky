@@ -105,6 +105,34 @@
 }
 @media (max-width: 480px) { .footer-grid { grid-template-columns: 1fr; } }
 
+/* ---------- Pris-kalkylator ---------- */
+.calc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: var(--space-3); }
+.calc-opt { position: relative; display: block; cursor: pointer; }
+.calc-opt input { position: absolute; opacity: 0; pointer-events: none; }
+.calc-opt-body {
+  display: flex; flex-direction: column; gap: 2px;
+  padding: var(--space-4); border-radius: var(--radius-md);
+  background: var(--surface); border: 1.5px solid var(--border-color);
+  transition: border-color var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease);
+  height: 100%;
+}
+.calc-opt:hover .calc-opt-body { border-color: var(--accent); }
+.calc-opt.is-selected .calc-opt-body { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(68,140,116,.15); }
+.calc-opt-title { font-weight: var(--fw-semibold); }
+.calc-tag { font-style: normal; font-size: var(--text-xs); font-weight: var(--fw-semibold); color: var(--accent); background: var(--accent-soft); padding: 1px 7px; border-radius: var(--radius-pill); margin-left: 6px; }
+.calc-opt-sub { font-size: var(--text-sm); color: var(--text-secondary); }
+.calc-opt-price { font-size: var(--text-sm); font-weight: var(--fw-semibold); color: var(--accent); margin-top: 4px; }
+
+.calc-estimate {
+  margin-top: var(--space-7); padding: var(--space-5) var(--space-6);
+  background: var(--surface-2); border-radius: var(--radius-lg);
+  position: sticky; bottom: var(--space-3); z-index: 5;
+  box-shadow: var(--shadow-md);
+}
+.calc-est-label { display: block; font-size: var(--text-sm); color: var(--text-secondary); }
+.calc-est-value { display: block; font-family: var(--font-display); font-size: var(--text-3xl); font-weight: var(--fw-bold); letter-spacing: var(--tracking-tight); }
+.calc-est-note { font-size: var(--text-sm); color: var(--text-muted); }
+
 /* Sprakvaxlare: tva flaggor (svenska / finska). Aktivt sprak ar markerat. */
 .lang-switch { display: inline-flex; align-items: center; gap: var(--space-2); }
 .lang-flag {

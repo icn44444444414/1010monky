@@ -42,6 +42,7 @@ SITEMAP_PATHS = [
     ('/', '1.0'),
     ('/services-v1', '0.9'),
     ('/pricing', '0.9'),
+    ('/priskalkylator', '0.8'),
     ('/portfolio-grid-v1', '0.7'),
     ('/portfolio-single-v1', '0.6'),
     ('/portfolio-single-askhackers', '0.6'),
