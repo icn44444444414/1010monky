@@ -1,19 +1,18 @@
 <!-- 1010monky chatt-widget (publik). Anonym, sakrad via /api/chat. -->
 <div id="monky-chat">
-  <!-- Launcher: chatt-bubbla med apan sittande pa toppen -->
+  <!-- Launcher: ren chatt-bubbla -->
   <button id="monky-chat-launcher" type="button" aria-label="Oppna chatten" data-avatar="{{ config.ASSETS_ROOT }}/img/monkey-logo.webp">
     <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
       <path d="M4 5.5h16a1.5 1.5 0 0 1 1.5 1.5v8a1.5 1.5 0 0 1-1.5 1.5H9l-4 3.2V16.5H4A1.5 1.5 0 0 1 2.5 15V7A1.5 1.5 0 0 1 4 5.5Z" fill="#fff"/>
     </svg>
-    <span class="mc-badge" aria-hidden="true"></span>
   </button>
   <span id="mc-hint" class="mc-hint" role="button" tabindex="0">Chatta med oss</span>
 
   <!-- Panel -->
   <section id="monky-chat-panel" role="dialog" aria-label="Chatta med Matias" aria-modal="false">
-    <img class="mc-monkey-hang" src="{{ config.ASSETS_ROOT }}/img/monkey-logo.webp" alt="" aria-hidden="true">
     <div class="mc-shell">
       <header class="mc-header">
+        <span class="mc-header-mark" aria-hidden="true">M</span>
         <div>
           <div class="mc-title">Chatta med Matias</div>
           <div class="mc-status"><span class="mc-dot"></span> Svarar oftast inom kort</div>
@@ -48,5 +47,5 @@
   </section>
 </div>
 
-<link rel="stylesheet" href="{{ config.ASSETS_ROOT }}/css/chat-widget.css?v=5">
-<script src="{{ config.ASSETS_ROOT }}/js/chat-widget.js?v=5" defer></script>
+<link rel="stylesheet" href="{{ config.ASSETS_ROOT }}/css/chat-widget.css?v=6">
+<script src="{{ config.ASSETS_ROOT }}/js/chat-widget.js?v=6" defer></script>

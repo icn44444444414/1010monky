@@ -53,12 +53,6 @@
     var row = document.createElement("div");
     row.className = "mc-row mc-row-" + (side === "visitor" ? "visitor" : "in") + (grouped ? " mc-grouped" : "");
 
-    if (side !== "visitor") {
-      var av = document.createElement("img");
-      av.className = "mc-msg-avatar" + (grouped ? " mc-av-hidden" : "");
-      av.src = els.avatarSrc; av.alt = ""; av.setAttribute("aria-hidden", "true");
-      row.appendChild(av);
-    }
     var col = document.createElement("div");
     col.className = "mc-col";
     var bubble = document.createElement("div");
@@ -94,9 +88,9 @@
     if (gotIncoming && !isOpen) showUnread();
   }
 
-  function showUnread() { els.badge.classList.add("mc-show"); els.launcher.classList.add("mc-attn"); }
+  function showUnread() { els.launcher.classList.add("mc-attn"); }
   function clearUnread() {
-    els.badge.classList.remove("mc-show"); els.launcher.classList.remove("mc-attn");
+    els.launcher.classList.remove("mc-attn");
     lastReadId = lastId;
     try { localStorage.setItem(READ_KEY, String(lastReadId)); } catch (e) {}
   }
@@ -187,9 +181,8 @@
     els.intro = $("mc-intro");
     els.hp = $("mc-hp");
     els.hint = $("mc-hint");
-    els.badge = els.launcher ? els.launcher.querySelector(".mc-badge") : null;
     els.live = $("mc-live");
-    if (!els.launcher || !els.badge) return;
+    if (!els.launcher) return;
     els.avatarSrc = els.launcher.getAttribute("data-avatar") || "";
 
     els.launcher.addEventListener("click", open);
