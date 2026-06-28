@@ -154,11 +154,18 @@ def chat_messages(token):
     if not conv:
         return jsonify(success=False, error='Konversationen hittades inte.'), 404
 
-    conv.last_seen_at = datetime.utcnow()
-    db.session.commit()
+    # READ-ONLY: polling far aldrig skriva till DB (skulle ge skrivlas pa
+    # varje anrop under last). Delta-polling: skicka ?after_id=N for att bara
+    # fa nyare meddelanden - mindre data och ingen onodig last.
+    try:
+        after_id = int(request.args.get('after_id', 0))
+    except (TypeError, ValueError):
+        after_id = 0
 
+    msgs = [m for m in conv.messages if m.id > after_id]
     return jsonify(
         success=True,
         status=conv.status,
-        messages=[m.to_public() for m in conv.messages],
+        last_id=conv.messages[-1].id if conv.messages else 0,
+        messages=[m.to_public() for m in msgs],
     )

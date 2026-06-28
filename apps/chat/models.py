@@ -83,6 +83,7 @@ class ChatMessage(db.Model):
         # Endast falt som ar ofarliga att visa for besokaren. Ingen PII,
         # inga interna id:n, ingen is_read/ip.
         return {
+            'id': self.id,
             'sender_type': self.sender_type,
             'body': self.body,
             'created_at': self.created_at.isoformat() + 'Z',
