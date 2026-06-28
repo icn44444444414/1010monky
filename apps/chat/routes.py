@@ -30,6 +30,7 @@ from apps.chat.validators import (
 from apps.chat.security import (
     client_ip, rate_limit, apply_security_headers, csrf_token, log_suspicious,
 )
+from apps.chat.ai import maybe_bot_reply
 
 # Mjuk grans: max antal nya konversationer per IP per timme.
 MAX_NEW_CONV_PER_IP_PER_HOUR = 8
@@ -105,6 +106,8 @@ def chat_start():
                                sender_type='visitor', body=message))
     db.session.commit()
 
+    maybe_bot_reply(conv, message)  # AI-som (inert tills M11)
+
     return jsonify(success=True, conversation_token=conv.public_token)
 
 
@@ -140,6 +143,8 @@ def chat_message():
     conv.touch()
     conv.last_seen_at = datetime.utcnow()
     db.session.commit()
+
+    maybe_bot_reply(conv, message)  # AI-som (inert tills M11)
 
     return jsonify(success=True)
 
