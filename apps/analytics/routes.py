@@ -7,11 +7,12 @@ siffror fran VisitorSession/VisitorEvent/Lead.
 """
 from functools import wraps
 
-from flask import session, redirect, url_for, request, render_template
+from flask import session, redirect, url_for, request, render_template, jsonify
 
 from apps.analytics import blueprint
 from apps.analytics import models  # noqa: F401  (sakerstaller att tabellerna laddas)
 from apps.analytics import events  # noqa: F401  (registrerar event-API:t)
+from apps.analytics import stats
 
 
 def admin_required(view):
@@ -70,4 +71,22 @@ def admin_home():
 @blueprint.route('/admin/dashboard')
 @admin_required
 def dashboard():
-    return render_template('analytics/dashboard.html', d=DEMO)
+    # Live-siffrorna ar redan riktiga; ovriga paneler kor demodata tills
+    # resten kopplas in (nasta steg).
+    d = dict(DEMO)
+    d['live_now'] = len(stats.live_sessions())
+    d['today'] = stats.count_today()
+    return render_template('analytics/dashboard.html', d=d)
+
+
+@blueprint.route('/admin/live')
+@admin_required
+def live():
+    return render_template('analytics/live.html')
+
+
+@blueprint.route('/admin/live/data')
+@admin_required
+def live_data():
+    sessions = [stats.session_view(s) for s in stats.live_sessions()]
+    return jsonify(count=len(sessions), sessions=sessions)

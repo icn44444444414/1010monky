@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>1010monky · Live besökare</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = { theme: { extend: {
+            fontFamily: { sans: ['Inter', 'sans-serif'] },
+            colors: { brand: { 500: '#448C74', 600: '#3a7a64' } }
+        }}}
+    </script>
+    <style>body { background-color: #f6f8f9; } ::-webkit-scrollbar { width: 0; }</style>
+</head>
+<body class="flex h-screen overflow-hidden text-gray-800 antialiased">
+
+    {% set active = 'live' %}
+    {% include 'analytics/_sidebar.html' %}
+
+    <main class="flex-1 flex flex-col h-full overflow-y-auto">
+        <header class="h-20 flex items-center justify-between px-8">
+            <div class="text-gray-500 font-medium">Live besökare</div>
+            <div class="text-xs text-gray-400">Uppdateras automatiskt</div>
+        </header>
+
+        <div class="p-8 pt-0">
+            <div class="flex items-center gap-3 mb-8">
+                <span class="relative flex h-3 w-3">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+                </span>
+                <h1 class="text-2xl font-bold text-gray-900">Live besökare just nu: <span id="live-count">–</span></h1>
+            </div>
+
+            <div id="live-list" class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-5">
+                <div class="text-gray-400 col-span-full">Laddar…</div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        var countEl = document.getElementById('live-count');
+        var list = document.getElementById('live-list');
+
+        function esc(s) { var d = document.createElement('div'); d.textContent = s == null ? '' : s; return d.innerHTML; }
+
+        function card(s) {
+            var flow = (s.flow || []).map(function (p) { return '<span class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-md">' + esc(p) + '</span>'; })
+                .join('<i class="fa-solid fa-arrow-right text-gray-300 text-[10px] mx-1"></i>');
+            var dev = s.device === 'mobil' ? 'fa-mobile-screen' : s.device === 'surfplatta' ? 'fa-tablet-screen-button' : 'fa-desktop';
+            return '' +
+            '<div class="bg-white rounded-2xl border border-gray-50 shadow-[0_2px_10px_-3px_rgba(20,23,26,0.06)] p-5">' +
+                '<div class="flex justify-between items-center mb-4">' +
+                    '<span class="font-bold text-gray-900">' + esc(s.id) + '</span>' +
+                    '<span class="text-xs font-medium bg-green-50 text-green-600 px-2 py-1 rounded-md">Aktiv</span>' +
+                '</div>' +
+                '<div class="text-sm text-gray-500 mb-1"><i class="fa-regular fa-file w-5"></i> Sida: <span class="text-gray-800 font-medium">' + esc(s.page) + '</span></div>' +
+                '<div class="text-sm text-gray-500 mb-1"><i class="fa-solid fa-bolt w-5"></i> ' + esc(s.last) + '</div>' +
+                '<div class="text-sm text-gray-500 mb-3"><i class="fa-regular fa-clock w-5"></i> ' + esc(s.time) + ' · <i class="fa-solid ' + dev + ' ml-1"></i> ' + esc(s.device) + '</div>' +
+                '<div class="flex items-center flex-wrap gap-y-1 pt-3 border-t border-gray-50">' + flow + '</div>' +
+            '</div>';
+        }
+
+        function render(data) {
+            countEl.textContent = data.count;
+            if (!data.sessions || !data.sessions.length) {
+                list.innerHTML = '<div class="text-gray-400 col-span-full py-10 text-center">Inga aktiva besökare just nu.</div>';
+                return;
+            }
+            list.innerHTML = data.sessions.map(card).join('');
+        }
+
+        function poll() {
+            fetch('/admin/live/data', { headers: { 'Accept': 'application/json' } })
+                .then(function (r) { return r.json(); })
+                .then(render)
+                .catch(function () {});
+        }
+        poll();
+        setInterval(poll, 3000);
+    </script>
+</body>
+</html>
