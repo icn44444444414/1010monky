@@ -10,6 +10,8 @@ from functools import wraps
 from flask import session, redirect, url_for, request, render_template
 
 from apps.analytics import blueprint
+from apps.analytics import models  # noqa: F401  (sakerstaller att tabellerna laddas)
+from apps.analytics import events  # noqa: F401  (registrerar event-API:t)
 
 
 def admin_required(view):
