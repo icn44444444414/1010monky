@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>1010monky design system</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ config.ASSETS_ROOT }}/css/system/tokens.css">
+  <link rel="stylesheet" href="{{ config.ASSETS_ROOT }}/css/system/base.css">
+  <style>
+    .sg-head { position: sticky; top: 0; z-index: 10; background: var(--surface); border-bottom: var(--border); }
+    .sg-sec { padding-block: var(--space-7); border-bottom: var(--border); }
+    .sg-sec > .container > h2 { margin-bottom: var(--space-5); }
+    .swatch { border-radius: var(--radius); height: 64px; border: var(--border); }
+    .swatch-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(96px, 1fr)); gap: var(--space-3); }
+    .swatch-row .text-xs { margin-top: var(--space-1); }
+    .demo-box { background: var(--accent); border-radius: var(--radius); }
+    .tile { padding: var(--space-4); border-radius: var(--radius); border: var(--border); background: var(--surface-2); }
+  </style>
+</head>
+<body>
+  <header class="sg-head">
+    <div class="container cluster" style="justify-content: space-between; padding-block: var(--space-3);">
+      <div class="cluster" style="gap: var(--space-2);">
+        <strong style="font-weight: var(--fw-extrabold); letter-spacing: -.02em;">1010<span style="color: var(--accent);">monky</span></strong>
+        <span class="badge badge-accent">design system</span>
+      </div>
+      <button class="btn btn-secondary btn-sm" onclick="document.documentElement.dataset.theme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'">Vaxla ljus/mork</button>
+    </div>
+  </header>
+
+  <!-- Farger -->
+  <section class="sg-sec">
+    <div class="container">
+      <span class="eyebrow">Tokens</span>
+      <h2>Farger</h2>
+      <h5 class="text-secondary" style="margin-bottom: var(--space-3);">Brand-gron</h5>
+      <div class="swatch-row" style="margin-bottom: var(--space-5);">
+        {% for n in [50,100,200,300,400,500,600,700,800,900] %}
+        <div><div class="swatch" style="background: var(--green-{{n}})"></div><div class="text-xs text-muted">green-{{n}}</div></div>
+        {% endfor %}
+      </div>
+      <h5 class="text-secondary" style="margin-bottom: var(--space-3);">Neutraler</h5>
+      <div class="swatch-row">
+        {% for n in [0,50,100,200,300,400,500,600,700,800,900] %}
+        <div><div class="swatch" style="background: var(--gray-{{n}})"></div><div class="text-xs text-muted">gray-{{n}}</div></div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <!-- Typografi -->
+  <section class="sg-sec">
+    <div class="container">
+      <span class="eyebrow">Tokens</span>
+      <h2>Typografi</h2>
+      <div class="stack">
+        <span class="eyebrow">Eyebrow / versal etikett</span>
+        <h1>Rubrik H1</h1>
+        <h2>Rubrik H2</h2>
+        <h3>Rubrik H3</h3>
+        <h4>Rubrik H4</h4>
+        <h5>Rubrik H5</h5>
+        <h6>Rubrik H6</h6>
+        <p class="lead">Ingress (.lead) – lite storre, luftig radhojd, sekundar farg for inledande stycken.</p>
+        <p>Brodtext i basstorlek med normal radhojd. <a href="#">En lank</a> ser ut sa har.</p>
+        <p class="text-sm text-muted">Liten, dampad text (.text-sm .text-muted) for metadata och bildtexter.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Spacing + radie -->
+  <section class="sg-sec">
+    <div class="container grid grid-2">
+      <div>
+        <span class="eyebrow">Tokens</span><h2>Spacing</h2>
+        <div class="stack-sm">
+          {% for s in [1,2,3,4,5,6,7,8] %}
+          <div class="cluster"><div class="demo-box" style="width: var(--space-{{s}}); height: 16px;"></div><span class="text-sm text-muted">--space-{{s}}</span></div>
+          {% endfor %}
+        </div>
+      </div>
+      <div>
+        <span class="eyebrow">Tokens</span><h2>Radie</h2>
+        <div class="cluster" style="gap: var(--space-4);">
+          {% for r in ['sm','','md','lg','xl'] %}
+          <div><div class="tile" style="width: 80px; height: 60px; border-radius: var(--radius{{ '-' + r if r }});"></div><div class="text-xs text-muted">radius{{ '-' + r if r else '' }}</div></div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skuggor -->
+  <section class="sg-sec">
+    <div class="container">
+      <span class="eyebrow">Tokens</span><h2>Skuggor (elevation)</h2>
+      <div class="grid grid-auto">
+        {% for s in ['xs','sm','md','lg','xl'] %}
+        <div class="tile" style="background: var(--surface); box-shadow: var(--shadow-{{s}}); text-align: center;">shadow-{{s}}</div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <!-- Komponenter -->
+  <section class="sg-sec">
+    <div class="container">
+      <span class="eyebrow">Komponenter</span><h2>Knappar</h2>
+      <div class="cluster" style="margin-bottom: var(--space-4);">
+        <button class="btn btn-primary">Primar</button>
+        <button class="btn btn-secondary">Sekundar</button>
+        <button class="btn btn-outline">Outline</button>
+        <button class="btn btn-ghost">Ghost</button>
+      </div>
+      <div class="cluster">
+        <button class="btn btn-primary btn-sm">Liten</button>
+        <button class="btn btn-primary">Normal</button>
+        <button class="btn btn-primary btn-lg">Stor</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="sg-sec">
+    <div class="container">
+      <span class="eyebrow">Komponenter</span><h2>Kort, badges, formular</h2>
+      <div class="grid grid-3">
+        <div class="card card-hover">
+          <span class="badge badge-accent">Nyhet</span>
+          <h4 style="margin-block: var(--space-3) var(--space-2);">Kort-titel</h4>
+          <p class="text-secondary text-sm">Ett kort med yta, kant, radie och mjuk skugga. Hovra for lyft.</p>
+        </div>
+        <div class="card">
+          <div class="cluster" style="margin-bottom: var(--space-3);">
+            <span class="badge badge-success">success</span>
+            <span class="badge badge-warning">warning</span>
+            <span class="badge badge-danger">danger</span>
+          </div>
+          <p class="text-secondary text-sm">Status-badges via semantiska tokens.</p>
+        </div>
+        <div class="card">
+          <div class="field" style="margin-bottom: var(--space-3);">
+            <label class="label" for="sg-n">Namn</label>
+            <input class="input" id="sg-n" placeholder="Ditt namn">
+          </div>
+          <div class="field">
+            <label class="label" for="sg-m">Meddelande</label>
+            <textarea class="textarea" id="sg-m" placeholder="Skriv har..."></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="container" style="padding-block: var(--space-6);">
+    <p class="text-sm text-muted">1010monky design system · vanilla CSS · tokens.css + base.css</p>
+  </footer>
+</body>
+</html>
