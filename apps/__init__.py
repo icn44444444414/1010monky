@@ -29,8 +29,8 @@ def register_maintenance(app):
         # Slapp igenom statiska filer, robots.txt + upplasningsdorren
         if path.startswith('/static') or path in ('/favicon.ico', '/bygg', '/robots.txt'):
             return
-        # Upplast via session (robust) eller Basic Auth
-        if session.get('wip_unlocked'):
+        # Upplast via session (robust), inloggad admin, eller Basic Auth
+        if session.get('wip_unlocked') or session.get('chat_admin'):
             return
         auth = request.authorization
         if auth and hmac.compare_digest(auth.password or '', wip_password):
