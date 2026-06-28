@@ -79,7 +79,7 @@
   {# Hoppa direkt till innehållet – bra för tangentbord och skärmläsare #}
   <a class="skip-link" href="#innehall">Hoppa till innehållet</a>
 
-  {% block header %}{% endblock %}
+  {% block header %}{% include 'partials/site-header.html' %}{% endblock %}
 
   <main id="innehall">
     {% block content %}{% endblock %}
@@ -88,6 +88,7 @@
   {% block footer %}{% endblock %}
 
   {% include 'partials/chat_widget.html' %}
+  <script src="{{ config.ASSETS_ROOT }}/js/site.js?v=1" defer></script>
   {% block scripts %}{% endblock %}
 </body>
 </html>

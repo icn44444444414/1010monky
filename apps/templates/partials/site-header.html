@@ -1,0 +1,29 @@
+{# Sidhuvud (vanilla). Sticky, med språkväxlare och tillgänglig mobilmeny.
+   Aktiv länk markeras genom att matcha nuvarande sökväg. #}
+{% set here = (request.path[3:] if request.path.startswith('/fi/') else request.path).rstrip('/') or '/' %}
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href="{{ '/fi/' if lang == 'fi' else '/' }}" aria-label="1010monky Studio – startsida">
+      1010<span class="brand-accent">monky</span><span class="brand-studio">studio</span>
+    </a>
+
+    <nav class="main-nav" id="main-nav" aria-label="Huvudmeny">
+      <ul class="nav-list">
+        <li><a class="nav-link {{ 'is-active' if here == '/services-v1' }}" href="/services-v1">Tjänster</a></li>
+        <li><a class="nav-link {{ 'is-active' if here == '/portfolio-grid-v1' }}" href="/portfolio-grid-v1">Portfolio</a></li>
+        <li><a class="nav-link {{ 'is-active' if here == '/pricing' }}" href="/pricing">Priser</a></li>
+        <li><a class="nav-link {{ 'is-active' if here == '/about-agency' }}" href="/about-agency">Om oss</a></li>
+        <li><a class="nav-link {{ 'is-active' if here == '/blogg' }}" href="/blogg">Blogg</a></li>
+      </ul>
+    </nav>
+
+    <div class="header-actions">
+      {% include 'partials/lang-switch.html' %}
+      <a class="btn btn-primary btn-sm header-cta" href="/contacts-v1">Kontakt</a>
+      <button class="menu-toggle" type="button" data-menu-toggle
+              aria-label="Öppna meny" aria-expanded="false" aria-controls="main-nav">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>

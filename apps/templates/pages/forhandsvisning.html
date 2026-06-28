@@ -1,0 +1,40 @@
+{% extends 'layouts/clean.html' %}
+
+{% block title %}Förhandsvisning – nya sidhuvudet{% endblock %}
+{% block meta_description %}Intern förhandsvisning av det nya vanilla-sidhuvudet och designsystemet.{% endblock %}
+{% block robots %}noindex, nofollow{% endblock %}
+
+{% block content %}
+<section class="section section-alt">
+  <div class="container" style="max-width: 60ch;">
+    <span class="eyebrow">Förhandsvisning</span>
+    <h1 style="margin-block: var(--space-3);">Ett sidhuvud som <span class="text-gradient">känns dyrt</span>.</h1>
+    <p class="lead">Sticky glas-header, språkväxlare med flaggor och en tillgänglig mobilmeny – allt i ren vanilla-CSS. Krymp fönstret så ser du hamburgaren ta över.</p>
+    <div class="cluster" style="margin-top: var(--space-5);">
+      <a class="btn btn-primary btn-lg" href="/contacts-v1">Hör av dig</a>
+      <a class="btn btn-ghost" href="/styleguide">Till designsystemet</a>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <span class="eyebrow">Tema-känsla</span>
+    <h2 style="margin-bottom: var(--space-6);">Mindre boxar, mer luft</h2>
+    <div class="features">
+      <div class="feature">
+        <div class="feature-title">Tjänster</div>
+        <p class="feature-text">Hemsidor i WordPress och skräddarsydd kod, byggt för fart och sökmotorer.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-title">Tvåspråkigt</div>
+        <p class="feature-text">Svenska och finska från start, med rätt hreflang-signaler till Google.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-title">Personligt</div>
+        <p class="feature-text">Du pratar med mig, inte en säljavdelning. Rakt och utan teknik-jargong.</p>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
