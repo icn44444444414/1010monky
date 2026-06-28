@@ -18,6 +18,8 @@ def register_maintenance(app):
     via /bygg ser den riktiga sajten. Stang av genom att ta bort flaggan i .env."""
     maintenance_on = os.getenv('MAINTENANCE_MODE', 'false').lower() == 'true'
     wip_password = os.getenv('WIP_PASSWORD', 'monky-wip-2026')
+    # Gor flaggan tillganglig i mallar (t.ex. for att inte ladda Analytics under bygget)
+    app.config['MAINTENANCE_MODE'] = maintenance_on
 
     @app.before_request
     def gate():

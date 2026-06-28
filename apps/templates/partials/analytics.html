@@ -1,0 +1,12 @@
+{# Google Analytics (gtag.js). Laddas pa alla kundsidor men INTE under
+   under-byggnad-laget, sa egna bygg-besok inte rakna med. Byt matnings-id har. #}
+{% if not config.get('MAINTENANCE_MODE') %}
+<link rel="preconnect" href="https://www.googletagmanager.com">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-VNHQH29FZ4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-VNHQH29FZ4');
+</script>
+{% endif %}
