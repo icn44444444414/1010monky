@@ -134,8 +134,10 @@ h6, .h6 { font-size: var(--text-lg);  letter-spacing: var(--tracking-normal); }
 .surface { background: var(--surface); border: var(--border); border-radius: var(--radius-lg); }
 .surface-2 { background: var(--surface-2); }
 .card {
-  background: var(--surface); border: var(--border); border-radius: var(--radius-lg);
-  padding: var(--space-5); box-shadow: var(--shadow-sm);
+  background: var(--surface); border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  /* Mjuk skugga + hartunn ring istallet for hard ram = premium SaaS, mindre border */
+  box-shadow: var(--shadow-sm), 0 0 0 1px var(--hairline);
 }
 .card-hover { transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease); }
 .card-hover:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
@@ -156,14 +158,14 @@ h6, .h6 { font-size: var(--text-lg);  letter-spacing: var(--tracking-normal); }
 .field { display: flex; flex-direction: column; gap: var(--space-2); }
 .label { font-size: var(--text-sm); font-weight: var(--fw-medium); color: var(--text-secondary); }
 .input, .textarea, .select {
-  width: 100%; padding: 0.7rem 0.9rem;
-  background: var(--surface); color: var(--text-primary);
-  border: var(--border-width) solid var(--border-color); border-radius: var(--radius);
-  transition: border-color var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease);
+  width: 100%; padding: 0.7rem 0.95rem;
+  background: var(--surface-2); color: var(--text-primary);
+  border: var(--border-width) solid transparent; border-radius: var(--radius);
+  transition: background var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease);
 }
 .input::placeholder, .textarea::placeholder { color: var(--text-muted); }
 .input:focus, .textarea:focus, .select:focus {
-  outline: none; border-color: var(--accent); box-shadow: var(--shadow-focus);
+  outline: none; background: var(--surface); border-color: var(--accent); box-shadow: var(--shadow-focus);
 }
 .textarea { resize: vertical; min-height: 120px; }
 

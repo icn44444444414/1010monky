@@ -35,14 +35,16 @@
   --c-danger:  #c8443f; --c-danger-bg:  #fae9e8;
   --c-info:    #2d6fa8; --c-info-bg:    #e6f0f8;
 
-  /* ---------- Semantiska (ljust lage) ---------- */
-  --bg:           var(--gray-0);
+  /* ---------- Semantiska (ljust lage) ----------
+     Mjuk off-white canvas + vita kort som "lyfter" = lugn, premium SaaS-kansla
+     utan tunga ramar. Hog kontrast pa text for latt lasbarhet. */
+  --bg:           #f7f9f8;
   --surface:      #ffffff;
-  --surface-2:    var(--gray-50);
-  --surface-sunken: var(--gray-100);
-  --text-primary:   var(--gray-900);
-  --text-secondary: var(--gray-600);
-  --text-muted:     var(--gray-400);
+  --surface-2:    #eef1f0;
+  --surface-sunken: #e6eae9;
+  --text-primary:   #15191c;
+  --text-secondary: #525a60;
+  --text-muted:     #8b939a;
   --text-on-accent: #ffffff;
   --accent:         var(--green-500);
   --accent-hover:   var(--green-600);
@@ -108,11 +110,11 @@
   --border: var(--border-width) solid var(--border-color);
 
   /* ---------- Skuggor (elevation) ---------- */
-  --shadow-xs: 0 1px 2px rgba(20, 23, 26, .06);
-  --shadow-sm: 0 2px 6px rgba(20, 23, 26, .08);
-  --shadow-md: 0 6px 18px rgba(20, 23, 26, .10);
-  --shadow-lg: 0 16px 40px rgba(20, 23, 26, .14);
-  --shadow-xl: 0 28px 70px rgba(20, 23, 26, .20);
+  --shadow-xs: 0 1px 2px rgba(20, 23, 26, .05);
+  --shadow-sm: 0 1px 3px rgba(20, 23, 26, .06), 0 1px 2px rgba(20, 23, 26, .04);
+  --shadow-md: 0 4px 14px rgba(20, 23, 26, .07), 0 2px 5px rgba(20, 23, 26, .05);
+  --shadow-lg: 0 12px 34px rgba(20, 23, 26, .10), 0 4px 10px rgba(20, 23, 26, .06);
+  --shadow-xl: 0 28px 70px rgba(20, 23, 26, .16);
   --shadow-focus: 0 0 0 3px rgba(68, 140, 116, .25);
 
   /* ---------- Rorelse ---------- */

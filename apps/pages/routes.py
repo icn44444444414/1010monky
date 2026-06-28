@@ -1,11 +1,29 @@
 import os
 import ssl
 import smtplib
+import hmac
+from functools import wraps
 from email.message import EmailMessage
 
 from apps.pages import blueprint
 from flask import render_template, request, jsonify, Response
 from jinja2 import TemplateNotFound
+
+# Losenord for sidor under arbete (styleguide m.m.). Satt i .env pa servern.
+WIP_PASSWORD = os.getenv('WIP_PASSWORD', 'monky-wip-2026')
+
+
+def wip_protected(view):
+    """HTTP Basic Auth-grind for sidor som inte ska visas for kund an."""
+    @wraps(view)
+    def wrapper(*args, **kwargs):
+        auth = request.authorization
+        if not auth or not hmac.compare_digest(auth.password or '', WIP_PASSWORD):
+            return Response(
+                'Inloggning kravs.', 401,
+                {'WWW-Authenticate': 'Basic realm="1010monky – under arbete"'})
+        return view(*args, **kwargs)
+    return wrapper
 
 SITE_URL = 'https://1010monky.se'
 
@@ -153,6 +171,12 @@ def api_contact():
         return jsonify(ok=True)
     except Exception:
         return jsonify(ok=False, error='Kunde inte skicka just nu, forsok igen eller mejla info@1010monky.se.'), 500
+
+
+@blueprint.route('/styleguide')
+@wip_protected
+def styleguide():
+    return render_template('pages/styleguide.html', segment='styleguide')
 
 
 @blueprint.route('/<template>')
