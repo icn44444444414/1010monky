@@ -8,8 +8,8 @@
 <main class="page-wrapper">
     {% include "partials/navbar.html" %}
 
-    <!-- Page container -->
-    <div class="container pt-5 pb-lg-5 pb-md-4 pb-2 my-5">
+    <!-- Breadcrumb + Blog grid (Around portfolio-grid-stil) -->
+    <section class="container overflow-hidden py-5 mt-5 mb-2 mb-md-3 mb-lg-4 mb-xxl-5">
         <!-- Breadcrumb -->
         <nav aria-label="breadcrumb">
             <ol class="pt-lg-3 pb-lg-4 pb-2 breadcrumb">
@@ -17,83 +17,59 @@
                 <li aria-current="page" class="breadcrumb-item active">Blogg</li>
             </ol>
         </nav>
-        <!-- Page title + filters -->
-        <div class="row align-items-center gy-2 mb-4 pb-1 pb-sm-2 pb-lg-3">
-            <div class="col-lg-5">
-                <h1 class="mb-lg-0">Blogg</h1>
-            </div>
-            <div class="col-xl-2 offset-xl-1 col-lg-3 col-sm-5">
-                <select class="form-select" id="blogCategory" aria-label="Filtrera på kategori">
-                    <option value="all">Alla kategorier</option>
-                    <option value="Kod &amp; webb">Kod &amp; webb</option>
-                    <option value="Pris &amp; projekt">Pris &amp; projekt</option>
-                </select>
-            </div>
-            <div class="col-lg-4 col-sm-7">
-                <div class="position-relative">
-                    <i class="ai-search position-absolute top-50 start-0 translate-middle-y ms-3"></i>
-                    <input class="form-control ps-5" id="blogSearch" placeholder="Sök i bloggen" type="search"/>
-                </div>
-            </div>
-        </div>
-
-        <!-- Posts -->
-        <div class="row g-4" id="blogGrid">
-            <!-- Post: chatt-app pris -->
-            <div class="col-md-6 col-lg-4" data-post data-category="Pris &amp; projekt">
-                <article class="card border-0 bg-secondary h-100">
-                    <a href="/blogg/chatt-app-pris">
-                        <img alt="Vad kostar det att bygga en egen chatt-app?" class="card-img-top" src="{{ config.ASSETS_ROOT }}/img/blog/covers/chatt-app-pris.png"/>
-                    </a>
-                    <div class="card-body pb-4">
-                        <div class="d-flex align-items-center mb-3 mt-n1">
-                            <span class="fs-sm text-body-secondary">Juni 2026</span>
-                            <span class="fs-xs opacity-20 mx-3">|</span>
-                            <span class="badge text-nav fs-xs border">Pris &amp; projekt</span>
+        <!-- Page title -->
+        <h1 class="text-center pb-2 pb-md-3 pb-lg-4">Blogg</h1>
+        <div class="blog-filterable">
+            <!-- Filters -->
+            <ul class="nav nav-pills fs-sm flex-nowrap overflow-auto text-nowrap w-100 mx-auto justify-content-center pb-4 mb-2 mb-sm-3"
+                id="blogFilters" style="max-width: 590px;">
+                <li class="nav-item mb-0">
+                    <a class="nav-link border active" data-group="all" href="#">Alla</a>
+                </li>
+                <li class="nav-item mb-0">
+                    <a class="nav-link border" data-group="kod" href="#">Kod &amp; webb</a>
+                </li>
+                <li class="nav-item mb-0">
+                    <a class="nav-link border" data-group="pris" href="#">Pris &amp; projekt</a>
+                </li>
+            </ul>
+            <!-- Grid of posts -->
+            <div class="row row-cols-1 row-cols-md-2 g-4 g-lg-5" id="blogGrid">
+                <!-- Item -->
+                <article class="col" data-group="kod">
+                    <div class="card-hover zoom-effect mx-auto" style="max-width: 620px;">
+                        <div class="zoom-effect-wrapper rounded-5">
+                            <div class="zoom-effect-img">
+                                <img alt="Hur bygger man en chatt-app i Python Flask?" src="{{ config.ASSETS_ROOT }}/img/blog/covers/chatt-app-python-flask.png" width="1200" height="630"/>
+                            </div>
                         </div>
-                        <h2 class="h4 card-title">
-                            <a href="/blogg/chatt-app-pris">Vad kostar det att bygga en egen chatt-app 2026?</a>
-                        </h2>
-                        <p class="card-text">Ärliga prisspann för en enkel, en medelstor och en avancerad chatt-app, och vad som faktiskt påverkar priset.</p>
-                    </div>
-                    <div class="card-footer pt-3 bg-transparent border-0">
-                        <div class="d-flex align-items-center pb-2">
-                            <img alt="1010monky" src="{{ config.ASSETS_ROOT }}/img/monkey-logo.webp" width="28"/>
-                            <span class="h6 ps-2 mb-0">Matias, 1010monky Studio</span>
+                        <div class="pt-4 mt-lg-2">
+                            <h2 class="h5 mb-2">
+                                <a class="stretched-link text-nav" href="/blogg/chatt-app-python-flask">Hur bygger man en chatt-app i Python Flask?</a>
+                            </h2>
+                            <span class="fs-sm text-body-secondary">Kod &amp; webb</span>
                         </div>
                     </div>
                 </article>
-            </div>
-            <!-- Post: chatt-app guide -->
-            <div class="col-md-6 col-lg-4" data-post data-category="Kod &amp; webb">
-                <article class="card border-0 bg-secondary h-100">
-                    <a href="/blogg/chatt-app-python-flask">
-                        <img alt="Hur bygger man en chatt-app i Python Flask?" class="card-img-top" src="{{ config.ASSETS_ROOT }}/img/blog/covers/chatt-app-python-flask.png"/>
-                    </a>
-                    <div class="card-body pb-4">
-                        <div class="d-flex align-items-center mb-3 mt-n1">
-                            <span class="fs-sm text-body-secondary">Juni 2026</span>
-                            <span class="fs-xs opacity-20 mx-3">|</span>
-                            <span class="badge text-nav fs-xs border">Kod &amp; webb</span>
+                <!-- Item -->
+                <article class="col" data-group="pris">
+                    <div class="card-hover zoom-effect mx-auto" style="max-width: 620px;">
+                        <div class="zoom-effect-wrapper rounded-5">
+                            <div class="zoom-effect-img">
+                                <img alt="Vad kostar det att bygga en egen chatt-app?" src="{{ config.ASSETS_ROOT }}/img/blog/covers/chatt-app-pris.png" width="1200" height="630"/>
+                            </div>
                         </div>
-                        <h2 class="h4 card-title">
-                            <a href="/blogg/chatt-app-python-flask">Hur bygger man en chatt-app i Python Flask?</a>
-                        </h2>
-                        <p class="card-text">Går det, hur svårt är det och vad påverkar tid och pris? En ärlig genomgång utifrån att jag byggt en egen realtidschatt.</p>
-                    </div>
-                    <div class="card-footer pt-3 bg-transparent border-0">
-                        <div class="d-flex align-items-center pb-2">
-                            <img alt="1010monky" src="{{ config.ASSETS_ROOT }}/img/monkey-logo.webp" width="28"/>
-                            <span class="h6 ps-2 mb-0">Matias, 1010monky Studio</span>
+                        <div class="pt-4 mt-lg-2">
+                            <h2 class="h5 mb-2">
+                                <a class="stretched-link text-nav" href="/blogg/chatt-app-pris">Vad kostar det att bygga en egen chatt-app 2026?</a>
+                            </h2>
+                            <span class="fs-sm text-body-secondary">Pris &amp; projekt</span>
                         </div>
                     </div>
                 </article>
             </div>
         </div>
-
-        <p class="text-body-secondary fs-sm mt-5 mb-0" id="blogEmpty" style="display: none;">Inga inlägg matchar din sökning.</p>
-        <p class="text-body-secondary fs-sm mt-5 mb-0" id="blogMore">Fler texter är på väg. Kika in igen om ett tag.</p>
-    </div>
+    </section>
 </main>
 
 {% include "partials/footer.html" %}
@@ -104,28 +80,23 @@
 <script src="{{ config.ASSETS_ROOT }}/js/theme.min.js"></script>
 <script>
     (function () {
-        var search = document.getElementById('blogSearch');
-        var cat = document.getElementById('blogCategory');
-        var cards = Array.prototype.slice.call(document.querySelectorAll('#blogGrid [data-post]'));
-        var empty = document.getElementById('blogEmpty');
-        var more = document.getElementById('blogMore');
-        if (!search || !cat) return;
-        function apply() {
-            var q = (search.value || '').toLowerCase().trim();
-            var c = cat.value;
-            var shown = 0;
-            cards.forEach(function (el) {
-                var text = el.textContent.toLowerCase();
-                var category = el.getAttribute('data-category');
-                var match = (!q || text.indexOf(q) !== -1) && (c === 'all' || category === c);
-                el.style.display = match ? '' : 'none';
-                if (match) shown++;
+        var filters = document.getElementById('blogFilters');
+        var grid = document.getElementById('blogGrid');
+        if (!filters || !grid) return;
+        var pills = filters.querySelectorAll('.nav-link');
+        var items = grid.querySelectorAll('[data-group]');
+        pills.forEach(function (pill) {
+            pill.addEventListener('click', function (e) {
+                e.preventDefault();
+                pills.forEach(function (p) { p.classList.remove('active'); });
+                pill.classList.add('active');
+                var g = pill.getAttribute('data-group');
+                items.forEach(function (item) {
+                    var show = (g === 'all' || item.getAttribute('data-group') === g);
+                    item.style.display = show ? '' : 'none';
+                });
             });
-            if (empty) empty.style.display = shown === 0 ? '' : 'none';
-            if (more) more.style.display = shown === 0 ? 'none' : '';
-        }
-        search.addEventListener('input', apply);
-        cat.addEventListener('change', apply);
+        });
     })();
 </script>
 {% endblock scripts %}
