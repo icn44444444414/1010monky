@@ -19,6 +19,10 @@
         </nav>
         <!-- Page title -->
         <h1 class="text-center pb-2 pb-md-3 pb-lg-4">Blogg</h1>
+        <!-- Lås alla kort-bilder till samma form (1.9:1) så gridden blir jämn -->
+        <style>
+            #blogGrid .zoom-effect-img img { width: 100%; height: auto; aspect-ratio: 1200 / 630; object-fit: cover; }
+        </style>
         <div class="blog-filterable">
             <!-- Filters -->
             <ul class="nav nav-pills fs-sm flex-nowrap overflow-auto text-nowrap w-100 mx-auto justify-content-center pb-4 mb-2 mb-sm-3"
@@ -64,6 +68,88 @@
                                 <a class="stretched-link text-nav" href="/blogg/chatt-app-pris">Vad kostar det att bygga en egen chatt-app 2026?</a>
                             </h2>
                             <span class="fs-sm text-body-secondary">Pris &amp; projekt</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- DEMO-poster (platshållare för att visa hur fylld grid ser ut – byt mot riktiga inlägg) -->
+                <!-- Item -->
+                <article class="col" data-group="kod">
+                    <div class="card-hover zoom-effect mx-auto" style="max-width: 620px;">
+                        <div class="zoom-effect-wrapper rounded-5">
+                            <div class="zoom-effect-img">
+                                <img alt="Lär dig Python på svenska" src="{{ config.ASSETS_ROOT }}/img/blog/covers/lara-python-pa-svenska.png" width="1200" height="630"/>
+                            </div>
+                        </div>
+                        <div class="pt-4 mt-lg-2">
+                            <h2 class="h5 mb-2">
+                                <a class="stretched-link text-nav" href="#">Lär dig Python på svenska, så kom jag igång</a>
+                            </h2>
+                            <span class="fs-sm text-body-secondary">Kod &amp; webb</span>
+                        </div>
+                    </div>
+                </article>
+                <!-- Item -->
+                <article class="col" data-group="kod">
+                    <div class="card-hover zoom-effect mx-auto" style="max-width: 620px;">
+                        <div class="zoom-effect-wrapper rounded-5">
+                            <div class="zoom-effect-img">
+                                <img alt="Flask istället för WordPress" src="{{ config.ASSETS_ROOT }}/img/blog/grid/01.jpg" width="1200" height="630"/>
+                            </div>
+                        </div>
+                        <div class="pt-4 mt-lg-2">
+                            <h2 class="h5 mb-2">
+                                <a class="stretched-link text-nav" href="#">Därför valde jag Flask istället för WordPress</a>
+                            </h2>
+                            <span class="fs-sm text-body-secondary">Kod &amp; webb</span>
+                        </div>
+                    </div>
+                </article>
+                <!-- Item -->
+                <article class="col" data-group="kod">
+                    <div class="card-hover zoom-effect mx-auto" style="max-width: 620px;">
+                        <div class="zoom-effect-wrapper rounded-5">
+                            <div class="zoom-effect-img">
+                                <img alt="Snabb sajt under en sekund" src="{{ config.ASSETS_ROOT }}/img/blog/grid/02.jpg" width="1200" height="630"/>
+                            </div>
+                        </div>
+                        <div class="pt-4 mt-lg-2">
+                            <h2 class="h5 mb-2">
+                                <a class="stretched-link text-nav" href="#">Så fick jag sajten att ladda på under en sekund</a>
+                            </h2>
+                            <span class="fs-sm text-body-secondary">Kod &amp; webb</span>
+                        </div>
+                    </div>
+                </article>
+                <!-- Item -->
+                <article class="col" data-group="pris">
+                    <div class="card-hover zoom-effect mx-auto" style="max-width: 620px;">
+                        <div class="zoom-effect-wrapper rounded-5">
+                            <div class="zoom-effect-img">
+                                <img alt="Vad en hemsida kostar" src="{{ config.ASSETS_ROOT }}/img/blog/grid/03.jpg" width="1200" height="630"/>
+                            </div>
+                        </div>
+                        <div class="pt-4 mt-lg-2">
+                            <h2 class="h5 mb-2">
+                                <a class="stretched-link text-nav" href="#">Vad en hemsida faktiskt kostar 2026</a>
+                            </h2>
+                            <span class="fs-sm text-body-secondary">Pris &amp; projekt</span>
+                        </div>
+                    </div>
+                </article>
+                <!-- Item -->
+                <article class="col" data-group="kod">
+                    <div class="card-hover zoom-effect mx-auto" style="max-width: 620px;">
+                        <div class="zoom-effect-wrapper rounded-5">
+                            <div class="zoom-effect-img">
+                                <img alt="Misstag med första kundsajten" src="{{ config.ASSETS_ROOT }}/img/blog/grid/04.jpg" width="1200" height="630"/>
+                            </div>
+                        </div>
+                        <div class="pt-4 mt-lg-2">
+                            <h2 class="h5 mb-2">
+                                <a class="stretched-link text-nav" href="#">Misstagen jag gjorde med min första kundsajt</a>
+                            </h2>
+                            <span class="fs-sm text-body-secondary">Kod &amp; webb</span>
                         </div>
                     </div>
                 </article>
