@@ -19,7 +19,11 @@
 .mc-badge {
   position: absolute; top: 8px; right: 8px; width: 12px; height: 12px;
   background: #ff5d5d; border: 2px solid var(--mc-ink); border-radius: 50%;
+  display: none;
 }
+.mc-badge.mc-show { display: block; }
+#monky-chat-launcher.mc-attn { animation: mc-attn 1.6s ease-in-out infinite; }
+@keyframes mc-attn { 0%,100% { transform: none; } 25% { transform: translateY(-3px) rotate(-4deg); } 75% { transform: translateY(-3px) rotate(4deg); } }
 
 /* Label-bubbla som visar att det ar chatt */
 .mc-hint {
@@ -79,12 +83,23 @@
 /* Body */
 .mc-body { flex: 1; overflow-y: auto; padding: 18px; background: #f6f8f9; display: flex; flex-direction: column; gap: 12px; scroll-behavior: smooth; }
 .mc-intro { background: #fff; border: 1px solid rgba(0,0,0,.06); border-radius: 16px; padding: 15px 16px; font-size: 14px; line-height: 1.55; color: #2c3236; box-shadow: 0 2px 8px rgba(20,23,26,.04); }
-.mc-bubble { max-width: 82%; padding: 10px 14px; border-radius: 17px; font-size: 14px; line-height: 1.45; word-wrap: break-word; animation: mc-pop .18s ease; }
+/* meddelanderader */
+.mc-row { display: flex; gap: 8px; align-items: flex-end; max-width: 100%; }
+.mc-row-visitor { justify-content: flex-end; }
+.mc-row-in { justify-content: flex-start; }
+.mc-grouped { margin-top: -6px; }
+.mc-msg-avatar { width: 26px; height: 26px; border-radius: 50%; background: #fff; border: 1px solid rgba(0,0,0,.08); object-fit: cover; flex: 0 0 auto; }
+.mc-av-hidden { visibility: hidden; }
+.mc-col { display: flex; flex-direction: column; max-width: 80%; }
+.mc-bubble { padding: 10px 14px; border-radius: 17px; font-size: 14px; line-height: 1.45; word-wrap: break-word; overflow-wrap: anywhere; animation: mc-pop .18s ease; }
+.mc-bubble a { color: inherit; text-decoration: underline; }
 @keyframes mc-pop { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: none; } }
-.mc-visitor { align-self: flex-end; background: var(--monky); color: #fff; border-bottom-right-radius: 5px; }
-.mc-admin, .mc-bot { align-self: flex-start; background: #fff; color: #20262b; border: 1px solid rgba(0,0,0,.07); border-bottom-left-radius: 5px; }
+.mc-visitor { background: var(--monky); color: #fff; border-bottom-right-radius: 5px; }
+.mc-admin, .mc-bot { background: #fff; color: #20262b; border: 1px solid rgba(0,0,0,.07); border-bottom-left-radius: 5px; }
 .mc-bot { background: #efe7d6; border-color: rgba(0,0,0,.05); }
-.mc-system { align-self: center; font-size: 12px; color: #8a9099; }
+.mc-system { align-self: center; font-size: 12px; color: #8a9099; text-align: center; }
+.mc-meta { font-size: 11px; color: #9aa1a7; margin-top: 3px; padding: 0 4px; }
+.mc-row-visitor .mc-meta { text-align: right; }
 
 /* Snabbval */
 .mc-quick { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
@@ -101,8 +116,27 @@
 .mc-send:disabled { opacity: .5; cursor: default; }
 .mc-foot-note { text-align: center; font-size: 11px; color: #9aa1a7; margin-top: 9px; }
 
+.mc-send.mc-loading { font-size: 0; }
+.mc-send.mc-loading::after { content: ""; width: 18px; height: 18px; border: 2px solid rgba(255,255,255,.45); border-top-color: #fff; border-radius: 50%; animation: mc-spin .7s linear infinite; }
+@keyframes mc-spin { to { transform: rotate(360deg); } }
+
+/* egen scrollbar i meddelandelistan */
+.mc-body::-webkit-scrollbar { width: 8px; }
+.mc-body::-webkit-scrollbar-thumb { background: rgba(20,23,26,.16); border-radius: 8px; }
+.mc-body::-webkit-scrollbar-thumb:hover { background: rgba(20,23,26,.28); }
+.mc-body { scrollbar-width: thin; scrollbar-color: rgba(20,23,26,.18) transparent; }
+
+/* skarmlasare + scroll-las pa mobil */
+.mc-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+body.mc-noscroll { overflow: hidden; }
+
 /* honeypot */
 .mc-hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+
+/* respektera anvandare som vill ha mindre rorelse */
+@media (prefers-reduced-motion: reduce) {
+  #monky-chat *, #monky-chat-launcher { animation: none !important; transition: none !important; }
+}
 
 @media (max-width: 460px) {
   #monky-chat-panel { right: 0; bottom: 0; width: 100vw; max-width: 100vw; height: 100dvh; max-height: 100dvh; }

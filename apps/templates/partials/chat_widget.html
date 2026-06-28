@@ -1,7 +1,7 @@
 <!-- 1010monky chatt-widget (publik). Anonym, sakrad via /api/chat. -->
 <div id="monky-chat">
   <!-- Launcher: chatt-bubbla med apan sittande pa toppen -->
-  <button id="monky-chat-launcher" type="button" aria-label="Oppna chatten">
+  <button id="monky-chat-launcher" type="button" aria-label="Oppna chatten" data-avatar="{{ config.ASSETS_ROOT }}/img/monkey-logo.webp">
     <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
       <path d="M4 5.5h16a1.5 1.5 0 0 1 1.5 1.5v8a1.5 1.5 0 0 1-1.5 1.5H9l-4 3.2V16.5H4A1.5 1.5 0 0 1 2.5 15V7A1.5 1.5 0 0 1 4 5.5Z" fill="#fff"/>
     </svg>
@@ -21,6 +21,7 @@
         <button id="mc-close" class="mc-close" type="button" aria-label="Stang chatten">&times;</button>
       </header>
 
+      <div id="mc-live" class="mc-sr" aria-live="polite" role="status"></div>
       <div id="mc-body" class="mc-body">
         <div id="mc-intro" class="mc-intro">
           Hej! Behover du hjalp med hemsida, WordPress, pris eller skraddarsydd utveckling?
@@ -47,5 +48,5 @@
   </section>
 </div>
 
-<link rel="stylesheet" href="{{ config.ASSETS_ROOT }}/css/chat-widget.css?v=4">
-<script src="{{ config.ASSETS_ROOT }}/js/chat-widget.js?v=3" defer></script>
+<link rel="stylesheet" href="{{ config.ASSETS_ROOT }}/css/chat-widget.css?v=5">
+<script src="{{ config.ASSETS_ROOT }}/js/chat-widget.js?v=5" defer></script>
