@@ -1,0 +1,36 @@
+{# Cookie-samtycke. Visas bara nar sajten ar live (ej under bygget). Aktivt
+   samtycke: inget spars/laddas (GA + egen statistik) forran man valt Tillat.
+   Egen CSS sa den funkar bade pa Bootstrap- och vanilla-sidor. #}
+{% if not config.get('MAINTENANCE_MODE') %}
+<div id="cookie-consent" role="dialog" aria-label="Cookies" aria-live="polite" hidden>
+  <div class="cc-card">
+    <p class="cc-text">
+      Vi använder cookies för statistik och för att förbättra webbplatsen.
+      Du väljer själv. Läs mer i vår <a href="/integritetspolicy">integritetspolicy</a>.
+    </p>
+    <div class="cc-actions">
+      <button type="button" class="cc-btn cc-deny" data-consent-deny>Endast nödvändiga</button>
+      <button type="button" class="cc-btn cc-allow" data-consent-allow>Tillåt statistik</button>
+    </div>
+  </div>
+</div>
+<style>
+  #cookie-consent { position: fixed; left: 16px; bottom: 16px; z-index: 1060; max-width: 420px; font-family: 'Inter', system-ui, sans-serif; }
+  #cookie-consent[hidden] { display: none; }
+  #cookie-consent .cc-card { background: #fff; color: #1b2126; border: 1px solid rgba(20,23,26,.08); border-radius: 16px; box-shadow: 0 16px 44px rgba(20,23,26,.18); padding: 18px 20px; }
+  #cookie-consent .cc-text { font-size: 13.5px; line-height: 1.55; margin: 0 0 14px; }
+  #cookie-consent .cc-text a { color: #448C74; }
+  #cookie-consent .cc-actions { display: flex; gap: 10px; }
+  #cookie-consent .cc-btn { flex: 1; padding: 9px 14px; border-radius: 10px; font: 600 13px/1 'Inter', sans-serif; cursor: pointer; border: 1px solid transparent; }
+  #cookie-consent .cc-deny { background: #f2f4f3; color: #1b2126; }
+  #cookie-consent .cc-deny:hover { background: #e8ebe9; }
+  #cookie-consent .cc-allow { background: #448C74; color: #fff; }
+  #cookie-consent .cc-allow:hover { background: #3a7a64; }
+  @media (max-width: 480px) { #cookie-consent { left: 12px; right: 12px; bottom: 12px; max-width: none; } }
+  @media (prefers-color-scheme: dark) {
+    #cookie-consent .cc-card { background: #1a1f23; color: #e9eef1; border-color: rgba(255,255,255,.12); }
+    #cookie-consent .cc-deny { background: rgba(255,255,255,.08); color: #e9eef1; }
+  }
+</style>
+<script src="{{ config.ASSETS_ROOT }}/js/analytics.js?v=1" defer></script>
+{% endif %}
