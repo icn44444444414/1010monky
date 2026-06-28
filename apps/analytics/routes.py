@@ -5,23 +5,21 @@ Bakom admin-login (samma session som chatt-adminen). Skickar in demodata sa
 hela dashboarden gar att se live; i nasta steg byts demodata mot riktiga
 siffror fran VisitorSession/VisitorEvent/Lead.
 """
-from functools import wraps
-
-from flask import session, redirect, url_for, request, render_template, jsonify
+from flask import render_template, jsonify
 
 from apps.analytics import blueprint
 from apps.analytics import models  # noqa: F401  (sakerstaller att tabellerna laddas)
 from apps.analytics import events  # noqa: F401  (registrerar event-API:t)
+from apps.analytics import crm     # noqa: F401  (registrerar CRM-routes)
 from apps.analytics import stats
+from apps.analytics.auth import admin_required
+from apps.chat.security import csrf_token
 
 
-def admin_required(view):
-    @wraps(view)
-    def wrapper(*args, **kwargs):
-        if not session.get('chat_admin'):
-            return redirect(url_for('chat_blueprint.admin_login', next=request.path))
-        return view(*args, **kwargs)
-    return wrapper
+# Gor csrf_token() tillganglig i analytics/CRM-mallarna.
+@blueprint.context_processor
+def _inject_csrf():
+    return {'csrf_token': csrf_token}
 
 
 @blueprint.route('/admin')

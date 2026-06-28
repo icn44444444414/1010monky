@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>1010monky · Förfrågningar</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = { theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'] }, colors: { brand: { 500: '#448C74', 600: '#3a7a64' } } }}}
+    </script>
+    <style>body { background-color: #f6f8f9; } ::-webkit-scrollbar { width: 0; }</style>
+</head>
+<body class="flex h-screen overflow-hidden text-gray-800 antialiased">
+
+    {% set active = 'crm' %}
+    {% include 'analytics/_sidebar.html' %}
+    {% set badge = {'green':'bg-green-50 text-green-600','blue':'bg-blue-50 text-blue-600','amber':'bg-amber-50 text-amber-700','teal':'bg-teal-50 text-teal-600','gray':'bg-gray-100 text-gray-600'} %}
+
+    <main class="flex-1 flex flex-col h-full overflow-y-auto">
+        <header class="h-20 flex items-center justify-between px-8">
+            <div class="text-gray-500 font-medium">Förfrågningar</div>
+            <div class="text-xs text-gray-400">{{ counts.all }} totalt</div>
+        </header>
+
+        <div class="p-8 pt-0">
+            <h1 class="text-2xl font-bold text-gray-900 mb-5">Förfrågningar</h1>
+
+            <div class="flex gap-2 mb-5 text-sm flex-wrap">
+                {% set tabs = [('all','Alla'),('ny','Nya'),('kontaktad','Kontaktade'),('offert','Offert'),('vunnen','Vunna'),('forlorad','Förlorade')] %}
+                {% for key, label in tabs %}
+                <a href="{{ '/admin/forfragningar' if key=='all' else '/admin/forfragningar?status=' + key }}"
+                   class="px-3 py-1.5 rounded-lg {{ 'bg-brand-500 text-white' if active_status == key else 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50' }}">
+                    {{ label }} <span class="opacity-70">{{ counts[key] if key != 'all' else counts.all }}</span>
+                </a>
+                {% endfor %}
+            </div>
+
+            <div class="bg-white rounded-2xl border border-gray-50 shadow-[0_2px_10px_-3px_rgba(20,23,26,0.06)] overflow-hidden">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="text-xs text-gray-500 border-b border-gray-100 bg-gray-50">
+                            <th class="py-3 px-5 font-medium">Namn</th>
+                            <th class="py-3 px-5 font-medium">Kontakt</th>
+                            <th class="py-3 px-5 font-medium">Källa</th>
+                            <th class="py-3 px-5 font-medium">Status</th>
+                            <th class="py-3 px-5 font-medium">Inkom</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-sm">
+                        {% for l in leads %}
+                        <tr class="border-b border-gray-50 hover:bg-gray-50/50 cursor-pointer" onclick="window.location='/admin/forfragningar/{{ l.id }}'">
+                            <td class="py-4 px-5 font-medium text-gray-800">{{ l.name or 'Okänd' }}</td>
+                            <td class="py-4 px-5 text-gray-500">{{ l.email or '–' }}{% if l.phone %}<br><span class="text-xs">{{ l.phone }}</span>{% endif %}</td>
+                            <td class="py-4 px-5"><span class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-md">{{ 'Kalkylator' if l.source == 'kalkylator' else 'Kontakt' }}</span></td>
+                            <td class="py-4 px-5"><span class="{{ badge[l.status_cls] }} px-2 py-1 rounded-md text-xs font-medium">{{ l.status_label }}</span></td>
+                            <td class="py-4 px-5 text-gray-400 text-xs">{{ l.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                        </tr>
+                        {% else %}
+                        <tr><td colspan="5" class="py-12 px-5 text-center text-gray-400">Inga förfrågningar än. De landar här när någon skickar kontaktformuläret eller pris-kalkylatorn.</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

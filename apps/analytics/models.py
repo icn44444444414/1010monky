@@ -59,6 +59,53 @@ class VisitorSession(db.Model):
         return self.events[-1] if self.events else None
 
 
+LEAD_STATUSES = ('ny', 'kontaktad', 'offert', 'vunnen', 'forlorad')
+LEAD_STATUS_LABEL = {'ny': 'Ny', 'kontaktad': 'Kontaktad', 'offert': 'Offert skickad',
+                     'vunnen': 'Vunnen', 'forlorad': 'Förlorad'}
+LEAD_STATUS_CLS = {'ny': 'green', 'kontaktad': 'blue', 'offert': 'amber',
+                   'vunnen': 'teal', 'forlorad': 'gray'}
+
+
+class Lead(db.Model):
+    """En namngiven forfragan (kontaktformular eller pris-kalkylator)."""
+    __tablename__ = 'leads'
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(120))
+    email = db.Column(db.String(255))
+    phone = db.Column(db.String(60))
+    service_interest = db.Column(db.String(160))
+    budget_range = db.Column(db.String(80))
+    message = db.Column(db.Text)
+    source = db.Column(db.String(40), default='kontakt')   # kontakt / kalkylator
+    lead_score = db.Column(db.Integer, default=0, nullable=False)
+    status = db.Column(db.String(20), default='ny', nullable=False, index=True)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False, index=True)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+    notes = db.relationship('LeadNote', backref='lead',
+                            order_by='LeadNote.created_at.desc()',
+                            cascade='all, delete-orphan', lazy='select')
+
+    @property
+    def status_label(self):
+        return LEAD_STATUS_LABEL.get(self.status, self.status)
+
+    @property
+    def status_cls(self):
+        return LEAD_STATUS_CLS.get(self.status, 'gray')
+
+
+class LeadNote(db.Model):
+    __tablename__ = 'lead_notes'
+
+    id = db.Column(db.Integer, primary_key=True)
+    lead_id = db.Column(db.Integer, db.ForeignKey('leads.id', ondelete='CASCADE'),
+                        nullable=False, index=True)
+    note = db.Column(db.Text, nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
+
+
 class VisitorEvent(db.Model):
     __tablename__ = 'visitor_events'
 

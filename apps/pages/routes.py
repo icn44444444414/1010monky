@@ -161,6 +161,15 @@ def api_contact():
     except Exception:
         pass
 
+    # Spara som forfragan i mini-CRM (far aldrig stoppa kontaktflodet)
+    try:
+        from apps.analytics.crm import create_lead
+        src = 'kalkylator' if message.startswith('Prisförslag via kalkylatorn') else 'kontakt'
+        create_lead(name=name, email=email, phone=phone, message=message, source=src,
+                    service_interest=(', '.join(services) if services else None))
+    except Exception:
+        pass
+
     # Ingen autentiserad SMTP konfigurerad an -> meddelandet ar sparat i loggen ovan
     if not (SMTP_HOST and SMTP_USER and SMTP_PASS):
         return jsonify(ok=True)
