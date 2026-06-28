@@ -1,57 +1,66 @@
 {% extends 'layouts/clean.html' %}
 
-{% block title %}Kontakt – begär offert på din hemsida{% endblock %}
-{% block meta_description %}Hör av dig till 1010monky Studio i Eskilstuna. Berätta om ditt projekt via formuläret, ring +46 72 027 41 13 eller mejla info@1010monky.se.{% endblock %}
+{% block title %}{{ 'Yhteystiedot – pyydä tarjous sivustosta' if lang == 'fi' else 'Kontakt – begär offert på din hemsida' }}{% endblock %}
+{% block meta_description %}{{ 'Ota yhteyttä 1010monky Studioon Eskilstunassa. Kerro projektistasi lomakkeella, soita +46 72 027 41 13 tai laita sähköpostia info@1010monky.se.' if lang == 'fi' else 'Hör av dig till 1010monky Studio i Eskilstuna. Berätta om ditt projekt via formuläret, ring +46 72 027 41 13 eller mejla info@1010monky.se.' }}{% endblock %}
+{% block alternates %}
+  <link rel="alternate" hreflang="sv" href="{{ sv_url }}">
+  <link rel="alternate" hreflang="fi" href="{{ fi_url }}">
+  <link rel="alternate" hreflang="x-default" href="{{ sv_url }}">
+{% endblock %}
 
 {% block jsonld %}
 <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "ContactPage",
-  "name": "Kontakta 1010monky Studio",
-  "url": "https://1010monky.se/contacts-v1",
-  "mainEntity": {
-    "@type": "ProfessionalService",
-    "name": "1010monky Studio",
-    "email": "info@1010monky.se",
-    "telephone": "+46720274113",
-    "address": { "@type": "PostalAddress", "streetAddress": "Björksgatan 5", "postalCode": "632 21", "addressLocality": "Eskilstuna", "addressCountry": "SE" },
-    "areaServed": ["SE", "FI"]
-  }
-}
+{ "@context":"https://schema.org","@type":"ContactPage","url":"https://1010monky.se{{ request.path }}",
+  "mainEntity":{ "@type":"ProfessionalService","name":"1010monky Studio","email":"info@1010monky.se","telephone":"+46720274113",
+    "address":{"@type":"PostalAddress","streetAddress":"Björksgatan 5","postalCode":"632 21","addressLocality":"Eskilstuna","addressCountry":"SE"},
+    "areaServed":["SE","FI"] } }
 </script>
 {% endblock %}
+
+{% set T = {
+  'sv': {'eyebrow':'Kontakt','h1a':'Berätta om ditt ','h1b':'projekt',
+         'lead':'Hör av dig via formuläret nedan, ring eller mejla. Jag svarar oftast samma dag – och du får alltid ett fast pris innan vi börjar.',
+         'addr':'Adress','phone':'Telefon','phone_sub':'Ring eller sms:a','email':'E-post','email_sub':'Skriv när som helst',
+         'hours':'Öppettider','hours_txt':'Mån–Tor 10–22<br>Fre 10–16 · Helg stängt',
+         'form_h':'Skicka en förfrågan','form_sub':'Kort om ditt projekt räcker – jag återkommer med förslag och pris.',
+         'name':'Namn','company':'Företag','msg':'Vad kan jag hjälpa till med?','msg_ph':'Skriv kort om ditt projekt här…',
+         'what':'Vad gäller det?','svc':['Ny hemsida','WordPress','Skräddarsydd webb','Underhåll & drift'],'send':'Skicka förfrågan'},
+  'fi': {'eyebrow':'Yhteystiedot','h1a':'Kerro ','h1b':'projektistasi',
+         'lead':'Ota yhteyttä lomakkeella, soita tai laita sähköpostia. Vastaan yleensä samana päivänä – ja saat aina kiinteän hinnan ennen kuin aloitamme.',
+         'addr':'Osoite','phone':'Puhelin','phone_sub':'Soita tai tekstaa','email':'Sähköposti','email_sub':'Kirjoita milloin vain',
+         'hours':'Aukioloajat','hours_txt':'Ma–To 10–22<br>Pe 10–16 · Viikonloppu suljettu',
+         'form_h':'Lähetä yhteydenotto','form_sub':'Lyhyt kuvaus projektista riittää – palaan asiaan ehdotuksen ja hinnan kanssa.',
+         'name':'Nimi','company':'Yritys','msg':'Miten voin auttaa?','msg_ph':'Kirjoita lyhyesti projektistasi…',
+         'what':'Mitä asia koskee?','svc':['Uusi sivusto','WordPress','Räätälöity sivusto','Ylläpito'],'send':'Lähetä'}
+}[lang] %}
 
 {% block content %}
 <section class="section section-alt">
   <div class="container">
-    <nav aria-label="Brödsmulor" class="text-sm text-muted" style="margin-bottom: var(--space-4);">
-      <a href="/">Hem</a> <span aria-hidden="true">/</span> Kontakt
-    </nav>
-    <span class="eyebrow">Kontakt</span>
-    <h1 style="margin-block: var(--space-3) var(--space-4); max-width: 18ch;">Berätta om ditt <span class="text-gradient">projekt</span></h1>
-    <p class="lead" style="max-width: 52ch;">Hör av dig via formuläret nedan, ring eller mejla. Jag svarar oftast samma dag – och du får alltid ett fast pris innan vi börjar.</p>
+    <span class="eyebrow">{{ T.eyebrow }}</span>
+    <h1 style="margin-block: var(--space-3) var(--space-4); max-width: 18ch;">{{ T.h1a }}<span class="text-gradient">{{ T.h1b }}</span></h1>
+    <p class="lead" style="max-width: 52ch;">{{ T.lead }}</p>
 
     <div class="features" style="margin-top: var(--space-7);">
       <div class="feature">
         <div class="feature-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-5.7-7-11a7 7 0 0 1 14 0c0 5.3-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></div>
-        <div class="feature-title">Adress</div>
-        <p class="feature-text">Björksgatan 5<br>632 21 Eskilstuna, Sverige</p>
+        <div class="feature-title">{{ T.addr }}</div>
+        <p class="feature-text">Björksgatan 5<br>632 21 Eskilstuna, {{ 'Ruotsi' if lang == 'fi' else 'Sverige' }}</p>
       </div>
       <div class="feature">
         <div class="feature-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 7a2 2 0 0 1 2-3z"/></svg></div>
-        <div class="feature-title">Telefon</div>
-        <p class="feature-text"><a href="tel:+46720274113">+46 72 027 41 13</a><br><span class="text-muted text-sm">Ring eller sms:a</span></p>
+        <div class="feature-title">{{ T.phone }}</div>
+        <p class="feature-text"><a href="tel:+46720274113">+46 72 027 41 13</a><br><span class="text-muted text-sm">{{ T.phone_sub }}</span></p>
       </div>
       <div class="feature">
         <div class="feature-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></div>
-        <div class="feature-title">E-post</div>
-        <p class="feature-text"><a href="mailto:info@1010monky.se">info@1010monky.se</a><br><span class="text-muted text-sm">Skriv när som helst</span></p>
+        <div class="feature-title">{{ T.email }}</div>
+        <p class="feature-text"><a href="mailto:info@1010monky.se">info@1010monky.se</a><br><span class="text-muted text-sm">{{ T.email_sub }}</span></p>
       </div>
       <div class="feature">
         <div class="feature-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
-        <div class="feature-title">Öppettider</div>
-        <p class="feature-text">Mån–Tor 10–22<br>Fre 10–16 · Helg stängt</p>
+        <div class="feature-title">{{ T.hours }}</div>
+        <p class="feature-text">{{ T.hours_txt|safe }}</p>
       </div>
     </div>
   </div>
@@ -60,36 +69,30 @@
 <section class="section">
   <div class="container" style="max-width: 760px;">
     <div class="card">
-      <h2 class="h4" style="margin-bottom: var(--space-2);">Skicka en förfrågan</h2>
-      <p class="text-secondary" style="margin-bottom: var(--space-5);">Kort om ditt projekt räcker – jag återkommer med förslag och pris.</p>
-
+      <h2 class="h4" style="margin-bottom: var(--space-2);">{{ T.form_h }}</h2>
+      <p class="text-secondary" style="margin-bottom: var(--space-5);">{{ T.form_sub }}</p>
       <div id="contactNotice" role="alert" style="display:none; margin-bottom: var(--space-4); padding: var(--space-3) var(--space-4); border-radius: var(--radius);"></div>
-
-      <form id="contactForm">
+      <form id="contactForm" data-lang="{{ lang }}">
         <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute; left:-9999px">
         <div class="grid grid-2" style="gap: var(--space-4);">
-          <div class="field"><label class="label" for="name">Namn</label><input class="input" id="name" name="name" required></div>
-          <div class="field"><label class="label" for="company">Företag</label><input class="input" id="company" name="company"></div>
-          <div class="field"><label class="label" for="email">E-post</label><input class="input" id="email" name="email" type="email" required></div>
-          <div class="field"><label class="label" for="phone">Telefon</label><input class="input" id="phone" name="phone" type="tel"></div>
+          <div class="field"><label class="label" for="name">{{ T.name }}</label><input class="input" id="name" name="name" required></div>
+          <div class="field"><label class="label" for="company">{{ T.company }}</label><input class="input" id="company" name="company"></div>
+          <div class="field"><label class="label" for="email">{{ T.email }}</label><input class="input" id="email" name="email" type="email" required></div>
+          <div class="field"><label class="label" for="phone">{{ T.phone }}</label><input class="input" id="phone" name="phone" type="tel"></div>
         </div>
         <div class="field" style="margin-top: var(--space-4);">
-          <label class="label" for="message">Vad kan jag hjälpa till med?</label>
-          <textarea class="textarea" id="message" name="message" rows="5" required placeholder="Skriv kort om ditt projekt här…"></textarea>
+          <label class="label" for="message">{{ T.msg }}</label>
+          <textarea class="textarea" id="message" name="message" rows="5" required placeholder="{{ T.msg_ph }}"></textarea>
         </div>
         <div class="field" style="margin-top: var(--space-4);">
-          <span class="label">Vad gäller det?</span>
+          <span class="label">{{ T.what }}</span>
           <div class="cluster" style="gap: var(--space-2);">
-            {% for s in ['Ny hemsida','WordPress','Skräddarsydd webb','Underhåll & drift'] %}
-            <label class="badge" style="cursor:pointer; padding:.5em 1em; border:1px solid var(--border-color);">
-              <input type="checkbox" name="services" value="{{ s }}" style="margin-right:.4em;">{{ s }}
-            </label>
+            {% for s in T.svc %}
+            <label class="badge" style="cursor:pointer; padding:.5em 1em; border:1px solid var(--border-color);"><input type="checkbox" name="services" value="{{ s }}" style="margin-right:.4em;">{{ s }}</label>
             {% endfor %}
           </div>
         </div>
-        <div style="margin-top: var(--space-5);">
-          <button class="btn btn-primary btn-lg" id="contactSubmit" type="submit">Skicka förfrågan</button>
-        </div>
+        <div style="margin-top: var(--space-5);"><button class="btn btn-primary btn-lg" id="contactSubmit" type="submit">{{ T.send }}</button></div>
       </form>
     </div>
   </div>
@@ -101,27 +104,19 @@
 (function () {
   var form = document.getElementById('contactForm');
   if (!form) return;
+  var fi = form.getAttribute('data-lang') === 'fi';
   var notice = document.getElementById('contactNotice');
   var btn = document.getElementById('contactSubmit');
-
-  function show(ok, text) {
-    notice.style.display = 'block';
-    notice.textContent = text;
-    notice.style.background = ok ? 'var(--c-success-bg)' : 'var(--c-danger-bg)';
-    notice.style.color = ok ? 'var(--c-success)' : 'var(--c-danger)';
-  }
-
+  var OK = fi ? '✓ Kiitos! Yhteydenottosi on lähetetty – palaan asiaan niin pian kuin voin.' : '✓ Tack! Din förfrågan är skickad – jag återkommer så snart jag kan.';
+  var ERR = fi ? 'Jotain meni pieleen. Laita mielellään sähköpostia osoitteeseen info@1010monky.se.' : 'Något gick fel. Mejla gärna info@1010monky.se direkt.';
+  function show(ok, text){ notice.style.display='block'; notice.textContent=text; notice.style.background = ok?'var(--c-success-bg)':'var(--c-danger-bg)'; notice.style.color = ok?'var(--c-success)':'var(--c-danger)'; }
   form.addEventListener('submit', function (e) {
     e.preventDefault();
-    var original = btn.textContent;
-    btn.disabled = true; btn.textContent = 'Skickar…';
+    var original = btn.textContent; btn.disabled = true; btn.textContent = fi ? 'Lähetetään…' : 'Skickar…';
     fetch('/api/contact', { method: 'POST', body: new FormData(form) })
       .then(function (r) { return r.json().catch(function () { return { ok: r.ok }; }); })
-      .then(function (d) {
-        if (d && d.ok) { show(true, '✓ Tack! Din förfrågan är skickad – jag återkommer så snart jag kan.'); form.reset(); }
-        else { show(false, (d && d.error) || 'Något gick fel. Mejla gärna info@1010monky.se direkt.'); }
-      })
-      .catch(function () { show(false, 'Något gick fel. Mejla gärna info@1010monky.se direkt.'); })
+      .then(function (d) { if (d && d.ok) { show(true, OK); form.reset(); } else { show(false, (d && d.error) || ERR); } })
+      .catch(function () { show(false, ERR); })
       .finally(function () { btn.disabled = false; btn.textContent = original; });
   });
 })();

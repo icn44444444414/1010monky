@@ -1,12 +1,7 @@
-{# --- Sprakdetektering: finska under /fi/, svenska i roten (standard) --- #}
-{% set _p = request.path %}
-{% set is_fi = _p == '/fi' or _p.startswith('/fi/') %}
-{% set lang = 'fi' if is_fi else 'sv' %}
-{% set base_path = (_p[3:] if _p.startswith('/fi/') else ('/' if _p == '/fi' else _p)) %}
-{% set sv_url = 'https://1010monky.se' + base_path %}
-{% set fi_url = 'https://1010monky.se/fi' + ('' if base_path == '/' else base_path) %}
+{# Sprak (lang), sv_url, fi_url, has_fi och tr() injiceras av context-processorn
+   i apps/pages/routes.py utifran sokvagen. #}
 <!DOCTYPE html>
-<html lang="{{ lang }}">
+<html lang="{{ lang|default('sv') }}">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -28,14 +23,15 @@
          aldrig pekar Google mot en /fi/-sida som inte finns. --- #}
   {% block alternates %}
   <link rel="alternate" hreflang="sv" href="{{ sv_url }}">
+  {% if has_fi %}<link rel="alternate" hreflang="fi" href="{{ fi_url }}">{% endif %}
   <link rel="alternate" hreflang="x-default" href="{{ sv_url }}">
   {% endblock %}
 
   {# --- Delning i sociala medier --- #}
   <meta property="og:type" content="{% block og_type %}website{% endblock %}">
   <meta property="og:site_name" content="1010monky Studio">
-  <meta property="og:locale" content="{{ 'fi_FI' if is_fi else 'sv_SE' }}">
-  <meta property="og:locale:alternate" content="{{ 'sv_SE' if is_fi else 'fi_FI' }}">
+  <meta property="og:locale" content="{{ 'fi_FI' if lang == 'fi' else 'sv_SE' }}">
+  {% if has_fi %}<meta property="og:locale:alternate" content="{{ 'sv_SE' if lang == 'fi' else 'fi_FI' }}">{% endif %}
   <meta property="og:title" content="{{ self.title() }} | 1010monky Studio">
   <meta property="og:description" content="{{ self.meta_description() }}">
   <meta property="og:url" content="https://1010monky.se{{ request.path }}">

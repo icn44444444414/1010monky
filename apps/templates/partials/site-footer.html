@@ -1,11 +1,11 @@
-{# Sidfot (vanilla). Mörk ink-panel oavsett sidans läge – en medveten premium-signatur. #}
+{# Sidfot (vanilla, tvasprakig). Mörk ink-panel – en medveten premium-signatur. #}
 <footer class="site-footer">
   <div class="container footer-grid">
     <div class="footer-brand">
-      <a class="brand" href="{{ '/fi/' if lang == 'fi' else '/' }}" aria-label="1010monky Studio – startsida">
+      <a class="brand" href="{{ nav_url('home') }}" aria-label="1010monky Studio">
         1010<span class="brand-accent">monky</span><span class="brand-studio">studio</span>
       </a>
-      <p class="footer-tagline">Liten webbstudio i Sverige och Finland – en utvecklare och en designer. WordPress och skräddarsydd kod, med fokus på tydliga och snabba webbplatser.</p>
+      <p class="footer-tagline">{{ tr('foot_tagline') }}</p>
       <div class="footer-social">
         <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
         <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-.95 1.83-1.95 3.77-1.95 4.03 0 4.78 2.5 4.78 5.75V21h-4v-4.9c0-1.17-.02-2.67-1.7-2.67-1.7 0-1.96 1.27-1.96 2.59V21H9z"/></svg></a>
@@ -13,30 +13,28 @@
       </div>
     </div>
 
-    <nav class="footer-col" aria-label="Sidor">
-      <h2 class="footer-heading">Sidor</h2>
+    <nav class="footer-col" aria-label="{{ tr('foot_pages') }}">
+      <h2 class="footer-heading">{{ tr('foot_pages') }}</h2>
       <ul>
-        <li><a href="/services-v1">Tjänster</a></li>
-        <li><a href="/portfolio-grid-v1">Portfolio</a></li>
-        <li><a href="/pricing">Priser</a></li>
-        <li><a href="/about-agency">Om oss</a></li>
-        <li><a href="/blogg">Blogg</a></li>
+        {% for key in ['services','portfolio','pricing','about','blog'] %}
+        <li><a href="{{ nav_url(key) }}">{{ tr('nav_' + key) }}</a></li>
+        {% endfor %}
       </ul>
     </nav>
 
     <div class="footer-col">
-      <h2 class="footer-heading">Kontakt</h2>
+      <h2 class="footer-heading">{{ tr('foot_contact') }}</h2>
       <ul>
-        <li><a href="/contacts-v1">Kontakta oss</a></li>
+        <li><a href="{{ nav_url('contact') }}">{{ tr('foot_contact_us') }}</a></li>
         <li><a href="mailto:info@1010monky.se">info@1010monky.se</a></li>
         <li><a href="tel:+46720274113">+46 72 027 41 13</a></li>
-        <li><span>Sverige &amp; Finland</span></li>
+        <li><span>{{ 'Ruotsi & Suomi' if lang == 'fi' else 'Sverige & Finland' }}</span></li>
       </ul>
     </div>
   </div>
 
   <div class="container footer-bottom">
-    <p>© 2026 1010monky Studio. Alla rättigheter förbehållna. <a href="/villkor">Villkor</a> <a href="/integritetspolicy">Integritetspolicy</a> <a href="#" onclick="if(window.monkyOpenConsent){monkyOpenConsent();}return false;">Cookies</a></p>
-    <a class="btn btn-primary btn-sm" href="/contacts-v1">Starta projekt</a>
+    <p>© 2026 1010monky Studio. {{ tr('foot_rights') }} <a href="{{ nav_url('terms') }}">{{ tr('foot_terms') }}</a> <a href="{{ nav_url('privacy') }}">{{ tr('foot_privacy') }}</a> <a href="#" onclick="if(window.monkyOpenConsent){monkyOpenConsent();}return false;">{{ tr('foot_cookies') }}</a></p>
+    <a class="btn btn-primary btn-sm" href="{{ nav_url('contact') }}">{{ tr('start_project') }}</a>
   </div>
 </footer>

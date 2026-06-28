@@ -1,27 +1,26 @@
-{# Sidhuvud (vanilla). Sticky, med språkväxlare och tillgänglig mobilmeny.
-   Aktiv länk markeras genom att matcha nuvarande sökväg. #}
-{% set here = (request.path[3:] if request.path.startswith('/fi/') else request.path).rstrip('/') or '/' %}
+{# Sidhuvud (vanilla, tvasprakig). Lankar och etiketter foljer aktivt sprak via
+   nav_url()/tr() fran context-processorn. Aktiv lank = matchar sokvagen. #}
+{% set here = request.path.rstrip('/') or '/' %}
 <header class="site-header">
   <div class="container header-inner">
-    <a class="brand" href="{{ '/fi/' if lang == 'fi' else '/' }}" aria-label="1010monky Studio – startsida">
+    <a class="brand" href="{{ nav_url('home') }}" aria-label="1010monky Studio">
       1010<span class="brand-accent">monky</span><span class="brand-studio">studio</span>
     </a>
 
-    <nav class="main-nav" id="main-nav" aria-label="Huvudmeny">
+    <nav class="main-nav" id="main-nav" aria-label="{{ 'Huvudmeny' if lang != 'fi' else 'Päävalikko' }}">
       <ul class="nav-list">
-        <li><a class="nav-link {{ 'is-active' if here == '/services-v1' }}" href="/services-v1">Tjänster</a></li>
-        <li><a class="nav-link {{ 'is-active' if here == '/portfolio-grid-v1' }}" href="/portfolio-grid-v1">Portfolio</a></li>
-        <li><a class="nav-link {{ 'is-active' if here == '/pricing' }}" href="/pricing">Priser</a></li>
-        <li><a class="nav-link {{ 'is-active' if here == '/about-agency' }}" href="/about-agency">Om oss</a></li>
-        <li><a class="nav-link {{ 'is-active' if here == '/blogg' }}" href="/blogg">Blogg</a></li>
+        {% for key in ['services','portfolio','pricing','about','blog'] %}
+        {% set href = nav_url(key) %}
+        <li><a class="nav-link {{ 'is-active' if here == href.rstrip('/') }}" href="{{ href }}">{{ tr('nav_' + key) }}</a></li>
+        {% endfor %}
       </ul>
     </nav>
 
     <div class="header-actions">
       {% include 'partials/lang-switch.html' %}
-      <a class="btn btn-primary btn-sm header-cta" href="/contacts-v1">Kontakt</a>
+      <a class="btn btn-primary btn-sm header-cta" href="{{ nav_url('contact') }}">{{ tr('nav_contact') }}</a>
       <button class="menu-toggle" type="button" data-menu-toggle
-              aria-label="Öppna meny" aria-expanded="false" aria-controls="main-nav">
+              aria-label="{{ 'Öppna meny' if lang != 'fi' else 'Avaa valikko' }}" aria-expanded="false" aria-controls="main-nav">
         <span></span><span></span><span></span>
       </button>
     </div>

@@ -1,7 +1,7 @@
 {# Sprakvaxlare med tva flaggor. Faller tillbaka pa / och /fi/ om sv_url/fi_url
    inte satts (t.ex. i styleguiden). I clean.html-sidor kommer ratt URL:er in. #}
-{% set _sv = sv_url|default('/') %}
-{% set _fi = fi_url|default('/fi/') %}
+{% set _sv = sv_url|default('/') or '/' %}
+{% set _fi = fi_url|default('/fi') or '/fi' %}
 {% set _lang = lang|default('sv') %}
 <div class="lang-switch" role="group" aria-label="Byt språk · Vaihda kieli">
   <a class="lang-flag {{ 'is-active' if _lang == 'sv' }}" href="{{ _sv }}" hreflang="sv" aria-label="Svenska"{% if _lang == 'sv' %} aria-current="true"{% endif %}>

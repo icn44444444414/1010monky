@@ -200,6 +200,38 @@ def bygg():
     return redirect('/')
 
 
+from apps.pages.i18n import urls_for, t as _t, FI_ROUTES, PAGES
+
+
+@blueprint.app_context_processor
+def inject_i18n():
+    """Ger alla mallar: lang, sv_url, fi_url, has_fi, tr() och nav_url()."""
+    sv_url, fi_url, has_fi, lang = urls_for(request.path)
+
+    def nav_url(key):
+        sv, fi, tpl = PAGES.get(key, ('/', '/fi', None))
+        return fi if lang == 'fi' else sv
+
+    return {'lang': lang, 'sv_url': sv_url, 'fi_url': fi_url, 'has_fi': has_fi,
+            'tr': (lambda k: _t(lang, k)), 'nav_url': nav_url}
+
+
+@blueprint.route('/fi')
+def fi_home():
+    return render_template('pages/landing-web-studio.html', segment='index')
+
+
+@blueprint.route('/fi/<path:sub>')
+def fi_page(sub):
+    entry = FI_ROUTES.get('fi/' + sub)
+    if entry:
+        key, tpl = entry
+        return render_template('pages/' + tpl, segment=key)
+    if sub == 'blogi':
+        return render_template('pages/blog-grid.html', segment='blog')
+    return render_template('pages/error-404.html'), 404
+
+
 @blueprint.route('/styleguide')
 @wip_protected
 def styleguide():
