@@ -1,7 +1,13 @@
 {% extends 'layouts/clean.html' %}
+{% set fi = lang == 'fi' %}
 
-{% block title %}Tjänster – WordPress, skräddarsydd kod &amp; webbdesign{% endblock %}
-{% block meta_description %}Webbplatser i WordPress och skräddarsydd kod – design, e-handel, SEO och förvaltning. En utvecklare och en designer i Eskilstuna, för företag i Sverige och Finland.{% endblock %}
+{% block title %}{{ 'Palvelut – WordPress, räätälöity koodi & verkkosuunnittelu' if fi else 'Tjänster – WordPress, skräddarsydd kod & webbdesign' }}{% endblock %}
+{% block meta_description %}{{ 'Sivustot WordPressillä ja räätälöidyllä koodilla – suunnittelu, verkkokauppa, SEO ja ylläpito. Kehittäjä ja suunnittelija Eskilstunassa, yrityksille Ruotsissa ja Suomessa.' if fi else 'Webbplatser i WordPress och skräddarsydd kod – design, e-handel, SEO och förvaltning. En utvecklare och en designer i Eskilstuna, för företag i Sverige och Finland.' }}{% endblock %}
+{% block alternates %}
+  <link rel="alternate" hreflang="sv" href="{{ sv_url }}">
+  <link rel="alternate" hreflang="fi" href="{{ fi_url }}">
+  <link rel="alternate" hreflang="x-default" href="{{ sv_url }}">
+{% endblock %}
 
 {% block styles %}
 <style>
@@ -14,151 +20,132 @@
 
 {% block jsonld %}
 <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@graph": [
-    { "@type": "BreadcrumbList", "itemListElement": [
-      { "@type": "ListItem", "position": 1, "name": "Hem", "item": "https://1010monky.se/" },
-      { "@type": "ListItem", "position": 2, "name": "Tjänster", "item": "https://1010monky.se/services-v1" }
-    ]},
-    { "@type": "ProfessionalService", "name": "1010monky Studio", "url": "https://1010monky.se",
-      "areaServed": ["SE","FI"], "address": { "@type": "PostalAddress", "addressLocality": "Eskilstuna", "addressCountry": "SE" },
-      "hasOfferCatalog": { "@type": "OfferCatalog", "name": "Tjänster", "itemListElement": [
-        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Skräddarsydda webbsidor" } },
-        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "WordPress-utveckling" } },
-        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Design och UX" } },
-        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "E-handel" } },
-        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "SEO och prestanda" } },
-        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Förvaltning och support" } }
-      ]}
-    }
-  ]
-}
+{ "@context":"https://schema.org","@graph":[
+  { "@type":"BreadcrumbList","itemListElement":[
+    {"@type":"ListItem","position":1,"name":"{{ tr('home') }}","item":"https://1010monky.se{{ nav_url('home') }}"},
+    {"@type":"ListItem","position":2,"name":"{{ tr('nav_services') }}","item":"https://1010monky.se{{ request.path }}"}]},
+  { "@type":"ProfessionalService","name":"1010monky Studio","url":"https://1010monky.se","areaServed":["SE","FI"],
+    "address":{"@type":"PostalAddress","addressLocality":"Eskilstuna","addressCountry":"SE"} }]}
 </script>
 {% endblock %}
 
 {% block content %}
 <section class="section section-alt">
   <div class="container" style="max-width: 62ch;">
-    <span class="eyebrow">Tjänster</span>
-    <h1 style="margin-block: var(--space-3);">Allt för din webb, på <span class="text-gradient">ett ställe</span></h1>
-    <p class="lead">Webbplatser i WordPress och skräddarsydd kod – från idé till lansering. En utvecklare och en designer, i Sverige och Finland.</p>
+    <span class="eyebrow">{{ tr('nav_services') }}</span>
+    <h1 style="margin-block: var(--space-3);">{{ 'Kaikki verkkoasi varten, ' if fi else 'Allt för din webb, på ' }}<span class="text-gradient">{{ 'yhdestä paikasta' if fi else 'ett ställe' }}</span></h1>
+    <p class="lead">{{ 'Sivustot WordPressillä ja räätälöidyllä koodilla – ideasta julkaisuun. Kehittäjä ja suunnittelija, Ruotsissa ja Suomessa.' if fi else 'Webbplatser i WordPress och skräddarsydd kod – från idé till lansering. En utvecklare och en designer, i Sverige och Finland.' }}</p>
     <div class="cluster" style="margin-top: var(--space-5);">
-      <a class="btn btn-primary" href="/contacts-v1">Få offert</a>
-      <a class="btn btn-ghost" href="/priskalkylator">Se vad det kostar</a>
+      <a class="btn btn-primary" href="{{ nav_url('contact') }}">{{ 'Pyydä tarjous' if fi else 'Få offert' }}</a>
+      <a class="btn btn-ghost" href="{{ nav_url('pricing') }}">{{ 'Katso hinnat' if fi else 'Se vad det kostar' }}</a>
     </div>
   </div>
 </section>
 
-<!-- Tjänster -->
 <section class="section">
   <div class="container">
     <div class="grid grid-3">
       <div class="card">
         <span class="svc-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="m8 9-3 3 3 3M16 9l3 3-3 3M13 6l-2 12"/></svg></span>
-        <h2 class="h5">Skräddarsydda webbsidor</h2>
-        <p class="text-secondary text-sm">Byggda från grunden i modern kod, anpassade efter din verksamhet. Snabba att ladda och enkla att bygga vidare på.</p>
+        <h2 class="h5">{{ 'Räätälöidyt sivustot' if fi else 'Skräddarsydda webbsidor' }}</h2>
+        <p class="text-secondary text-sm">{{ 'Rakennettu alusta modernilla koodilla, sovitettu toimintaasi. Nopeat ladata ja helpot kehittää eteenpäin.' if fi else 'Byggda från grunden i modern kod, anpassade efter din verksamhet. Snabba att ladda och enkla att bygga vidare på.' }}</p>
       </div>
       <div class="card">
         <span class="svc-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="m7 9 2.5 7L12 9l2.5 7L17 9"/></svg></span>
-        <h2 class="h5">WordPress-utveckling</h2>
-        <p class="text-secondary text-sm">WordPress-sidor du själv kan uppdatera – med rätt struktur, plugins och en design som håller över tid.</p>
+        <h2 class="h5">{{ 'WordPress-kehitys' if fi else 'WordPress-utveckling' }}</h2>
+        <p class="text-secondary text-sm">{{ 'WordPress-sivut, joita voit itse päivittää – oikealla rakenteella, lisäosilla ja kestävällä suunnittelulla.' if fi else 'WordPress-sidor du själv kan uppdatera – med rätt struktur, plugins och en design som håller över tid.' }}</p>
       </div>
       <div class="card">
         <span class="svc-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></span>
-        <h2 class="h5">Design &amp; UX</h2>
-        <p class="text-secondary text-sm">Tydlig design som gör innehållet lätt att förstå och vägen till kontakt enkel – på alla skärmar.</p>
+        <h2 class="h5">{{ 'Suunnittelu & UX' if fi else 'Design & UX' }}</h2>
+        <p class="text-secondary text-sm">{{ 'Selkeä suunnittelu, joka tekee sisällöstä helppoa ymmärtää ja yhteydenotosta yksinkertaista – kaikilla näytöillä.' if fi else 'Tydlig design som gör innehållet lätt att förstå och vägen till kontakt enkel – på alla skärmar.' }}</p>
       </div>
       <div class="card">
         <span class="svc-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 3h3l2.5 12.5a2 2 0 0 0 2 1.5h7a2 2 0 0 0 2-1.5L21 7H6"/></svg></span>
-        <h2 class="h5">E-handel</h2>
-        <p class="text-secondary text-sm">Webbutiker i WooCommerce eller skräddarsydd lösning – smidig kassa, säkra betalningar och en butik som är lätt att sköta.</p>
+        <h2 class="h5">{{ 'Verkkokauppa' if fi else 'E-handel' }}</h2>
+        <p class="text-secondary text-sm">{{ 'Verkkokaupat WooCommercella tai räätälöitynä – sujuva kassa, turvalliset maksut ja helposti hallittava kauppa.' if fi else 'Webbutiker i WooCommerce eller skräddarsydd lösning – smidig kassa, säkra betalningar och en butik som är lätt att sköta.' }}</p>
       </div>
       <div class="card">
         <span class="svc-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg></span>
-        <h2 class="h5">SEO &amp; prestanda</h2>
-        <p class="text-secondary text-sm">Teknisk SEO, bildoptimering och en struktur som gör webbplatsen snabb och lätt att hitta i sökmotorer.</p>
+        <h2 class="h5">{{ 'SEO & nopeus' if fi else 'SEO & prestanda' }}</h2>
+        <p class="text-secondary text-sm">{{ 'Tekninen SEO, kuvaoptimointi ja rakenne, joka tekee sivustosta nopean ja löydettävän hakukoneissa.' if fi else 'Teknisk SEO, bildoptimering och en struktur som gör webbplatsen snabb och lätt att hitta i sökmotorer.' }}</p>
       </div>
       <div class="card">
         <span class="svc-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 4 6v5c0 5 3.5 8 8 10 4.5-2 8-5 8-10V6z"/><path d="m9 12 2 2 4-4"/></svg></span>
-        <h2 class="h5">Förvaltning &amp; support</h2>
-        <p class="text-secondary text-sm">Löpande drift, uppdateringar, säkerhet och backup – så att din webbplats förblir snabb och stabil över tid.</p>
+        <h2 class="h5">{{ 'Ylläpito & tuki' if fi else 'Förvaltning & support' }}</h2>
+        <p class="text-secondary text-sm">{{ 'Jatkuva ylläpito, päivitykset, tietoturva ja varmuuskopiot – jotta sivustosi pysyy nopeana ja vakaana.' if fi else 'Löpande drift, uppdateringar, säkerhet och backup – så att din webbplats förblir snabb och stabil över tid.' }}</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Så är det att jobba med oss -->
 <section class="section section-alt">
   <div class="container">
     <div class="media">
-      <img src="{{ config.ASSETS_ROOT }}/img/1010monkey-dashboard.webp" alt="1010monky Studio – projektöversikt" class="rounded-lg" loading="lazy">
+      <img src="{{ config.ASSETS_ROOT }}/img/1010monkey-dashboard.webp" alt="1010monky Studio" class="rounded-lg" loading="lazy">
       <div>
-        <span class="eyebrow">Så jobbar vi</span>
-        <h2 style="margin-block: var(--space-2) var(--space-5);">Så är det att jobba med oss</h2>
+        <span class="eyebrow">{{ 'Näin työskentelemme' if fi else 'Så jobbar vi' }}</span>
+        <h2 style="margin-block: var(--space-2) var(--space-5);">{{ 'Millaista on tehdä yhteistyötä kanssamme' if fi else 'Så är det att jobba med oss' }}</h2>
         <div class="stack-lg">
-          <div class="step"><span class="step-num">01</span><div><h3 class="h6">Personlig kontakt</h3><p class="text-secondary text-sm">Du jobbar direkt med oss som bygger webbplatsen – inga mellanhänder, snabba svar och en lösning anpassad efter dina mål.</p></div></div>
-          <div class="step"><span class="step-num">02</span><div><h3 class="h6">Snabbt och genomtänkt</h3><p class="text-secondary text-sm">Webbplatser som laddar snabbt, fungerar i mobilen och är lätta att använda för dina besökare.</p></div></div>
-          <div class="step"><span class="step-num">03</span><div><h3 class="h6">Tydlig process</h3><p class="text-secondary text-sm">Du vet hela tiden vad som händer – från första skiss till lansering jobbar vi steg för steg med löpande avstämningar.</p></div></div>
-          <div class="step"><span class="step-num">04</span><div><h3 class="h6">Allt på ett ställe</h3><p class="text-secondary text-sm">Design, utveckling, SEO och förvaltning – du slipper samordna flera leverantörer och har samma kontakt genom hela projektet.</p></div></div>
+          <div class="step"><span class="step-num">01</span><div><h3 class="h6">{{ 'Henkilökohtainen kontakti' if fi else 'Personlig kontakt' }}</h3><p class="text-secondary text-sm">{{ 'Työskentelet suoraan meidän kanssa jotka rakennamme sivuston – ei välikäsiä, nopeat vastaukset ja ratkaisu tavoitteidesi mukaan.' if fi else 'Du jobbar direkt med oss som bygger webbplatsen – inga mellanhänder, snabba svar och en lösning anpassad efter dina mål.' }}</p></div></div>
+          <div class="step"><span class="step-num">02</span><div><h3 class="h6">{{ 'Nopeaa ja harkittua' if fi else 'Snabbt och genomtänkt' }}</h3><p class="text-secondary text-sm">{{ 'Sivustot jotka latautuvat nopeasti, toimivat mobiilissa ja ovat helppoja käyttää kävijöillesi.' if fi else 'Webbplatser som laddar snabbt, fungerar i mobilen och är lätta att använda för dina besökare.' }}</p></div></div>
+          <div class="step"><span class="step-num">03</span><div><h3 class="h6">{{ 'Selkeä prosessi' if fi else 'Tydlig process' }}</h3><p class="text-secondary text-sm">{{ 'Tiedät koko ajan mitä tapahtuu – ensimmäisestä luonnoksesta julkaisuun etenemme askel kerrallaan.' if fi else 'Du vet hela tiden vad som händer – från första skiss till lansering jobbar vi steg för steg med löpande avstämningar.' }}</p></div></div>
+          <div class="step"><span class="step-num">04</span><div><h3 class="h6">{{ 'Kaikki yhdestä paikasta' if fi else 'Allt på ett ställe' }}</h3><p class="text-secondary text-sm">{{ 'Suunnittelu, kehitys, SEO ja ylläpito – sama kontakti läpi koko projektin.' if fi else 'Design, utveckling, SEO och förvaltning – du slipper samordna flera leverantörer och har samma kontakt genom hela projektet.' }}</p></div></div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Projekt vi byggt -->
 <section class="section">
   <div class="container">
     <div style="text-align:center; max-width: 640px; margin-inline:auto;">
-      <span class="eyebrow">Exempel</span>
-      <h2 style="margin-block: var(--space-2) var(--space-3);">Projekt vi byggt</h2>
-      <p class="text-secondary" style="margin-bottom: var(--space-6);">Ett par egna och partnerdrivna projekt som visar hur vi arbetar – från teknik till webbnärvaro.</p>
+      <span class="eyebrow">{{ 'Esimerkkejä' if fi else 'Exempel' }}</span>
+      <h2 style="margin-block: var(--space-2) var(--space-3);">{{ 'Rakentamiamme projekteja' if fi else 'Projekt vi byggt' }}</h2>
+      <p class="text-secondary" style="margin-bottom: var(--space-6);">{{ 'Pari omaa ja kumppaniprojektia jotka näyttävät miten työskentelemme.' if fi else 'Ett par egna och partnerdrivna projekt som visar hur vi arbetar – från teknik till webbnärvaro.' }}</p>
     </div>
     <div class="grid grid-2">
       <div class="card">
         <img src="{{ config.ASSETS_ROOT }}/img/brands/ghostymsg-logo.png" alt="GhostyMsg" height="48" style="height:48px;width:auto;margin-bottom:var(--space-4)" loading="lazy">
-        <h3 class="h5"><a href="https://ghostymsg.com" target="_blank" rel="noopener">GhostyMsg – anonym chatt i realtid</a></h3>
-        <p class="text-secondary text-sm" style="margin-top:var(--space-2)">Tillfälliga, inbjudningsbaserade chattrum som skapas med en delbar länk och ett lösenord. Meddelanden skickas i realtid via WebSockets och sparas aldrig.</p>
-        <p class="text-secondary text-sm" style="margin-top:var(--space-2)">Vår del var att bygga det i Node.js, sköta realtidsdelen och få krypteringen att ske i själva webbläsaren, så att servern aldrig ser vad som skrivs.</p>
+        <h3 class="h5"><a href="https://ghostymsg.com" target="_blank" rel="noopener">{{ 'GhostyMsg – anonyymi chat reaaliajassa' if fi else 'GhostyMsg – anonym chatt i realtid' }}</a></h3>
+        <p class="text-secondary text-sm" style="margin-top:var(--space-2)">{{ 'Väliaikaiset chat-huoneet jotka luodaan jaettavalla linkillä ja salasanalla. Viestit lähetetään reaaliajassa WebSocketsilla eikä niitä tallenneta koskaan.' if fi else 'Tillfälliga, inbjudningsbaserade chattrum som skapas med en delbar länk och ett lösenord. Meddelanden skickas i realtid via WebSockets och sparas aldrig.' }}</p>
+        <p class="text-secondary text-sm" style="margin-top:var(--space-2)">{{ 'Meidän osuutemme oli rakentaa se Node.js:llä, hoitaa reaaliaikaosuus ja saada salaus tapahtumaan itse selaimessa, niin ettei palvelin näe mitä kirjoitetaan.' if fi else 'Vår del var att bygga det i Node.js, sköta realtidsdelen och få krypteringen att ske i själva webbläsaren, så att servern aldrig ser vad som skrivs.' }}</p>
         <div class="cluster" style="margin-top:var(--space-3)"><span class="badge">Node.js</span><span class="badge">Express</span><span class="badge">WebSockets</span></div>
-        <p class="quote">”Vi kom med en idé och en deadline. 1010monky byggde GhostyMsg precis som vi tänkt – realtid, inga konton, inget som sparas. Rakt och utan överraskningar.” <br><span class="text-muted">— Grundare, GhostyMsg</span></p>
+        <p class="quote">”Vi kom med en idé och en deadline. 1010monky byggde GhostyMsg precis som vi tänkt. Rakt och utan överraskningar.” <br><span class="text-muted">— {{ 'Perustaja' if fi else 'Grundare' }}, GhostyMsg</span></p>
       </div>
       <div class="card">
         <img src="{{ config.ASSETS_ROOT }}/img/brands/askhackers-logo-dark.svg" alt="AskHackers" height="36" style="height:36px;width:auto;margin-bottom:var(--space-4)" loading="lazy">
-        <h3 class="h5"><a href="https://askhackers.se" target="_blank" rel="noopener">AskHackers – lär dig Python på svenska</a></h3>
-        <p class="text-secondary text-sm" style="margin-top:var(--space-2)">En interaktiv kodutbildning där du bygger spelet Snake steg för steg. Koden körs direkt i webbläsaren via Pyodide, ingen installation behövs.</p>
-        <p class="text-secondary text-sm" style="margin-top:var(--space-2)">Allt är på svenska, vilket det sällan är när man lär sig programmering. Vår del var att forma upplägget, bygga sidan i Flask och få Pyodide att köra Python tryggt i webbläsaren.</p>
+        <h3 class="h5"><a href="https://askhackers.se" target="_blank" rel="noopener">{{ 'AskHackers – opi Pythonia ruotsiksi' if fi else 'AskHackers – lär dig Python på svenska' }}</a></h3>
+        <p class="text-secondary text-sm" style="margin-top:var(--space-2)">{{ 'Interaktiivinen koodikoulutus jossa rakennat Snake-pelin askel kerrallaan. Koodi ajetaan suoraan selaimessa Pyodidella, ilman asennusta.' if fi else 'En interaktiv kodutbildning där du bygger spelet Snake steg för steg. Koden körs direkt i webbläsaren via Pyodide, ingen installation behövs.' }}</p>
+        <p class="text-secondary text-sm" style="margin-top:var(--space-2)">{{ 'Meidän osuutemme oli muotoilla kokonaisuus, rakentaa sivu Flaskilla ja saada Pyodide ajamaan Pythonia turvallisesti selaimessa.' if fi else 'Vår del var att forma upplägget, bygga sidan i Flask och få Pyodide att köra Python tryggt i webbläsaren.' }}</p>
         <div class="cluster" style="margin-top:var(--space-3)"><span class="badge">Flask</span><span class="badge">Python</span><span class="badge">Pyodide</span></div>
-        <p class="quote">”Det vi uppskattade mest var att de förstod vem sidan är till för. Lyhörda, pedagogiska och lätta att samarbeta med genom hela projektet.” <br><span class="text-muted">— Projektägare, AskHackers</span></p>
+        <p class="quote">”Det vi uppskattade mest var att de förstod vem sidan är till för. Lyhörda och lätta att samarbeta med.” <br><span class="text-muted">— {{ 'Projektin omistaja' if fi else 'Projektägare' }}, AskHackers</span></p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Omdömen -->
 <section class="section section-alt">
   <div class="container">
-    <div style="text-align:center;"><span class="eyebrow">Omdömen</span><h2 style="margin-block: var(--space-2) var(--space-6);">Vad våra kunder säger</h2></div>
+    <div style="text-align:center;"><span class="eyebrow">{{ 'Asiakkaiden sanomaa' if fi else 'Omdömen' }}</span><h2 style="margin-block: var(--space-2) var(--space-6);">{{ 'Mitä asiakkaamme sanovat' if fi else 'Vad våra kunder säger' }}</h2></div>
     <div class="grid grid-2">
       <div class="card">
-        <p class="text-secondary text-sm">Jag kom till Matias med en rörig idé om en sida där man lär sig Python genom att bygga Snake, en bit i taget. Det smartaste är att koden körs direkt i webbläsaren. Det blev precis det upplägg jag ville ha, och det som dök upp under vägen löstes utan krångel.</p>
-        <p style="margin-top:var(--space-3);font-weight:var(--fw-semibold)">Anthony <svg viewBox="0 0 16 10" width="18" height="11" style="border-radius:2px;vertical-align:middle" aria-label="Sverige"><rect width="16" height="10" fill="#006AA7"/><rect x="5" width="2" height="10" fill="#FECC00"/><rect y="4" width="16" height="2" fill="#FECC00"/></svg> <span class="text-muted fw-regular text-sm">— Grundare, AskHackers</span></p>
+        <p class="text-secondary text-sm">Jag kom till Matias med en rörig idé om en sida där man lär sig Python genom att bygga Snake, en bit i taget. Det smartaste är att koden körs direkt i webbläsaren. Det blev precis det upplägg jag ville ha.</p>
+        <p style="margin-top:var(--space-3);font-weight:var(--fw-semibold)">Anthony <svg viewBox="0 0 16 10" width="18" height="11" style="border-radius:2px;vertical-align:middle" aria-label="Sverige"><rect width="16" height="10" fill="#006AA7"/><rect x="5" width="2" height="10" fill="#FECC00"/><rect y="4" width="16" height="2" fill="#FECC00"/></svg> <span class="text-muted fw-regular text-sm">— {{ 'Perustaja' if fi else 'Grundare' }}, AskHackers</span></p>
       </div>
       <div class="card">
         <p class="text-secondary text-sm">Halusin chatin, jossa se mitä kirjoittaa pysyy vain juttelevien kesken, mitään ei tallenneta eikä tilejä tarvita. Tykkään siitä, että salaus tapahtuu itse selaimessa. Homma toimii ja Matias sanoo suoraan mikä on valmista ja mikä vielä kesken.</p>
-        <p style="margin-top:var(--space-3);font-weight:var(--fw-semibold)">Kristian <svg viewBox="0 0 18 11" width="18" height="11" style="border-radius:2px;vertical-align:middle" aria-label="Suomi"><rect width="18" height="11" fill="#fff" stroke="rgba(0,0,0,.1)"/><rect x="5" width="3" height="11" fill="#003580"/><rect y="4" width="18" height="3" fill="#003580"/></svg> <span class="text-muted fw-regular text-sm">— Tilaaja, GhostyMsg (Suomi)</span></p>
+        <p style="margin-top:var(--space-3);font-weight:var(--fw-semibold)">Kristian <svg viewBox="0 0 18 11" width="18" height="11" style="border-radius:2px;vertical-align:middle" aria-label="Suomi"><rect width="18" height="11" fill="#fff" stroke="rgba(0,0,0,.1)"/><rect x="5" width="3" height="11" fill="#003580"/><rect y="4" width="18" height="3" fill="#003580"/></svg> <span class="text-muted fw-regular text-sm">— {{ 'Tilaaja' if fi else 'Tilaaja' }}, GhostyMsg (Suomi)</span></p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- CTA -->
 <section class="section">
   <div class="container" style="text-align:center; max-width: 640px;">
-    <h2 style="margin-bottom: var(--space-3);">Har du ett projekt på gång?</h2>
-    <p class="lead" style="margin-bottom: var(--space-5);">Berätta kort så hör vi av oss med förslag och pris – kostnadsfritt. Vi svarar oftast inom ett dygn.</p>
-    <a class="btn btn-primary btn-lg" href="/contacts-v1">Boka ett samtal</a>
+    <h2 style="margin-bottom: var(--space-3);">{{ 'Onko sinulla projekti suunnitteilla?' if fi else 'Har du ett projekt på gång?' }}</h2>
+    <p class="lead" style="margin-bottom: var(--space-5);">{{ 'Kerro lyhyesti niin palaamme asiaan ehdotuksen ja hinnan kanssa – maksutonta. Vastaamme yleensä vuorokauden sisällä.' if fi else 'Berätta kort så hör vi av oss med förslag och pris – kostnadsfritt. Vi svarar oftast inom ett dygn.' }}</p>
+    <a class="btn btn-primary btn-lg" href="{{ nav_url('contact') }}">{{ 'Varaa puhelu' if fi else 'Boka ett samtal' }}</a>
   </div>
 </section>
 {% endblock %}

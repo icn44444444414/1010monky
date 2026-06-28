@@ -1,7 +1,12 @@
 {% extends 'layouts/clean.html' %}
 
-{% block title %}Priser – vad kostar en hemsida? Fasta paket från 5 000 kr{% endblock %}
-{% block meta_description %}Vad kostar en hemsida 2026? Fasta paket: enkel sida 5 000 kr, företagssida 12 000 kr, premium skräddarsydd 28 000 kr (ex moms). Se vad som ingår och räkna ut ditt pris.{% endblock %}
+{% block title %}{{ 'Hinnasto – paljonko sivusto maksaa? Kiinteät paketit alkaen 5 000 kr' if lang == 'fi' else 'Priser – vad kostar en hemsida? Fasta paket från 5 000 kr' }}{% endblock %}
+{% block meta_description %}{{ 'Paljonko sivusto maksaa? Kiinteät paketit: yksinkertainen sivu 5 000 kr, yrityssivusto 12 000 kr, räätälöity premium 28 000 kr (alv 0 %). Katso mitä kuuluu ja laske hintasi.' if lang == 'fi' else 'Vad kostar en hemsida 2026? Fasta paket: enkel sida 5 000 kr, företagssida 12 000 kr, premium skräddarsydd 28 000 kr (ex moms). Se vad som ingår och räkna ut ditt pris.' }}{% endblock %}
+{% block alternates %}
+  <link rel="alternate" hreflang="sv" href="{{ sv_url }}">
+  <link rel="alternate" hreflang="fi" href="{{ fi_url }}">
+  <link rel="alternate" hreflang="x-default" href="{{ sv_url }}">
+{% endblock %}
 
 {% block styles %}
 <style>
@@ -16,185 +21,182 @@
 </style>
 {% endblock %}
 
+{% set fi = lang == 'fi' %}
+{% set exmoms = 'alv 0 %' if fi else 'ex. moms' %}
+
 {% block jsonld %}
 <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@graph": [
-    { "@type": "BreadcrumbList", "itemListElement": [
-      { "@type": "ListItem", "position": 1, "name": "Hem", "item": "https://1010monky.se/" },
-      { "@type": "ListItem", "position": 2, "name": "Priser", "item": "https://1010monky.se/pricing" }
-    ]},
-    { "@type": "OfferCatalog", "name": "Webbpaket – 1010monky Studio", "itemListElement": [
-      { "@type": "Offer", "name": "Starter Företag", "price": "5000", "priceCurrency": "SEK", "description": "Enkel sida / one-page, WordPress eller skräddarsydd HTML." },
-      { "@type": "Offer", "name": "Business Medium", "price": "12000", "priceCurrency": "SEK", "description": "Komplett WordPress-sida, 4–6 sidor, SEO-grund." },
-      { "@type": "Offer", "name": "Premium Skräddarsydd", "price": "28000", "priceCurrency": "SEK", "description": "Skräddarsydd webb, 8–12 sidor, premiumdesign." }
-    ]},
-    { "@type": "FAQPage", "mainEntity": [
-      { "@type": "Question", "name": "Vad kostar en hemsida?", "acceptedAnswer": { "@type": "Answer", "text": "Hos mig börjar en enkel sida på 5 000 kr, en företagssida på 12 000 kr och en premium skräddarsydd på 28 000 kr, alla ex moms. Du får alltid ett fast pris innan vi börjar." } },
-      { "@type": "Question", "name": "Vad ingår i priset?", "acceptedAnswer": { "@type": "Answer", "text": "WordPress eller skräddarsydd kod, mobilanpassad design, grundläggande SEO, Google Analytics och lanseringshjälp. Exakt vad som ingår per paket ser du i jämförelsetabellen." } },
-      { "@type": "Question", "name": "Hur lång tid tar det att bygga en hemsida?", "acceptedAnswer": { "@type": "Answer", "text": "En enkel sida tar oftast 1–2 veckor, en företagssida 2–4 veckor. Vi sätter en tidsplan tillsammans." } },
-      { "@type": "Question", "name": "Kan jag ändra på sidan själv efteråt?", "acceptedAnswer": { "@type": "Answer", "text": "Ja. WordPress-sidor kan du uppdatera själv, och jag erbjuder månadspaket (Care) om du vill att jag sköter drift och underhåll." } }
-    ]}
-  ]
-}
+{ "@context":"https://schema.org","@graph":[
+  { "@type":"BreadcrumbList","itemListElement":[
+    {"@type":"ListItem","position":1,"name":"{{ tr('home') }}","item":"https://1010monky.se{{ nav_url('home') }}"},
+    {"@type":"ListItem","position":2,"name":"{{ tr('nav_pricing') }}","item":"https://1010monky.se{{ request.path }}"}]},
+  { "@type":"OfferCatalog","name":"Webbpaket – 1010monky Studio","itemListElement":[
+    {"@type":"Offer","name":"Starter","price":"5000","priceCurrency":"SEK"},
+    {"@type":"Offer","name":"Business","price":"12000","priceCurrency":"SEK"},
+    {"@type":"Offer","name":"Premium","price":"28000","priceCurrency":"SEK"}]},
+  { "@type":"FAQPage","mainEntity":[
+    {% if fi %}
+    {"@type":"Question","name":"Paljonko sivusto maksaa?","acceptedAnswer":{"@type":"Answer","text":"Yksinkertainen sivu alkaa 5 000 kr, yrityssivusto 12 000 kr ja räätälöity premium 28 000 kr (alv 0 %). Saat aina kiinteän hinnan ennen kuin aloitamme."}},
+    {"@type":"Question","name":"Mitä hintaan kuuluu?","acceptedAnswer":{"@type":"Answer","text":"WordPress tai räätälöity koodi, mobiilioptimoitu suunnittelu, perus-SEO, Google Analytics ja julkaisuapu. Tarkat sisällöt näet vertailutaulukosta."}},
+    {"@type":"Question","name":"Kuinka kauan sivuston rakentaminen kestää?","acceptedAnswer":{"@type":"Answer","text":"Yksinkertainen sivu vie yleensä 1–2 viikkoa, yrityssivusto 2–4 viikkoa. Sovimme aikataulun yhdessä."}},
+    {"@type":"Question","name":"Voinko muokata sivua itse jälkeenpäin?","acceptedAnswer":{"@type":"Answer","text":"Kyllä. WordPress-sivuja voit päivittää itse, ja tarjoan kuukausipaketteja (Care) jos haluat että hoidan ylläpidon."}}
+    {% else %}
+    {"@type":"Question","name":"Vad kostar en hemsida?","acceptedAnswer":{"@type":"Answer","text":"Enkel sida börjar på 5 000 kr, företagssida 12 000 kr och premium skräddarsydd 28 000 kr (ex moms). Du får alltid ett fast pris innan vi börjar."}},
+    {"@type":"Question","name":"Vad ingår i priset?","acceptedAnswer":{"@type":"Answer","text":"WordPress eller skräddarsydd kod, mobilanpassad design, grundläggande SEO, Google Analytics och lanseringshjälp. Se exakt per paket i tabellen."}},
+    {"@type":"Question","name":"Hur lång tid tar det?","acceptedAnswer":{"@type":"Answer","text":"En enkel sida tar oftast 1–2 veckor, en företagssida 2–4 veckor. Vi sätter en tidsplan tillsammans."}},
+    {"@type":"Question","name":"Kan jag ändra själv efteråt?","acceptedAnswer":{"@type":"Answer","text":"Ja. WordPress-sidor kan du uppdatera själv, och jag erbjuder månadspaket (Care) om du vill att jag sköter drift och underhåll."}}
+    {% endif %}
+  ]}]}
 </script>
 {% endblock %}
 
 {% block content %}
 <section class="section section-alt">
   <div class="container" style="max-width: 60ch;">
-    <span class="eyebrow">Priser</span>
-    <h1 style="margin-block: var(--space-3);">Vad kostar <span class="text-gradient">din hemsida?</span></h1>
-    <p class="lead">Personlig frilansare med webbyråkänsla – WordPress, design och skräddarsydd kod i samma paket, till fast pris. Alla priser ex. moms.</p>
+    <span class="eyebrow">{{ tr('nav_pricing') }}</span>
+    <h1 style="margin-block: var(--space-3);">{{ 'Paljonko ' if fi else 'Vad kostar ' }}<span class="text-gradient">{{ 'sivustosi maksaa?' if fi else 'din hemsida?' }}</span></h1>
+    <p class="lead">{{ 'Henkilökohtainen freelancer verkkotoimiston otteella – WordPress, suunnittelu ja räätälöity koodi samassa paketissa, kiinteään hintaan. Kaikki hinnat alv 0 %.' if fi else 'Personlig frilansare med webbyråkänsla – WordPress, design och skräddarsydd kod i samma paket, till fast pris. Alla priser ex. moms.' }}</p>
     <div class="cluster" style="margin-top: var(--space-5);">
-      <a class="btn btn-primary" href="/priskalkylator">Räkna ut ditt pris</a>
-      <a class="btn btn-ghost" href="/contacts-v1">Få offert</a>
+      <a class="btn btn-primary" href="{{ nav_url('calc') }}">{{ 'Laske hintasi' if fi else 'Räkna ut ditt pris' }}</a>
+      <a class="btn btn-ghost" href="{{ nav_url('contact') }}">{{ 'Pyydä tarjous' if fi else 'Få offert' }}</a>
     </div>
   </div>
 </section>
 
-<!-- Paket -->
 <section class="section">
   <div class="container">
     <div class="grid grid-3">
       <div class="card pkg">
-        <h2 class="h4">Starter Företag</h2>
-        <p class="text-secondary text-sm">För nystartade företag som behöver en snygg första webbnärvaro.</p>
-        <div class="pkg-price">5 000 kr <small>ex. moms</small></div>
+        <h2 class="h4">{{ 'Starter Yritys' if fi else 'Starter Företag' }}</h2>
+        <p class="text-secondary text-sm">{{ 'Aloittaville yrityksille, jotka tarvitsevat siistin ensimmäisen verkkonäkyvyyden.' if fi else 'För nystartade företag som behöver en snygg första webbnärvaro.' }}</p>
+        <div class="pkg-price">5 000 kr <small>{{ exmoms }}</small></div>
         <ul class="pkg-list">
-          <li>WordPress eller enkel skräddarsydd sida</li><li>1 sida / one-page</li><li>Mobilanpassad design</li>
-          <li>Kontaktformulär</li><li>Google Analytics</li><li>Grundläggande SEO</li><li>Favicon &amp; varumärke</li>
-          <li>Bildoptimering</li><li>Lanseringshjälp</li><li>1 korrekturrunda</li>
+        {% if fi %}<li>WordPress tai yksinkertainen räätälöity sivu</li><li>1 sivu / one-page</li><li>Mobiilioptimoitu suunnittelu</li><li>Yhteydenottolomake</li><li>Google Analytics</li><li>Perus-SEO</li><li>Favicon &amp; brändi</li><li>Kuvaoptimointi</li><li>Julkaisuapu</li><li>1 oikolukukierros</li>
+        {% else %}<li>WordPress eller enkel skräddarsydd sida</li><li>1 sida / one-page</li><li>Mobilanpassad design</li><li>Kontaktformulär</li><li>Google Analytics</li><li>Grundläggande SEO</li><li>Favicon &amp; varumärke</li><li>Bildoptimering</li><li>Lanseringshjälp</li><li>1 korrekturrunda</li>{% endif %}
         </ul>
-        <a class="btn btn-outline" style="margin-top:auto;" href="/contacts-v1">Få offert</a>
+        <a class="btn btn-outline" style="margin-top:auto;" href="{{ nav_url('contact') }}">{{ 'Pyydä tarjous' if fi else 'Få offert' }}</a>
       </div>
 
       <div class="card pkg pkg--popular">
-        <span class="pkg-badge">Populärast</span>
+        <span class="pkg-badge">{{ 'Suosituin' if fi else 'Populärast' }}</span>
         <h2 class="h4">Business Medium</h2>
-        <p class="text-secondary text-sm">Komplett WordPress-sida med flera sidor, SEO-grund och tydlig kontaktväg.</p>
-        <div class="pkg-price">12 000 kr <small>ex. moms</small></div>
+        <p class="text-secondary text-sm">{{ 'Kattava WordPress-sivusto useammalla sivulla, SEO-pohja ja selkeä yhteydenottopolku.' if fi else 'Komplett WordPress-sida med flera sidor, SEO-grund och tydlig kontaktväg.' }}</p>
+        <div class="pkg-price">12 000 kr <small>{{ exmoms }}</small></div>
         <ul class="pkg-list">
-          <li>WordPress-hemsida</li><li>4–6 undersidor</li><li>Kontaktformulär</li><li>Google Analytics 4</li>
-          <li>Google Search Console</li><li>SEO på varje sida</li><li>Snabbhetsoptimering</li>
-          <li>Säkerhetsplugin + backup</li><li>Google Maps / sociala länkar</li><li>2 korrekturrundor</li><li>14 dagars support</li>
+        {% if fi %}<li>WordPress-sivusto</li><li>4–6 alasivua</li><li>Yhteydenottolomake</li><li>Google Analytics 4</li><li>Google Search Console</li><li>SEO joka sivulla</li><li>Nopeusoptimointi</li><li>Tietoturvalisäosa + varmuuskopiot</li><li>Google Maps / some-linkit</li><li>2 oikolukukierrosta</li><li>14 päivän tuki</li>
+        {% else %}<li>WordPress-hemsida</li><li>4–6 undersidor</li><li>Kontaktformulär</li><li>Google Analytics 4</li><li>Google Search Console</li><li>SEO på varje sida</li><li>Snabbhetsoptimering</li><li>Säkerhetsplugin + backup</li><li>Google Maps / sociala länkar</li><li>2 korrekturrundor</li><li>14 dagars support</li>{% endif %}
         </ul>
-        <a class="btn btn-primary" style="margin-top:auto;" href="/contacts-v1">Få offert</a>
+        <a class="btn btn-primary" style="margin-top:auto;" href="{{ nav_url('contact') }}">{{ 'Pyydä tarjous' if fi else 'Få offert' }}</a>
       </div>
 
       <div class="card pkg">
-        <h2 class="h4">Premium Skräddarsydd</h2>
-        <p class="text-secondary text-sm">Unik design, bättre struktur, case och konvertering.</p>
-        <div class="pkg-price">28 000 kr <small>ex. moms</small></div>
+        <h2 class="h4">{{ 'Premium räätälöity' if fi else 'Premium Skräddarsydd' }}</h2>
+        <p class="text-secondary text-sm">{{ 'Uniikki suunnittelu, parempi rakenne, caset ja konversio.' if fi else 'Unik design, bättre struktur, case och konvertering.' }}</p>
+        <div class="pkg-price">28 000 kr <small>{{ exmoms }}</small></div>
         <ul class="pkg-list">
-          <li>Skräddarsydd WordPress eller specialbyggd</li><li>8–12 sidor</li><li>Premium UI med stark CTA</li>
-          <li>Tjänstesidor optimerade för Google</li><li>Case/portfolio-sektion</li><li>GA4 + Search Console</li>
-          <li>Teknisk SEO-grund</li><li>Snabbhets- &amp; mediaoptimering</li><li>Säkerhet, backup, SSL, cookie-banner</li>
-          <li>Copy/text-polish</li><li>3 korrekturrundor</li><li>30 dagars support</li>
+        {% if fi %}<li>Räätälöity WordPress tai erikoisrakennettu sivu</li><li>8–12 sivua</li><li>Premium-UI vahvalla CTA:lla</li><li>Palvelusivut optimoitu Googlelle</li><li>Case-/portfolio-osio</li><li>GA4 + Search Console</li><li>Tekninen SEO-pohja</li><li>Nopeus- &amp; mediaoptimointi</li><li>Tietoturva, varmuuskopiot, SSL, evästebanneri</li><li>Tekstien hionta</li><li>3 oikolukukierrosta</li><li>30 päivän tuki</li>
+        {% else %}<li>Skräddarsydd WordPress eller specialbyggd</li><li>8–12 sidor</li><li>Premium UI med stark CTA</li><li>Tjänstesidor optimerade för Google</li><li>Case/portfolio-sektion</li><li>GA4 + Search Console</li><li>Teknisk SEO-grund</li><li>Snabbhets- &amp; mediaoptimering</li><li>Säkerhet, backup, SSL, cookie-banner</li><li>Copy/text-polish</li><li>3 korrekturrundor</li><li>30 dagars support</li>{% endif %}
         </ul>
-        <a class="btn btn-outline" style="margin-top:auto;" href="/contacts-v1">Få offert</a>
+        <a class="btn btn-outline" style="margin-top:auto;" href="{{ nav_url('contact') }}">{{ 'Pyydä tarjous' if fi else 'Få offert' }}</a>
       </div>
     </div>
 
-    <div class="surface-2 rounded-lg" style="padding: var(--space-6); margin-top: var(--space-6); text-align:center; border-radius: var(--radius-lg);">
-      <h2 class="h4" style="margin-bottom: var(--space-2);">Behöver du något mer avancerat?</h2>
-      <p class="text-secondary" style="max-width: 680px; margin-inline:auto;">Webbappar, bokningssystem, kundportaler, dashboards och specialfunktioner offereras separat från 45 000 kr.</p>
+    <div class="surface-2" style="padding: var(--space-6); margin-top: var(--space-6); text-align:center; border-radius: var(--radius-lg);">
+      <h2 class="h4" style="margin-bottom: var(--space-2);">{{ 'Tarvitsetko jotain edistyneempää?' if fi else 'Behöver du något mer avancerat?' }}</h2>
+      <p class="text-secondary" style="max-width: 680px; margin-inline:auto;">{{ 'Verkkosovellukset, varausjärjestelmät, asiakasportaalit ja dashboardit tarjotaan erikseen alkaen 45 000 kr.' if fi else 'Webbappar, bokningssystem, kundportaler, dashboards och specialfunktioner offereras separat från 45 000 kr.' }}</p>
     </div>
   </div>
 </section>
 
-<!-- Jämförelse -->
 <section class="section section-alt">
   <div class="container">
-    <h2 class="h3 text-center" style="margin-bottom: var(--space-6);">Vad ingår i paketen</h2>
+    <h2 class="h3 text-center" style="margin-bottom: var(--space-6);">{{ 'Mitä paketteihin kuuluu' if fi else 'Vad ingår i paketen' }}</h2>
     <div class="table-wrap">
       <table class="table">
-        <thead>
-          <tr><th>Funktion</th><th class="center">Starter<br><span class="text-muted">5 000 kr</span></th><th class="center">Business<br><span class="text-muted">12 000 kr</span></th><th class="center">Premium<br><span class="text-muted">28 000 kr</span></th></tr>
-        </thead>
+        <thead><tr><th>{{ 'Ominaisuus' if fi else 'Funktion' }}</th><th class="center">Starter<br><span class="text-muted">5 000 kr</span></th><th class="center">Business<br><span class="text-muted">12 000 kr</span></th><th class="center">Premium<br><span class="text-muted">28 000 kr</span></th></tr></thead>
         <tbody>
-          {% set rows = [
-            ('Passar för','Nystartat företag','Växande företag','Seriös satsning'),
-            ('Antal sidor','1 / one-page','4–6 sidor','8–12 sidor'),
-            ('WordPress','Ja','Ja','Ja / skräddarsytt'),
-            ('Skräddarsydd design','Enkel','Mer anpassad','Premiumdesign'),
-            ('Mobilanpassning','Ja','Ja','Ja'),
-            ('Kontaktformulär','Ja','Ja','Avancerat vid behov'),
-            ('Google Analytics 4','Ja','Ja','Ja'),
-            ('Search Console','Tillval','Ja','Ja'),
-            ('Grundläggande SEO','Ja','Ja','Ja'),
-            ('Sökordsstruktur','Enkel','Medium','Fördjupad'),
-            ('Snabbhetsoptimering','Grund','Ja','Ja, noggrant'),
-            ('Säkerhetsplugin','Ja','Ja','Ja'),
-            ('Backup-lösning','Enkel','Ja','Ja'),
-            ('Cookie-banner','Tillval','Ja','Ja'),
-            ('Blogg/nyheter','–','Tillval','Vid behov'),
-            ('Portfolio/case','–','Tillval','Ja'),
-            ('Copy/text-polish','Lätt','Medium','Genomarbetad'),
-            ('Revisionsrundor','1','2','3'),
-            ('Support efter lansering','7 dagar','14 dagar','30 dagar')
-          ] %}
-          {% for f, a, b, c in rows %}
-          <tr><td>{{ f }}</td><td class="center">{{ a }}</td><td class="center">{{ b }}</td><td class="center">{{ c }}</td></tr>
-          {% endfor %}
+          {% if fi %}{% set rows = [
+            ('Kenelle','Aloittava yritys','Kasvava yritys','Vakava panostus'),('Sivumäärä','1 / one-page','4–6 sivua','8–12 sivua'),
+            ('WordPress','Kyllä','Kyllä','Kyllä / räätälöity'),('Räätälöity suunnittelu','Yksinkertainen','Mukautetumpi','Premium-suunnittelu'),
+            ('Mobiilioptimointi','Kyllä','Kyllä','Kyllä'),('Yhteydenottolomake','Kyllä','Kyllä','Edistynyt tarvittaessa'),
+            ('Google Analytics 4','Kyllä','Kyllä','Kyllä'),('Search Console','Lisävaruste','Kyllä','Kyllä'),
+            ('Perus-SEO','Kyllä','Kyllä','Kyllä'),('Avainsanarakenne','Yksinkertainen','Keskitaso','Syvempi'),
+            ('Nopeusoptimointi','Perus','Kyllä','Kyllä, huolellinen'),('Tietoturvalisäosa','Kyllä','Kyllä','Kyllä'),
+            ('Varmuuskopiot','Yksinkertainen','Kyllä','Kyllä'),('Evästebanneri','Lisävaruste','Kyllä','Kyllä'),
+            ('Blogi/uutiset','–','Lisävaruste','Tarvittaessa'),('Portfolio/case','–','Lisävaruste','Kyllä'),
+            ('Tekstien hionta','Kevyt','Keskitaso','Perusteellinen'),('Tarkistuskierrokset','1','2','3'),
+            ('Tuki julkaisun jälkeen','7 päivää','14 päivää','30 päivää')] %}
+          {% else %}{% set rows = [
+            ('Passar för','Nystartat företag','Växande företag','Seriös satsning'),('Antal sidor','1 / one-page','4–6 sidor','8–12 sidor'),
+            ('WordPress','Ja','Ja','Ja / skräddarsytt'),('Skräddarsydd design','Enkel','Mer anpassad','Premiumdesign'),
+            ('Mobilanpassning','Ja','Ja','Ja'),('Kontaktformulär','Ja','Ja','Avancerat vid behov'),
+            ('Google Analytics 4','Ja','Ja','Ja'),('Search Console','Tillval','Ja','Ja'),
+            ('Grundläggande SEO','Ja','Ja','Ja'),('Sökordsstruktur','Enkel','Medium','Fördjupad'),
+            ('Snabbhetsoptimering','Grund','Ja','Ja, noggrant'),('Säkerhetsplugin','Ja','Ja','Ja'),
+            ('Backup-lösning','Enkel','Ja','Ja'),('Cookie-banner','Tillval','Ja','Ja'),
+            ('Blogg/nyheter','–','Tillval','Vid behov'),('Portfolio/case','–','Tillval','Ja'),
+            ('Copy/text-polish','Lätt','Medium','Genomarbetad'),('Revisionsrundor','1','2','3'),
+            ('Support efter lansering','7 dagar','14 dagar','30 dagar')] %}{% endif %}
+          {% for f, a, b, c in rows %}<tr><td>{{ f }}</td><td class="center">{{ a }}</td><td class="center">{{ b }}</td><td class="center">{{ c }}</td></tr>{% endfor %}
         </tbody>
       </table>
     </div>
   </div>
 </section>
 
-<!-- Timpris + månad -->
 <section class="section">
   <div class="container">
     <div class="grid grid-2" style="gap: var(--space-7);">
       <div>
-        <h2 class="h4" style="margin-bottom: var(--space-2);">Timpris för extraarbete</h2>
-        <p class="text-secondary text-sm" style="margin-bottom: var(--space-4);">För ändringar och tillägg efter att projektet är klart.</p>
-        <table class="table">
-          <tbody>
-            <tr><td>Mindre text- och bildändringar</td><td class="num">650–750 kr/h</td></tr>
-            <tr><td>WordPress-fix och felsökning</td><td class="num">750–950 kr/h</td></tr>
-            <tr><td>Design/UI-arbete</td><td class="num">750–950 kr/h</td></tr>
-            <tr><td>Skräddarsydd PHP/JS/Python</td><td class="num">900–1 200 kr/h</td></tr>
-            <tr><td>Akut hjälp / snabb leverans</td><td class="num">1 200 kr/h+</td></tr>
-          </tbody>
-        </table>
+        <h2 class="h4" style="margin-bottom: var(--space-2);">{{ 'Tuntihinta lisätyölle' if fi else 'Timpris för extraarbete' }}</h2>
+        <p class="text-secondary text-sm" style="margin-bottom: var(--space-4);">{{ 'Muutoksille ja lisäyksille projektin valmistuttua.' if fi else 'För ändringar och tillägg efter att projektet är klart.' }}</p>
+        <table class="table"><tbody>
+          <tr><td>{{ 'Pienet teksti- ja kuvamuutokset' if fi else 'Mindre text- och bildändringar' }}</td><td class="num">650–750 kr/h</td></tr>
+          <tr><td>{{ 'WordPress-korjaukset ja vianetsintä' if fi else 'WordPress-fix och felsökning' }}</td><td class="num">750–950 kr/h</td></tr>
+          <tr><td>{{ 'Suunnittelu/UI-työ' if fi else 'Design/UI-arbete' }}</td><td class="num">750–950 kr/h</td></tr>
+          <tr><td>{{ 'Räätälöity PHP/JS/Python' if fi else 'Skräddarsydd PHP/JS/Python' }}</td><td class="num">900–1 200 kr/h</td></tr>
+          <tr><td>{{ 'Kiireellinen apu / nopea toimitus' if fi else 'Akut hjälp / snabb leverans' }}</td><td class="num">1 200 kr/h+</td></tr>
+        </tbody></table>
       </div>
       <div>
-        <h2 class="h4" style="margin-bottom: var(--space-2);">Månadspaket efter lansering</h2>
-        <p class="text-secondary text-sm" style="margin-bottom: var(--space-4);">Löpande drift och underhåll – snabb, säker och uppdaterad sida.</p>
+        <h2 class="h4" style="margin-bottom: var(--space-2);">{{ 'Kuukausipaketit julkaisun jälkeen' if fi else 'Månadspaket efter lansering' }}</h2>
+        <p class="text-secondary text-sm" style="margin-bottom: var(--space-4);">{{ 'Jatkuva ylläpito – nopea, turvallinen ja päivitetty sivusto.' if fi else 'Löpande drift och underhåll – snabb, säker och uppdaterad sida.' }}</p>
         <div class="stack-sm">
-          <div class="card"><div class="cluster" style="justify-content:space-between;"><strong>Care Basic</strong><span class="text-accent fw-semibold">690 kr/mån</span></div><p class="text-secondary text-sm" style="margin-top:var(--space-2);">Uppdateringar, säkerhetskoll, backup-kontroll och enklare support.</p></div>
-          <div class="card"><div class="cluster" style="justify-content:space-between;"><strong>Care Growth</strong><span class="text-accent fw-semibold">1 200 kr/mån</span></div><p class="text-secondary text-sm" style="margin-top:var(--space-2);">Allt i Basic plus mindre ändringar, Analytics-koll och prioriterad support.</p></div>
-          <div class="card"><div class="cluster" style="justify-content:space-between;"><strong>Care Premium</strong><span class="text-accent fw-semibold">2 000 kr/mån</span></div><p class="text-secondary text-sm" style="margin-top:var(--space-2);">Allt i Growth plus månatlig förbättring, SEO-koll och konverteringsförslag.</p></div>
+          <div class="card"><div class="cluster" style="justify-content:space-between;"><strong>Care Basic</strong><span class="text-accent fw-semibold">690 kr/{{ 'kk' if fi else 'mån' }}</span></div><p class="text-secondary text-sm" style="margin-top:var(--space-2);">{{ 'Päivitykset, tietoturvatarkistus, varmuuskopiot ja perustuki.' if fi else 'Uppdateringar, säkerhetskoll, backup-kontroll och enklare support.' }}</p></div>
+          <div class="card"><div class="cluster" style="justify-content:space-between;"><strong>Care Growth</strong><span class="text-accent fw-semibold">1 200 kr/{{ 'kk' if fi else 'mån' }}</span></div><p class="text-secondary text-sm" style="margin-top:var(--space-2);">{{ 'Basic plus pienet muutokset, Analytics-seuranta ja priorisoitu tuki.' if fi else 'Allt i Basic plus mindre ändringar, Analytics-koll och prioriterad support.' }}</p></div>
+          <div class="card"><div class="cluster" style="justify-content:space-between;"><strong>Care Premium</strong><span class="text-accent fw-semibold">2 000 kr/{{ 'kk' if fi else 'mån' }}</span></div><p class="text-secondary text-sm" style="margin-top:var(--space-2);">{{ 'Growth plus kuukausittainen parannus, SEO-seuranta ja konversioehdotukset.' if fi else 'Allt i Growth plus månatlig förbättring, SEO-koll och konverteringsförslag.' }}</p></div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- FAQ -->
 <section class="section section-alt">
   <div class="container" style="max-width: 760px;">
-    <h2 class="h3" style="margin-bottom: var(--space-5);">Vanliga frågor om pris</h2>
+    <h2 class="h3" style="margin-bottom: var(--space-5);">{{ 'Usein kysytyt kysymykset hinnasta' if fi else 'Vanliga frågor om pris' }}</h2>
     <div class="stack">
+    {% if fi %}
+      <div><h3 class="h5">Paljonko sivusto maksaa?</h3><p class="text-secondary">Yksinkertainen sivu alkaa 5 000 kr, yrityssivusto 12 000 kr ja räätälöity premium 28 000 kr (alv 0 %). Saat aina kiinteän hinnan ennen kuin aloitamme.</p></div>
+      <div><h3 class="h5">Mitä hintaan kuuluu?</h3><p class="text-secondary">WordPress tai räätälöity koodi, mobiilioptimoitu suunnittelu, perus-SEO, Google Analytics ja julkaisuapu. Tarkat sisällöt näet yllä olevasta taulukosta.</p></div>
+      <div><h3 class="h5">Kuinka kauan se kestää?</h3><p class="text-secondary">Yksinkertainen sivu vie yleensä 1–2 viikkoa, yrityssivusto 2–4 viikkoa. Sovimme aikataulun yhdessä.</p></div>
+      <div><h3 class="h5">Voinko muokata sivua itse?</h3><p class="text-secondary">Kyllä. WordPress-sivuja voit päivittää itse, ja tarjoan kuukausipaketteja (Care) jos haluat että hoidan ylläpidon.</p></div>
+    {% else %}
       <div><h3 class="h5">Vad kostar en hemsida?</h3><p class="text-secondary">Enkel sida börjar på 5 000 kr, företagssida 12 000 kr och premium skräddarsydd 28 000 kr (ex moms). Du får alltid ett fast pris innan vi börjar.</p></div>
       <div><h3 class="h5">Vad ingår i priset?</h3><p class="text-secondary">WordPress eller skräddarsydd kod, mobilanpassad design, grundläggande SEO, Google Analytics och lanseringshjälp. Se exakt per paket i tabellen ovan.</p></div>
       <div><h3 class="h5">Hur lång tid tar det?</h3><p class="text-secondary">En enkel sida tar oftast 1–2 veckor, en företagssida 2–4 veckor. Vi sätter en tidsplan tillsammans.</p></div>
       <div><h3 class="h5">Kan jag ändra själv efteråt?</h3><p class="text-secondary">Ja. WordPress-sidor kan du uppdatera själv, och jag erbjuder månadspaket (Care) om du vill att jag sköter drift och underhåll.</p></div>
+    {% endif %}
     </div>
   </div>
 </section>
 
-<!-- CTA -->
 <section class="section">
   <div class="container" style="text-align:center; max-width: 640px;">
-    <h2 class="h3" style="margin-bottom: var(--space-3);">Osäker på vilket paket som passar?</h2>
-    <p class="lead" style="margin-bottom: var(--space-5);">Berätta kort om ditt projekt så hör jag av mig med ett förslag och fast pris. Kostnadsfritt.</p>
+    <h2 class="h3" style="margin-bottom: var(--space-3);">{{ 'Etkö ole varma mikä paketti sopii?' if fi else 'Osäker på vilket paket som passar?' }}</h2>
+    <p class="lead" style="margin-bottom: var(--space-5);">{{ 'Kerro lyhyesti projektistasi niin palaan asiaan ehdotuksen ja kiinteän hinnan kanssa. Maksutonta.' if fi else 'Berätta kort om ditt projekt så hör jag av mig med ett förslag och fast pris. Kostnadsfritt.' }}</p>
     <div class="cluster" style="justify-content:center;">
-      <a class="btn btn-primary btn-lg" href="/contacts-v1">Boka ett samtal</a>
-      <a class="btn btn-ghost" href="/priskalkylator">Räkna ut ditt pris</a>
+      <a class="btn btn-primary btn-lg" href="{{ nav_url('contact') }}">{{ 'Varaa puhelu' if fi else 'Boka ett samtal' }}</a>
+      <a class="btn btn-ghost" href="{{ nav_url('calc') }}">{{ 'Laske hintasi' if fi else 'Räkna ut ditt pris' }}</a>
     </div>
   </div>
 </section>
