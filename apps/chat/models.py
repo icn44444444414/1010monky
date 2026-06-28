@@ -5,6 +5,7 @@ ChatConversation = en besokares chatt-trad. ChatMessage = ett meddelande i en
 trad. Relation 1-till-manga. sender_type stoder 'bot' redan nu sa systemet ar
 AI-redo utan schemandring senare.
 """
+import secrets
 from datetime import datetime
 from apps import db
 
@@ -14,10 +15,19 @@ CONV_STATUSES = ('new', 'open', 'closed', 'spam')
 SENDER_TYPES = ('visitor', 'admin', 'bot', 'system')
 
 
+def _new_token():
+    # 192 bitar entropi -> ogissningsbart. Anvands utat istallet for det
+    # lopande id:t sa ingen kan rakna upp och lasa andras konversationer.
+    return secrets.token_urlsafe(24)
+
+
 class ChatConversation(db.Model):
     __tablename__ = 'chat_conversations'
 
     id = db.Column(db.Integer, primary_key=True)
+    # Publik, ogissningsbar nyckel. Widgeten anvander denna; aldrig id:t.
+    public_token = db.Column(db.String(48), unique=True, index=True,
+                             nullable=False, default=_new_token)
     visitor_name = db.Column(db.String(120))
     visitor_email = db.Column(db.String(255))
     visitor_phone = db.Column(db.String(60))
@@ -68,6 +78,15 @@ class ChatMessage(db.Model):
     body = db.Column(db.Text, nullable=False)
     is_read = db.Column(db.Boolean, default=False, nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
+
+    def to_public(self):
+        # Endast falt som ar ofarliga att visa for besokaren. Ingen PII,
+        # inga interna id:n, ingen is_read/ip.
+        return {
+            'sender_type': self.sender_type,
+            'body': self.body,
+            'created_at': self.created_at.isoformat() + 'Z',
+        }
 
     def __repr__(self):
         return f'<ChatMessage {self.id} {self.sender_type} conv={self.conversation_id}>'
