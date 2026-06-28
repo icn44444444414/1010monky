@@ -1,0 +1,64 @@
+{% extends 'chat/admin_base.html' %}
+{% block title %}Inkorg{% endblock %}
+{% block content %}
+<div class="d-flex flex-wrap align-items-center mb-3">
+    <h1 class="h4 mb-0 me-auto">Inkorg</h1>
+    <span class="text-body-secondary fs-sm">{{ counts.all }} konversationer</span>
+</div>
+
+<!-- Statusfilter -->
+<ul class="nav nav-pills gap-2 mb-3 fs-sm">
+    {% set tabs = [('all','Alla'),('new','Nya'),('open','Oppna'),('closed','Stangda'),('spam','Spam')] %}
+    {% for key, label in tabs %}
+    <li class="nav-item">
+        <a class="nav-link py-1 px-3 {{ 'active btn-monky' if active_status == key else 'bg-white border' }}"
+           href="{{ url_for('chat_blueprint.admin_inbox', status=None if key=='all' else key) }}">
+            {{ label }} <span class="opacity-75">{{ counts[key] }}</span>
+        </a>
+    </li>
+    {% endfor %}
+</ul>
+
+<div class="card border-0 shadow-sm">
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+            <thead class="table-light">
+                <tr class="fs-sm text-body-secondary">
+                    <th class="ps-4">Status</th>
+                    <th>Kund</th>
+                    <th>Senaste meddelande</th>
+                    <th class="text-nowrap">Tid</th>
+                    <th class="text-center pe-4">Olasta</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for c in conversations %}
+                <tr class="conv-row {{ 'unread' if c.unread_count else '' }}"
+                    onclick="window.location='{{ url_for('chat_blueprint.admin_thread', conversation_id=c.id) }}'"
+                    style="cursor:pointer">
+                    <td class="ps-4"><span class="badge badge-status s-{{ c.status }}">{{ c.status }}</span></td>
+                    <td>
+                        <div class="fw-semibold">{{ c.visitor_name or 'Anonym' }}</div>
+                        <div class="meta">{{ c.visitor_email or '-' }}</div>
+                    </td>
+                    <td class="text-truncate" style="max-width: 360px;">
+                        {% if c.last_message %}
+                            <span class="text-body-secondary fs-sm">
+                                {% if c.last_message.sender_type == 'admin' %}<i class="ai-arrow-up-right"></i> {% endif %}
+                                {{ c.last_message.body }}
+                            </span>
+                        {% else %}<span class="meta">-</span>{% endif %}
+                    </td>
+                    <td class="meta text-nowrap">{{ c.updated_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                    <td class="text-center pe-4">
+                        {% if c.unread_count %}<span class="badge rounded-pill btn-monky">{{ c.unread_count }}</span>{% endif %}
+                    </td>
+                </tr>
+            {% else %}
+                <tr><td colspan="5" class="text-center text-body-secondary py-5">Inga konversationer an.</td></tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

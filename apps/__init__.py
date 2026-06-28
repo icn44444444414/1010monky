@@ -10,7 +10,7 @@ db = SQLAlchemy()
 def register_extensions(app):
     db.init_app(app)
 
-apps = ('pages',)
+apps = ('pages', 'chat',)
 
 def register_blueprints(app):
     for module_name in apps:

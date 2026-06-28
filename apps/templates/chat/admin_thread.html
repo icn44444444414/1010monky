@@ -1,0 +1,72 @@
+{% extends 'chat/admin_base.html' %}
+{% block title %}{{ conv.visitor_name or 'Konversation' }}{% endblock %}
+{% block content %}
+<a href="{{ url_for('chat_blueprint.admin_inbox') }}" class="btn btn-sm btn-link px-0 mb-3"><i class="ai-arrow-left me-1"></i>Tillbaka till inkorgen</a>
+
+<div class="row g-4">
+    <!-- Trad -->
+    <div class="col-lg-8">
+        <div class="card border-0 shadow-sm">
+            <div class="card-header bg-white d-flex align-items-center py-3">
+                <div>
+                    <span class="fw-semibold">{{ conv.visitor_name or 'Anonym' }}</span>
+                    <span class="badge badge-status s-{{ conv.status }} ms-2">{{ conv.status }}</span>
+                </div>
+            </div>
+            <div class="card-body" style="background:#f4f6f8;">
+                {% for m in conv.messages %}
+                    {% if m.sender_type == 'system' %}
+                        <div class="text-center my-3"><span class="bubble bubble-system">{{ m.body }}</span></div>
+                    {% else %}
+                    <div class="d-flex mb-3 {{ 'justify-content-end' if m.sender_type in ('admin','bot') else '' }}">
+                        <div>
+                            <div class="bubble bubble-{{ m.sender_type }}">{{ m.body }}</div>
+                            <div class="meta mt-1 {{ 'text-end' if m.sender_type in ('admin','bot') else '' }}">
+                                {{ {'visitor': conv.visitor_name or 'Besokare', 'admin':'Matias', 'bot':'Assistent'}.get(m.sender_type, m.sender_type) }}
+                                · {{ m.created_at.strftime('%Y-%m-%d %H:%M') }}
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <div class="card-footer bg-white">
+                <form method="post" action="{{ url_for('chat_blueprint.admin_reply', conversation_id=conv.id) }}">
+                    <div class="input-group">
+                        <input class="form-control" name="body" placeholder="Svara som Matias..." autocomplete="off" required>
+                        <button class="btn btn-monky px-4" type="submit">Skicka</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Kunduppgifter + status -->
+    <div class="col-lg-4">
+        <div class="card border-0 shadow-sm mb-4">
+            <div class="card-body">
+                <h2 class="h6 text-uppercase text-body-secondary fs-xs mb-3">Kunduppgifter</h2>
+                <dl class="row mb-0 fs-sm">
+                    <dt class="col-4 text-body-secondary fw-normal">Namn</dt><dd class="col-8">{{ conv.visitor_name or '-' }}</dd>
+                    <dt class="col-4 text-body-secondary fw-normal">E-post</dt><dd class="col-8">{{ conv.visitor_email or '-' }}</dd>
+                    <dt class="col-4 text-body-secondary fw-normal">Telefon</dt><dd class="col-8">{{ conv.visitor_phone or '-' }}</dd>
+                    <dt class="col-4 text-body-secondary fw-normal">Sida</dt><dd class="col-8">{{ conv.source_page or '-' }}</dd>
+                    <dt class="col-4 text-body-secondary fw-normal">IP</dt><dd class="col-8">{{ conv.ip_address or '-' }}</dd>
+                    <dt class="col-4 text-body-secondary fw-normal">Skapad</dt><dd class="col-8">{{ conv.created_at.strftime('%Y-%m-%d %H:%M') }}</dd>
+                </dl>
+            </div>
+        </div>
+        <div class="card border-0 shadow-sm">
+            <div class="card-body">
+                <h2 class="h6 text-uppercase text-body-secondary fs-xs mb-3">Status</h2>
+                <form method="post" action="{{ url_for('chat_blueprint.admin_status', conversation_id=conv.id) }}" class="d-flex flex-wrap gap-2">
+                    {% for s in statuses %}
+                    <button name="status" value="{{ s }}" type="submit"
+                            class="btn btn-sm {{ 'btn-monky' if conv.status == s else 'btn-outline-secondary' }}">{{ s }}</button>
+                    {% endfor %}
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

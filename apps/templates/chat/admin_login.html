@@ -1,0 +1,21 @@
+{% extends 'chat/admin_base.html' %}
+{% block title %}Logga in{% endblock %}
+{% block content %}
+<div class="row justify-content-center pt-lg-5">
+    <div class="col-md-5 col-lg-4 pt-4">
+        <div class="card border-0 shadow-sm">
+            <div class="card-body p-4 p-lg-5">
+                <h1 class="h4 mb-1">Admin · chatt</h1>
+                <p class="text-body-secondary fs-sm mb-4">Logga in for att se konversationerna.</p>
+                <form method="post">
+                    <div class="mb-3">
+                        <label class="form-label" for="password">Losenord</label>
+                        <input class="form-control" type="password" id="password" name="password" autofocus required>
+                    </div>
+                    <button class="btn btn-monky w-100" type="submit">Logga in</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
