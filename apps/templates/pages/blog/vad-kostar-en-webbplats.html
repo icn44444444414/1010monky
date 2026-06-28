@@ -1,7 +1,7 @@
 {% extends 'layouts/base.html' %}
 
-{% block title %}Så bygger du en chatt-app i Python och Flask{% endblock %}
-{% block meta_description %}Ja, det går utmärkt att bygga en chatt-app i Python med Flask. Men jag är ärlig med att det är en medelsvår uppgift, inte ett nybörjarprojekt. Det…{% endblock %}
+{% block title %}Vad en webbplats faktiskt kostar – och varför priset varierar{% endblock %}
+{% block meta_description %}Få frågor är så svåra att svara kort på som 'vad kostar en hemsida?'. Det är ungefär som att fråga vad ett hus kostar. Svaret beror helt på vad du…{% endblock %}
 
 {% block styles %}
 <link href="{{ config.ASSETS_ROOT }}/vendor/swiper/swiper-bundle.min.css" media="screen" rel="stylesheet"/>
@@ -17,81 +17,67 @@
             <ol class="pt-lg-3 pb-lg-4 pb-2 breadcrumb">
                 <li class="breadcrumb-item"><a href="/">Hem</a></li>
                 <li class="breadcrumb-item"><a href="/blogg">Blogg</a></li>
-                <li aria-current="page" class="breadcrumb-item active">Så bygger du en chatt-app i Python och Flask</li>
+                <li aria-current="page" class="breadcrumb-item active">Vad en webbplats faktiskt kostar – och varför priset varierar</li>
             </ol>
         </nav>
         <div class="row">
             <div class="col-lg-9 col-xl-8 pe-lg-4 pe-xl-0">
-                <h1 class="pb-2 pb-lg-3">Så bygger du en chatt-app i Python och Flask</h1>
+                <h1 class="pb-2 pb-lg-3">Vad en webbplats faktiskt kostar – och varför priset varierar</h1>
                 <div class="d-flex flex-wrap align-items-center justify-content-between border-bottom mb-4">
                     <div class="d-flex align-items-center mb-4 me-4 text-body-secondary fs-sm">
-                        <span>Kod</span>
+                        <span>Pris</span>
                         <span class="fs-xs opacity-20 mx-3">|</span>
-                        <span>Cirka 6 min läsning</span>
+                        <span>Cirka 4 min läsning</span>
                     </div>
                     <div class="d-flex align-items-center mb-4">
                         <span class="fs-sm me-2">Dela:</span>
                         <div class="d-flex">
-                            <a aria-label="Facebook" class="nav-link p-2 me-2" href="https://www.facebook.com/sharer/sharer.php?u=https://1010monky.se/blogg/chatt-app-python-flask" rel="noopener" target="_blank"><i class="ai-facebook"></i></a>
-                            <a aria-label="LinkedIn" class="nav-link p-2 me-2" href="https://www.linkedin.com/sharing/share-offsite/?url=https://1010monky.se/blogg/chatt-app-python-flask" rel="noopener" target="_blank"><i class="ai-linkedin"></i></a>
-                            <a aria-label="X" class="nav-link p-2" href="https://twitter.com/intent/tweet?url=https://1010monky.se/blogg/chatt-app-python-flask" rel="noopener" target="_blank"><i class="ai-x"></i></a>
+                            <a aria-label="Facebook" class="nav-link p-2 me-2" href="https://www.facebook.com/sharer/sharer.php?u=https://1010monky.se/blogg/vad-kostar-en-webbplats" rel="noopener" target="_blank"><i class="ai-facebook"></i></a>
+                            <a aria-label="LinkedIn" class="nav-link p-2 me-2" href="https://www.linkedin.com/sharing/share-offsite/?url=https://1010monky.se/blogg/vad-kostar-en-webbplats" rel="noopener" target="_blank"><i class="ai-linkedin"></i></a>
+                            <a aria-label="X" class="nav-link p-2" href="https://twitter.com/intent/tweet?url=https://1010monky.se/blogg/vad-kostar-en-webbplats" rel="noopener" target="_blank"><i class="ai-x"></i></a>
                         </div>
                     </div>
                 </div>
                 <!-- Post content -->
-
-                <p class="fs-lg">Ja, det går utmärkt att bygga en chatt-app i Python med Flask. Men jag är ärlig med att det är en medelsvår uppgift, inte ett nybörjarprojekt. Det svåra är inte att visa meddelanden på en sida, utan att få dem att komma fram direkt i realtid, hålla det säkert och bestämma vad som ska sparas. Här berättar jag vad det faktiskt innebär, utan att gå ner i kod, utifrån att jag har byggt en riktig realtidschatt själv.</p>
-
-                <h2 class="h4 mb-lg-4 pt-3 pt-md-4">Hur svårt är det egentligen?</h2>
-                <p class="fs-lg">Jag skulle kalla det medelsvårt. Att bygga en sida som visar en lista med meddelanden är enkelt. Det som höjer ribban är att meddelandena ska komma fram direkt, att det ska vara säkert mot missbruk, och att det ska bete sig vettigt när många är inne samtidigt. Var sak för sig är hanterbar, men tillsammans gör de att en chatt är mer än ett nybörjarprojekt. Är man van utvecklare går en enkel version fort. Är man nybörjare är det fullt möjligt, men då är det ett projekt man växer in i.</p>
-
-                <h2 class="h4 mb-lg-4 pt-3 pt-md-4">Det som faktiskt är klurigt</h2>
-                <p class="fs-lg">En vanlig hemsida fungerar som fråga och svar. Webbläsaren frågar, servern svarar, klart. En chatt vet inte i förväg när nästa meddelande kommer, så den modellen passar dåligt. Lösningen är en öppen kanal mellan webbläsaren och servern, en så kallad WebSocket, så att ett meddelande kan skickas ut i samma stund det skrivs. Det är den biten som gör en realtidschatt till en realtidschatt, och den som gör den lite klurigare än en vanlig sida. Sen tillkommer säkerheten och beslutet om meddelandena ska sparas eller inte.</p>
-
-                <div class="card border-0 bg-secondary my-4">
+<p class="fs-lg pt-2 pt-sm-3">Få frågor är så svåra att svara kort på som 'vad kostar en hemsida?'. Det är ungefär som att fråga vad ett hus kostar. Svaret beror helt på vad du behöver – och de stora prisskillnaderna mellan offerter speglar oftast helt olika sorters arbete.</p>
+                <h2 class="h4 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Du betalar för tänkande, inte bara pixlar</h2>
+                <p class="fs-lg pb-4 pb-xl-5">En billig sajt är ofta en mall som fylls med din text. En dyrare lösning innehåller research, strategi, copy, unik design och teknik byggd för just dina mål. Båda kan vara rätt – men de är inte samma vara, även om de kallas samma sak.</p>
+                <figure class="figure">
+                    <img alt="Image" class="figure-img rounded-5 mb-3" src="{{ config.ASSETS_ROOT }}/img/blog/single/image.jpg"/>
+                    <figcaption class="figure-caption">Vad en webbplats faktiskt kostar – och varför priset varierar</figcaption>
+                </figure>
+                <h2 class="h4 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Det löpande är en del av priset</h2>
+                <p class="fs-lg">Lansering är inte slutet. Drift, uppdateringar, säkerhet och vidareutveckling kostar över tid. En seriös offert är tydlig med vad som ingår efteråt, så att du inte överraskas av en räkning sex månader senare.</p>
+                <div class="card border-0 bg-secondary mb-3">
                     <div class="card-body">
-                        <figure class="mb-0">
-                            <blockquote class="blockquote mb-0">
-                                <p class="mb-0">Det de flesta tänker på, själva chatt-fönstret, är den minsta delen. Det är realtiden och säkerheten som är det riktiga arbetet.</p>
+                        <figure>
+                            <blockquote class="blockquote">
+                                <p>Ett lågt pris är sällan billigt. Det betyder oftast bara att kostnaden flyttats till något du inte ser ännu.</p>
                             </blockquote>
+                            <figcaption class="blockquote-footer">Matias</figcaption>
                         </figure>
                     </div>
                 </div>
-
-                <h2 class="h4 mb-lg-4 pt-3 pt-md-4">Ska meddelandena sparas?</h2>
-                <p class="fs-lg">En tidig och viktig fråga. Vill man läsa historik i efterhand behövs en databas. Vill man tvärtom att det man skriver ska försvinna behövs ingen lagring alls, och då blir appen både enklare och mer privat. I min egen chatt GhostyMsg sparas ingenting. En ärlig parentes: GhostyMsg ligger faktiskt i Node och inte i Flask, men besluten är desamma oavsett språk.</p>
-
-                <h2 class="h4 mb-lg-4 pt-3 pt-md-4">Vad det tar i tid och pris</h2>
-                <p class="fs-lg">Det här är det vanligaste jag får frågan om, och det ärliga svaret är att det beror på kraven. En enkel chatt utan konton, där inget sparas, är ett litet projekt. En med inloggning, sparad historik och ordentlig säkerhet är betydligt större. Får du ett pris utan att någon först frågat vad chatten ska klara, var lite skeptisk. Jag tittar hellre på vad du faktiskt behöver. Du kan läsa mer om hur jag tänker kring <a href="/pricing">priser</a>.</p>
-
-                <h2 class="h4 mb-lg-4 pt-3 pt-md-4">Bygga eget eller använda en färdig tjänst?</h2>
-                <p class="fs-lg">För ren kundsupport finns färdiga verktyg som Intercom och Crisp, och oftast är de rätt val. Eget blir motiverat först när du behöver något de inte ger dig, som att data ska stanna hos dig, eller att chatten är en del av själva produkten och inte bara support. Är det så du har det kan en skräddarsydd lösning vara värd pengarna.</p>
-
-                <h2 class="h4 mb-lg-4 pt-3 pt-md-4">Vanliga frågor</h2>
-                <h3 class="h6">Kan man bygga en chatt-app i Python Flask?</h3>
-                <p class="fs-lg">Ja. Flask sköter sidan och ett realtidstillägg ovanpå Flask sköter att meddelanden kommer fram direkt. Python och Flask räcker hela vägen.</p>
-                <h3 class="h6">Hur svårt är det att bygga en chatt-app?</h3>
-                <p class="fs-lg">Medelsvårt. Att visa meddelanden är enkelt, men realtiden, säkerheten och frågan om vad som ska sparas gör det till mer än ett nybörjarprojekt.</p>
-                <h3 class="h6">Är det bättre att bygga eget eller använda en färdig chatt?</h3>
-                <p class="fs-lg">För vanlig support är färdiga verktyg oftast bäst. Eget är värt det när du behöver något de inte ger dig.</p>
-
-                <!-- Taggar -->
-                <div class="d-flex flex-wrap align-items-center gap-2 pt-4 mt-4 border-top">
-                    <span class="fs-sm fw-medium me-1">Taggar:</span>
-                    <span class="badge bg-secondary text-body fw-normal">Python</span>
-                    <span class="badge bg-secondary text-body fw-normal">Flask</span>
-                    <span class="badge bg-secondary text-body fw-normal">Realtid</span>
-                    <span class="badge bg-secondary text-body fw-normal">WebSockets</span>
-                </div>
-
-                <!-- CTA -->
-                <div class="card border-0 bg-secondary mt-5">
-                    <div class="card-body p-4 p-md-5">
-                        <h2 class="h4 mb-2">Vill du ha en chatt-app eller skräddarsydd webbsida byggd?</h2>
-                        <p class="mb-4">Jag har byggt en riktig realtidschatt och bygger moderna webblösningar med Python, Flask, WordPress och skräddarsydd frontend. Berätta kort om din idé så hör jag av mig med förslag och pris.</p>
-                        <a class="btn btn-primary rounded-pill monky-btn-primary me-2" href="/contacts-v1">Kontakta mig för offert</a>
-                        <a class="btn btn-link px-0" href="/portfolio-single-v1">Se min chatt GhostyMsg</a>
-                    </div>
+                <h2 class="h4 mb-lg-4 pt-3 pt-md-4 pt-xl-5">Kom ihåg det här</h2>
+                <ul>
+                    <li class="mb-1">Fråga vad som ingår – och vad som tillkommer</li>
+                    <li class="mb-1">Be om att se strategi och process, inte bara design</li>
+                    <li class="mb-1">Räkna med löpande drift och förvaltning</li>
+                    <li class="mb-1">Jämför vad offerterna faktiskt innehåller, inte bara slutsumman</li>
+                </ul>
+                <p class="fs-lg">Det dyraste valet är sällan den högsta offerten. Det är den sajt som måste göras om för att den första byggdes för billigt. Be om tydlighet, inte om det lägsta priset.</p>
+                <!-- Tags -->
+                <div class="d-flex flex-wrap pb-5 pt-3 pt-md-4 pt-xl-5 mt-xl-n2">
+                    <h3 class="h6 py-1 mb-0 me-4">Taggar:</h3>
+                    <a class="nav-link fs-sm py-1 px-0 me-3" href="#">
+                        <span class="text-primary">#</span>Pris
+                    </a>
+                    <a class="nav-link fs-sm py-1 px-0 me-3" href="#">
+                        <span class="text-primary">#</span>Affär
+                    </a>
+                    <a class="nav-link fs-sm py-1 px-0 me-3" href="#">
+                        <span class="text-primary">#</span>Webbprojekt
+                    </a>
                 </div>
                 <!-- Author widget -->
                 <div class="border-top border-bottom py-4 mt-4" id="author">
@@ -318,6 +304,6 @@
 <script src="{{ config.ASSETS_ROOT }}/vendor/swiper/swiper-bundle.min.js"></script>
 <script src="{{ config.ASSETS_ROOT }}/js/theme.min.js"></script>
 <script type="application/ld+json">
-{ "@context": "https://schema.org", "@type": "BlogPosting", "headline": "Så bygger du en chatt-app i Python och Flask", "description": "Ja, det går utmärkt att bygga en chatt-app i Python med Flask. Men jag är ärlig med att det är en medelsvår uppgift, inte ett nybörjarprojekt. Det…", "inLanguage": "sv", "author": { "@type": "Person", "name": "Matias", "url": "https://1010monky.se/about-agency" }, "publisher": { "@type": "Organization", "name": "1010monky Studio", "logo": { "@type": "ImageObject", "url": "https://1010monky.se/static/img/monkey-logo.webp" } }, "mainEntityOfPage": "https://1010monky.se/blogg/chatt-app-python-flask", "image": "https://1010monky.se/static/img/blog/list/06.jpg" }
+{ "@context": "https://schema.org", "@type": "BlogPosting", "headline": "Vad en webbplats faktiskt kostar – och varför priset varierar", "description": "Få frågor är så svåra att svara kort på som 'vad kostar en hemsida?'. Det är ungefär som att fråga vad ett hus kostar. Svaret beror helt på vad du…", "inLanguage": "sv", "author": { "@type": "Person", "name": "Matias", "url": "https://1010monky.se/about-agency" }, "publisher": { "@type": "Organization", "name": "1010monky Studio", "logo": { "@type": "ImageObject", "url": "https://1010monky.se/static/img/monkey-logo.webp" } }, "mainEntityOfPage": "https://1010monky.se/blogg/vad-kostar-en-webbplats", "image": "https://1010monky.se/static/img/blog/list/04.jpg" }
 </script>
 {% endblock scripts %}

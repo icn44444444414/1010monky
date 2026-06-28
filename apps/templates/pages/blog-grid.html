@@ -8,152 +8,286 @@
 <main class="page-wrapper">
     {% include "partials/navbar.html" %}
 
-    <!-- Breadcrumb + Blog grid (Around portfolio-grid-stil) -->
-    <section class="container overflow-hidden py-5 mt-5 mb-2 mb-md-3 mb-lg-4 mb-xxl-5">
-        <!-- Breadcrumb -->
+    <section class="container py-5 mt-5">
         <nav aria-label="breadcrumb">
             <ol class="pt-lg-3 pb-lg-4 pb-2 breadcrumb">
                 <li class="breadcrumb-item"><a href="/">Hem</a></li>
                 <li aria-current="page" class="breadcrumb-item active">Blogg</li>
             </ol>
         </nav>
-        <!-- Page title -->
-        <h1 class="text-center pb-2 pb-md-3 pb-lg-4">Blogg</h1>
-        <!-- Lås alla kort-bilder till samma form (1.9:1) så gridden blir jämn -->
-        <style>
-            #blogGrid .zoom-effect-img img { width: 100%; height: auto; aspect-ratio: 1200 / 630; object-fit: cover; }
-        </style>
-        <div class="blog-filterable">
-            <!-- Filters -->
-            <ul class="nav nav-pills fs-sm flex-nowrap overflow-auto text-nowrap w-100 mx-auto justify-content-center pb-4 mb-2 mb-sm-3"
-                id="blogFilters" style="max-width: 590px;">
-                <li class="nav-item mb-0">
-                    <a class="nav-link border active" data-group="all" href="#">Alla</a>
-                </li>
-                <li class="nav-item mb-0">
-                    <a class="nav-link border" data-group="kod" href="#">Kod &amp; webb</a>
-                </li>
-                <li class="nav-item mb-0">
-                    <a class="nav-link border" data-group="pris" href="#">Pris &amp; projekt</a>
-                </li>
-            </ul>
-            <!-- Grid of posts -->
-            <div class="row row-cols-1 row-cols-md-2 g-4 g-lg-5" id="blogGrid">
-                <!-- Item -->
-                <article class="col" data-group="kod">
-                    <div class="card-hover zoom-effect mx-auto" style="max-width: 620px;">
-                        <div class="zoom-effect-wrapper rounded-5">
-                            <div class="zoom-effect-img">
-                                <img alt="Hur bygger man en chatt-app i Python Flask?" src="{{ config.ASSETS_ROOT }}/img/blog/covers/chatt-app-python-flask.png" width="1200" height="630"/>
-                            </div>
-                        </div>
-                        <div class="pt-4 mt-lg-2">
-                            <h2 class="h5 mb-2">
-                                <a class="stretched-link text-nav" href="/blogg/chatt-app-python-flask">Hur bygger man en chatt-app i Python Flask?</a>
-                            </h2>
-                            <span class="fs-sm text-body-secondary">Kod &amp; webb</span>
-                        </div>
-                    </div>
-                </article>
-                <!-- Item -->
-                <article class="col" data-group="pris">
-                    <div class="card-hover zoom-effect mx-auto" style="max-width: 620px;">
-                        <div class="zoom-effect-wrapper rounded-5">
-                            <div class="zoom-effect-img">
-                                <img alt="Vad kostar det att bygga en egen chatt-app?" src="{{ config.ASSETS_ROOT }}/img/blog/covers/chatt-app-pris.png" width="1200" height="630"/>
-                            </div>
-                        </div>
-                        <div class="pt-4 mt-lg-2">
-                            <h2 class="h5 mb-2">
-                                <a class="stretched-link text-nav" href="/blogg/chatt-app-pris">Vad kostar det att bygga en egen chatt-app 2026?</a>
-                            </h2>
-                            <span class="fs-sm text-body-secondary">Pris &amp; projekt</span>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- DEMO-poster (platshållare för att visa hur fylld grid ser ut – byt mot riktiga inlägg) -->
-                <!-- Item -->
-                <article class="col" data-group="kod">
-                    <div class="card-hover zoom-effect mx-auto" style="max-width: 620px;">
-                        <div class="zoom-effect-wrapper rounded-5">
-                            <div class="zoom-effect-img">
-                                <img alt="Lär dig Python på svenska" src="{{ config.ASSETS_ROOT }}/img/blog/covers/lara-python-pa-svenska.png" width="1200" height="630"/>
-                            </div>
-                        </div>
-                        <div class="pt-4 mt-lg-2">
-                            <h2 class="h5 mb-2">
-                                <a class="stretched-link text-nav" href="#">Lär dig Python på svenska, så kom jag igång</a>
-                            </h2>
-                            <span class="fs-sm text-body-secondary">Kod &amp; webb</span>
-                        </div>
-                    </div>
-                </article>
-                <!-- Item -->
-                <article class="col" data-group="kod">
-                    <div class="card-hover zoom-effect mx-auto" style="max-width: 620px;">
-                        <div class="zoom-effect-wrapper rounded-5">
-                            <div class="zoom-effect-img">
-                                <img alt="Flask istället för WordPress" src="{{ config.ASSETS_ROOT }}/img/blog/grid/01.jpg" width="1200" height="630"/>
-                            </div>
-                        </div>
-                        <div class="pt-4 mt-lg-2">
-                            <h2 class="h5 mb-2">
-                                <a class="stretched-link text-nav" href="#">Därför valde jag Flask istället för WordPress</a>
-                            </h2>
-                            <span class="fs-sm text-body-secondary">Kod &amp; webb</span>
-                        </div>
-                    </div>
-                </article>
-                <!-- Item -->
-                <article class="col" data-group="kod">
-                    <div class="card-hover zoom-effect mx-auto" style="max-width: 620px;">
-                        <div class="zoom-effect-wrapper rounded-5">
-                            <div class="zoom-effect-img">
-                                <img alt="Snabb sajt under en sekund" src="{{ config.ASSETS_ROOT }}/img/blog/grid/02.jpg" width="1200" height="630"/>
-                            </div>
-                        </div>
-                        <div class="pt-4 mt-lg-2">
-                            <h2 class="h5 mb-2">
-                                <a class="stretched-link text-nav" href="#">Så fick jag sajten att ladda på under en sekund</a>
-                            </h2>
-                            <span class="fs-sm text-body-secondary">Kod &amp; webb</span>
-                        </div>
-                    </div>
-                </article>
-                <!-- Item -->
-                <article class="col" data-group="pris">
-                    <div class="card-hover zoom-effect mx-auto" style="max-width: 620px;">
-                        <div class="zoom-effect-wrapper rounded-5">
-                            <div class="zoom-effect-img">
-                                <img alt="Vad en hemsida kostar" src="{{ config.ASSETS_ROOT }}/img/blog/grid/03.jpg" width="1200" height="630"/>
-                            </div>
-                        </div>
-                        <div class="pt-4 mt-lg-2">
-                            <h2 class="h5 mb-2">
-                                <a class="stretched-link text-nav" href="#">Vad en hemsida faktiskt kostar 2026</a>
-                            </h2>
-                            <span class="fs-sm text-body-secondary">Pris &amp; projekt</span>
-                        </div>
-                    </div>
-                </article>
-                <!-- Item -->
-                <article class="col" data-group="kod">
-                    <div class="card-hover zoom-effect mx-auto" style="max-width: 620px;">
-                        <div class="zoom-effect-wrapper rounded-5">
-                            <div class="zoom-effect-img">
-                                <img alt="Misstag med första kundsajten" src="{{ config.ASSETS_ROOT }}/img/blog/grid/04.jpg" width="1200" height="630"/>
-                            </div>
-                        </div>
-                        <div class="pt-4 mt-lg-2">
-                            <h2 class="h5 mb-2">
-                                <a class="stretched-link text-nav" href="#">Misstagen jag gjorde med min första kundsajt</a>
-                            </h2>
-                            <span class="fs-sm text-body-secondary">Kod &amp; webb</span>
-                        </div>
-                    </div>
-                </article>
+        <div class="row align-items-center gy-2 mb-4 pb-1 pb-sm-2 pb-lg-3">
+            <div class="col-lg-8">
+                <h1 class="mb-lg-0">Blogg</h1>
             </div>
+            <div class="col-lg-4">
+                <p class="mb-0 fs-lg text-body-secondary">Webb, kod och projekten jag bygger – på svenska.</p>
+            </div>
+        </div>
+        <div class="masonry-grid mb-2 mb-md-4 pb-lg-3" data-columns="3">
+            <article class="masonry-grid-item">
+                <div class="card border-0 bg-secondary h-100">
+                    <a href="/blogg/tappar-besokare-tre-sekunder">
+                        <img alt="Därför tappar din sajt besökare de första 3 sekunderna" class="card-img-top" src="{{ config.ASSETS_ROOT }}/img/blog/grid/01.jpg"/>
+                    </a>
+                    <div class="card-body pb-4">
+                        <div class="d-flex align-items-center mb-4 mt-n1">
+                            <span class="badge text-nav fs-xs border">Prestanda</span>
+                        </div>
+                        <h2 class="h4 card-title">
+                            <a href="/blogg/tappar-besokare-tre-sekunder">Därför tappar din sajt besökare de första 3 sekunderna</a>
+                        </h2>
+                        <p class="card-text">Nästan hälften av alla besökare lämnar en sida som tar mer än tre sekunder att ladda. För en webbyrå är det inte en statistik – det är förlorade kunder…</p>
+                    </div>
+                    <div class="card-footer pt-3">
+                        <a class="d-flex align-items-center text-decoration-none pb-2" href="/blogg/tappar-besokare-tre-sekunder">
+                            <img alt="1010monky" class="rounded-circle" src="{{ config.ASSETS_ROOT }}/img/monkey-logo.webp" width="48"/>
+                            <span class="h6 ps-3 mb-0">Matias, 1010monky</span>
+                        </a>
+                    </div>
+                </div>
+            </article>
+            <article class="masonry-grid-item">
+                <div class="card border-0 bg-secondary h-100">
+                    <a href="/blogg/lokal-seo-smaforetag">
+                        <img alt="Lokal SEO för småföretag i Eskilstuna och Sörmland" class="card-img-top" src="{{ config.ASSETS_ROOT }}/img/blog/grid/02.jpg"/>
+                    </a>
+                    <div class="card-body pb-4">
+                        <div class="d-flex align-items-center mb-4 mt-n1">
+                            <span class="badge text-nav fs-xs border">SEO</span>
+                        </div>
+                        <h2 class="h4 card-title">
+                            <a href="/blogg/lokal-seo-smaforetag">Lokal SEO för småföretag i Eskilstuna och Sörmland</a>
+                        </h2>
+                        <p class="card-text">För ett lokalt företag är det inte 'webbdesign' du vill ranka på – det är 'webbdesign Eskilstuna'. Lokal SEO handlar om att vara det självklara valet…</p>
+                    </div>
+                    <div class="card-footer pt-3">
+                        <a class="d-flex align-items-center text-decoration-none pb-2" href="/blogg/lokal-seo-smaforetag">
+                            <img alt="1010monky" class="rounded-circle" src="{{ config.ASSETS_ROOT }}/img/monkey-logo.webp" width="48"/>
+                            <span class="h6 ps-3 mb-0">Matias, 1010monky</span>
+                        </a>
+                    </div>
+                </div>
+            </article>
+            <article class="masonry-grid-item">
+                <div class="card border-0 bg-secondary h-100">
+                    <a href="/blogg/hero-sektion-som-konverterar">
+                        <img alt="Så skriver du en hero-sektion som faktiskt konverterar" class="card-img-top" src="{{ config.ASSETS_ROOT }}/img/blog/grid/03.jpg"/>
+                    </a>
+                    <div class="card-body pb-4">
+                        <div class="d-flex align-items-center mb-4 mt-n1">
+                            <span class="badge text-nav fs-xs border">Konvertering</span>
+                        </div>
+                        <h2 class="h4 card-title">
+                            <a href="/blogg/hero-sektion-som-konverterar">Så skriver du en hero-sektion som faktiskt konverterar</a>
+                        </h2>
+                        <p class="card-text">Hero-sektionen – det första man ser innan man scrollar – är den mest värdefulla ytan på hela din webbplats. Ändå fylls den ofta med en vacker bild och…</p>
+                    </div>
+                    <div class="card-footer pt-3">
+                        <a class="d-flex align-items-center text-decoration-none pb-2" href="/blogg/hero-sektion-som-konverterar">
+                            <img alt="1010monky" class="rounded-circle" src="{{ config.ASSETS_ROOT }}/img/monkey-logo.webp" width="48"/>
+                            <span class="h6 ps-3 mb-0">Matias, 1010monky</span>
+                        </a>
+                    </div>
+                </div>
+            </article>
+            <article class="masonry-grid-item">
+                <div class="card border-0 bg-secondary h-100">
+                    <a href="/blogg/wordpress-eller-skraddarsytt">
+                        <img alt="WordPress eller skräddarsytt – vad ska du välja 2026?" class="card-img-top" src="{{ config.ASSETS_ROOT }}/img/blog/grid/04.jpg"/>
+                    </a>
+                    <div class="card-body pb-4">
+                        <div class="d-flex align-items-center mb-4 mt-n1">
+                            <span class="badge text-nav fs-xs border">Webbutveckling</span>
+                        </div>
+                        <h2 class="h4 card-title">
+                            <a href="/blogg/wordpress-eller-skraddarsytt">WordPress eller skräddarsytt – vad ska du välja 2026?</a>
+                        </h2>
+                        <p class="card-text">Frågan kommer i nästan varje första möte: ska vi bygga på WordPress eller koda något eget? Båda kan ge ett utmärkt resultat. Valet handlar mindre om…</p>
+                    </div>
+                    <div class="card-footer pt-3">
+                        <a class="d-flex align-items-center text-decoration-none pb-2" href="/blogg/wordpress-eller-skraddarsytt">
+                            <img alt="1010monky" class="rounded-circle" src="{{ config.ASSETS_ROOT }}/img/monkey-logo.webp" width="48"/>
+                            <span class="h6 ps-3 mb-0">Matias, 1010monky</span>
+                        </a>
+                    </div>
+                </div>
+            </article>
+            <article class="masonry-grid-item">
+                <div class="card border-0 bg-secondary h-100">
+                    <a href="/blogg/misstag-i-kontaktformular">
+                        <img alt="7 misstag i kontaktformulär som kostar dig kunder" class="card-img-top" src="{{ config.ASSETS_ROOT }}/img/blog/grid/05.jpg"/>
+                    </a>
+                    <div class="card-body pb-4">
+                        <div class="d-flex align-items-center mb-4 mt-n1">
+                            <span class="badge text-nav fs-xs border">Konvertering</span>
+                        </div>
+                        <h2 class="h4 card-title">
+                            <a href="/blogg/misstag-i-kontaktformular">7 misstag i kontaktformulär som kostar dig kunder</a>
+                        </h2>
+                        <p class="card-text">Kontaktformuläret är den sista dörren mellan en intresserad besökare och en faktisk förfrågan. Ändå är det ofta den mest försummade delen av en sajt.…</p>
+                    </div>
+                    <div class="card-footer pt-3">
+                        <a class="d-flex align-items-center text-decoration-none pb-2" href="/blogg/misstag-i-kontaktformular">
+                            <img alt="1010monky" class="rounded-circle" src="{{ config.ASSETS_ROOT }}/img/monkey-logo.webp" width="48"/>
+                            <span class="h6 ps-3 mb-0">Matias, 1010monky</span>
+                        </a>
+                    </div>
+                </div>
+            </article>
+            <article class="masonry-grid-item">
+                <div class="card border-0 bg-secondary h-100">
+                    <a href="/blogg/tillganglighet-ar-lag">
+                        <img alt="Tillgänglighet är inte ett val längre – det är lag" class="card-img-top" src="{{ config.ASSETS_ROOT }}/img/blog/grid/06.jpg"/>
+                    </a>
+                    <div class="card-body pb-4">
+                        <div class="d-flex align-items-center mb-4 mt-n1">
+                            <span class="badge text-nav fs-xs border">Tillgänglighet</span>
+                        </div>
+                        <h2 class="h4 card-title">
+                            <a href="/blogg/tillganglighet-ar-lag">Tillgänglighet är inte ett val längre – det är lag</a>
+                        </h2>
+                        <p class="card-text">Tillgänglighet brukade behandlas som en bonus. Det stämmer inte längre. Med EU:s tillgänglighetsdirektiv omfattas allt fler företag av krav på att…</p>
+                    </div>
+                    <div class="card-footer pt-3">
+                        <a class="d-flex align-items-center text-decoration-none pb-2" href="/blogg/tillganglighet-ar-lag">
+                            <img alt="1010monky" class="rounded-circle" src="{{ config.ASSETS_ROOT }}/img/monkey-logo.webp" width="48"/>
+                            <span class="h6 ps-3 mb-0">Matias, 1010monky</span>
+                        </a>
+                    </div>
+                </div>
+            </article>
+            <article class="masonry-grid-item">
+                <div class="card border-0 bg-secondary h-100">
+                    <a href="/blogg/farg-och-typografi">
+                        <img alt="Färg och typografi: så bygger du ett varumärke som känns dyrt" class="card-img-top" src="{{ config.ASSETS_ROOT }}/img/blog/grid/01.jpg"/>
+                    </a>
+                    <div class="card-body pb-4">
+                        <div class="d-flex align-items-center mb-4 mt-n1">
+                            <span class="badge text-nav fs-xs border">Design</span>
+                        </div>
+                        <h2 class="h4 card-title">
+                            <a href="/blogg/farg-och-typografi">Färg och typografi: så bygger du ett varumärke som känns dyrt</a>
+                        </h2>
+                        <p class="card-text">Två sajter kan ha exakt samma innehåll och ändå kännas helt olika. Den ena ser pålitlig och påkostad ut, den andra billig. Skillnaden ligger nästan…</p>
+                    </div>
+                    <div class="card-footer pt-3">
+                        <a class="d-flex align-items-center text-decoration-none pb-2" href="/blogg/farg-och-typografi">
+                            <img alt="1010monky" class="rounded-circle" src="{{ config.ASSETS_ROOT }}/img/monkey-logo.webp" width="48"/>
+                            <span class="h6 ps-3 mb-0">Matias, 1010monky</span>
+                        </a>
+                    </div>
+                </div>
+            </article>
+            <article class="masonry-grid-item">
+                <div class="card border-0 bg-secondary h-100">
+                    <a href="/blogg/snabb-mobilsajt">
+                        <img alt="Därför är en snabb mobilsajt viktigare än din desktopdesign" class="card-img-top" src="{{ config.ASSETS_ROOT }}/img/blog/grid/02.jpg"/>
+                    </a>
+                    <div class="card-body pb-4">
+                        <div class="d-flex align-items-center mb-4 mt-n1">
+                            <span class="badge text-nav fs-xs border">Prestanda</span>
+                        </div>
+                        <h2 class="h4 card-title">
+                            <a href="/blogg/snabb-mobilsajt">Därför är en snabb mobilsajt viktigare än din desktopdesign</a>
+                        </h2>
+                        <p class="card-text">Öppna din egen statistik och titta på fördelningen mellan mobil och desktop. För de allra flesta företag är majoriteten av besökarna på telefon. Ändå…</p>
+                    </div>
+                    <div class="card-footer pt-3">
+                        <a class="d-flex align-items-center text-decoration-none pb-2" href="/blogg/snabb-mobilsajt">
+                            <img alt="1010monky" class="rounded-circle" src="{{ config.ASSETS_ROOT }}/img/monkey-logo.webp" width="48"/>
+                            <span class="h6 ps-3 mb-0">Matias, 1010monky</span>
+                        </a>
+                    </div>
+                </div>
+            </article>
+            <article class="masonry-grid-item">
+                <div class="card border-0 bg-secondary h-100">
+                    <a href="/blogg/fran-besokare-till-kund">
+                        <img alt="Från besökare till kund: en guide till bra uppmaningar" class="card-img-top" src="{{ config.ASSETS_ROOT }}/img/blog/grid/03.jpg"/>
+                    </a>
+                    <div class="card-body pb-4">
+                        <div class="d-flex align-items-center mb-4 mt-n1">
+                            <span class="badge text-nav fs-xs border">Konvertering</span>
+                        </div>
+                        <h2 class="h4 card-title">
+                            <a href="/blogg/fran-besokare-till-kund">Från besökare till kund: en guide till bra uppmaningar</a>
+                        </h2>
+                        <p class="card-text">Varje sida på din webbplats borde ha ett tydligt svar på frågan: vad ska besökaren göra härnäst? Uppmaningen till handling – din CTA – är bryggan…</p>
+                    </div>
+                    <div class="card-footer pt-3">
+                        <a class="d-flex align-items-center text-decoration-none pb-2" href="/blogg/fran-besokare-till-kund">
+                            <img alt="1010monky" class="rounded-circle" src="{{ config.ASSETS_ROOT }}/img/monkey-logo.webp" width="48"/>
+                            <span class="h6 ps-3 mb-0">Matias, 1010monky</span>
+                        </a>
+                    </div>
+                </div>
+            </article>
+            <article class="masonry-grid-item">
+                <div class="card border-0 bg-secondary h-100">
+                    <a href="/blogg/vad-kostar-en-webbplats">
+                        <img alt="Vad en webbplats faktiskt kostar – och varför priset varierar" class="card-img-top" src="{{ config.ASSETS_ROOT }}/img/blog/grid/04.jpg"/>
+                    </a>
+                    <div class="card-body pb-4">
+                        <div class="d-flex align-items-center mb-4 mt-n1">
+                            <span class="badge text-nav fs-xs border">Pris</span>
+                        </div>
+                        <h2 class="h4 card-title">
+                            <a href="/blogg/vad-kostar-en-webbplats">Vad en webbplats faktiskt kostar – och varför priset varierar</a>
+                        </h2>
+                        <p class="card-text">Få frågor är så svåra att svara kort på som 'vad kostar en hemsida?'. Det är ungefär som att fråga vad ett hus kostar. Svaret beror helt på vad du…</p>
+                    </div>
+                    <div class="card-footer pt-3">
+                        <a class="d-flex align-items-center text-decoration-none pb-2" href="/blogg/vad-kostar-en-webbplats">
+                            <img alt="1010monky" class="rounded-circle" src="{{ config.ASSETS_ROOT }}/img/monkey-logo.webp" width="48"/>
+                            <span class="h6 ps-3 mb-0">Matias, 1010monky</span>
+                        </a>
+                    </div>
+                </div>
+            </article>
+            <article class="masonry-grid-item">
+                <div class="card border-0 bg-secondary h-100">
+                    <a href="/blogg/chatt-app-pris">
+                        <img alt="Vad kostar det att bygga en egen chatt-app 2026?" class="card-img-top" src="{{ config.ASSETS_ROOT }}/img/blog/grid/05.jpg"/>
+                    </a>
+                    <div class="card-body pb-4">
+                        <div class="d-flex align-items-center mb-4 mt-n1">
+                            <span class="badge text-nav fs-xs border">Pris</span>
+                        </div>
+                        <h2 class="h4 card-title">
+                            <a href="/blogg/chatt-app-pris">Vad kostar det att bygga en egen chatt-app 2026?</a>
+                        </h2>
+                        <p class="card-text">Kort svar: en enkel chatt-app brukar grovt räknat landa på runt 15 000 till 40 000 kr, en med inloggning och sparade meddelanden på ungefär 40 000 till…</p>
+                    </div>
+                    <div class="card-footer pt-3">
+                        <a class="d-flex align-items-center text-decoration-none pb-2" href="/blogg/chatt-app-pris">
+                            <img alt="1010monky" class="rounded-circle" src="{{ config.ASSETS_ROOT }}/img/monkey-logo.webp" width="48"/>
+                            <span class="h6 ps-3 mb-0">Matias, 1010monky</span>
+                        </a>
+                    </div>
+                </div>
+            </article>
+            <article class="masonry-grid-item">
+                <div class="card border-0 bg-secondary h-100">
+                    <a href="/blogg/chatt-app-python-flask">
+                        <img alt="Så bygger du en chatt-app i Python och Flask" class="card-img-top" src="{{ config.ASSETS_ROOT }}/img/blog/grid/06.jpg"/>
+                    </a>
+                    <div class="card-body pb-4">
+                        <div class="d-flex align-items-center mb-4 mt-n1">
+                            <span class="badge text-nav fs-xs border">Kod</span>
+                        </div>
+                        <h2 class="h4 card-title">
+                            <a href="/blogg/chatt-app-python-flask">Så bygger du en chatt-app i Python och Flask</a>
+                        </h2>
+                        <p class="card-text">Ja, det går utmärkt att bygga en chatt-app i Python med Flask. Men jag är ärlig med att det är en medelsvår uppgift, inte ett nybörjarprojekt. Det…</p>
+                    </div>
+                    <div class="card-footer pt-3">
+                        <a class="d-flex align-items-center text-decoration-none pb-2" href="/blogg/chatt-app-python-flask">
+                            <img alt="1010monky" class="rounded-circle" src="{{ config.ASSETS_ROOT }}/img/monkey-logo.webp" width="48"/>
+                            <span class="h6 ps-3 mb-0">Matias, 1010monky</span>
+                        </a>
+                    </div>
+                </div>
+            </article>
         </div>
     </section>
 </main>
@@ -164,25 +298,4 @@
 
 {% block scripts %}
 <script src="{{ config.ASSETS_ROOT }}/js/theme.min.js"></script>
-<script>
-    (function () {
-        var filters = document.getElementById('blogFilters');
-        var grid = document.getElementById('blogGrid');
-        if (!filters || !grid) return;
-        var pills = filters.querySelectorAll('.nav-link');
-        var items = grid.querySelectorAll('[data-group]');
-        pills.forEach(function (pill) {
-            pill.addEventListener('click', function (e) {
-                e.preventDefault();
-                pills.forEach(function (p) { p.classList.remove('active'); });
-                pill.classList.add('active');
-                var g = pill.getAttribute('data-group');
-                items.forEach(function (item) {
-                    var show = (g === 'all' || item.getAttribute('data-group') === g);
-                    item.style.display = show ? '' : 'none';
-                });
-            });
-        });
-    })();
-</script>
 {% endblock scripts %}
