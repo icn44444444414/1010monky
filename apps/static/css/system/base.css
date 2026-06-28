@@ -26,7 +26,9 @@ ul[class], ol[class] { list-style: none; padding: 0; }
 :focus-visible { outline: none; box-shadow: var(--shadow-focus); border-radius: var(--radius-sm); }
 hr { border: 0; border-top: var(--border); }
 
-/* ---------- Rubriker ---------- */
+/* ---------- Rubriker ----------
+   Stora rubriker (h1-h3) i display-typsnittet for karaktar; sma (h4-h6) i sans
+   for tydlig hierarki. Tight tracking pa de storsta = dyr, samlad kansla. */
 h1, h2, h3, h4, h5, h6,
 .h1, .h2, .h3, .h4, .h5, .h6 {
   font-family: var(--font-sans);
@@ -36,12 +38,19 @@ h1, h2, h3, h4, h5, h6,
   color: var(--text-primary);
   text-wrap: balance;
 }
-h1, .h1 { font-size: var(--text-5xl); letter-spacing: var(--tracking-tighter); }
-h2, .h2 { font-size: var(--text-4xl); }
+h1, .h1, h2, .h2, h3, .h3 { font-family: var(--font-display); }
+h1, .h1 { font-size: var(--text-5xl); letter-spacing: var(--tracking-tighter); line-height: 1.05; }
+h2, .h2 { font-size: var(--text-4xl); letter-spacing: var(--tracking-tighter); line-height: 1.1; }
 h3, .h3 { font-size: var(--text-3xl); }
 h4, .h4 { font-size: var(--text-2xl); letter-spacing: var(--tracking-normal); }
 h5, .h5 { font-size: var(--text-xl);  letter-spacing: var(--tracking-normal); }
 h6, .h6 { font-size: var(--text-lg);  letter-spacing: var(--tracking-normal); }
+
+/* Signaturmoment: ett ord i grön gradient – sparsamt, en gång per sida */
+.text-gradient {
+  background: linear-gradient(100deg, var(--green-600), var(--green-400));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
 
 /* Eyebrow: liten versal etikett ovanfor rubriker */
 .eyebrow {

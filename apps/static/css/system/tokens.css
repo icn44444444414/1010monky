@@ -58,8 +58,11 @@
   --glass-border: rgba(255, 255, 255, .55);
   --glass-blur:   18px;
 
-  /* ---------- Typografi ---------- */
+  /* ---------- Typografi ----------
+     Inter for brodtext (lattlast), Space Grotesk for rubriker (egen karaktar,
+     premium utan att bli kallt). Byt --font-display for ett annat rubrik-uttryck. */
   --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Space Grotesk', 'Inter', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
 
   --text-xs:   0.75rem;    /* 12 */
@@ -69,8 +72,8 @@
   --text-xl:   1.25rem;    /* 20 */
   --text-2xl:  1.5rem;     /* 24 */
   --text-3xl:  1.875rem;   /* 30 */
-  --text-4xl:  clamp(2rem, 1.4rem + 2vw, 2.75rem);
-  --text-5xl:  clamp(2.5rem, 1.6rem + 3vw, 3.75rem);
+  --text-4xl:  clamp(2.1rem, 1.35rem + 2.4vw, 3rem);
+  --text-5xl:  clamp(2.75rem, 1.55rem + 3.8vw, 4.25rem);
 
   --fw-regular:  400;
   --fw-medium:   500;

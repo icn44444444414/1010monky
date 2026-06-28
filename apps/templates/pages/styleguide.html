@@ -5,10 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
   <title>1010monky design system</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="{{ config.ASSETS_ROOT }}/css/system/tokens.css?v=4">
-  <link rel="stylesheet" href="{{ config.ASSETS_ROOT }}/css/system/base.css?v=4">
-  <link rel="stylesheet" href="{{ config.ASSETS_ROOT }}/css/system/site.css?v=4">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ config.ASSETS_ROOT }}/css/system/tokens.css?v=5">
+  <link rel="stylesheet" href="{{ config.ASSETS_ROOT }}/css/system/base.css?v=5">
+  <link rel="stylesheet" href="{{ config.ASSETS_ROOT }}/css/system/site.css?v=5">
   <style>
     .sg-head { position: sticky; top: 0; z-index: 10; background: var(--surface); border-bottom: var(--border); }
     .sg-sec { padding-block: var(--space-7); border-bottom: var(--border); }
@@ -31,6 +32,19 @@
       <button class="btn btn-secondary btn-sm" onclick="document.documentElement.dataset.theme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'">Vaxla ljus/mork</button>
     </div>
   </header>
+
+  <!-- Hero: visar premium-uttrycket (display-typsnitt + gradient-signatur) -->
+  <section class="sg-sec section-alt">
+    <div class="container" style="padding-block: var(--space-7); max-width: 56ch;">
+      <span class="eyebrow">1010monky Studio</span>
+      <h1 style="margin-block: var(--space-3);">Vi bygger snabba, sökoptimerade hemsidor som <span class="text-gradient">känns dyra</span>.</h1>
+      <p class="lead">WordPress och skräddarsydd kod för företag i Sverige och Finland. Rakt, personligt och utan onödig teknik-jargong.</p>
+      <div class="cluster" style="margin-top: var(--space-5);">
+        <a class="btn btn-primary btn-lg" href="#">Hör av dig</a>
+        <a class="btn btn-ghost" href="#">Se exempel</a>
+      </div>
+    </div>
+  </section>
 
   <!-- Farger -->
   <section class="sg-sec">
