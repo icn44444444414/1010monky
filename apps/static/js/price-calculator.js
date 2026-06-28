@@ -76,6 +76,8 @@
     next:         { sv: 'Nästa →',                       fi: 'Seuraava →' },
     show_price:   { sv: 'Visa mitt pris →',              fi: 'Näytä hintani →' },
     restart:      { sv: 'Börja om',                      fi: 'Aloita alusta' },
+    modal_title:  { sv: 'Räkna ut ditt pris',            fi: 'Laske hintasi' },
+    modal_close:  { sv: 'Stäng',                         fi: 'Sulje' },
     result_eyebrow:{ sv: 'Ditt prisförslag',            fi: 'Hinta-arviosi' },
     result_label: { sv: 'Ungefärligt pris',             fi: 'Arvioitu hinta' },
     est_vat:      { sv: 'ex. moms',                      fi: 'ilman alv.' },
@@ -122,7 +124,18 @@
     '.pc-summary li{display:flex;justify-content:space-between;gap:var(--space-4);padding:var(--space-3) 0;border-bottom:1px solid var(--border);font-size:var(--text-sm)}' +
     '.pc-summary .pc-sum-k{color:var(--text-secondary)}' +
     '.pc-summary .pc-sum-v{font-weight:var(--fw-semibold);text-align:right}' +
-    '.pc-restart{background:none;border:0;color:var(--text-muted);cursor:pointer;font:inherit;font-size:var(--text-sm);text-decoration:underline;padding:0}';
+    '.pc-restart{background:none;border:0;color:var(--text-muted);cursor:pointer;font:inherit;font-size:var(--text-sm);text-decoration:underline;padding:0}' +
+    /* Modal-lage */
+    '.pc-modal{position:fixed;inset:0;z-index:1000;display:none;align-items:flex-start;justify-content:center;padding:5vh 16px;overflow-y:auto;background:rgba(20,23,26,.55);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}' +
+    '.pc-modal.is-open{display:flex}' +
+    '.pc-modal-dialog{background:var(--surface);width:100%;max-width:660px;box-shadow:var(--shadow-xl);position:relative;animation:pc-pop .25s ease}' +
+    '@keyframes pc-pop{from{opacity:0;transform:translateY(14px) scale(.98)}to{opacity:1;transform:none}}' +
+    '.pc-modal-head{display:flex;align-items:center;justify-content:space-between;gap:var(--space-4);padding:var(--space-5) var(--space-5) 0}' +
+    '.pc-modal-title{font-family:var(--font-display);font-weight:var(--fw-bold);font-size:var(--text-lg)}' +
+    '.pc-modal-close{background:none;border:0;font-size:1.6rem;line-height:1;cursor:pointer;color:var(--text-muted);padding:2px 8px}' +
+    '.pc-modal-close:hover{color:var(--text-primary)}' +
+    '.pc-modal-body{padding:var(--space-5)}' +
+    'body.pc-lock{overflow:hidden}';
 
   function injectStyle() {
     if (document.getElementById(STYLE_ID)) return;
@@ -366,15 +379,68 @@
     });
   };
 
+  function docLang() { return (document.documentElement.getAttribute('lang') || 'sv').slice(0, 2); }
+
+  // Oppna quizen i en modal (overlay). Frasch instans varje gang.
+  function openModal(opts) {
+    opts = opts || {};
+    injectStyle();
+    var lang = opts.lang === 'fi' ? 'fi' : (opts.lang || docLang());
+    var tr = function (k) { var p = UI[k]; return p ? p[lang === 'fi' ? 'fi' : 'sv'] : k; };
+
+    var modal = document.createElement('div');
+    modal.className = 'pc-modal';
+    modal.setAttribute('role', 'dialog');
+    modal.setAttribute('aria-modal', 'true');
+    modal.innerHTML =
+      '<div class="pc-modal-dialog">' +
+        '<div class="pc-modal-head">' +
+          '<span class="pc-modal-title">' + esc(tr('modal_title')) + '</span>' +
+          '<button type="button" class="pc-modal-close" aria-label="' + esc(tr('modal_close')) + '">&times;</button>' +
+        '</div>' +
+        '<div class="pc-modal-body"><div class="pc-mount"></div></div>' +
+      '</div>';
+    document.body.appendChild(modal);
+    document.body.classList.add('pc-lock');
+    new PriceCalculator(modal.querySelector('.pc-mount'), { lang: lang, lead: true });
+    // Visa direkt (ingen rAF - den fyrar inte i bakgrundsflikar). Dialogens
+    // entré-animation (pc-pop) spelas ändå när den ritas ut.
+    modal.classList.add('is-open');
+
+    function close() {
+      modal.classList.remove('is-open');
+      document.body.classList.remove('pc-lock');
+      document.removeEventListener('keydown', onKey);
+      setTimeout(function () { if (modal.parentNode) modal.parentNode.removeChild(modal); }, 220);
+    }
+    function onKey(e) { if (e.key === 'Escape') close(); }
+    modal.querySelector('.pc-modal-close').addEventListener('click', close);
+    modal.addEventListener('click', function (e) { if (e.target === modal) close(); });
+    document.addEventListener('keydown', onKey);
+    return { close: close };
+  }
+
   // Publikt API
-  var api = { config: CONFIG, mount: function (el, opts) { return new PriceCalculator(el, opts); } };
+  var api = {
+    config: CONFIG,
+    mount: function (el, opts) { return new PriceCalculator(el, opts); },
+    openModal: openModal
+  };
 
   function boot() {
-    var docLang = (document.documentElement.getAttribute('lang') || 'sv').slice(0, 2);
+    var lang = docLang();
+    // Inbäddade kalkylatorer (t.ex. /priskalkylator-sidan)
     Array.prototype.forEach.call(document.querySelectorAll('[data-price-calculator]'), function (el) {
       if (el.dataset.pcMounted) return;
       el.dataset.pcMounted = '1';
-      api.mount(el, { lang: el.getAttribute('data-lang') || docLang, lead: el.getAttribute('data-lead') !== 'false' });
+      api.mount(el, { lang: el.getAttribute('data-lang') || lang, lead: el.getAttribute('data-lead') !== 'false' });
+    });
+    // Knappar som öppnar quizen i en modal: [data-price-calculator-open]
+    document.addEventListener('click', function (e) {
+      var btn = e.target.closest ? e.target.closest('[data-price-calculator-open]') : null;
+      if (!btn) return;
+      e.preventDefault();
+      openModal({ lang: btn.getAttribute('data-lang') || docLang() });
     });
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
