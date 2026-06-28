@@ -6,9 +6,9 @@
   <meta name="robots" content="noindex, nofollow">
   <title>1010monky design system</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="{{ config.ASSETS_ROOT }}/css/system/tokens.css?v=3">
-  <link rel="stylesheet" href="{{ config.ASSETS_ROOT }}/css/system/base.css?v=3">
-  <link rel="stylesheet" href="{{ config.ASSETS_ROOT }}/css/system/site.css?v=3">
+  <link rel="stylesheet" href="{{ config.ASSETS_ROOT }}/css/system/tokens.css?v=4">
+  <link rel="stylesheet" href="{{ config.ASSETS_ROOT }}/css/system/base.css?v=4">
+  <link rel="stylesheet" href="{{ config.ASSETS_ROOT }}/css/system/site.css?v=4">
   <style>
     .sg-head { position: sticky; top: 0; z-index: 10; background: var(--surface); border-bottom: var(--border); }
     .sg-sec { padding-block: var(--space-7); border-bottom: var(--border); }
@@ -124,32 +124,73 @@
     </div>
   </section>
 
+  <!-- Tema-känsla: redaktionella mönster utan boxar -->
   <section class="sg-sec">
     <div class="container">
-      <span class="eyebrow">Komponenter</span><h2>Kort, badges, formular</h2>
-      <div class="grid grid-3">
+      <span class="eyebrow">Tema-känsla</span>
+      <h2>Layoutmönster – mindre kort, mer luft</h2>
+      <p class="lead" style="max-width: 48ch;">Innehåll ligger direkt på sidan, separerat med luft och tunna linjer. Kort används bara när något verkligen ska lyftas fram.</p>
+
+      <div class="features" style="margin-top: var(--space-6);">
+        <div class="feature">
+          <span class="feature-icon">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg>
+          </span>
+          <div class="feature-title">Snabbt</div>
+          <p class="feature-text">Lätta sidor som laddar direkt – byggt för Core Web Vitals.</p>
+        </div>
+        <div class="feature">
+          <span class="feature-icon">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg>
+          </span>
+          <div class="feature-title">Sökoptimerat</div>
+          <p class="feature-text">Semantisk HTML, hreflang och strukturerad data i grunden.</p>
+        </div>
+        <div class="feature">
+          <span class="feature-icon">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v18M3 12h18"/></svg>
+          </span>
+          <div class="feature-title">Skräddarsytt</div>
+          <p class="feature-text">Egen vanilla-kod – inget tungt ramverk, full kontroll.</p>
+        </div>
+      </div>
+
+      <hr class="divider">
+
+      <div class="stats">
+        <div><div class="stat-num">~50 KB</div><div class="stat-label">CSS över nätet</div></div>
+        <div><div class="stat-num">0,3 s</div><div class="stat-label">Laddningstid</div></div>
+        <div><div class="stat-num">2</div><div class="stat-label">Språk: sv + fi</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Kort + formulär: används sparsamt -->
+  <section class="sg-sec">
+    <div class="container">
+      <span class="eyebrow">Komponenter</span>
+      <h2>Kort och formulär</h2>
+      <p class="text-secondary" style="margin-bottom: var(--space-5);">Kort lyfter fram enskilt innehåll – inte allt. Badges och fält hör till formulär.</p>
+      <div class="media">
         <div class="card card-hover">
-          <span class="badge badge-accent">Nyhet</span>
-          <h4 style="margin-block: var(--space-3) var(--space-2);">Kort-titel</h4>
-          <p class="text-secondary text-sm">Ett kort med yta, kant, radie och mjuk skugga. Hovra for lyft.</p>
-        </div>
-        <div class="card">
-          <div class="cluster" style="margin-bottom: var(--space-3);">
-            <span class="badge badge-success">success</span>
-            <span class="badge badge-warning">warning</span>
-            <span class="badge badge-danger">danger</span>
+          <span class="badge badge-accent">Lyft fram</span>
+          <h4 style="margin-block: var(--space-3) var(--space-2);">Ett kort, medvetet</h4>
+          <p class="text-secondary">Mjuk skugga, ingen ram. Använd när något ska sticka ut – t.ex. ett erbjudande eller en CTA.</p>
+          <div class="cluster" style="margin-top: var(--space-4);">
+            <span class="badge badge-success">klart</span>
+            <span class="badge badge-warning">pågår</span>
           </div>
-          <p class="text-secondary text-sm">Status-badges via semantiska tokens.</p>
         </div>
-        <div class="card">
-          <div class="field" style="margin-bottom: var(--space-3);">
+        <div>
+          <div class="field" style="margin-bottom: var(--space-4);">
             <label class="label" for="sg-n">Namn</label>
             <input class="input" id="sg-n" placeholder="Ditt namn">
           </div>
-          <div class="field">
+          <div class="field" style="margin-bottom: var(--space-4);">
             <label class="label" for="sg-m">Meddelande</label>
-            <textarea class="textarea" id="sg-m" placeholder="Skriv har..."></textarea>
+            <textarea class="textarea" id="sg-m" placeholder="Skriv här..."></textarea>
           </div>
+          <button class="btn btn-primary">Skicka</button>
         </div>
       </div>
     </div>
