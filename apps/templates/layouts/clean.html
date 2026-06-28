@@ -1,0 +1,91 @@
+{# --- Sprakdetektering: finska under /fi/, svenska i roten (standard) --- #}
+{% set _p = request.path %}
+{% set is_fi = _p == '/fi' or _p.startswith('/fi/') %}
+{% set lang = 'fi' if is_fi else 'sv' %}
+{% set base_path = (_p[3:] if _p.startswith('/fi/') else ('/' if _p == '/fi' else _p)) %}
+{% set sv_url = 'https://1010monky.se' + base_path %}
+{% set fi_url = 'https://1010monky.se/fi' + ('' if base_path == '/' else base_path) %}
+<!DOCTYPE html>
+<html lang="{{ lang }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+  {# --- Sidans titel + beskrivning (varje sida fyller blocken) --- #}
+  <title>{% block title %}{% endblock %} | 1010monky Studio</title>
+  <meta name="description" content="{% block meta_description %}1010monky Studio bygger snabba, sökoptimerade hemsidor i Eskilstuna – WordPress och skräddarsydd kod för företag i Sverige och Finland.{% endblock %}">
+  <meta name="author" content="1010monky Studio">
+  <meta name="robots" content="{% block robots %}index, follow, max-image-preview:large, max-snippet:-1{% endblock %}">
+  <meta name="theme-color" content="#448C74">
+
+  {# --- Rätt adress till Google (en kanonisk URL per sida) --- #}
+  <link rel="canonical" href="https://1010monky.se{{ request.path }}">
+
+  {# --- Tvåspråkigt: berätta för Google vilken sida som är vilket språk --- #}
+  <link rel="alternate" hreflang="sv" href="{{ sv_url }}">
+  <link rel="alternate" hreflang="fi" href="{{ fi_url }}">
+  <link rel="alternate" hreflang="x-default" href="{{ sv_url }}">
+
+  {# --- Delning i sociala medier --- #}
+  <meta property="og:type" content="{% block og_type %}website{% endblock %}">
+  <meta property="og:site_name" content="1010monky Studio">
+  <meta property="og:locale" content="{{ 'fi_FI' if is_fi else 'sv_SE' }}">
+  <meta property="og:locale:alternate" content="{{ 'sv_SE' if is_fi else 'fi_FI' }}">
+  <meta property="og:title" content="{{ self.title() }} | 1010monky Studio">
+  <meta property="og:description" content="{{ self.meta_description() }}">
+  <meta property="og:url" content="https://1010monky.se{{ request.path }}">
+  <meta property="og:image" content="{% block og_image %}https://1010monky.se{{ config.ASSETS_ROOT }}/img/og-default.png{% endblock %}">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{ self.title() }} | 1010monky Studio">
+  <meta name="twitter:description" content="{{ self.meta_description() }}">
+  <meta name="twitter:image" content="{{ self.og_image() }}">
+
+  {# --- Favicon / app-ikoner --- #}
+  <link rel="icon" type="image/x-icon" href="{{ config.ASSETS_ROOT }}/app-icons/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="{{ config.ASSETS_ROOT }}/app-icons/icon-32x32.png">
+  <link rel="apple-touch-icon" href="{{ config.ASSETS_ROOT }}/app-icons/icon-180x180.png">
+
+  {# --- Typsnitt: koppla upp tidigt så texten renderas snabbare --- #}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  {# --- Designsystemet: tokens först, sedan grund, sedan sidans egna stilar --- #}
+  <link rel="stylesheet" href="{{ config.ASSETS_ROOT }}/css/system/tokens.css">
+  <link rel="stylesheet" href="{{ config.ASSETS_ROOT }}/css/system/base.css">
+  <link rel="stylesheet" href="{{ config.ASSETS_ROOT }}/css/system/site.css">
+  {% block styles %}{% endblock %}
+
+  {# --- Strukturerad data: hjälper Google förstå att vi är en lokal webbyrå --- #}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "1010monky Studio",
+    "url": "https://1010monky.se",
+    "image": "https://1010monky.se{{ config.ASSETS_ROOT }}/img/og-default.png",
+    "description": "Webbyrå i Eskilstuna som bygger snabba, sökoptimerade hemsidor i WordPress och skräddarsydd kod.",
+    "areaServed": ["SE", "FI"],
+    "address": { "@type": "PostalAddress", "addressLocality": "Eskilstuna", "addressCountry": "SE" },
+    "knowsLanguage": ["sv", "fi", "en"]
+  }
+  </script>
+  {% block jsonld %}{% endblock %}
+</head>
+
+<body>
+  {# Hoppa direkt till innehållet – bra för tangentbord och skärmläsare #}
+  <a class="skip-link" href="#innehall">Hoppa till innehållet</a>
+
+  {% block header %}{% endblock %}
+
+  <main id="innehall">
+    {% block content %}{% endblock %}
+  </main>
+
+  {% block footer %}{% endblock %}
+
+  {% include 'partials/chat_widget.html' %}
+  {% block scripts %}{% endblock %}
+</body>
+</html>

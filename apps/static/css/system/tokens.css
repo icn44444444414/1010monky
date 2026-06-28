@@ -47,8 +47,14 @@
   --accent:         var(--green-500);
   --accent-hover:   var(--green-600);
   --accent-soft:    var(--green-50);
-  --border-color:        rgba(20, 23, 26, .10);
-  --border-color-strong: rgba(20, 23, 26, .18);
+  --border-color:        rgba(20, 23, 26, .07);
+  --border-color-strong: rgba(20, 23, 26, .14);
+  --hairline:            rgba(20, 23, 26, .06);
+
+  /* ---------- Glas (anvands pa flytande element, ej platta innehallskort) ---------- */
+  --glass-bg:     rgba(255, 255, 255, .62);
+  --glass-border: rgba(255, 255, 255, .55);
+  --glass-blur:   18px;
 
   /* ---------- Typografi ---------- */
   --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
@@ -143,8 +149,11 @@
   --accent:         var(--green-400);
   --accent-hover:   var(--green-300);
   --accent-soft:    rgba(91, 168, 140, .14);
-  --border-color:        rgba(255, 255, 255, .12);
-  --border-color-strong: rgba(255, 255, 255, .22);
+  --border-color:        rgba(255, 255, 255, .10);
+  --border-color-strong: rgba(255, 255, 255, .20);
+  --hairline:            rgba(255, 255, 255, .08);
+  --glass-bg:     rgba(26, 31, 34, .55);
+  --glass-border: rgba(255, 255, 255, .10);
   --c-success-bg: rgba(47,143,99,.18); --c-warning-bg: rgba(181,129,26,.18);
   --c-danger-bg: rgba(200,68,63,.18);  --c-info-bg: rgba(45,111,168,.18);
 }

@@ -1,0 +1,33 @@
+/* =========================================================================
+   1010monky - sidans egna komponenter (header, footer, sektioner).
+   Bygger pa tokens.css + base.css. Vaxer en bit i taget under migrationen.
+   ========================================================================= */
+
+/* Skip-lank: gomd tills man tabbar dit. Bra for tangentbord och SEO/a11y. */
+.skip-link {
+  position: absolute;
+  left: var(--space-3);
+  top: -3rem;
+  z-index: var(--z-toast);
+  padding: 0.6rem 1rem;
+  background: var(--accent);
+  color: var(--text-on-accent);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+  transition: top var(--dur) var(--ease);
+}
+.skip-link:focus {
+  top: var(--space-3);
+  color: var(--text-on-accent);
+}
+
+/* Sprakvaxlare: tva flaggor (svenska / finska). Aktivt sprak ar markerat. */
+.lang-switch { display: inline-flex; align-items: center; gap: var(--space-2); }
+.lang-flag {
+  display: inline-flex; padding: 3px; border-radius: var(--radius-sm); line-height: 0;
+  opacity: .5; transition: opacity var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease);
+}
+.lang-flag:hover { opacity: 1; }
+.lang-flag.is-active { opacity: 1; box-shadow: 0 0 0 2px var(--accent); }
+.lang-flag svg { display: block; border-radius: 3px; }
+

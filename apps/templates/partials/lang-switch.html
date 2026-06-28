@@ -1,0 +1,21 @@
+{# Sprakvaxlare med tva flaggor. Faller tillbaka pa / och /fi/ om sv_url/fi_url
+   inte satts (t.ex. i styleguiden). I clean.html-sidor kommer ratt URL:er in. #}
+{% set _sv = sv_url|default('/') %}
+{% set _fi = fi_url|default('/fi/') %}
+{% set _lang = lang|default('sv') %}
+<div class="lang-switch" role="group" aria-label="Byt språk · Vaihda kieli">
+  <a class="lang-flag {{ 'is-active' if _lang == 'sv' }}" href="{{ _sv }}" hreflang="sv" aria-label="Svenska"{% if _lang == 'sv' %} aria-current="true"{% endif %}>
+    <svg viewBox="0 0 20 14" width="23" height="16" aria-hidden="true">
+      <rect width="20" height="14" rx="2" fill="#006AA7"/>
+      <rect x="6" width="2.6" height="14" fill="#FECC00"/>
+      <rect y="5.7" width="20" height="2.6" fill="#FECC00"/>
+    </svg>
+  </a>
+  <a class="lang-flag {{ 'is-active' if _lang == 'fi' }}" href="{{ _fi }}" hreflang="fi" aria-label="Suomeksi"{% if _lang == 'fi' %} aria-current="true"{% endif %}>
+    <svg viewBox="0 0 20 14" width="23" height="16" aria-hidden="true">
+      <rect width="20" height="14" rx="2" fill="#fff" stroke="rgba(0,0,0,.12)"/>
+      <rect x="6" width="2.6" height="14" fill="#003580"/>
+      <rect y="5.7" width="20" height="2.6" fill="#003580"/>
+    </svg>
+  </a>
+</div>
