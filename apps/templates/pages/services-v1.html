@@ -1,356 +1,164 @@
-{% extends 'layouts/base.html' %}
+{% extends 'layouts/clean.html' %}
 
-{% block title %}Tjänster – WordPress, skräddarsydd kod & webbdesign{% endblock %}
+{% block title %}Tjänster – WordPress, skräddarsydd kod &amp; webbdesign{% endblock %}
+{% block meta_description %}Webbplatser i WordPress och skräddarsydd kod – design, e-handel, SEO och förvaltning. En utvecklare och en designer i Eskilstuna, för företag i Sverige och Finland.{% endblock %}
 
 {% block styles %}
+<style>
+  .svc-icon { width: 46px; height: 46px; border-radius: var(--radius-md); display: grid; place-items: center; background: var(--accent-soft); color: var(--accent); margin-bottom: var(--space-3); }
+  .step { display: flex; gap: var(--space-3); }
+  .step-num { font-family: var(--font-display); font-weight: var(--fw-bold); color: var(--accent); flex: 0 0 auto; }
+  .quote { border-top: 1px solid var(--border-color); margin-top: var(--space-4); padding-top: var(--space-3); font-style: italic; color: var(--text-secondary); font-size: var(--text-sm); }
+</style>
+{% endblock %}
 
-<link href="{{ config.ASSETS_ROOT }}/vendor/swiper/swiper-bundle.min.css" media="screen" rel="stylesheet"/>
-<link href="{{ config.ASSETS_ROOT }}/icons/around-icons.min.css" rel="stylesheet"/>
-<link href="{{ config.ASSETS_ROOT }}/css/theme.min.css" media="screen" rel="stylesheet"/>
-{% endblock styles %}
+{% block jsonld %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    { "@type": "BreadcrumbList", "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Hem", "item": "https://1010monky.se/" },
+      { "@type": "ListItem", "position": 2, "name": "Tjänster", "item": "https://1010monky.se/services-v1" }
+    ]},
+    { "@type": "ProfessionalService", "name": "1010monky Studio", "url": "https://1010monky.se",
+      "areaServed": ["SE","FI"], "address": { "@type": "PostalAddress", "addressLocality": "Eskilstuna", "addressCountry": "SE" },
+      "hasOfferCatalog": { "@type": "OfferCatalog", "name": "Tjänster", "itemListElement": [
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Skräddarsydda webbsidor" } },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "WordPress-utveckling" } },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Design och UX" } },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "E-handel" } },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "SEO och prestanda" } },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Förvaltning och support" } }
+      ]}
+    }
+  ]
+}
+</script>
+{% endblock %}
 
 {% block content %}
-<!-- Page loading spinner -->
-{% include 'partials/loader.html' %}
-<!-- Page wrapper -->
-<main class="page-wrapper">
-    <!-- Navbar. Remove 'fixed-top' class to make the navigation bar scrollable with the page -->
-    {% include "partials/navbar.html" %}
-    <!-- Breadcrumb + Services grid -->
-    <section class="container py-5 mt-5 mb-md-3 mb-lg-4 mb-xxl-5">
-        <!-- Breadcrumb -->
-        <nav aria-label="breadcrumb">
-            <ol class="pt-lg-3 pb-lg-4 pb-2 breadcrumb">
-                <li class="breadcrumb-item"><a href="/">Hem</a></li>
-                <li aria-current="page" class="breadcrumb-item active">Tjänster</li>
-            </ol>
-        </nav>
-        <!-- Page title -->
-        <h1 class="page-title text-center">Våra tjänster</h1>
-        <p class="text-center pb-4 mb-2 mb-lg-3">Webbplatser i WordPress och skräddarsydd kod – från idé till lansering. En utvecklare och en designer, i Sverige och Finland.</p>
-        <!-- Services grid -->
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4 pb-sm-3 pb-md-4 pb-xl-5">
-            <!-- Item -->
-            <div class="col">
-                <a class="card card-hover-primary bg-secondary border-0 h-100 text-decoration-none" href="#">
-                    <div class="card-body pb-0">
-                        <svg class="d-block text-warning mb-4" fill="currentColor" height="40" viewbox="0 0 40 40"
-                             width="40" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M1.7276 27.5001C1.21683 28.3857 0.916576 29.3769 0.850062 30.3971C0.783549 31.4173 0.952558 32.4391 1.34402 33.3835C1.73548 34.328 2.33891 35.1697 3.10764 35.8437C3.87638 36.5177 4.78982 37.0058 5.77734 37.2704C6.76486 37.5349 7.8 37.5689 8.80272 37.3695C9.80544 37.1701 10.7489 36.7428 11.5601 36.1206C12.3713 35.4983 13.0285 34.6979 13.4809 33.7811C13.9334 32.8643 14.1689 31.8558 14.1693 30.8334C14.1698 29.3654 13.6858 27.9382 12.7924 26.7734C11.8989 25.6085 10.6459 24.7712 9.22787 24.3913C7.80984 24.0114 6.30606 24.1101 4.94991 24.6722C3.59375 25.2344 2.46105 26.2284 1.7276 27.5001Z"></path>
-                            <path d="M11.7344 10.1667L4.23438 23.1667C5.42383 22.6595 6.71498 22.4361 8.00568 22.5142C9.29638 22.5922 10.5512 22.9695 11.6709 23.6163C12.7906 24.263 13.7444 25.1615 14.4569 26.2405C15.1694 27.3196 15.621 28.5496 15.776 29.8333L19.0427 24.1667C12.8427 13.45 11.9427 12.425 11.7344 10.1667Z"></path>
-                            <path d="M38.2784 27.5C37.8534 26.7833 25.6701 5.6083 25.4284 5.29996C24.4255 3.9011 22.9204 2.94436 21.2281 2.62997C19.5358 2.31559 17.7875 2.66792 16.3491 3.61323C14.9107 4.55855 13.8936 6.02357 13.5108 7.70171C13.1279 9.37984 13.409 11.141 14.2951 12.6166C14.2118 12.6166 13.8784 11.9 26.7284 34.1666C27.1662 34.925 27.749 35.5898 28.4437 36.1229C29.1383 36.656 29.9311 37.0471 30.7769 37.2739C31.6227 37.5006 32.5049 37.5585 33.373 37.4443C34.2412 37.3301 35.0784 37.046 35.8368 36.6083C36.5952 36.1706 37.2599 35.5877 37.793 34.8931C38.3262 34.1984 38.7173 33.4056 38.944 32.5598C39.1707 31.714 39.2287 30.8319 39.1145 29.9637C39.0003 29.0955 38.7162 28.2583 38.2784 27.5Z"></path>
-                        </svg>
-                        <h3 class="h4 card-title mt-0">Skräddarsydda webbsidor</h3>
-                        <p class="card-text">Webbplatser byggda från grunden i modern kod, anpassade efter din
-                            verksamhet. Snabba att ladda och enkla att bygga vidare på.</p>
-                    </div>
-                    <div class="card-footer border-0 py-3 my-3 mb-sm-4">
-                        <div class="btn btn-lg btn-icon btn-outline-primary rounded-circle pe-none">
-                            <i class="ai-arrow-right"></i>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <!-- Item -->
-            <div class="col">
-                <a class="card card-hover-primary bg-secondary border-0 h-100 text-decoration-none" href="#">
-                    <div class="card-body pb-0">
-                        <svg class="d-block text-warning mb-4" fill="currentColor" height="40" viewbox="0 0 40 40"
-                             width="40" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M32.6213 22.7824C26.4943 23.0213 20.6934 24.6146 15.525 27.255L8.87893 31.0927C7.12129 32.1061 4.87665 31.4978 3.86795 29.7493L0.49035 23.9008C-0.520513 22.1491 0.0820047 19.9007 1.83372 18.8898L7.33997 15.7103C7.65881 15.5262 8.06657 15.6354 8.25074 15.9543L12.5774 23.4483C12.7647 23.7727 13.1836 23.8804 13.5051 23.6822C13.816 23.4905 13.9009 23.074 13.7182 22.7577L9.36036 15.2095C9.18727 14.9097 9.27227 14.5269 9.55686 14.3297C14.1026 11.1781 17.9484 7.16404 20.9018 2.48266C22.0206 0.707687 24.6278 0.755188 25.6794 2.57599L34.9289 18.5981C35.9801 20.415 34.7215 22.7007 32.6213 22.7824ZM33.8082 11.6236C34.1506 9.6637 33.0019 7.69797 31.1452 7.02512C30.5616 6.81361 30.0322 7.44872 30.3425 7.98632C31.0812 9.2661 31.8225 10.5503 32.5721 11.8482C32.8853 12.3903 33.7004 12.2404 33.8082 11.6236ZM18.4184 35.2136L15.2546 29.7215C15.0708 29.4024 14.6625 29.2929 14.3434 29.477C12.6288 30.4663 12.564 30.5047 10.2768 31.8249C9.95788 32.009 9.84821 32.417 10.0324 32.736L13.2016 38.2245C13.6078 38.9274 14.3384 39.3096 15.0824 39.3096C15.8041 39.3096 16.0801 39.0654 17.625 38.1737C18.66 37.5762 19.0159 36.2478 18.4184 35.2136ZM38.676 6.55444C38.9948 6.37035 39.1041 5.96259 38.92 5.64375C38.736 5.32499 38.3284 5.21557 38.0093 5.39974L36.2843 6.39569C35.694 6.73653 35.9409 7.63989 36.6183 7.63989C36.8554 7.63981 36.8079 7.63297 38.676 6.55444ZM32.5456 3.09976L32.9663 1.53004C33.0616 1.17437 32.8505 0.808857 32.495 0.713521C32.139 0.618351 31.7737 0.829274 31.6783 1.18495L31.2577 2.75466C31.1444 3.17734 31.4629 3.5941 31.902 3.5941C32.1964 3.59402 32.4658 3.3976 32.5456 3.09976ZM39.9772 13.6731C40.0725 13.3175 39.8613 12.9519 39.5057 12.8566L37.9359 12.436C37.5803 12.3409 37.2148 12.5519 37.1194 12.9075C37.0241 13.2631 37.2353 13.6286 37.5909 13.724C39.3076 14.184 39.2134 14.1675 39.3336 14.1675C39.6279 14.1675 39.8973 13.971 39.9772 13.6731Z"></path>
-                        </svg>
-                        <h3 class="h4 card-title mt-0">WordPress-utveckling</h3>
-                        <p class="card-text">WordPress-sidor du själv kan uppdatera – med rätt struktur, plugins och
-                            en design som håller över tid.</p>
-                    </div>
-                    <div class="card-footer border-0 py-3 my-3 mb-sm-4">
-                        <div class="btn btn-lg btn-icon btn-outline-primary rounded-circle pe-none">
-                            <i class="ai-arrow-right"></i>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <!-- Item -->
-            <div class="col">
-                <a class="card card-hover-primary bg-secondary border-0 h-100 text-decoration-none" href="#">
-                    <div class="card-body pb-0">
-                        <svg class="d-block text-warning mb-4" fill="currentColor" height="40" viewbox="0 0 40 40"
-                             width="40" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M26.7306 12.5C25.4119 6.375 22.5994 2.5 19.9981 2.5C17.3969 2.5 14.5844 6.375 13.2656 12.5H26.7306Z"></path>
-                            <path d="M12.5 20C12.4997 21.6722 12.6112 23.3426 12.8338 25H27.1663C27.3888 23.3426 27.5003 21.6722 27.5 20C27.5003 18.3278 27.3888 16.6574 27.1663 15H12.8338C12.6112 16.6574 12.4997 18.3278 12.5 20Z"></path>
-                            <path d="M13.2656 27.5C14.5844 33.625 17.3969 37.5 19.9981 37.5C22.5994 37.5 25.4119 33.625 26.7306 27.5H13.2656Z"></path>
-                            <path d="M29.2956 12.5H37.1706C35.9874 9.80721 34.1895 7.42918 31.9213 5.55667C29.6531 3.68416 26.9775 2.36928 24.1094 1.7175C26.4806 3.80375 28.3406 7.66125 29.2956 12.5Z"></path>
-                            <path d="M38.0638 15H29.6887C29.895 16.6587 29.9981 18.3286 29.9975 20C29.9977 21.6715 29.8941 23.3413 29.6875 25H38.0625C38.9741 21.729 38.9741 18.271 38.0625 15H38.0638Z"></path>
-                            <path d="M24.1094 38.2825C26.978 37.6311 29.654 36.3164 31.9227 34.4438C34.1914 32.5713 35.9896 30.1931 37.1731 27.5H29.2981C28.3406 32.3388 26.4806 36.1963 24.1094 38.2825Z"></path>
-                            <path d="M10.7109 27.5H2.83594C4.01943 30.1931 5.81766 32.5713 8.08636 34.4438C10.3551 36.3164 13.0311 37.6311 15.8997 38.2825C13.5259 36.1963 11.6659 32.3388 10.7109 27.5Z"></path>
-                            <path d="M15.8919 1.7175C13.0233 2.36893 10.3472 3.68365 8.07854 5.55618C5.80984 7.42871 4.01161 9.80692 2.82812 12.5H10.7031C11.6606 7.66125 13.5206 3.80375 15.8919 1.7175Z"></path>
-                            <path d="M9.99868 20C9.99852 18.3285 10.102 16.6587 10.3087 15H1.93369C1.0221 18.271 1.0221 21.729 1.93369 25H10.3087C10.102 23.3413 9.99852 21.6715 9.99868 20Z"></path>
-                        </svg>
-                        <h3 class="h4 card-title mt-0">Design &amp; UX</h3>
-                        <p class="card-text">Tydlig design som gör innehållet lätt att förstå och vägen till kontakt
-                            enkel – på alla skärmar.</p>
-                    </div>
-                    <div class="card-footer border-0 py-3 my-3 mb-sm-4">
-                        <div class="btn btn-lg btn-icon btn-outline-primary rounded-circle pe-none">
-                            <i class="ai-arrow-right"></i>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <!-- Item -->
-            <div class="col">
-                <a class="card card-hover-primary bg-secondary border-0 h-100 text-decoration-none" href="#">
-                    <div class="card-body pb-0">
-                        <svg class="d-block text-warning mb-4" fill="currentColor" height="40" viewbox="0 0 40 40"
-                             width="40" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M38.6803 8.92375C38.5174 7.83484 37.9698 6.84032 37.1367 6.12048C36.3036 5.40064 35.2401 5.00313 34.1391 5H5.86156C4.76054 5.00313 3.69708 5.40064 2.86395 6.12048C2.03083 6.84032 1.48319 7.83484 1.32031 8.92375L20.0003 21.0112L38.6803 8.92375Z"></path>
-                            <path d="M20.6787 23.55C20.4765 23.6807 20.2408 23.7503 20 23.7503C19.7592 23.7503 19.5235 23.6807 19.3212 23.55L1.25 11.8575V30.3887C1.25132 31.6113 1.73758 32.7834 2.60207 33.6479C3.46656 34.5124 4.63868 34.9987 5.86125 35H34.1388C35.3613 34.9987 36.5334 34.5124 37.3979 33.6479C38.2624 32.7834 38.7487 31.6113 38.75 30.3887V11.8562L20.6787 23.55Z"></path>
-                        </svg>
-                        <h3 class="h4 card-title mt-0">E-handel</h3>
-                        <p class="card-text">Webbutiker i WooCommerce eller skräddarsydd lösning – smidig kassa,
-                            säkra betalningar och en butik som är lätt att sköta.</p>
-                    </div>
-                    <div class="card-footer border-0 py-3 my-3 mb-sm-4">
-                        <div class="btn btn-lg btn-icon btn-outline-primary rounded-circle pe-none">
-                            <i class="ai-arrow-right"></i>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <!-- Item -->
-            <div class="col">
-                <a class="card card-hover-primary bg-secondary border-0 h-100 text-decoration-none" href="#">
-                    <div class="card-body pb-0">
-                        <svg class="d-block text-warning mb-4" fill="currentColor" height="40" viewbox="0 0 40 40"
-                             width="40" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M34.25 2H5.25C4.12344 2.00198 3.04359 2.45039 2.24699 3.24699C1.45039 4.04359 1.00198 5.12344 1 6.25V27.75C1.00198 28.8766 1.45039 29.9564 2.24699 30.753C3.04359 31.5496 4.12344 31.998 5.25 32H8.5V38.25C8.50037 38.4929 8.5715 38.7304 8.70469 38.9336C8.83789 39.1367 9.02738 39.2966 9.25 39.3938C9.40728 39.4641 9.5777 39.5003 9.75 39.5C10.0629 39.5 10.3644 39.3827 10.595 39.1712L18.4188 32H34.25C35.3766 31.998 36.4564 31.5496 37.253 30.753C38.0496 29.9564 38.498 28.8766 38.5 27.75V6.25C38.498 5.12344 38.0496 4.04359 37.253 3.24699C36.4564 2.45039 35.3766 2.00198 34.25 2ZM28.5 24.5H11C10.6685 24.5 10.3505 24.3683 10.1161 24.1339C9.8817 23.8995 9.75 23.5815 9.75 23.25C9.75 22.9185 9.8817 22.6005 10.1161 22.3661C10.3505 22.1317 10.6685 22 11 22H28.5C28.8315 22 29.1495 22.1317 29.3839 22.3661C29.6183 22.6005 29.75 22.9185 29.75 23.25C29.75 23.5815 29.6183 23.8995 29.3839 24.1339C29.1495 24.3683 28.8315 24.5 28.5 24.5ZM28.5 18.25H11C10.6685 18.25 10.3505 18.1183 10.1161 17.8839C9.8817 17.6495 9.75 17.3315 9.75 17C9.75 16.6685 9.8817 16.3505 10.1161 16.1161C10.3505 15.8817 10.6685 15.75 11 15.75H28.5C28.8315 15.75 29.1495 15.8817 29.3839 16.1161C29.6183 16.3505 29.75 16.6685 29.75 17C29.75 17.3315 29.6183 17.6495 29.3839 17.8839C29.1495 18.1183 28.8315 18.25 28.5 18.25ZM28.5 12H11C10.6685 12 10.3505 11.8683 10.1161 11.6339C9.8817 11.3995 9.75 11.0815 9.75 10.75C9.75 10.4185 9.8817 10.1005 10.1161 9.86612C10.3505 9.6317 10.6685 9.5 11 9.5H28.5C28.8315 9.5 29.1495 9.6317 29.3839 9.86612C29.6183 10.1005 29.75 10.4185 29.75 10.75C29.75 11.0815 29.6183 11.3995 29.3839 11.6339C29.1495 11.8683 28.8315 12 28.5 12Z"></path>
-                        </svg>
-                        <h3 class="h4 card-title mt-0">SEO &amp; prestanda</h3>
-                        <p class="card-text">Teknisk SEO, bildoptimering och en struktur som gör webbplatsen snabb
-                            och lätt att hitta i sökmotorer.</p>
-                    </div>
-                    <div class="card-footer border-0 py-3 my-3 mb-sm-4">
-                        <div class="btn btn-lg btn-icon btn-outline-primary rounded-circle pe-none">
-                            <i class="ai-arrow-right"></i>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <!-- Item -->
-            <div class="col">
-                <a class="card card-hover-primary bg-secondary border-0 h-100 text-decoration-none" href="#">
-                    <div class="card-body pb-0">
-                        <svg class="d-block text-warning mb-4" fill="currentColor" height="40" viewbox="0 0 40 40"
-                             width="40" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M28.8575 10.625L15.3663 24.1162C15.1318 24.3506 15.0001 24.6685 15 25V28.75C15 29.0815 15.1317 29.3995 15.3661 29.6339C15.6005 29.8683 15.9185 30 16.25 30H20C20.3315 29.9999 20.6494 29.8682 20.8838 29.6338L34.4263 16.0913C33.6525 15.3837 32.97 14.7375 32.8662 14.6337L28.8575 10.625Z"></path>
-                            <path d="M38.3838 10.3662L34.6338 6.61623C34.3993 6.38189 34.0815 6.25024 33.75 6.25024C33.4185 6.25024 33.1007 6.38189 32.8662 6.61623L30.625 8.85748L36.1425 14.375L38.3838 12.1337C38.6181 11.8993 38.7497 11.5814 38.7497 11.25C38.7497 10.9185 38.6181 10.6006 38.3838 10.3662Z"></path>
-                            <path d="M20 32.5H16.25C15.2554 32.5 14.3016 32.1049 13.5983 31.4017C12.8951 30.6984 12.5 29.7446 12.5 28.75V25C12.4986 24.5074 12.595 24.0193 12.7836 23.5642C12.9722 23.1091 13.2493 22.696 13.5987 22.3487L28.75 7.1975V2.5C28.75 2.16848 28.6183 1.85054 28.3839 1.61612C28.1495 1.3817 27.8315 1.25 27.5 1.25H2.5C2.16848 1.25 1.85054 1.3817 1.61612 1.61612C1.3817 1.85054 1.25 2.16848 1.25 2.5V37.5C1.25 37.8315 1.3817 38.1495 1.61612 38.3839C1.85054 38.6183 2.16848 38.75 2.5 38.75H27.5C27.8315 38.75 28.1495 38.6183 28.3839 38.3839C28.6183 38.1495 28.75 37.8315 28.75 37.5V25.3025L22.6513 31.4013C22.304 31.7507 21.8909 32.0278 21.4358 32.2164C20.9807 32.405 20.4926 32.5014 20 32.5ZM7.5 7.5H22.5C22.8315 7.5 23.1495 7.6317 23.3839 7.86612C23.6183 8.10054 23.75 8.41848 23.75 8.75C23.75 9.08152 23.6183 9.39946 23.3839 9.63388C23.1495 9.8683 22.8315 10 22.5 10H7.5C7.16848 10 6.85054 9.8683 6.61612 9.63388C6.3817 9.39946 6.25 9.08152 6.25 8.75C6.25 8.41848 6.3817 8.10054 6.61612 7.86612C6.85054 7.6317 7.16848 7.5 7.5 7.5ZM6.25 15C6.25 14.6685 6.3817 14.3505 6.61612 14.1161C6.85054 13.8817 7.16848 13.75 7.5 13.75H15C15.3315 13.75 15.6495 13.8817 15.8839 14.1161C16.1183 14.3505 16.25 14.6685 16.25 15C16.25 15.3315 16.1183 15.6495 15.8839 15.8839C15.6495 16.1183 15.3315 16.25 15 16.25H7.5C7.16848 16.25 6.85054 16.1183 6.61612 15.8839C6.3817 15.6495 6.25 15.3315 6.25 15Z"></path>
-                        </svg>
-                        <h3 class="h4 card-title mt-0">Förvaltning &amp; support</h3>
-                        <p class="card-text">Löpande drift, uppdateringar, säkerhet och backup – så att din
-                            webbplats förblir snabb och stabil över tid.</p>
-                    </div>
-                    <div class="card-footer border-0 py-3 my-3 mb-sm-4">
-                        <div class="btn btn-lg btn-icon btn-outline-primary rounded-circle pe-none">
-                            <i class="ai-arrow-right"></i>
-                        </div>
-                    </div>
-                </a>
-            </div>
+<section class="section section-alt">
+  <div class="container" style="max-width: 62ch;">
+    <span class="eyebrow">Tjänster</span>
+    <h1 style="margin-block: var(--space-3);">Allt för din webb, på <span class="text-gradient">ett ställe</span></h1>
+    <p class="lead">Webbplatser i WordPress och skräddarsydd kod – från idé till lansering. En utvecklare och en designer, i Sverige och Finland.</p>
+    <div class="cluster" style="margin-top: var(--space-5);">
+      <a class="btn btn-primary" href="/contacts-v1">Få offert</a>
+      <a class="btn btn-ghost" href="/priskalkylator">Se vad det kostar</a>
+    </div>
+  </div>
+</section>
+
+<!-- Tjänster -->
+<section class="section">
+  <div class="container">
+    <div class="grid grid-3">
+      <div class="card">
+        <span class="svc-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="m8 9-3 3 3 3M16 9l3 3-3 3M13 6l-2 12"/></svg></span>
+        <h2 class="h5">Skräddarsydda webbsidor</h2>
+        <p class="text-secondary text-sm">Byggda från grunden i modern kod, anpassade efter din verksamhet. Snabba att ladda och enkla att bygga vidare på.</p>
+      </div>
+      <div class="card">
+        <span class="svc-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="m7 9 2.5 7L12 9l2.5 7L17 9"/></svg></span>
+        <h2 class="h5">WordPress-utveckling</h2>
+        <p class="text-secondary text-sm">WordPress-sidor du själv kan uppdatera – med rätt struktur, plugins och en design som håller över tid.</p>
+      </div>
+      <div class="card">
+        <span class="svc-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></span>
+        <h2 class="h5">Design &amp; UX</h2>
+        <p class="text-secondary text-sm">Tydlig design som gör innehållet lätt att förstå och vägen till kontakt enkel – på alla skärmar.</p>
+      </div>
+      <div class="card">
+        <span class="svc-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 3h3l2.5 12.5a2 2 0 0 0 2 1.5h7a2 2 0 0 0 2-1.5L21 7H6"/></svg></span>
+        <h2 class="h5">E-handel</h2>
+        <p class="text-secondary text-sm">Webbutiker i WooCommerce eller skräddarsydd lösning – smidig kassa, säkra betalningar och en butik som är lätt att sköta.</p>
+      </div>
+      <div class="card">
+        <span class="svc-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg></span>
+        <h2 class="h5">SEO &amp; prestanda</h2>
+        <p class="text-secondary text-sm">Teknisk SEO, bildoptimering och en struktur som gör webbplatsen snabb och lätt att hitta i sökmotorer.</p>
+      </div>
+      <div class="card">
+        <span class="svc-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 4 6v5c0 5 3.5 8 8 10 4.5-2 8-5 8-10V6z"/><path d="m9 12 2 2 4-4"/></svg></span>
+        <h2 class="h5">Förvaltning &amp; support</h2>
+        <p class="text-secondary text-sm">Löpande drift, uppdateringar, säkerhet och backup – så att din webbplats förblir snabb och stabil över tid.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Så är det att jobba med oss -->
+<section class="section section-alt">
+  <div class="container">
+    <div class="media">
+      <img src="{{ config.ASSETS_ROOT }}/img/1010monkey-dashboard.webp" alt="1010monky Studio – projektöversikt" class="rounded-lg" loading="lazy">
+      <div>
+        <span class="eyebrow">Så jobbar vi</span>
+        <h2 style="margin-block: var(--space-2) var(--space-5);">Så är det att jobba med oss</h2>
+        <div class="stack-lg">
+          <div class="step"><span class="step-num">01</span><div><h3 class="h6">Personlig kontakt</h3><p class="text-secondary text-sm">Du jobbar direkt med oss som bygger webbplatsen – inga mellanhänder, snabba svar och en lösning anpassad efter dina mål.</p></div></div>
+          <div class="step"><span class="step-num">02</span><div><h3 class="h6">Snabbt och genomtänkt</h3><p class="text-secondary text-sm">Webbplatser som laddar snabbt, fungerar i mobilen och är lätta att använda för dina besökare.</p></div></div>
+          <div class="step"><span class="step-num">03</span><div><h3 class="h6">Tydlig process</h3><p class="text-secondary text-sm">Du vet hela tiden vad som händer – från första skiss till lansering jobbar vi steg för steg med löpande avstämningar.</p></div></div>
+          <div class="step"><span class="step-num">04</span><div><h3 class="h6">Allt på ett ställe</h3><p class="text-secondary text-sm">Design, utveckling, SEO och förvaltning – du slipper samordna flera leverantörer och har samma kontakt genom hela projektet.</p></div></div>
         </div>
-    </section>
-    <!-- Benefits -->
-    <section class="container pb-5 mb-md-3 mb-lg-4 mb-xxl-5">
-        <div class="row pb-md-4 pb-xl-5">
-            <div class="col-md-6 mb-4 mb-md-0 d-flex align-items-center justify-content-center">
-                <img src="{{ config.ASSETS_ROOT }}/img/1010monkey-dashboard.webp" alt="1010monkey Studio – projektöversikt" class="img-fluid rounded-3" style="width: 100%; height: auto;"/>
-            </div>
-            <div class="col-md-6 col-xl-5 offset-xl-1">
-                <div class="pt-4 pb-sm-4 ps-md-4 ps-xl-0">
-                    <h2 class="h1 pb-2 pb-sm-3 pb-xl-4">Så är det <br/>att jobba med oss</h2>
-                    <div class="d-flex pb-3 mb-2 mb-xl-3">
-                        <div class="text-body-secondary pt-1">01</div>
-                        <div class="ps-3">
-                            <h3 class="h5">Personlig kontakt</h3>
-                            <p class="mb-0">Du jobbar direkt med oss som bygger webbplatsen – inga mellanhänder,
-                                snabba svar och en lösning anpassad efter dina mål.</p>
-                        </div>
-                    </div>
-                    <div class="d-flex pb-3 mb-2 mb-xl-3">
-                        <div class="text-body-secondary pt-1">02</div>
-                        <div class="ps-3">
-                            <h3 class="h5">Snabbt och genomtänkt</h3>
-                            <p class="mb-0">Webbplatser som laddar snabbt, fungerar i mobilen och är lätta att
-                                använda för dina besökare.</p>
-                        </div>
-                    </div>
-                    <div class="d-flex pb-3 mb-2 mb-xl-3">
-                        <div class="text-body-secondary pt-1">03</div>
-                        <div class="ps-3">
-                            <h3 class="h5">Tydlig process</h3>
-                            <p class="mb-0">Du vet hela tiden vad som händer – från första skiss till lansering jobbar
-                                vi steg för steg med löpande avstämningar.</p>
-                        </div>
-                    </div>
-                    <div class="d-flex mb-2 mb-xl-3">
-                        <div class="text-body-secondary pt-1">04</div>
-                        <div class="ps-3">
-                            <h3 class="h5">Allt på ett ställe</h3>
-                            <p class="mb-0">Design, utveckling, SEO och förvaltning – du slipper samordna flera
-                                leverantörer och har samma kontakt genom hela projektet.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Featured projects (replaces fabricated testimonials) -->
-    <section class="bg-secondary py-sm-2 py-lg-3 py-xl-4 py-xxl-5">
-        <div class="container py-5">
-            <h2 class="h1 text-center pt-1 pt-sm-2 pt-lg-3 pb-2">Projekt vi byggt</h2>
-            <p class="text-center pb-4 mb-2 mb-lg-3 mx-auto" style="max-width: 640px;">Ett par egna och partnerdrivna projekt som visar hur vi arbetar – från teknik till webbnärvaro.</p>
-            <div class="row g-4 justify-content-center">
-                <!-- GhostyMsg -->
-                <div class="col-6">
-                    <div class="card border-0 h-100">
-                        <div class="card-body p-4 p-xl-5">
-                            <a class="monky-loghover mb-4" href="https://ghostymsg.com" target="_blank" rel="noopener" aria-label="Öppna GhostyMsg live i ny flik">
-                                <img class="d-block" src="{{ config.ASSETS_ROOT }}/img/brands/ghostymsg-logo.png" alt="GhostyMsg" height="56"/>
-                            </a>
-                            <h3 class="h4"><a class="monky-livelink" href="https://ghostymsg.com" target="_blank" rel="noopener">GhostyMsg – anonym chatt i realtid</a></h3>
-                            <p class="fs-sm mb-3">Tillfälliga, inbjudningsbaserade chattrum som skapas med en delbar länk och ett lösenord. Meddelanden skickas i realtid via WebSockets och sparas aldrig.</p>
-                            <p class="fs-sm mb-3">Tanken bakom GhostyMsg är att ett samtal ska kunna vara helt tillfälligt. Du skapar ett rum, delar länken och lösenordet med den du vill prata med, och när ni är klara finns ingenting kvar. Inga konton och ingen historik.</p>
-                            <p class="fs-sm mb-4">Vår del var att bygga det i Node.js, sköta realtidsdelen och få krypteringen att ske i själva webbläsaren, så att servern aldrig ser vad som skrivs. Den är inte helt färdig, vi lägger till delar efter hand, men grunden funkar och vi är raka med vad som är på plats och vad som är kvar.</p>
-                            <div class="d-flex flex-wrap gap-2">
-                                <span class="badge bg-secondary text-body fw-normal">Node.js</span>
-                                <span class="badge bg-secondary text-body fw-normal">Express</span>
-                                <span class="badge bg-secondary text-body fw-normal">WebSockets</span>
-                            </div>
-                            <figure class="border-top mt-4 pt-3 mb-0">
-                                <blockquote class="fs-sm fst-italic mb-2">”Vi kom med en idé och en deadline. 1010monky byggde GhostyMsg precis som vi tänkt – realtid, inga konton, inget som sparas – och motiverade varje teknval på vägen. Rakt och utan överraskningar.”</blockquote>
-                                <figcaption class="fs-xs text-body-secondary">— Grundare, GhostyMsg</figcaption>
-                            </figure>
-                        </div>
-                    </div>
-                </div>
-                <!-- AskHackers -->
-                <div class="col-6">
-                    <div class="card border-0 h-100">
-                        <div class="card-body p-4 p-xl-5">
-                            <a class="monky-loghover mb-4" href="https://askhackers.se" target="_blank" rel="noopener" aria-label="Öppna AskHackers live i ny flik">
-                                <img class="d-block" src="{{ config.ASSETS_ROOT }}/img/brands/askhackers-logo-dark.svg" alt="AskHackers" height="40"/>
-                            </a>
-                            <h3 class="h4"><a class="monky-livelink" href="https://askhackers.se" target="_blank" rel="noopener">AskHackers – lär dig Python på svenska</a></h3>
-                            <p class="fs-sm mb-3">En interaktiv kodutbildning där du bygger spelet Snake steg för steg. Koden körs direkt i webbläsaren via Pyodide, ingen installation behövs.</p>
-                            <p class="fs-sm mb-3">Tanken bakom AskHackers är att de flesta som vill lära sig koda ger upp för att det blir abstrakt för fort. Här bygger man något man känner igen, ett spel, och ser koden köra direkt medan man skriver den. Vi lade mycket tid på att hålla språket vardagligt och stegen små, så att någon som aldrig öppnat en kodredigerare hänger med.</p>
-                            <p class="fs-sm mb-4">Allt är på svenska, vilket det sällan är när man försöker lära sig programmering. Vår del var att forma upplägget, bygga sidan i Flask och få Pyodide att köra Python tryggt i webbläsaren, så att fokus kan ligga på att lära sig och inte på att installera verktyg.</p>
-                            <div class="d-flex flex-wrap gap-2">
-                                <span class="badge bg-secondary text-body fw-normal">Flask</span>
-                                <span class="badge bg-secondary text-body fw-normal">Python</span>
-                                <span class="badge bg-secondary text-body fw-normal">Pyodide</span>
-                            </div>
-                            <figure class="border-top mt-4 pt-3 mb-0">
-                                <blockquote class="fs-sm fst-italic mb-2">”Det vi uppskattade mest var att de förstod vem sidan är till för. AskHackers ska vara begripligt för någon som aldrig kodat – och det blev det. Lyhörda, pedagogiska och lätta att samarbeta med genom hela projektet.”</blockquote>
-                                <figcaption class="fs-xs text-body-secondary">— Projektägare, AskHackers</figcaption>
-                            </figure>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Testimonials (customer reviews) -->
-    <section class="bg-secondary py-sm-2 py-lg-3 py-xl-4 py-xxl-5">
-        <div class="container py-5">
-            <h2 class="h1 text-center pt-1 pt-sm-2 pt-lg-3 pb-3 pb-lg-4">Vad våra kunder säger</h2>
-            <div class="row g-4 justify-content-center pb-2 pb-sm-3 pb-lg-4">
-                <!-- Item -->
-                <div class="col-6">
-                    <div class="card border-0 shadow-sm h-100">
-                        <div class="card-body p-4">
-                            <p class="card-text mb-4">Jag kom till Matias med en rörig idé om en sida där man lär sig Python genom att bygga Snake, en bit i taget. Det smartaste är att koden körs direkt i webbläsaren, så man slipper installera något och ser resultatet på en gång. Det blev precis det upplägg jag ville ha, och det som dök upp under vägen löstes utan krångel.</p>
-                            <div class="h6 mb-1 d-inline-flex align-items-center">Anthony
-                                <svg class="ms-2" width="22" height="14" viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Sverige" style="border-radius:2px;border:1px solid rgba(0,0,0,.12);flex:0 0 auto">
-                                    <rect width="16" height="10" fill="#006AA7"/>
-                                    <rect x="5" width="2" height="10" fill="#FECC00"/>
-                                    <rect y="4" width="16" height="2" fill="#FECC00"/>
-                                </svg>
-                            </div>
-                            <div class="fs-sm text-body-secondary">Grundare, <a class="monky-livelink" href="https://askhackers.se" target="_blank" rel="noopener">AskHackers</a></div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Item -->
-                <div class="col-6">
-                    <div class="card border-0 shadow-sm h-100">
-                        <div class="card-body p-4">
-                            <p class="card-text mb-4">Halusin chatin, jossa se mitä kirjoittaa pysyy vain juttelevien kesken, mitään ei tallenneta eikä tilejä tarvita. Tykkään siitä, että salaus tapahtuu itse selaimessa, joten palvelin ei koskaan näe viestejä. Emme ole vielä ihan valmiita, uusia osia tulee pikkuhiljaa, mutta homma toimii ja Matias sanoo suoraan mikä on valmista ja mikä vielä kesken.</p>
-                            <div class="h6 mb-1 d-inline-flex align-items-center">Kristian
-                                <svg class="ms-2" width="22" height="14" viewBox="0 0 18 11" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Suomi" style="border-radius:2px;border:1px solid rgba(0,0,0,.12);flex:0 0 auto">
-                                    <rect width="18" height="11" fill="#ffffff"/>
-                                    <rect x="5" width="3" height="11" fill="#003580"/>
-                                    <rect y="4" width="18" height="3" fill="#003580"/>
-                                </svg>
-                            </div>
-                            <div class="fs-sm text-body-secondary">Tilaaja, <a class="monky-livelink" href="https://ghostymsg.com" target="_blank" rel="noopener">GhostyMsg</a> (Suomi)</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- CTA -->
-    <section class="bg-primary py-5" data-bs-theme="dark">
-        <div class="container pt-lg-2 pt-xl-4 pt-xxl-5 pb-1 pb-sm-3">
-            <div class="row pt-sm-3 pt-md-4">
-                <div class="col-md-6 col-xl-5 offset-xl-1">
-                    <h2 class="display-3">Har du ett projekt på gång?</h2>
-                </div>
-                <div class="col-md-6 col-lg-5 col-xl-4 offset-lg-1">
-                    <p class="text-body fs-xl pb-4 mb-2 mb-lg-3">Berätta kort om ditt projekt så hör vi av oss med
-                        förslag och pris – kostnadsfritt och utan förpliktelser. Vi svarar oftast inom ett dygn.</p>
-                    <div class="input-group">
-<span class="input-group-text text-body-secondary">
-<i class="ai-mail"></i>
-</span>
-                        <input class="form-control" placeholder="Ange din e-post" type="email"/>
-                        <button class="btn btn-warning" type="button">Boka samtal</button>
-                    </div>
-                </div>
-            </div>
-            <div class="d-none d-md-block text-center mt-n5">
-                <svg class="text-warning ms-lg-5" fill="currentColor" height="97" viewbox="0 0 171 97" width="171"
-                     xmlns="http://www.w3.org/2000/svg">
-                    <path d="M169.319 54.333C162.404 55.9509 155.712 58.0764 149.09 60.6764L149.07 60.6761C148.967 60.7158 148.863 60.7554 148.76 60.7951C147.3 61.3811 148.325 63.4238 149.672 63.2067C154.548 62.4134 159.994 59.8725 164.87 59.0792C148.278 73.1339 129.684 89.2549 107.779 92.6402C85.6981 96.0539 65.5665 86.7839 56.8768 66.9865C70.9662 55.0671 79.2106 35.6614 79.0299 17.6457C78.9484 10.3157 76.1485 -3.36373 65.7068 1.21851C55.8557 5.53146 52.0466 22.5213 50.5736 31.7739C48.7364 43.2858 49.7593 55.5291 53.8643 66.2014C52.787 67.0812 51.6907 67.8989 50.5755 68.6546C40.6328 75.3851 27.1039 78.8929 16.4487 72.0362C2.91045 63.3259 1.93984 44.9485 1.56902 30.4091C1.54778 29.6265 0.359869 29.6092 0.360624 30.3915C0.322634 44.0809 0.835929 59.065 10.5664 69.6857C18.5722 78.4182 30.4315 79.7753 41.3346 75.9924C46.2437 74.2834 50.7739 71.7557 54.8581 68.6348C59.9738 80.2586 68.9965 89.6956 82.2735 93.7393C113.474 103.223 141.744 83.0494 164.903 63.697L161.901 71.0334C161.267 72.5887 163.76 73.2736 164.393 71.7389C165.986 67.8713 167.569 63.9933 169.152 60.1359C169.288 60.0247 169.695 58.6127 169.821 58.491C170.122 57.1161 169.152 60.1359 169.851 58.4169C170.189 57.6087 170.517 56.79 170.855 55.9818C171.248 54.9994 170.185 54.1192 169.319 54.333ZM54.3624 59.8578C51.4872 49.1623 51.6051 37.5841 54.2025 26.8039C55.5185 21.3369 57.4405 15.8066 60.1572 10.8541C61.2311 8.89354 62.5139 6.77134 64.2307 5.31421C69.4231 0.902277 74.3649 4.80357 75.8002 10.4446C80.5272 28.9489 70.1806 51.6898 55.8431 64.5114C55.2971 63.0109 54.793 61.4698 54.3624 59.8578Z"></path>
-                </svg>
-            </div>
-        </div>
-    </section>
-</main>
-{% include "partials/footer.html" %}
+      </div>
+    </div>
+  </div>
+</section>
 
+<!-- Projekt vi byggt -->
+<section class="section">
+  <div class="container">
+    <div style="text-align:center; max-width: 640px; margin-inline:auto;">
+      <span class="eyebrow">Exempel</span>
+      <h2 style="margin-block: var(--space-2) var(--space-3);">Projekt vi byggt</h2>
+      <p class="text-secondary" style="margin-bottom: var(--space-6);">Ett par egna och partnerdrivna projekt som visar hur vi arbetar – från teknik till webbnärvaro.</p>
+    </div>
+    <div class="grid grid-2">
+      <div class="card">
+        <img src="{{ config.ASSETS_ROOT }}/img/brands/ghostymsg-logo.png" alt="GhostyMsg" height="48" style="height:48px;width:auto;margin-bottom:var(--space-4)" loading="lazy">
+        <h3 class="h5"><a href="https://ghostymsg.com" target="_blank" rel="noopener">GhostyMsg – anonym chatt i realtid</a></h3>
+        <p class="text-secondary text-sm" style="margin-top:var(--space-2)">Tillfälliga, inbjudningsbaserade chattrum som skapas med en delbar länk och ett lösenord. Meddelanden skickas i realtid via WebSockets och sparas aldrig.</p>
+        <p class="text-secondary text-sm" style="margin-top:var(--space-2)">Vår del var att bygga det i Node.js, sköta realtidsdelen och få krypteringen att ske i själva webbläsaren, så att servern aldrig ser vad som skrivs.</p>
+        <div class="cluster" style="margin-top:var(--space-3)"><span class="badge">Node.js</span><span class="badge">Express</span><span class="badge">WebSockets</span></div>
+        <p class="quote">”Vi kom med en idé och en deadline. 1010monky byggde GhostyMsg precis som vi tänkt – realtid, inga konton, inget som sparas. Rakt och utan överraskningar.” <br><span class="text-muted">— Grundare, GhostyMsg</span></p>
+      </div>
+      <div class="card">
+        <img src="{{ config.ASSETS_ROOT }}/img/brands/askhackers-logo-dark.svg" alt="AskHackers" height="36" style="height:36px;width:auto;margin-bottom:var(--space-4)" loading="lazy">
+        <h3 class="h5"><a href="https://askhackers.se" target="_blank" rel="noopener">AskHackers – lär dig Python på svenska</a></h3>
+        <p class="text-secondary text-sm" style="margin-top:var(--space-2)">En interaktiv kodutbildning där du bygger spelet Snake steg för steg. Koden körs direkt i webbläsaren via Pyodide, ingen installation behövs.</p>
+        <p class="text-secondary text-sm" style="margin-top:var(--space-2)">Allt är på svenska, vilket det sällan är när man lär sig programmering. Vår del var att forma upplägget, bygga sidan i Flask och få Pyodide att köra Python tryggt i webbläsaren.</p>
+        <div class="cluster" style="margin-top:var(--space-3)"><span class="badge">Flask</span><span class="badge">Python</span><span class="badge">Pyodide</span></div>
+        <p class="quote">”Det vi uppskattade mest var att de förstod vem sidan är till för. Lyhörda, pedagogiska och lätta att samarbeta med genom hela projektet.” <br><span class="text-muted">— Projektägare, AskHackers</span></p>
+      </div>
+    </div>
+  </div>
+</section>
 
-{% include 'partials/back-to-top.html' %}
+<!-- Omdömen -->
+<section class="section section-alt">
+  <div class="container">
+    <div style="text-align:center;"><span class="eyebrow">Omdömen</span><h2 style="margin-block: var(--space-2) var(--space-6);">Vad våra kunder säger</h2></div>
+    <div class="grid grid-2">
+      <div class="card">
+        <p class="text-secondary text-sm">Jag kom till Matias med en rörig idé om en sida där man lär sig Python genom att bygga Snake, en bit i taget. Det smartaste är att koden körs direkt i webbläsaren. Det blev precis det upplägg jag ville ha, och det som dök upp under vägen löstes utan krångel.</p>
+        <p style="margin-top:var(--space-3);font-weight:var(--fw-semibold)">Anthony <svg viewBox="0 0 16 10" width="18" height="11" style="border-radius:2px;vertical-align:middle" aria-label="Sverige"><rect width="16" height="10" fill="#006AA7"/><rect x="5" width="2" height="10" fill="#FECC00"/><rect y="4" width="16" height="2" fill="#FECC00"/></svg> <span class="text-muted fw-regular text-sm">— Grundare, AskHackers</span></p>
+      </div>
+      <div class="card">
+        <p class="text-secondary text-sm">Halusin chatin, jossa se mitä kirjoittaa pysyy vain juttelevien kesken, mitään ei tallenneta eikä tilejä tarvita. Tykkään siitä, että salaus tapahtuu itse selaimessa. Homma toimii ja Matias sanoo suoraan mikä on valmista ja mikä vielä kesken.</p>
+        <p style="margin-top:var(--space-3);font-weight:var(--fw-semibold)">Kristian <svg viewBox="0 0 18 11" width="18" height="11" style="border-radius:2px;vertical-align:middle" aria-label="Suomi"><rect width="18" height="11" fill="#fff" stroke="rgba(0,0,0,.1)"/><rect x="5" width="3" height="11" fill="#003580"/><rect y="4" width="18" height="3" fill="#003580"/></svg> <span class="text-muted fw-regular text-sm">— Tilaaja, GhostyMsg (Suomi)</span></p>
+      </div>
+    </div>
+  </div>
+</section>
 
-
-<!-- Vendor scripts: JS libraries and plugins -->
-
-<!-- Bootstrap + Theme scripts -->
-{% endblock content %}
-
-{% block scripts %}
-<script src="{{ config.ASSETS_ROOT }}/js/theme-switcher.js"></script>
-<script>
-    (function () {
-      window.onload = function () {
-        const preloader = document.querySelector('.page-loading')
-        preloader.classList.remove('active')
-        setTimeout(function () {
-          preloader.remove()
-        }, 1500)
-      }
-    })()
-</script>
-<script src="{{ config.ASSETS_ROOT }}/vendor/swiper/swiper-bundle.min.js"></script>
-<script src="{{ config.ASSETS_ROOT }}/js/theme.min.js"></script>
-{% endblock scripts %}
+<!-- CTA -->
+<section class="section">
+  <div class="container" style="text-align:center; max-width: 640px;">
+    <h2 style="margin-bottom: var(--space-3);">Har du ett projekt på gång?</h2>
+    <p class="lead" style="margin-bottom: var(--space-5);">Berätta kort så hör vi av oss med förslag och pris – kostnadsfritt. Vi svarar oftast inom ett dygn.</p>
+    <a class="btn btn-primary btn-lg" href="/contacts-v1">Boka ett samtal</a>
+  </div>
+</section>
+{% endblock %}
