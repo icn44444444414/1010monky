@@ -59,7 +59,7 @@ def _set_sqlite_pragmas(dbapi_connection, connection_record):
 def register_extensions(app):
     db.init_app(app)
 
-apps = ('pages', 'chat',)
+apps = ('pages', 'chat', 'analytics',)
 
 def register_blueprints(app):
     for module_name in apps:
