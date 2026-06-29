@@ -106,7 +106,7 @@
     </div>
     <div class="grid grid-2">
       <div class="card">
-        <img src="{{ config.ASSETS_ROOT }}/img/brands/ghostymsg-logo.png" alt="GhostyMsg" height="48" style="height:48px;width:auto;margin-bottom:var(--space-4)" loading="lazy">
+        <a href="https://ghostymsg.com" target="_blank" rel="noopener"><img src="{{ config.ASSETS_ROOT }}/img/cases/ghostymsg.webp" alt="GhostyMsg" style="width:100%;aspect-ratio:16/10;object-fit:cover;margin-bottom:var(--space-4)" loading="lazy"></a>
         <h3 class="h5"><a href="https://ghostymsg.com" target="_blank" rel="noopener">{{ 'GhostyMsg – anonyymi chat reaaliajassa' if fi else 'GhostyMsg – anonym chatt i realtid' }}</a></h3>
         <p class="text-secondary text-sm" style="margin-top:var(--space-2)">{{ 'Väliaikaiset chat-huoneet jotka luodaan jaettavalla linkillä ja salasanalla. Viestit lähetetään reaaliajassa WebSocketsilla eikä niitä tallenneta koskaan.' if fi else 'Tillfälliga, inbjudningsbaserade chattrum som skapas med en delbar länk och ett lösenord. Meddelanden skickas i realtid via WebSockets och sparas aldrig.' }}</p>
         <p class="text-secondary text-sm" style="margin-top:var(--space-2)">{{ 'Meidän osuutemme oli rakentaa se Node.js:llä, hoitaa reaaliaikaosuus ja saada salaus tapahtumaan itse selaimessa, niin ettei palvelin näe mitä kirjoitetaan.' if fi else 'Vår del var att bygga det i Node.js, sköta realtidsdelen och få krypteringen att ske i själva webbläsaren, så att servern aldrig ser vad som skrivs.' }}</p>
@@ -114,7 +114,7 @@
         <p class="quote">”Vi kom med en idé och en deadline. 1010monky byggde GhostyMsg precis som vi tänkt. Rakt och utan överraskningar.” <br><span class="text-muted">— {{ 'Perustaja' if fi else 'Grundare' }}, GhostyMsg</span></p>
       </div>
       <div class="card">
-        <img src="{{ config.ASSETS_ROOT }}/img/brands/askhackers-logo-dark.svg" alt="AskHackers" height="36" style="height:36px;width:auto;margin-bottom:var(--space-4)" loading="lazy">
+        <a href="https://askhackers.se" target="_blank" rel="noopener"><img src="{{ config.ASSETS_ROOT }}/img/cases/askhackers-terminal.webp" alt="AskHackers" style="width:100%;aspect-ratio:16/10;object-fit:cover;margin-bottom:var(--space-4)" loading="lazy"></a>
         <h3 class="h5"><a href="https://askhackers.se" target="_blank" rel="noopener">{{ 'AskHackers – opi Pythonia ruotsiksi' if fi else 'AskHackers – lär dig Python på svenska' }}</a></h3>
         <p class="text-secondary text-sm" style="margin-top:var(--space-2)">{{ 'Interaktiivinen koodikoulutus jossa rakennat Snake-pelin askel kerrallaan. Koodi ajetaan suoraan selaimessa Pyodidella, ilman asennusta.' if fi else 'En interaktiv kodutbildning där du bygger spelet Snake steg för steg. Koden körs direkt i webbläsaren via Pyodide, ingen installation behövs.' }}</p>
         <p class="text-secondary text-sm" style="margin-top:var(--space-2)">{{ 'Meidän osuutemme oli muotoilla kokonaisuus, rakentaa sivu Flaskilla ja saada Pyodide ajamaan Pythonia turvallisesti selaimessa.' if fi else 'Vår del var att forma upplägget, bygga sidan i Flask och få Pyodide att köra Python tryggt i webbläsaren.' }}</p>

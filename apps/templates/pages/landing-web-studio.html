@@ -41,6 +41,47 @@
   .price-features li { display: flex; gap: 8px; align-items: flex-start; padding: 7px 0; font-size: var(--text-sm); border-bottom: 1px solid var(--border-color); }
   .price-features li:last-child { border-bottom: 0; }
   .price-features li::before { content: ""; flex: none; width: 16px; height: 16px; margin-top: 2px; background: var(--accent-soft); color: var(--accent); border-radius: 50%; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23448C74' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 8.5l2.5 2.5L12 5.5'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: center; }
+
+  /* Branscher & utvalda projekt – accordion + synkad bild */
+  .ind-grid { display: grid; grid-template-columns: 1fr 1.05fr; gap: var(--space-7); align-items: center; }
+  .ind-acc { display: flex; flex-direction: column; gap: var(--space-3); }
+  .ind-item { display: block; width: 100%; text-align: left; background: var(--surface); border: 0; border-left: 2px solid var(--border-color); padding: var(--space-4) var(--space-5); cursor: pointer; box-shadow: var(--shadow-sm); transition: border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease); }
+  .ind-item.is-open { border-left-color: var(--accent); box-shadow: var(--shadow-md); }
+  .ind-q { display: flex; justify-content: space-between; align-items: center; gap: var(--space-3); font-family: var(--font-display); font-weight: var(--fw-semibold); font-size: var(--text-lg); }
+  .ind-q svg { flex: none; transition: transform var(--dur) var(--ease); color: var(--text-muted); }
+  .ind-item.is-open .ind-q svg { transform: rotate(180deg); color: var(--accent); }
+  .ind-a { max-height: 0; overflow: hidden; color: var(--text-secondary); font-size: var(--text-sm); transition: max-height .35s var(--ease); }
+  .ind-item.is-open .ind-a { max-height: 240px; margin-top: var(--space-3); }
+  .ind-a .ind-live { color: var(--accent); font-weight: var(--fw-semibold); display: inline-block; margin-top: var(--space-2); }
+  .ind-media { position: relative; min-height: 1px; }
+  .ind-pane { display: none; }
+  .ind-pane.is-active { display: block; animation: ind-fade .35s ease; }
+  .ind-pane img { width: 100%; display: block; box-shadow: var(--shadow-lg); }
+  @keyframes ind-fade { from { opacity: 0; transform: scale(.99); } to { opacity: 1; transform: none; } }
+  @media (max-width: 800px) { .ind-grid { grid-template-columns: 1fr; } .ind-media { order: -1; } }
+
+  /* Vår kompetens – slider */
+  .skill-head { display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); margin-bottom: var(--space-5); }
+  .skill-head h2 { margin: 0; }
+  .skill-nav { display: flex; gap: var(--space-2); flex: none; }
+  .skill-nav button { width: 44px; height: 44px; border: 1px solid var(--border-color); background: var(--surface); cursor: pointer; display: grid; place-items: center; color: var(--text-primary); transition: border-color var(--dur) var(--ease), color var(--dur) var(--ease); }
+  .skill-nav button:hover { border-color: var(--accent); color: var(--accent); }
+  .skill-track { display: flex; gap: var(--space-4); overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; padding-bottom: var(--space-2); scrollbar-width: none; }
+  .skill-track::-webkit-scrollbar { display: none; }
+  .skill-card { flex: 0 0 290px; scroll-snap-align: start; min-height: 290px; }
+  @media (max-width: 640px) { .skill-card { flex-basis: 84%; } }
+  .skill-flip { background: transparent; perspective: 1200px; padding: 0; box-shadow: none; }
+  .skill-flip-inner { position: relative; width: 100%; min-height: 290px; transition: transform .6s var(--ease); transform-style: preserve-3d; }
+  .skill-flip:hover .skill-flip-inner, .skill-flip:focus-within .skill-flip-inner { transform: rotateY(180deg); }
+  .skill-face { position: absolute; inset: 0; -webkit-backface-visibility: hidden; backface-visibility: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: var(--space-5); background: var(--surface-2); box-shadow: var(--shadow-md); }
+  .skill-face img { margin-bottom: var(--space-3); }
+  .skill-face h3 { margin: 0 0 4px; }
+  .skill-face p { color: var(--text-secondary); font-size: var(--text-sm); margin: 0; }
+  .skill-back { transform: rotateY(180deg); }
+  .skill-back p { color: var(--text-primary); }
+  .skill-case { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; background: var(--surface-2); box-shadow: var(--shadow-md); padding: var(--space-6) var(--space-5); }
+  .skill-case img { margin-bottom: var(--space-4); }
+  .skill-case p { font-size: var(--text-sm); color: var(--text-secondary); margin: 0; }
 </style>
 {% endblock %}
 
@@ -115,13 +156,66 @@
   </div>
 </section>
 
-<!-- Projekt -->
+<!-- Branscher & utvalda projekt (accordion + synkad bild) -->
 <section class="section" id="cases">
+  <div class="container" style="text-align:center; max-width: 56ch; margin-inline:auto;">
+    <span class="eyebrow">Portfolio</span>
+    <h2 style="margin-block: var(--space-2) var(--space-3);">{{ 'Toimialat & valitut projektit' if fi else 'Branscher & utvalda projekt' }}</h2>
+    <p class="text-secondary" style="margin-bottom: var(--space-6);">{{ 'Yrityssivustoista omiin ja kumppanivetoisiin digitaalisiin tuotteisiin.' if fi else 'Från företagswebbplatser till egna och partnerdrivna digitala produkter.' }}</p>
+  </div>
+  <div class="container ind-grid">
+    <div class="ind-acc">
+      {% set chev = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>' %}
+      <button type="button" class="ind-item is-open" data-ind="ind-tech" aria-expanded="true">
+        <span class="ind-q">{{ 'Startup & teknologia' if fi else 'Startup & teknik' }} {{ chev|safe }}</span>
+        <span class="ind-a">{{ 'Laskeutumissivuja, tuotesivuja ja MVP-versioita startupeille ja teknologiayrityksille jotka haluavat julkaista nopeasti ja kehittää omaan tahtiin.' if fi else 'Landningssidor, produktsidor och MVP:er för startups och teknikbolag som vill lansera snabbt och bygga vidare i egen takt.' }}</span>
+      </button>
+      <button type="button" class="ind-item" data-ind="ind-ghostymsg" aria-expanded="false">
+        <span class="ind-q">GhostyMsg {{ chev|safe }}</span>
+        <span class="ind-a">{{ 'Kumppaniprojekti jossa 1010monky vastasi verkkonäkyvyydestä ja Node.js-sovelluksesta tilapäisille, kutsupohjaisille chat-huoneille – jaettava linkki, salasana ja reaaliaika WebSocketsilla.' if fi else 'Partnerprojekt där 1010monky stått för webbnärvaro och en Node.js-app för tillfälliga, inbjudningsbaserade chattrum – med delbar länk, lösenord och realtid via WebSockets.' }}<br><a class="ind-live" href="https://ghostymsg.com" target="_blank" rel="noopener">{{ 'Avaa GhostyMsg' if fi else 'Besök GhostyMsg live' }} ↗</a></span>
+      </button>
+      <button type="button" class="ind-item" data-ind="ind-askhackers" aria-expanded="false">
+        <span class="ind-q">AskHackers {{ chev|safe }}</span>
+        <span class="ind-a">{{ 'Koulutuscase Pythonille suomeksi ja ruotsiksi: käytännön oppimista, selkeä aloitus ja tekninen verkkonäkyvyys joka on helppo ymmärtää.' if fi else 'Ett utbildningscase för Python på svenska: praktiskt lärande, tydlig onboarding och en teknisk webbnärvaro som är enkel att förstå.' }}<br><a class="ind-live" href="https://askhackers.se" target="_blank" rel="noopener">{{ 'Avaa AskHackers' if fi else 'Besök AskHackers live' }} ↗</a></span>
+      </button>
+    </div>
+    <div class="ind-media">
+      <div class="ind-pane is-active" id="ind-tech"><img src="{{ config.ASSETS_ROOT }}/img/landing/web-studio/industries/02.jpg" alt="{{ 'Startup ja teknologia – moderni tuotesivu' if fi else 'Startup och teknik – modern produktsida' }}" loading="lazy"></div>
+      <div class="ind-pane" id="ind-ghostymsg"><a href="https://ghostymsg.com" target="_blank" rel="noopener"><img src="{{ config.ASSETS_ROOT }}/img/cases/ghostymsg.webp" alt="GhostyMsg" loading="lazy"></a></div>
+      <div class="ind-pane" id="ind-askhackers"><a href="https://askhackers.se" target="_blank" rel="noopener"><img src="{{ config.ASSETS_ROOT }}/img/cases/askhackers.webp" alt="AskHackers" loading="lazy"></a></div>
+    </div>
+  </div>
+</section>
+
+<!-- Vår kompetens (slider) -->
+<section class="section section-alt">
+  <div class="container skill-head">
+    <h2>{{ 'Osaamisemme' if fi else 'Vår kompetens' }}</h2>
+    <div class="skill-nav">
+      <button type="button" data-skill-prev aria-label="{{ 'Edellinen' if fi else 'Föregående' }}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg></button>
+      <button type="button" data-skill-next aria-label="{{ 'Seuraava' if fi else 'Nästa' }}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></button>
+    </div>
+  </div>
   <div class="container">
-    <div style="text-align:center;"><span class="eyebrow">Portfolio</span><h2 style="margin-block: var(--space-2) var(--space-6);">{{ 'Valittuja projekteja' if fi else 'Utvalda projekt' }}</h2></div>
-    <div class="grid grid-2">
-      <a class="card card-hover" style="text-decoration:none;" href="/portfolio-single-v1"><img src="{{ config.ASSETS_ROOT }}/img/cases/ghostymsg.webp" alt="GhostyMsg" loading="lazy" class="rounded" style="width:100%;aspect-ratio:16/10;object-fit:cover;margin-bottom:var(--space-3)"><h3 class="h5">GhostyMsg</h3><p class="text-secondary text-sm">{{ 'Anonyymi chat reaaliajassa' if fi else 'Anonym chatt i realtid' }}</p></a>
-      <a class="card card-hover" style="text-decoration:none;" href="/portfolio-single-askhackers"><img src="{{ config.ASSETS_ROOT }}/img/cases/askhackers-terminal.webp" alt="AskHackers" loading="lazy" class="rounded" style="width:100%;aspect-ratio:16/10;object-fit:cover;margin-bottom:var(--space-3)"><h3 class="h5">AskHackers</h3><p class="text-secondary text-sm">{{ 'Opi Pythonia rakentamalla' if fi else 'Lär dig Python genom att bygga' }}</p></a>
+    <div class="skill-track" data-skill-track>
+      <div class="card skill-card skill-flip" tabindex="0"><div class="skill-flip-inner">
+        <div class="skill-face"><img src="{{ config.ASSETS_ROOT }}/img/landing/web-studio/skills/figma.svg" alt="Figma" width="64"><h3 class="h5">Figma</h3><p>{{ 'Designjärjestelmät, rautalangat ja prototyypit.' if fi else 'Designsystem, wireframes och prototyper.' }}</p></div>
+        <div class="skill-face skill-back"><h3 class="h6">Figma</h3><p>{{ 'Käytämme Figmaa rakenteen, värien, typografian ja responsiivisten näkymien suunnitteluun ennen kuin sivu rakennetaan.' if fi else 'Vi använder Figma för att planera struktur, färger, typografi och responsiva vyer innan sidan byggs.' }}</p></div>
+      </div></div>
+      <div class="card skill-card skill-flip" tabindex="0"><div class="skill-flip-inner">
+        <div class="skill-face"><img src="{{ config.ASSETS_ROOT }}/img/landing/web-studio/skills/ai.svg" alt="AI" width="64"><h3 class="h5">AI</h3><p>{{ 'Älykkäät toiminnot ja automaatio Pythonilla.' if fi else 'Smarta funktioner och automation byggda i Python.' }}</p></div>
+        <div class="skill-face skill-back"><h3 class="h6">AI</h3><p>{{ 'Rakennamme AI-ratkaisuja Pythonilla – chatbotteja, automaatiota ja integraatioita kielimalleihin siellä missä niistä on hyötyä.' if fi else 'Vi bygger AI-lösningar i Python – chattbotar, automation och integrationer mot språkmodeller där de gör nytta.' }}</p></div>
+      </div></div>
+      <div class="card skill-card skill-flip" tabindex="0"><div class="skill-flip-inner">
+        <div class="skill-face"><img src="{{ config.ASSETS_ROOT }}/img/brands/wordpress.svg" alt="WordPress" width="120"><h3 class="h5">WordPress</h3><p>{{ 'Muokattavia, nopeita ja asiakasystävällisiä sivuja.' if fi else 'Redigerbara, snabba och kundvänliga hemsidor.' }}</p></div>
+        <div class="skill-face skill-back"><h3 class="h6">WordPress</h3><p>{{ 'Rakennamme WordPress-sivuja jotka on helppo päivittää, selkeitä kävijälle ja valmiita SEO:lle, nopeudelle ja tulevalle sisällölle.' if fi else 'Vi bygger WordPress-sidor som är enkla att uppdatera, tydliga för besökaren och redo för SEO, hastighet och framtida innehåll.' }}</p></div>
+      </div></div>
+      <div class="card skill-card skill-case"><img src="{{ config.ASSETS_ROOT }}/img/brands/askhackers-logo-dark.svg" alt="AskHackers" width="170"><p>{{ 'AskHackers on koulutuscase Pythonin oppimiseen – teoriaa, lyhyitä harjoituksia ja Snake-projekti joka rakennetaan askel kerrallaan.' if fi else 'AskHackers är ett utbildningscase för att lära sig Python — med teori, korta övningar och ett Snake-projekt som byggs steg för steg.' }}</p></div>
+      <div class="card skill-card skill-flip" tabindex="0"><div class="skill-flip-inner">
+        <div class="skill-face"><img src="{{ config.ASSETS_ROOT }}/img/landing/web-studio/skills/python.svg" alt="Python" width="64"><h3 class="h5">Python</h3><p>{{ 'Automaatio, rajapinnat ja älykkäät työkalut.' if fi else 'Automatisering, API:er och smarta verktyg.' }}</p></div>
+        <div class="skill-face skill-back"><h3 class="h6">Python</h3><p>{{ 'Pythonia käytetään sisäisiin työkaluihin, automaatioon, integraatioihin ja backend-logiikkaan joka tekee webistä hyödyllisemmän.' if fi else 'Python används för interna verktyg, automatisering, integrationer och backend-logik som gör webben mer användbar.' }}</p></div>
+      </div></div>
+      <div class="card skill-card skill-case"><img src="{{ config.ASSETS_ROOT }}/img/brands/ghostymsg-logo.png" alt="GhostyMsg" width="96"><p>{{ 'GhostyMsg on kumppaniprojekti anonyymiin reaaliaikaiseen chattiin — tilapäiset huoneet, linkin jako ja salasanasuojattu pääsy.' if fi else 'GhostyMsg är ett partnerprojekt med anonym chatt i realtid — byggt kring tillfälliga rum, länkdelning och lösenordsskyddad åtkomst.' }}</p></div>
     </div>
   </div>
 </section>
@@ -205,4 +299,5 @@
 
 {% block scripts %}
 <script src="{{ config.ASSETS_ROOT }}/js/price-calculator.js?v=2" defer></script>
+<script src="{{ config.ASSETS_ROOT }}/js/home.js?v=2" defer></script>
 {% endblock %}
