@@ -1,23 +1,251 @@
 {% extends 'layouts/clean.html' %}
 {% set fi = lang == 'fi' %}
 
+{% set posts = [
+  {
+    'title': 'Vad ingår i en professionell hemsida?',
+    'url': '/blogg/professionell-hemsida-vad-ingar',
+    'category': 'Webbprojekt',
+    'date': '29 juni 2026',
+    'read': '7 min',
+    'status': 'Publicerad',
+    'excerpt': 'Strategi, design, WordPress, SEO, mätning, lansering och pris. En rak genomgång av vad du faktiskt bör få.',
+    'image': 'https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1200&q=82',
+    'alt': 'Lugn arbetsplats med laptop och anteckningar'
+  },
+  {
+    'title': 'Behöver mitt företag en ny hemsida?',
+    'url': '',
+    'category': 'Redesign',
+    'date': 'Nästa artikel',
+    'read': '6 min',
+    'status': 'Kommer snart',
+    'excerpt': 'Konkreta tecken på att en hemsida kostar fler kunder än den hjälper. Mobil, fart, Google och förtroende.',
+    'image': 'https://images.unsplash.com/photo-1483058712412-4245e9b90334?auto=format&fit=crop&w=1200&q=82',
+    'alt': 'Laptop på ett rent skrivbord'
+  },
+  {
+    'title': 'WordPress eller Wix för företag?',
+    'url': '',
+    'category': 'WordPress',
+    'date': 'Planerad',
+    'read': '8 min',
+    'status': 'Kommer snart',
+    'excerpt': 'När WordPress är smartare, när Wix räcker och vad småföretag bör tänka på innan de låser sig i en plattform.',
+    'image': 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=82',
+    'alt': 'Kod på laptopskärm'
+  },
+  {
+    'title': 'Vad kan ett litet företag automatisera?',
+    'url': '',
+    'category': 'Automation',
+    'date': 'Planerad',
+    'read': '7 min',
+    'status': 'Kommer snart',
+    'excerpt': 'Formulär till CRM, påminnelser, bokningar, offerter och enklare AI-flöden utan att göra vardagen krångligare.',
+    'image': 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=82',
+    'alt': 'Dashboard och diagram på en laptop'
+  },
+  {
+    'title': 'Lokal SEO för småföretag',
+    'url': '',
+    'category': 'SEO',
+    'date': 'Planerad',
+    'read': '6 min',
+    'status': 'Kommer snart',
+    'excerpt': 'Hur en lokal tjänstesida, Google-profil och rätt struktur kan hjälpa fler kunder i närområdet att hitta dig.',
+    'image': 'https://images.unsplash.com/photo-1522542550221-31fd19575a2d?auto=format&fit=crop&w=1200&q=82',
+    'alt': 'Person som arbetar med digital planering'
+  },
+  {
+    'title': 'Från besökare till kund',
+    'url': '',
+    'category': 'Konvertering',
+    'date': 'Planerad',
+    'read': '6 min',
+    'status': 'Kommer snart',
+    'excerpt': 'Hur tydlig copy, rätt CTA och mindre friktion kan göra att fler faktiskt kontaktar dig från hemsidan.',
+    'image': 'https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=1200&q=82',
+    'alt': 'Möte där ett team tittar på en dator'
+  }
+] %}
+
 {% block title %}{{ 'Blogi rakenteilla' if fi else 'Blogg om webb, WordPress och småföretag' }}{% endblock %}
 {% block meta_description %}{{ 'Blogi on rakenteilla. Pian täällä on tekstejä webistä, koodista ja projekteista joita rakennan 1010monky Studiossa.' if fi else 'Praktiska texter om hemsidor, WordPress, SEO och digitala system för småföretag i Sverige och Finland.' }}{% endblock %}
 {% block robots %}{{ 'noindex, follow' if fi else 'index, follow, max-image-preview:large, max-snippet:-1' }}{% endblock %}
 
 {% block styles %}
 <style>
-  .blog-list { display: grid; gap: var(--space-5); max-width: 760px; }
+  .blog-shell { padding-block: clamp(5.5rem, 10vw, 8.5rem) var(--space-8); }
+  .blog-breadcrumb {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .45rem;
+    color: var(--text-muted);
+    font-size: var(--text-sm);
+    margin-bottom: var(--space-5);
+  }
+  .blog-breadcrumb a { color: var(--text-muted); }
+  .blog-breadcrumb span + span::before { content: "/"; margin-right: .45rem; color: var(--hairline); }
+  .blog-heading-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(280px, 520px);
+    gap: var(--space-5);
+    align-items: end;
+    margin-bottom: var(--space-7);
+  }
+  .blog-heading-row h1 { margin-top: var(--space-3); }
+  .blog-tools {
+    display: grid;
+    grid-template-columns: minmax(150px, .72fr) minmax(180px, 1fr);
+    gap: var(--space-3);
+  }
+  .blog-input,
+  .blog-select {
+    width: 100%;
+    min-height: 3rem;
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius);
+    background: var(--surface);
+    color: var(--text-primary);
+    padding: .78rem 1rem;
+    box-shadow: none;
+  }
+  .blog-input:focus,
+  .blog-select:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: var(--shadow-focus);
+  }
+  .blog-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-5);
+    align-items: start;
+  }
   .blog-card {
+    overflow: hidden;
+    background: var(--surface);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+  }
+  .blog-card:nth-child(3n + 1) { margin-top: 0; }
+  .blog-card:nth-child(3n + 2) { margin-top: var(--space-5); }
+  .blog-card:nth-child(3n) { margin-top: var(--space-3); }
+  .blog-card__image {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    background: var(--surface-2);
+  }
+  .blog-card__body {
     display: grid;
     gap: var(--space-3);
-    padding-block: var(--space-5);
-    border-top: 1px solid var(--hairline);
+    padding: var(--space-5);
   }
-  .blog-card:last-child { border-bottom: 1px solid var(--hairline); }
-  .blog-card h2 { font-size: var(--text-2xl); line-height: 1.18; letter-spacing: var(--tracking-normal); }
+  .blog-card__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .55rem .75rem;
+    align-items: center;
+    color: var(--text-muted);
+    font-size: var(--text-sm);
+  }
+  .blog-card__tag {
+    display: inline-flex;
+    width: fit-content;
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius-pill);
+    padding: .25rem .65rem;
+    color: var(--text-secondary);
+    font-size: var(--text-xs);
+    font-weight: var(--fw-semibold);
+  }
+  .blog-card h2 {
+    font-size: var(--text-2xl);
+    line-height: 1.16;
+    letter-spacing: var(--tracking-normal);
+  }
   .blog-card p { color: var(--text-secondary); }
-  .blog-meta { display: flex; flex-wrap: wrap; gap: .65rem 1rem; color: var(--text-muted); font-size: var(--text-sm); }
+  .blog-card__footer {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-3);
+    align-items: center;
+    border-top: 1px solid var(--hairline);
+    padding: var(--space-4) var(--space-5);
+    color: var(--text-muted);
+    font-size: var(--text-sm);
+  }
+  .blog-card__link { font-weight: var(--fw-semibold); }
+  .blog-card--soon { opacity: .82; }
+  .blog-card--soon .blog-card__link { color: var(--text-muted); }
+  .blog-empty {
+    display: none;
+    grid-column: 1 / -1;
+    padding: var(--space-6);
+    background: var(--surface-2);
+    border-radius: var(--radius-lg);
+    color: var(--text-secondary);
+    text-align: center;
+  }
+  .blog-cta {
+    margin-top: var(--space-8);
+    padding: clamp(2rem, 6vw, 4rem);
+    border-radius: var(--radius-lg);
+    background: var(--text-primary);
+    color: var(--bg);
+    overflow: hidden;
+  }
+  .blog-cta h2,
+  .blog-cta p { color: inherit; }
+  .blog-cta p { max-width: 58ch; opacity: .76; margin-top: var(--space-3); }
+  .blog-cta__row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    align-items: center;
+    justify-content: space-between;
+  }
+  @media (max-width: 980px) {
+    .blog-heading-row { grid-template-columns: 1fr; }
+    .blog-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .blog-card:nth-child(n) { margin-top: 0; }
+  }
+  @media (max-width: 640px) {
+    .blog-shell { padding-top: var(--space-8); }
+    .blog-shell .container { padding-inline: 1rem; overflow-x: clip; }
+    .blog-tools,
+    .blog-grid { grid-template-columns: 1fr; }
+    .blog-heading-row,
+    .blog-tools,
+    .blog-grid,
+    .blog-card { min-width: 0; max-width: 100%; }
+    .blog-heading-row,
+    .blog-tools,
+    .blog-grid { width: calc(100vw - 2rem); }
+    .blog-grid {
+      width: calc(100vw - 2.75rem);
+      margin-inline: auto;
+    }
+    .blog-card__body,
+    .blog-card__footer { padding-inline: var(--space-4); }
+    .blog-card__body { padding-right: calc(var(--space-4) + 1.25rem); }
+    .blog-card__footer {
+      display: grid;
+      grid-template-columns: 1fr;
+      justify-items: start;
+    }
+    .blog-card__body p,
+    .blog-card__link { overflow-wrap: anywhere; }
+  }
+  @media (max-width: 520px) {
+    .blog-grid {
+      width: min(22rem, 100%);
+      margin-inline: 0 auto;
+    }
+  }
 </style>
 {% endblock %}
 
@@ -35,35 +263,110 @@
   </div>
 </section>
 {% else %}
-<section class="section section-alt">
-  <div class="container" style="max-width: 720px;">
-    <span class="eyebrow">Blogg</span>
-    <h1 style="margin-block: var(--space-3);">Praktiska texter om webb som ska ge kunder</h1>
-    <p class="lead">Jag skriver om hemsidor, WordPress, SEO och små digitala system. Fokus är sådant som hjälper småföretag att fatta bättre beslut, inte trafik för trafikens skull.</p>
-  </div>
-</section>
+<section class="blog-shell">
+  <div class="container">
+    <nav class="blog-breadcrumb" aria-label="Brödsmulor">
+      <span><a href="/">Hem</a></span>
+      <span>Blogg</span>
+    </nav>
 
-<section class="section">
-  <div class="container blog-list">
-    <article class="blog-card">
-      <div class="blog-meta">
-        <span>Webbprojekt</span>
-        <span>29 juni 2026</span>
-        <span>Ca 7 min läsning</span>
+    <div class="blog-heading-row">
+      <div>
+        <span class="eyebrow">Blogg</span>
+        <h1>Praktiska texter om webb som ska ge kunder</h1>
       </div>
-      <h2><a href="/blogg/professionell-hemsida-vad-ingar">Vad ingår i en professionell hemsida?</a></h2>
-      <p>En genomgång av vad du faktiskt bör få när du köper en professionell hemsida: strategi, design, WordPress, SEO, mätning, lansering och pris.</p>
-      <p><a href="/blogg/professionell-hemsida-vad-ingar">Läs artikeln</a></p>
-    </article>
-  </div>
-</section>
+      <form class="blog-tools" role="search" aria-label="Filtrera blogginlägg">
+        <label class="sr-only" for="blog-category">Kategori</label>
+        <select class="blog-select" id="blog-category">
+          <option value="all">Alla kategorier</option>
+          <option value="Webbprojekt">Webbprojekt</option>
+          <option value="Redesign">Redesign</option>
+          <option value="WordPress">WordPress</option>
+          <option value="Automation">Automation</option>
+          <option value="SEO">SEO</option>
+          <option value="Konvertering">Konvertering</option>
+        </select>
+        <label class="sr-only" for="blog-search">Sök blogginlägg</label>
+        <input class="blog-input" id="blog-search" type="search" placeholder="Sök ämne">
+      </form>
+    </div>
 
-<section class="section section-alt">
-  <div class="container" style="max-width: 640px; text-align: center;">
-    <h2 class="h3" style="margin-bottom: var(--space-3);">Har du en hemsida som borde jobba hårdare?</h2>
-    <p class="lead" style="margin-bottom: var(--space-5);">Skicka länken eller beskriv projektet kort, så svarar jag med vad jag hade prioriterat först.</p>
-    <a class="btn btn-primary btn-lg" href="/kontakt">Boka första samtal</a>
+    <div class="blog-grid" id="blog-grid">
+      {% for post in posts %}
+      <article class="blog-card{% if not post.url %} blog-card--soon{% endif %}" data-category="{{ post.category }}" data-search="{{ post.title|lower }} {{ post.category|lower }} {{ post.excerpt|lower }}">
+        {% if post.url %}
+        <a href="{{ post.url }}" aria-label="Läs {{ post.title }}">
+          <img class="blog-card__image" src="{{ post.image }}" alt="{{ post.alt }}" loading="{{ 'eager' if loop.first else 'lazy' }}">
+        </a>
+        {% else %}
+        <img class="blog-card__image" src="{{ post.image }}" alt="{{ post.alt }}" loading="lazy">
+        {% endif %}
+        <div class="blog-card__body">
+          <div class="blog-card__meta">
+            <span>{{ post.date }}</span>
+            <span>{{ post.read }}</span>
+            <span class="blog-card__tag">{{ post.category }}</span>
+          </div>
+          <h2>
+            {% if post.url %}<a href="{{ post.url }}">{{ post.title }}</a>{% else %}{{ post.title }}{% endif %}
+          </h2>
+          <p>{{ post.excerpt }}</p>
+        </div>
+        <div class="blog-card__footer">
+          <span>Matias</span>
+          {% if post.url %}
+          <a class="blog-card__link" href="{{ post.url }}">Läs artikeln</a>
+          {% else %}
+          <span class="blog-card__link">{{ post.status }}</span>
+          {% endif %}
+        </div>
+      </article>
+      {% endfor %}
+      <p class="blog-empty" id="blog-empty">Inga inlägg matchar filtret just nu.</p>
+    </div>
+
+    <section class="blog-cta" aria-labelledby="blog-cta-title">
+      <div class="blog-cta__row">
+        <div>
+          <h2 class="h3" id="blog-cta-title">Har du en hemsida som borde jobba hårdare?</h2>
+          <p>Skicka länken eller beskriv projektet kort. Jag svarar med vad jag hade prioriterat först.</p>
+        </div>
+        <a class="btn btn-primary btn-lg" href="/kontakt">Boka första samtal</a>
+      </div>
+    </section>
   </div>
 </section>
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+{% if not fi %}
+<script>
+  (() => {
+    const category = document.getElementById('blog-category');
+    const search = document.getElementById('blog-search');
+    const cards = Array.from(document.querySelectorAll('.blog-card'));
+    const empty = document.getElementById('blog-empty');
+
+    function applyFilters() {
+      const selected = category.value;
+      const term = search.value.trim().toLowerCase();
+      let shown = 0;
+
+      cards.forEach((card) => {
+        const categoryMatch = selected === 'all' || card.dataset.category === selected;
+        const searchMatch = !term || card.dataset.search.includes(term);
+        const visible = categoryMatch && searchMatch;
+        card.hidden = !visible;
+        if (visible) shown += 1;
+      });
+
+      empty.style.display = shown ? 'none' : 'block';
+    }
+
+    category.addEventListener('change', applyFilters);
+    search.addEventListener('input', applyFilters);
+  })();
+</script>
 {% endif %}
 {% endblock %}
