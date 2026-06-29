@@ -1,0 +1,232 @@
+{% extends 'layouts/clean.html' %}
+
+{% block title %}Vad ingår i en professionell hemsida?{% endblock %}
+{% block meta_description %}Vad får du egentligen när du köper en professionell hemsida? Jag går igenom strategi, design, WordPress, SEO, mätning, lansering och pris för småföretag.{% endblock %}
+{% block og_type %}article{% endblock %}
+
+{% block styles %}
+<style>
+  .blog-article { max-width: 72ch; }
+  .blog-meta { display: flex; flex-wrap: wrap; gap: .75rem 1rem; color: var(--text-muted); font-size: var(--text-sm); margin-top: var(--space-4); }
+  .blog-note { background: var(--surface-2); border-radius: var(--radius-lg); padding: var(--space-5); margin-block: var(--space-6); }
+  .blog-note p { margin: 0; color: var(--text-secondary); }
+  .blog-checklist { list-style: none; padding: 0; }
+  .blog-checklist li { display: grid; grid-template-columns: 1.25rem 1fr; gap: .75rem; }
+  .blog-checklist li::before { content: "✓"; color: var(--accent); font-weight: var(--fw-bold); }
+  .source-list { font-size: var(--text-sm); color: var(--text-muted); }
+  .source-list a { color: inherit; text-decoration-color: color-mix(in srgb, currentColor 35%, transparent); }
+</style>
+{% endblock %}
+
+{% block jsonld %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "headline": "Vad ingår i en professionell hemsida?",
+      "description": "Vad du faktiskt bör få när du köper en professionell hemsida, från strategi och design till WordPress, SEO, mätning och lansering.",
+      "mainEntityOfPage": "https://1010monky.se/blogg/professionell-hemsida-vad-ingar",
+      "datePublished": "2026-06-29",
+      "dateModified": "2026-06-29",
+      "inLanguage": "sv-SE",
+      "author": {
+        "@type": "Person",
+        "name": "Matias"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "1010monky Studio",
+        "url": "https://1010monky.se"
+      },
+      "keywords": [
+        "professionell hemsida",
+        "vad ingår i en hemsida",
+        "hemsida företag",
+        "WordPress hemsida"
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Vad är viktigast i en professionell hemsida?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Det viktigaste är att hemsidan gör rätt sak för företaget. Den ska förklara erbjudandet tydligt, ladda snabbt, fungera i mobilen, vara enkel att kontakta från och ha en teknisk grund som går att förvalta."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Måste en professionell hemsida vara byggd i WordPress?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Nej. WordPress passar ofta när företaget själv vill uppdatera innehåll. Skräddarsydd kod passar bättre när det finns speciell logik, integrationer eller ett system bakom hemsidan."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Vad kostar en professionell hemsida?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Priset beror på innehåll, design, antal sidor, SEO, funktioner och förvaltning. Hos 1010monky börjar enkla företagssidor från 5 000 kr exklusive moms, medan större WordPress-sidor och skräddarsydda lösningar kostar mer."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+{% endblock %}
+
+{% block content %}
+<section class="section section-alt">
+  <div class="container blog-article">
+    <span class="eyebrow">Webbprojekt</span>
+    <h1 style="margin-block: var(--space-3);">Vad ingår i en professionell hemsida?</h1>
+    <p class="lead">En professionell hemsida är inte bara en snygg startsida. Den ska hjälpa en kund att förstå vad du gör, lita på dig och ta nästa steg utan att behöva tänka för mycket.</p>
+    <div class="blog-meta" aria-label="Artikelinformation">
+      <span>Publicerad 29 juni 2026</span>
+      <span>Ca 7 min läsning</span>
+      <span>Primärt sökord: professionell hemsida</span>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <article class="container prose blog-article">
+    <p>Jag träffar ofta företagare som jämför hemsidor som om allt var samma sak. En offert säger 5 000 kr. En annan säger 30 000 kr. Båda säger “hemsida”. Det är klart att det blir svårt att veta vad som är rimligt.</p>
+
+    <p>För mig börjar en professionell hemsida inte i färger eller animationer. Den börjar i vad sidan ska göra för företaget.</p>
+
+    <p>I Sverige finns det ungefär 1 miljon företag, och enligt Tillväxtverket har 97 procent färre än 10 anställda. Det är den verkligheten jag bygger för. Små företag behöver inte en tung byråprocess. De behöver en tydlig sida som går att hitta, förstå och använda.</p>
+
+    <h2>Först behöver erbjudandet bli begripligt</h2>
+    <p>Det första som ska ingå är inte design. Det är sortering.</p>
+
+    <p>Vad säljer du? Till vem? Varför ska någon välja dig? Vad ska besökaren göra efter att ha läst? Om de frågorna är otydliga kommer även en dyr design kännas svag.</p>
+
+    <p>På en bra hemsida ska en besökare snabbt förstå tre saker:</p>
+
+    <ul class="blog-checklist">
+      <li>vad företaget hjälper till med</li>
+      <li>vem det passar för</li>
+      <li>hur man tar kontakt eller går vidare</li>
+    </ul>
+
+    <p>Det låter enkelt, men det är ofta där mest arbete ligger. Många hemsidor försöker säga allt på en gång. Då blir resultatet att inget fastnar.</p>
+
+    <h2>Designen ska kännas trygg, inte bara modern</h2>
+    <p>En professionell hemsida ska se bra ut, men designen måste bära innehållet. För småföretag är det ofta bättre med lugn struktur, bra läsbarhet och tydliga kontaktvägar än en sida som försöker imponera med effekter.</p>
+
+    <p>Jag tittar särskilt på typografi, kontrast, luft, knappar, mobilvy och hur snabbt ögat hittar nästa steg. Det ska kännas ordnat. Inte stelt, men ordnat.</p>
+
+    <p>Det är också här många billiga mallbyggen tappar kvalitet. De kan se okej ut i en demo, men när riktigt innehåll, svenska rubriker och företagets egna bilder kommer in faller rytmen lätt isär.</p>
+
+    <h2>Tekniken ska vara lagom avancerad</h2>
+    <p>WordPress är fortfarande ett bra val för många företag. W3Techs visar att WordPress används av 41,5 procent av alla webbplatser och 59,3 procent av webbplatser där CMS är känt, mätt vid min research i juni 2026.</p>
+
+    <p>Det betyder inte att WordPress alltid är rätt. Det betyder att det är beprövat, lätt att hitta hjälp för och bra när kunden själv vill ändra texter, bilder och blogginlägg.</p>
+
+    <p>Men ibland räcker inte WordPress. Om sidan behöver ett bokningsflöde, dashboard, kundportal, API-koppling eller annan affärslogik kan skräddarsydd kod vara bättre. Då ska hemsidan inte bara vara en broschyr. Den ska bli ett verktyg.</p>
+
+    <div class="blog-note">
+      <p>Min tumregel är enkel: WordPress när innehållet ska vara lätt att sköta. Skräddarsytt när funktionen är viktigare än publiceringsverktyget.</p>
+    </div>
+
+    <h2>SEO-grunden ska byggas in från början</h2>
+    <p>SEO är inte något man strör över sidan efter lansering. En professionell hemsida behöver rätt struktur från start.</p>
+
+    <p>Det handlar bland annat om sidtitlar, rubriker, internlänkar, bildtexter, laddtid, tydliga tjänstesidor och innehåll som faktiskt svarar på kundens frågor. Googles egen SEO-guide trycker på saker som bra titlar, beskrivande länkar och användbart innehåll. Det är inte magi. Det är ordning.</p>
+
+    <p>För ett litet företag räcker det ofta långt att varje viktig tjänst får en egen sida, att ort och målgrupp nämns naturligt och att kontaktvägen är tydlig. En startsida kan inte ranka för allt.</p>
+
+    <h2>Prestanda och mobil måste tas på allvar</h2>
+    <p>Google beskriver Core Web Vitals som mått för verklig användarupplevelse, till exempel laddning, interaktivitet och visuell stabilitet. Det är tekniska ord, men problemet är enkelt: sidan får inte kännas seg eller hoppig.</p>
+
+    <p>Det här märks extra mycket i mobilen. En besökare som står i bilen, på bygget, i butiken eller mellan två möten har inte tålamod med en sida som laddar långsamt.</p>
+
+    <p>Därför bör en professionell hemsida ha optimerade bilder, ren kod, rimligt få script och en layout som inte flyttar på sig när sidan laddar.</p>
+
+    <h2>Tillgänglighet är inte en detalj längre</h2>
+    <p>En sida ska gå att använda med tangentbord, skärmläsare, tydliga kontraster och begriplig struktur. Det är bra för människor. Det är också bra för affären.</p>
+
+    <p>I EU började tillgänglighetsdirektivet tillämpas den 28 juni 2025. I Sverige beskriver PTS att lagen framför allt berör vissa tjänster, bland annat e-handelstjänster. Alla vanliga företagssidor omfattas inte på samma sätt, men riktningen är tydlig. Digitala tjänster ska bli lättare att använda för fler.</p>
+
+    <p>Jag ser det som grundhygien. Rätt rubrikordning, synliga fokuslägen, alt-texter, klickytor som går att träffa och text som går att läsa.</p>
+
+    <h2>Du ska kunna mäta utan att tappa förtroende</h2>
+    <p>Mätning behövs. Annars gissar man. Men mätning måste sättas upp med respekt för integritet.</p>
+
+    <p>På en professionell hemsida bör det vara tydligt vilka verktyg som används, varför cookies finns och hur besökaren kan göra val. IMY:s tidigare granskning av Google Analytics i Sverige visar också att analysverktyg inte bara är en teknisk fråga. Det är en integritetsfråga.</p>
+
+    <p>För många småföretag räcker en enkel grund: kontaktformulär, konverteringsmätning, Search Console och ett analytics-upplägg som inte samlar mer än nödvändigt.</p>
+
+    <h2>Vad du faktiskt bör få</h2>
+    <p>Om jag skulle bryta ner en professionell hemsida i praktiska delar skulle jag säga så här:</p>
+
+    <ul class="blog-checklist">
+      <li>en tydlig struktur för startsida och undersidor</li>
+      <li>copy som förklarar erbjudandet på vanlig svenska</li>
+      <li>mobilanpassad design som känns trygg</li>
+      <li>WordPress eller annan teknik som passar behovet</li>
+      <li>grundläggande SEO med titlar, rubriker och internlänkar</li>
+      <li>snabb laddning och optimerade bilder</li>
+      <li>kontaktformulär som fungerar och sparar leads tryggt</li>
+      <li>cookie och integritetsgrund om mätning används</li>
+      <li>lanseringshjälp med domän, hosting och redirects</li>
+      <li>en plan för uppdateringar, säkerhet och förbättringar</li>
+    </ul>
+
+    <p>Allt behöver inte vara stort. Men det behöver vara genomtänkt.</p>
+
+    <h2>Vad är skillnaden mellan billig och professionell?</h2>
+    <p>En billig hemsida kan vara helt rätt om behovet är litet. Det viktiga är att man vet vad man köper.</p>
+
+    <p>Skillnaden brukar ligga i förarbetet, texterna, detaljerna och förvaltningen. En billig sida kan ofta sättas upp snabbt. En professionell sida tar mer ansvar för helheten. Den tänker på hur kunden hittar dig, vad kunden behöver förstå och vad som händer efter lansering.</p>
+
+    <p>Hos mig finns enkla nivåer från 5 000 kr exklusive moms, och större WordPress-sidor från 12 000 kr. Mer skräddarsydda lösningar kostar mer eftersom de kräver mer tänkande, mer testning och mer kod. Du kan se aktuella nivåer på <a href="/priser">prissidan</a>.</p>
+
+    <h2>När är det värt att göra ordentligt?</h2>
+    <p>Det är värt att göra ordentligt när hemsidan är en del av hur företaget får kunder. Om sidan mest är ett visitkort kan den vara enkel. Om den ska skapa förtroende, synas i Google och ta emot förfrågningar behöver den få mer omsorg.</p>
+
+    <p>Det gäller särskilt om du säljer tjänster där kunden jämför flera aktörer. Då är hemsidan ofta första mötet. Den behöver inte skrika. Den behöver kännas pålitlig.</p>
+
+    <p>Vill du se hur jag delar upp sådana projekt finns en översikt på <a href="/tjanster">tjänstesidan</a>. Vill du se riktiga projekt kan du börja med <a href="/portfolio/ghostymsg">GhostyMsg</a>, som är byggt i Node.js med realtidschatt.</p>
+
+    <h2>Vanliga frågor</h2>
+
+    <h3>Vad är viktigast i en professionell hemsida?</h3>
+    <p>Det viktigaste är att hemsidan gör rätt sak för företaget. Den ska förklara erbjudandet tydligt, ladda snabbt, fungera i mobilen, vara enkel att kontakta från och ha en teknisk grund som går att förvalta.</p>
+
+    <h3>Måste en professionell hemsida vara byggd i WordPress?</h3>
+    <p>Nej. WordPress passar ofta när företaget själv vill uppdatera innehåll. Skräddarsydd kod passar bättre när det finns speciell logik, integrationer eller ett system bakom hemsidan.</p>
+
+    <h3>Vad kostar en professionell hemsida?</h3>
+    <p>Priset beror på innehåll, design, antal sidor, SEO, funktioner och förvaltning. Hos 1010monky börjar enkla företagssidor från 5 000 kr exklusive moms, medan större WordPress-sidor och skräddarsydda lösningar kostar mer.</p>
+
+    <h2>Källor jag lutat mig mot</h2>
+    <ul class="source-list">
+      <li><a href="https://tillvaxtverket.se/tillvaxtverket/statistikochanalys/statistikomforetag/foretagande/basfaktaomforetag.1719.html" rel="noopener" target="_blank">Tillväxtverket: Basfakta om företag</a></li>
+      <li><a href="https://w3techs.com/technologies/details/cm-wordpress" rel="noopener" target="_blank">W3Techs: WordPress usage statistics</a></li>
+      <li><a href="https://developers.google.com/search/docs/fundamentals/seo-starter-guide" rel="noopener" target="_blank">Google Search Central: SEO Starter Guide</a></li>
+      <li><a href="https://developers.google.com/search/docs/appearance/core-web-vitals" rel="noopener" target="_blank">Google Search Central: Core Web Vitals</a></li>
+      <li><a href="https://pts.se/digital-inkludering/lagkrav/introduktion-till-tillganglighetsdirektivet/" rel="noopener" target="_blank">PTS: Introduktion till tillgänglighetsdirektivet</a></li>
+      <li><a href="https://www.imy.se/en/news/four-companies-must-stop-using-google-analytics/" rel="noopener" target="_blank">IMY: Granskning av Google Analytics</a></li>
+    </ul>
+  </article>
+</section>
+
+<section class="section section-alt">
+  <div class="container" style="max-width: 640px; text-align: center;">
+    <h2 class="h3" style="margin-bottom: var(--space-3);">Vill du veta vad din sida borde innehålla?</h2>
+    <p class="lead" style="margin-bottom: var(--space-5);">Skicka några rader om företaget så kan jag ge ett ärligt första svar om struktur, prisnivå och vad som är viktigast att börja med.</p>
+    <div class="cluster" style="justify-content: center;">
+      <a class="btn btn-primary btn-lg" href="/kontakt">Boka första samtal</a>
+      <a class="btn btn-ghost" href="/priser">Se priser</a>
+    </div>
+  </div>
+</section>
+{% endblock %}
