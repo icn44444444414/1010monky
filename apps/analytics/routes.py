@@ -1,11 +1,10 @@
 """
-Routes for analytics-dashboarden (steg 1: demodata).
+Routes for analytics-dashboarden.
 
-Bakom admin-login (samma session som chatt-adminen). Skickar in demodata sa
-hela dashboarden gar att se live; i nasta steg byts demodata mot riktiga
-siffror fran VisitorSession/VisitorEvent/Lead.
+Bakom admin-login (samma session som chatt-adminen). All data ar RIKTIG och
+raknas fram i stats.py ur VisitorSession/VisitorEvent/Lead (ingen demodata).
 """
-from flask import render_template, jsonify
+from flask import render_template, jsonify, redirect, url_for
 
 from apps.analytics import blueprint
 from apps.analytics import models  # noqa: F401  (sakerstaller att tabellerna laddas)
