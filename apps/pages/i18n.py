@@ -14,6 +14,7 @@ PAGES = {
     'portfolio': ('/portfolio',   '/fi/portfolio',   'portfolio-grid-v1.html'),
     'contact':   ('/kontakt',     '/fi/yhteystiedot','contacts-v1.html'),
     'calc':      ('/priskalkylator', '/fi/hintalaskuri','priskalkylator.html'),
+    'svc_wordpress': ('/tjanster/wordpress-hemsida', '/fi/palvelut/wordpress-sivusto', 'services/wordpress-hemsida.html'),
     'blog':      ('/blogg',       '/fi/blogi',       None),
     'terms':     ('/villkor',     '/fi/ehdot',       'villkor.html'),
     'privacy':   ('/integritetspolicy', '/fi/tietosuoja', 'integritetspolicy.html'),

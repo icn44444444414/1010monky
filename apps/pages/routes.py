@@ -43,6 +43,7 @@ SITEMAP_PATHS = [
     ('/tjanster', '0.9'),
     ('/priser', '0.9'),
     ('/priskalkylator', '0.8'),
+    ('/tjanster/wordpress-hemsida', '0.8'),
     ('/portfolio', '0.7'),
     ('/portfolio/ghostymsg', '0.6'),
     ('/portfolio/askhackers', '0.6'),
@@ -53,6 +54,7 @@ SITEMAP_PATHS = [
     # Finska versioner (sv/fi kopplas via hreflang i sidhuvudet)
     ('/fi', '0.9'),
     ('/fi/palvelut', '0.8'),
+    ('/fi/palvelut/wordpress-sivusto', '0.8'),
     ('/fi/hinnasto', '0.8'),
     ('/fi/hintalaskuri', '0.7'),
     ('/fi/portfolio', '0.6'),
@@ -247,6 +249,7 @@ CLEAN_ROUTES = {
     '/portfolio/askhackers':  ('portfolio-single-askhackers.html', 'portfolio'),
     '/kontakt':               ('contacts-v1.html', 'contact'),
     '/om-oss':                ('about-agency.html', 'about'),
+    '/tjanster/wordpress-hemsida': ('services/wordpress-hemsida.html', 'services'),
 }
 # Gamla tema-slugs -> ny ren URL (301, behaller lankkraften)
 LEGACY_REDIRECTS = {
@@ -266,7 +269,7 @@ def _clean_view(tpl, segment):
 
 for _url, (_tpl, _seg) in CLEAN_ROUTES.items():
     blueprint.add_url_rule(
-        _url, 'clean_' + _tpl.replace('.html', '').replace('-', '_'),
+        _url, 'clean_' + _tpl.replace('.html', '').replace('-', '_').replace('/', '_'),
         (lambda t=_tpl, s=_seg: _clean_view(t, s)))
 
 

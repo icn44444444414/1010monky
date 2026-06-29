@@ -1,0 +1,134 @@
+{% extends 'layouts/clean.html' %}
+{% set fi = lang == 'fi' %}
+
+{% block title %}{{ 'WordPress-sivusto yrityksille' if fi else 'WordPress-hemsida för företag' }}{% endblock %}
+{% block meta_description %}{{ 'WordPress-sivusto jonka voit itse päivittää – nopea, hakukoneoptimoitu ja rakennettu kestämään. Kiinteä hinta, yleensä noin 12 000 kr. Eskilstuna, Ruotsi & Suomi.' if fi else 'WordPress-hemsida du själv kan uppdatera – snabb, sökoptimerad och byggd för att hålla. Fast pris, oftast runt 12 000 kr. Eskilstuna, Sverige & Finland.' }}{% endblock %}
+{% block alternates %}
+  <link rel="alternate" hreflang="sv" href="{{ sv_url }}">
+  <link rel="alternate" hreflang="fi" href="{{ fi_url }}">
+  <link rel="alternate" hreflang="x-default" href="{{ sv_url }}">
+{% endblock %}
+
+{% block jsonld %}
+<script type="application/ld+json">
+{ "@context":"https://schema.org","@graph":[
+  { "@type":"Service","name":"WordPress-hemsida","serviceType":"Webbutveckling",
+    "provider":{"@type":"ProfessionalService","name":"1010monky Studio","areaServed":["SE","FI"],
+      "address":{"@type":"PostalAddress","addressLocality":"Eskilstuna","addressCountry":"SE"}},
+    "url":"https://1010monky.se{{ request.path }}",
+    "offers":{"@type":"Offer","price":"12000","priceCurrency":"SEK"} },
+  { "@type":"BreadcrumbList","itemListElement":[
+    {"@type":"ListItem","position":1,"name":"{{ 'Etusivu' if fi else 'Hem' }}","item":"https://1010monky.se{{ nav_url('home') }}"},
+    {"@type":"ListItem","position":2,"name":"{{ 'Palvelut' if fi else 'Tjänster' }}","item":"https://1010monky.se{{ nav_url('services') }}"},
+    {"@type":"ListItem","position":3,"name":"WordPress","item":"https://1010monky.se{{ request.path }}"}
+  ]},
+  { "@type":"FAQPage","mainEntity":[
+    {"@type":"Question","name":"{{ 'Voinko päivittää sivuston itse?' if fi else 'Kan jag uppdatera sidan själv?' }}","acceptedAnswer":{"@type":"Answer","text":"{{ 'Kyllä. Hoidat tekstit ja kuvat WordPressissä ilman koodausta, ja näytän miten.' if fi else 'Ja. Du sköter text och bilder i WordPress utan att koda, och jag visar dig hur.' }}"}},
+    {"@type":"Question","name":"{{ 'Kuinka kauan se kestää?' if fi else 'Hur lång tid tar det?' }}","acceptedAnswer":{"@type":"Answer","text":"{{ 'Yrityssivusto vie yleensä 2–4 viikkoa, riippuen laajuudesta ja siitä kuinka nopeasti sisältö on valmista.' if fi else 'En företagssida tar oftast 2–4 veckor, beroende på omfattning och hur snabbt innehållet är klart.' }}"}},
+    {"@type":"Question","name":"{{ 'Paljonko WordPress-sivusto maksaa?' if fi else 'Vad kostar en WordPress-hemsida?' }}","acceptedAnswer":{"@type":"Answer","text":"{{ 'Yrityssivusto on yleensä noin 12 000 kr. Saat aina kiinteän hinnan ennen kuin aloitamme.' if fi else 'En företagssida ligger oftast runt 12 000 kr. Du får alltid ett fast pris innan vi börjar.' }}"}}
+  ]}
+]}
+</script>
+{% endblock %}
+
+{% block content %}
+<section class="section section-alt">
+  <div class="container" style="max-width: 62ch;">
+    <nav class="text-sm text-muted" style="margin-bottom: var(--space-4);"><a href="{{ nav_url('home') }}">{{ 'Etusivu' if fi else 'Hem' }}</a> / <a href="{{ nav_url('services') }}">{{ 'Palvelut' if fi else 'Tjänster' }}</a> / WordPress</nav>
+    <span class="eyebrow">{{ 'Palvelu' if fi else 'Tjänst' }}</span>
+    <h1 style="margin-block: var(--space-3);">{{ 'WordPress-sivusto ' if fi else 'WordPress-hemsida ' }}<span class="text-gradient">{{ 'yrityksille' if fi else 'för företag' }}</span></h1>
+    <p class="lead">{{ 'En sivusto jonka voit itse päivittää, oikealla rakenteella. Nopea, hakukoneoptimoitu ja rakennettu kestämään – ei raskaita teemoja jotka hidastavat.' if fi else 'En sida du själv kan uppdatera, med rätt struktur. Snabb, sökoptimerad och byggd för att hålla, utan tunga teman som tynger sidan.' }}</p>
+    <div class="cluster" style="margin-top: var(--space-5);">
+      <a class="btn btn-primary btn-lg" href="{{ nav_url('contact') }}">{{ 'Pyydä tarjous' if fi else 'Få offert' }}</a>
+      <a class="btn btn-ghost btn-lg" href="{{ nav_url('pricing') }}">{{ 'Katso hinnat' if fi else 'Se vad det kostar' }}</a>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div style="max-width: 56ch;">
+      <h2>{{ 'Mitä saat' if fi else 'Vad du får' }}</h2>
+      <p class="text-secondary" style="margin-bottom: var(--space-6);">{{ 'Allt rakennetaan juuri sinun toimintaasi varten, ei mallipohjasta.' if fi else 'Allt byggs efter just din verksamhet, inte en färdig mall.' }}</p>
+    </div>
+    <div class="grid grid-3">
+      {% set items = [
+        ('Design som passar dig','Egen design i WordPress, anpassad efter ditt företag och dina kunder.','Sinun näköisesi design','Oma design WordPressissä, sovitettu yritykseesi ja asiakkaisiisi.'),
+        ('Du uppdaterar själv','Text och bilder sköter du i ett enkelt gränssnitt, utan att koda.','Päivität itse','Tekstit ja kuvat hoidat helpossa käyttöliittymässä, ilman koodausta.'),
+        ('Mobilanpassad','Sidan fungerar lika bra i mobilen som på datorn.','Mobiilioptimoitu','Sivu toimii yhtä hyvin mobiilissa kuin tietokoneella.'),
+        ('SEO-grund','Rätt struktur, snabb laddning och sidor som Google förstår.','SEO-perusta','Oikea rakenne, nopea lataus ja sivut jotka Google ymmärtää.'),
+        ('Säkerhet & backup','Säkerhetsplugin och automatiska säkerhetskopior från start.','Tietoturva & varmuuskopiot','Tietoturvalisäosa ja automaattiset varmuuskopiot alusta asti.'),
+        ('Hjälp vid lansering','Jag finns med när sidan går live och en stund efter.','Apua julkaisussa','Olen mukana kun sivu julkaistaan ja hetken sen jälkeen.')
+      ] %}
+      {% for sv_t, sv_b, fi_t, fi_b in items %}
+      <div class="card">
+        <h3 class="h5" style="margin-bottom: var(--space-2);">{{ fi_t if fi else sv_t }}</h3>
+        <p class="text-secondary text-sm">{{ fi_b if fi else sv_b }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section section-alt">
+  <div class="container" style="max-width: 720px;">
+    <h2>{{ 'Så jobbar jag' if fi else 'Så jobbar jag' }}</h2>
+    <div class="stack" style="margin-top: var(--space-5);">
+      {% set steps = [
+        ('1. Vi pratar ihop oss','Du berättar vad sidan ska göra och för vem. Jag återkommer med förslag och ett fast pris.','1. Jutellaan','Kerrot mitä sivun pitää tehdä ja kenelle. Palaan ehdotuksen ja kiinteän hinnan kanssa.'),
+        ('2. Skiss och struktur','Vi bestämmer sidor, innehåll och hur det ska hänga ihop innan något byggs.','2. Luonnos ja rakenne','Päätämme sivut, sisällön ja rakenteen ennen kuin mitään rakennetaan.'),
+        ('3. Bygge','Jag bygger sidan i WordPress med din design, snabb och sökoptimerad.','3. Rakennus','Rakennan sivun WordPressissä, sinun designilla, nopeana ja optimoituna.'),
+        ('4. Granskning','Du får se sidan, vi justerar tillsammans tills den känns rätt.','4. Tarkistus','Näet sivun, hiomme yhdessä kunnes se tuntuu oikealta.'),
+        ('5. Lansering','Sidan går live. Du kan uppdatera den själv, och jag finns kvar om du behöver.','5. Julkaisu','Sivu julkaistaan. Voit päivittää sitä itse, ja olen tukena jos tarvitset.')
+      ] %}
+      {% for sv_t, sv_b, fi_t, fi_b in steps %}
+      <div>
+        <h3 class="h5" style="margin-bottom: 2px;">{{ fi_t if fi else sv_t }}</h3>
+        <p class="text-secondary">{{ fi_b if fi else sv_b }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container" style="max-width: 640px;">
+    <div class="card">
+      <h2 class="h4" style="margin-bottom: var(--space-2);">{{ 'Mitä se maksaa?' if fi else 'Vad kostar det?' }}</h2>
+      <p class="text-secondary">{{ 'Yrityssivusto WordPressillä on yleensä noin 12 000 kr (alv 0 %), 4–6 sivua. Saat aina kiinteän hinnan ennen kuin aloitamme.' if fi else 'En företagssida i WordPress ligger oftast runt 12 000 kr (ex moms), 4–6 sidor. Du får alltid ett fast pris innan vi börjar.' }}</p>
+      <div class="cluster" style="margin-top: var(--space-5);">
+        <a class="btn btn-primary" href="{{ nav_url('pricing') }}">{{ 'Katso paketit' if fi else 'Se paketpriser' }}</a>
+        <a class="btn btn-ghost" href="{{ nav_url('calc') }}">{{ 'Laske hintasi' if fi else 'Räkna ut ditt pris' }}</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section-alt">
+  <div class="container" style="max-width: 720px;">
+    <h2 style="margin-bottom: var(--space-5);">{{ 'Vanliga frågor' if fi else 'Vanliga frågor' }}</h2>
+    <div class="stack">
+      {% set faq = [
+        ('Kan jag uppdatera sidan själv?','Ja. Du sköter text och bilder i WordPress utan att koda, och jag visar dig hur.','Voinko päivittää sivuston itse?','Kyllä. Hoidat tekstit ja kuvat WordPressissä ilman koodausta, ja näytän miten.'),
+        ('Hur lång tid tar det?','En företagssida tar oftast 2–4 veckor, beroende på omfattning och hur snabbt innehållet är klart.','Kuinka kauan se kestää?','Yrityssivusto vie yleensä 2–4 viikkoa, riippuen laajuudesta ja sisällön valmiudesta.'),
+        ('Ingår SEO?','Grundläggande SEO ingår alltid: rätt struktur, snabb laddning och sidor som Google förstår. Vill du ha djupare arbete lägger vi till det.','Sisältyykö SEO?','Perus-SEO sisältyy aina: oikea rakenne, nopea lataus ja sivut jotka Google ymmärtää. Syvempi työ lisätään tarvittaessa.'),
+        ('Vad kostar en WordPress-hemsida?','En företagssida ligger oftast runt 12 000 kr. Räkna ut ett ungefärligt pris i kalkylatorn.','Paljonko WordPress-sivusto maksaa?','Yrityssivusto on yleensä noin 12 000 kr. Laske suuntaa-antava hinta laskurissa.')
+      ] %}
+      {% for sv_q, sv_a, fi_q, fi_a in faq %}
+      <div>
+        <h3 class="h5">{{ fi_q if fi else sv_q }}</h3>
+        <p class="text-secondary">{{ fi_a if fi else sv_a }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container" style="text-align:center; max-width: 600px;">
+    <h2 style="margin-bottom: var(--space-3);">{{ 'Tarvitsetko WordPress-sivuston?' if fi else 'Behöver du en WordPress-sida?' }}</h2>
+    <p class="lead" style="margin-bottom: var(--space-5);">{{ 'Kerro lyhyesti projektistasi niin palaan ehdotuksen ja hinnan kanssa – maksutonta.' if fi else 'Berätta kort om ditt projekt så hör jag av mig med förslag och pris – kostnadsfritt.' }}</p>
+    <a class="btn btn-primary btn-lg" href="{{ nav_url('contact') }}">{{ 'Ota yhteyttä' if fi else 'Hör av dig' }}</a>
+  </div>
+</section>
+{% endblock %}
