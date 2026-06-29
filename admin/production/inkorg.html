@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inkorg | 1010monky</title>
+<meta name="description" content="Chattinkorg – svara på besökare i 1010monky studios adminpanel.">
+<link rel="icon" href="../images/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script type="module" src="/src/main-v4.js"></script>
+<style>
+  .chat-wrap { display:grid; grid-template-columns:320px 1fr; min-height:66vh; }
+  @media (max-width:760px){ .chat-wrap { grid-template-columns:1fr; } .chat-wrap.has-open .chat-list { display:none; } }
+  .chat-list { border-right:1px solid var(--border-color); overflow-y:auto; max-height:72vh; }
+  .chat-li { display:block; width:100%; text-align:left; border:0; background:none; cursor:pointer; padding:12px 14px; border-bottom:1px solid var(--border-color-light); }
+  .chat-li:hover { background:var(--bg-surface-secondary); }
+  .chat-li.active { background:var(--primary-lt); border-left:3px solid var(--primary); padding-left:11px; }
+  .chat-li-top { display:flex; align-items:center; justify-content:space-between; gap:6px; }
+  .chat-li-name { font-weight:600; font-size:13px; color:var(--text); }
+  .chat-li-time { font-size:10.5px; color:var(--text-muted); white-space:nowrap; }
+  .chat-li-msg { font-size:12px; color:var(--text-secondary); margin-top:3px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .chat-unread { display:inline-block; min-width:18px; height:18px; line-height:18px; text-align:center; font-size:10px; font-weight:700; color:#fff; background:var(--primary); border-radius:9px; padding:0 5px; }
+  .chat-thread { display:flex; flex-direction:column; max-height:72vh; }
+  .chat-head { display:flex; align-items:center; justify-content:space-between; gap:10px; padding:12px 16px; border-bottom:1px solid var(--border-color); }
+  .chat-head .who { font-weight:600; }
+  .chat-head .sub { font-size:11px; color:var(--text-muted); }
+  .chat-head-actions { display:flex; gap:6px; }
+  .chat-msgs { flex:1; overflow-y:auto; padding:18px 16px; display:flex; flex-direction:column; gap:10px; }
+  .msg { max-width:74%; padding:9px 12px; border-radius:12px; font-size:13px; line-height:1.45; word-wrap:break-word; }
+  .msg .t { display:block; font-size:10px; margin-top:4px; opacity:.65; }
+  .msg.visitor { align-self:flex-start; background:var(--bg-surface-secondary); color:var(--text); border-bottom-left-radius:3px; }
+  .msg.admin { align-self:flex-end; background:var(--primary); color:#fff; border-bottom-right-radius:3px; }
+  .chat-reply { display:flex; gap:8px; padding:12px 16px; border-top:1px solid var(--border-color); }
+  .chat-reply input { flex:1; font:inherit; font-size:13px; padding:9px 12px; border:1px solid var(--border-color); border-radius:var(--radius); background:var(--bg-surface); color:var(--text); }
+  .chat-empty { margin:auto; text-align:center; color:var(--text-muted); font-size:13px; padding:40px; }
+  .chat-pill { font-size:10px; font-weight:600; padding:2px 8px; border-radius:20px; }
+  .chat-pill.open { color:var(--green); background:var(--green-lt); }
+  .chat-pill.closed { color:var(--text-muted); background:var(--bg-surface-secondary); }
+  .chat-icon-btn { background:none; border:1px solid var(--border-color); border-radius:var(--radius-sm); cursor:pointer; color:var(--text-secondary); padding:5px 9px; font-size:12px; }
+  .chat-icon-btn:hover { border-color:var(--primary); color:var(--primary); }
+</style>
+</head>
+<body data-shell="admin" data-page="inkorg" data-breadcrumb="1010monky > Kunder & affärer > Inkorg">
+
+<main class="main">
+<div class="page-wrapper">
+
+  <div class="page-header">
+    <div class="page-header-row">
+      <div>
+        <div class="page-pretitle">Kunder &amp; affärer</div>
+        <h1 class="page-title">Inkorg</h1>
+      </div>
+      <div class="page-actions">
+        <span id="chat-stat" style="font-size:12.5px;color:var(--text-muted)"></span>
+        <button class="btn btn-outline" id="push-btn" type="button" hidden></button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="padding:0;overflow:hidden">
+    <div class="chat-wrap" id="chat-wrap">
+      <div class="chat-list" id="chat-list"><div class="chat-empty">Laddar…</div></div>
+      <div class="chat-thread" id="chat-thread">
+        <div class="chat-empty" id="chat-placeholder">Välj en konversation till vänster.<br>Meddelanden från besökare på sajten dyker upp här.</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</main>
+
+<script>
+(function () {
+  var LIST = '/api/admin/chat';
+  var $ = function (id) { return document.getElementById(id); };
+  var openId = null;
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  function time(iso) { if (!iso) return ''; var d = new Date(iso); return d.toLocaleString('sv-SE', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }); }
+
+  function renderList(d) {
+    var s = (d && d.summary) || {};
+    $('chat-stat').textContent = (s.open || 0) + ' öppna · ' + (s.unread || 0) + ' olästa';
+    var convs = (d && d.conversations) || [];
+    var el = $('chat-list');
+    if (!convs.length) { el.innerHTML = '<div class="chat-empty">Inga konversationer än.</div>'; return; }
+    el.innerHTML = convs.map(function (c) {
+      var who = c.lastFrom === 'admin' ? 'Du: ' : '';
+      return '<button class="chat-li' + (c.id === openId ? ' active' : '') + '" data-id="' + c.id + '">' +
+        '<div class="chat-li-top"><span class="chat-li-name">' + esc(c.visitorName) + '</span>' +
+          (c.adminUnread ? '<span class="chat-unread">' + c.adminUnread + '</span>' : '<span class="chat-li-time">' + time(c.lastAt) + '</span>') + '</div>' +
+        '<div class="chat-li-msg">' + esc(who + (c.lastMessage || '…')) + '</div>' +
+      '</button>';
+    }).join('');
+  }
+
+  function renderThread(conv) {
+    var wrap = $('chat-wrap'); wrap.classList.add('has-open');
+    var msgs = (conv.messages || []).map(function (m) {
+      return '<div class="msg ' + (m.from === 'admin' ? 'admin' : 'visitor') + '">' + esc(m.text) + '<span class="t">' + time(m.at) + '</span></div>';
+    }).join('');
+    var statusPill = '<span class="chat-pill ' + (conv.status === 'open' ? 'open' : 'closed') + '">' + (conv.status === 'open' ? 'Öppen' : 'Stängd') + '</span>';
+    $('chat-thread').innerHTML =
+      '<div class="chat-head"><div><div class="who">' + esc(conv.visitorName) + ' ' + statusPill + '</div>' +
+        (conv.page ? '<div class="sub">från ' + esc(conv.page) + '</div>' : '') + '</div>' +
+        '<div class="chat-head-actions">' +
+          '<button class="chat-icon-btn" id="chat-toggle">' + (conv.status === 'open' ? 'Stäng' : 'Öppna igen') + '</button>' +
+          '<button class="chat-icon-btn" id="chat-del" title="Ta bort">Ta bort</button></div></div>' +
+      '<div class="chat-msgs" id="chat-msgs">' + (msgs || '<div class="chat-empty">Inga meddelanden.</div>') + '</div>' +
+      '<form class="chat-reply" id="chat-reply"><input type="text" id="chat-input" placeholder="Skriv ett svar…" autocomplete="off"><button class="btn btn-primary" type="submit">Skicka</button></form>';
+    var m = $('chat-msgs'); m.scrollTop = m.scrollHeight;
+  }
+
+  function loadList() { return fetch(LIST, { headers: { 'Accept': 'application/json' } }).then(function (r) { return r.json(); }).then(renderList).catch(function () {}); }
+  function openConv(id) { openId = id; return fetch(LIST + '/' + id).then(function (r) { return r.json(); }).then(function (res) { if (res && res.conversation) { renderThread(res.conversation); loadList(); } }); }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    loadList();
+
+    $('chat-list').addEventListener('click', function (e) {
+      var li = e.target.closest('.chat-li'); if (li) openConv(li.dataset.id);
+    });
+
+    $('chat-thread').addEventListener('submit', function (e) {
+      if (e.target.id !== 'chat-reply') return;
+      e.preventDefault();
+      var input = $('chat-input'); var text = input.value.trim(); if (!text || !openId) return;
+      input.value = '';
+      fetch(LIST + '/' + openId + '/reply', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ text: text }) })
+        .then(function (r) { return r.json(); }).then(function (res) { if (res && res.conversation) { renderThread(res.conversation); loadList(); } });
+    });
+
+    $('chat-thread').addEventListener('click', function (e) {
+      if (e.target.id === 'chat-toggle') {
+        var cur = e.target.textContent.indexOf('Stäng') === 0 ? 'closed' : 'open';
+        fetch(LIST + '/' + openId, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ status: cur }) })
+          .then(function (r) { return r.json(); }).then(function (res) { if (res && res.conversation) { renderThread(res.conversation); loadList(); } });
+      }
+      if (e.target.id === 'chat-del') {
+        if (!confirm('Ta bort hela konversationen?')) return;
+        fetch(LIST + '/' + openId, { method: 'DELETE' }).then(function (r) { return r.json(); }).then(function () { openId = null; $('chat-thread').innerHTML = '<div class="chat-empty">Konversationen togs bort.</div>'; $('chat-wrap').classList.remove('has-open'); loadList(); });
+      }
+    });
+
+    // Polling: uppdatera lista + öppen tråd var 4:e sekund
+    setInterval(function () {
+      loadList();
+      if (openId) fetch(LIST + '/' + openId).then(function (r) { return r.json(); }).then(function (res) {
+        if (res && res.conversation && document.activeElement.id !== 'chat-input') {
+          var open = $('chat-msgs');
+          var atBottom = !open || (open.scrollTop + open.clientHeight >= open.scrollHeight - 40);
+          renderThread(res.conversation);
+        }
+      }).catch(function () {});
+    }, 4000);
+  });
+})();
+</script>
+
+<script>
+/* Web-push: prenumerera så du får pling i mobilen när en besökare skriver. */
+(function () {
+  var btn = document.getElementById('push-btn');
+  if (!btn || !('serviceWorker' in navigator) || !('PushManager' in window) || !('Notification' in window)) { return; }
+  var vapidKey = '';
+
+  function b64ToUint8(base64) {
+    var pad = '='.repeat((4 - base64.length % 4) % 4);
+    var b = (base64 + pad).replace(/-/g, '+').replace(/_/g, '/');
+    var raw = atob(b); var arr = new Uint8Array(raw.length);
+    for (var i = 0; i < raw.length; i++) { arr[i] = raw.charCodeAt(i); }
+    return arr;
+  }
+  function set(text, on) { btn.hidden = false; btn.textContent = text; btn.disabled = false; btn.style.opacity = on ? '.7' : '1'; }
+
+  function refresh() {
+    navigator.serviceWorker.getRegistration('/admin/push-sw.js').then(function (reg) {
+      if (!reg) { set('🔔 Slå på notiser', false); return; }
+      reg.pushManager.getSubscription().then(function (sub) { set(sub ? '🔔 Notiser på' : '🔔 Slå på notiser', !!sub); });
+    }).catch(function () { set('🔔 Slå på notiser', false); });
+  }
+
+  fetch('/api/admin/push/key').then(function (r) { return r.json(); }).then(function (d) {
+    if (!d.enabled) { return; }   // push av på servern -> dölj knappen
+    vapidKey = d.key; refresh();
+  });
+
+  btn.addEventListener('click', function () {
+    btn.disabled = true; btn.textContent = '…';
+    navigator.serviceWorker.register('/admin/push-sw.js', { scope: '/admin/' })
+      .then(function (reg) {
+        return Notification.requestPermission().then(function (perm) {
+          if (perm !== 'granted') { throw new Error('nekad'); }
+          return reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: b64ToUint8(vapidKey) });
+        });
+      })
+      .then(function (sub) {
+        return fetch('/api/admin/push/subscribe', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(sub) });
+      })
+      .then(function () { set('🔔 Notiser på', true); })
+      .catch(function () { set('🔔 Slå på notiser', false); alert('Kunde inte slå på notiser. Tillåt notiser i webbläsaren och försök igen.'); });
+  });
+})();
+</script>
+</body>
+</html>

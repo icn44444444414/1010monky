@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Förkalkyl | 1010monky</title>
+<meta name="description" content="Förkalkyl – uppskatta tid och pris på jobb i 1010monky studios adminpanel.">
+<link rel="icon" href="../images/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script type="module" src="/src/main-v4.js"></script>
+<style>
+  .fk-form { display:grid; grid-template-columns:2fr 2fr 1fr 1fr 1fr; gap:10px; padding:16px; border-bottom:1px solid var(--border-color); align-items:end; }
+  @media (max-width:900px){ .fk-form { grid-template-columns:1fr 1fr; } }
+  .fk-form label { display:flex; flex-direction:column; gap:4px; font-size:11px; color:var(--text-muted); }
+  .fk-form input { font:inherit; font-size:13px; padding:7px 9px; border:1px solid var(--border-color); border-radius:var(--radius-sm); background:var(--bg-surface); color:var(--text); }
+  .fk-form .full { grid-column:1 / -1; display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+  .fk-preview { font-size:13px; color:var(--text-secondary); }
+  .fk-preview b { color:var(--primary); font-size:17px; }
+  .fk-table { width:100%; border-collapse:collapse; font-size:13px; }
+  .fk-table th { text-align:left; font-size:11px; text-transform:uppercase; letter-spacing:.4px; color:var(--text-muted); font-weight:600; padding:10px 16px; border-bottom:1px solid var(--border-color); white-space:nowrap; }
+  .fk-table th.r, .fk-table td.r { text-align:right; }
+  .fk-table td { padding:12px 16px; border-bottom:1px solid var(--border-color-light); color:var(--text); }
+  .fk-table tr:last-child td { border-bottom:0; }
+  .fk-price { font-weight:700; color:var(--primary); }
+  .fk-pill { font-size:10px; font-weight:600; padding:2px 8px; border-radius:20px; }
+  .fk-pill.open { color:var(--blue); background:var(--blue-lt); }
+  .fk-pill.done { color:var(--green); background:var(--green-lt); }
+  .fk-del { background:none; border:0; cursor:pointer; color:var(--text-muted); padding:4px; border-radius:4px; line-height:0; }
+  .fk-del:hover { color:var(--red); background:var(--red-lt); }
+  .fk-empty { padding:34px 16px; text-align:center; color:var(--text-muted); font-size:13px; }
+</style>
+</head>
+<body data-shell="admin" data-page="forkalkyl" data-breadcrumb="1010monky > Ekonomi > Förkalkyl">
+
+<main class="main">
+<div class="page-wrapper">
+
+  <div class="page-header">
+    <div class="page-header-row">
+      <div>
+        <div class="page-pretitle">Ekonomi</div>
+        <h1 class="page-title">Förkalkyl</h1>
+      </div>
+      <div class="page-actions">
+        <a class="btn btn-outline" href="/admin/efterkalkyl">Till efterkalkyl →</a>
+        <button class="btn btn-primary" id="fk-toggle" type="button">+ Ny kalkyl</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="row col-4">
+    <div class="card"><div class="stat">
+      <div class="stat-icon teal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h3"/></svg></div>
+      <div class="stat-content"><div class="stat-label">Kalkyler</div><div class="stat-value-row"><span class="stat-value" id="kpi-total">–</span></div><div class="stat-subtext">totalt</div></div>
+    </div></div>
+    <div class="card"><div class="stat">
+      <div class="stat-icon purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+      <div class="stat-content"><div class="stat-label">Pipeline</div><div class="stat-value-row"><span class="stat-value" id="kpi-pipeline">–</span></div><div class="stat-subtext">summa riktpris</div></div>
+    </div></div>
+    <div class="card"><div class="stat">
+      <div class="stat-icon green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+      <div class="stat-content"><div class="stat-label">Snitt timpenning</div><div class="stat-value-row"><span class="stat-value" id="kpi-hourly">–</span></div><div class="stat-subtext">faktiskt (efterkalkyl)</div></div>
+    </div></div>
+    <div class="card"><div class="stat">
+      <div class="stat-icon blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 12l5 5L21 4"/></svg></div>
+      <div class="stat-content"><div class="stat-label">Klara</div><div class="stat-value-row"><span class="stat-value" id="kpi-done">–</span></div><div class="stat-subtext">har efterkalkyl</div></div>
+    </div></div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-title">Kalkyler</div><span id="fk-count" style="font-size:12px;color:var(--text-muted)"></span></div>
+
+    <form class="fk-form" id="fk-form" hidden>
+      <label>Titel<input type="text" name="title" placeholder="t.ex. Hemsida Café Nord" required></label>
+      <label>Kund<input type="text" name="client" placeholder="Café Nord AB"></label>
+      <label>Beräknad tid (h)<input type="number" name="estHours" min="0" step="0.5" placeholder="20"></label>
+      <label>Timpris (kr/h)<input type="number" name="hourlyRate" min="0" step="50" value="800"></label>
+      <label>Externa kostn. (kr)<input type="number" name="estExternal" min="0" step="100" placeholder="0"></label>
+      <div class="full">
+        <div class="fk-preview">Riktpris: <b id="fk-preview">0 kr</b></div>
+        <div style="display:flex;gap:8px"><button type="button" class="btn btn-outline" id="fk-cancel">Avbryt</button><button type="submit" class="btn btn-primary">Spara kalkyl</button></div>
+      </div>
+    </form>
+
+    <div class="card-body" style="padding:0">
+      <div style="overflow-x:auto">
+        <table class="fk-table">
+          <thead><tr><th>Titel</th><th>Kund</th><th class="r">Tid</th><th class="r">Timpris</th><th class="r">Externa</th><th class="r">Riktpris</th><th>Status</th><th></th></tr></thead>
+          <tbody id="fk-rows"><tr><td colspan="8" class="fk-empty">Laddar…</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>
+</main>
+
+<script>
+(function () {
+  var API = '/api/admin/kalkyl';
+  var $ = function (id) { return document.getElementById(id); };
+  var kr = function (n) { return new Intl.NumberFormat('sv-SE').format(Math.round(Number(n) || 0)) + ' kr'; };
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+
+  function preview() {
+    var f = $('fk-form');
+    var v = (n) => parseFloat(f.querySelector('[name=' + n + ']').value) || 0;
+    $('fk-preview').textContent = kr(v('estHours') * v('hourlyRate') + v('estExternal'));
+  }
+
+  function render(d) {
+    var s = (d && d.summary) || {};
+    $('kpi-total').textContent = s.total || 0;
+    $('kpi-pipeline').textContent = kr(s.estPipeline);
+    $('kpi-hourly').textContent = s.avgActHourly ? kr(s.avgActHourly) + '/h' : '–';
+    $('kpi-done').textContent = s.done || 0;
+    var rows = (d && d.kalkyler) || [];
+    $('fk-count').textContent = rows.length + ' st';
+    var tb = $('fk-rows');
+    if (!rows.length) { tb.innerHTML = '<tr><td colspan="8" class="fk-empty">Inga kalkyler än. Klicka "Ny kalkyl".</td></tr>'; return; }
+    tb.innerHTML = rows.map(function (k) {
+      var pill = k.hasActuals ? '<span class="fk-pill done">Klar</span>' : '<span class="fk-pill open">Öppen</span>';
+      return '<tr>' +
+        '<td style="font-weight:600">' + esc(k.title) + '</td>' +
+        '<td style="color:var(--text-secondary)">' + esc(k.client || '—') + '</td>' +
+        '<td class="r">' + (k.estHours || 0) + ' h</td>' +
+        '<td class="r">' + kr(k.hourlyRate) + '</td>' +
+        '<td class="r">' + (k.estExternal ? kr(k.estExternal) : '–') + '</td>' +
+        '<td class="r fk-price">' + kr(k.estPrice) + '</td>' +
+        '<td>' + pill + '</td>' +
+        '<td style="text-align:right"><button class="fk-del" data-del="' + k.id + '" title="Ta bort" aria-label="Ta bort"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/></svg></button></td>' +
+      '</tr>';
+    }).join('');
+  }
+
+  function load() { fetch(API, { headers: { 'Accept': 'application/json' } }).then(function (r) { return r.json(); }).then(render).catch(function () { $('fk-rows').innerHTML = '<tr><td colspan="8" class="fk-empty">Kunde inte ladda.</td></tr>'; }); }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    load();
+    var form = $('fk-form');
+    $('fk-toggle').addEventListener('click', function () { form.hidden = !form.hidden; if (!form.hidden) { form.querySelector('[name=title]').focus(); preview(); } });
+    $('fk-cancel').addEventListener('click', function () { form.hidden = true; form.reset(); });
+    form.addEventListener('input', preview);
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var data = Object.fromEntries(new FormData(form).entries());
+      fetch(API, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) })
+        .then(function (r) { return r.json(); })
+        .then(function (res) { if (res && res.ok) { form.reset(); form.hidden = true; load(); } else { alert((res && res.error) || 'Kunde inte spara.'); } })
+        .catch(function () { alert('Kunde inte spara.'); });
+    });
+    document.addEventListener('click', function (e) {
+      var del = e.target.closest && e.target.closest('.fk-del');
+      if (!del) return;
+      if (!confirm('Ta bort kalkylen?')) return;
+      fetch(API + '/' + del.dataset.del, { method: 'DELETE' }).then(function (r) { return r.json(); }).then(function (res) { if (res && res.ok) load(); });
+    });
+  });
+})();
+</script>
+</body>
+</html>

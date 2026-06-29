@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Leads | 1010monky</title>
+<meta name="description" content="Inkommande leads och CRM i 1010monky studios adminpanel.">
+<link rel="icon" href="../images/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script type="module" src="/src/main-v4.js"></script>
+<style>
+  .lead-table { width:100%; border-collapse:collapse; font-size:13px; }
+  .lead-table th { text-align:left; font-size:11px; text-transform:uppercase; letter-spacing:.4px; color:var(--text-muted); font-weight:600; padding:10px 16px; border-bottom:1px solid var(--border-color); white-space:nowrap; }
+  .lead-table td { padding:12px 16px; border-bottom:1px solid var(--border-color-light); color:var(--text); vertical-align:top; }
+  .lead-table tr:last-child td { border-bottom:0; }
+  .lead-name { font-weight:600; }
+  .lead-sub { font-size:11px; color:var(--text-muted); margin-top:2px; }
+  .lead-contact a { color:var(--primary); }
+  .lead-msg { max-width:300px; color:var(--text-secondary); font-size:12.5px; line-height:1.5; }
+  .lead-msg-clamp { display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; cursor:pointer; }
+  .lead-tags { margin-top:4px; display:flex; flex-wrap:wrap; gap:4px; }
+  .lead-tag { font-size:10px; padding:1px 7px; border-radius:20px; background:var(--bg-surface-secondary); color:var(--text-muted); border:1px solid var(--border-color-light); }
+  .lead-status { font:inherit; font-size:12px; font-weight:600; padding:5px 8px; border:1px solid var(--border-color); border-radius:var(--radius-sm); background:var(--bg-surface); color:var(--text); cursor:pointer; }
+  .lead-status[data-status="ny"] { color:var(--primary); border-color:var(--primary); }
+  .lead-status[data-status="vunnen"] { color:var(--green); border-color:var(--green); }
+  .lead-status[data-status="forlorad"] { color:var(--text-muted); }
+  .lead-note { width:100%; min-width:130px; font:inherit; font-size:12px; padding:6px 8px; border:1px solid var(--border-color); border-radius:var(--radius-sm); background:var(--bg-surface); color:var(--text); }
+  .lead-note::placeholder { color:var(--text-disabled); }
+  .lead-del { background:none; border:0; cursor:pointer; color:var(--text-muted); padding:4px; border-radius:4px; line-height:0; }
+  .lead-del:hover { color:var(--red); background:var(--red-lt); }
+  .lead-empty { padding:34px 16px; text-align:center; color:var(--text-muted); font-size:13px; }
+</style>
+</head>
+<body data-shell="admin" data-page="leads" data-breadcrumb="1010monky > Kunder & affärer > Leads">
+
+<main class="main">
+<div class="page-wrapper">
+
+  <div class="page-header">
+    <div class="page-header-row">
+      <div>
+        <div class="page-pretitle">Kunder &amp; affärer</div>
+        <h1 class="page-title">Leads</h1>
+      </div>
+      <div class="page-actions">
+        <button class="btn btn-outline" id="lead-refresh" type="button">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13.5 8a5.5 5.5 0 1 1-1.6-3.9M13.5 2v3h-3"/></svg>
+          Uppdatera
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- KPI -->
+  <div class="row col-4">
+    <div class="card"><div class="stat">
+      <div class="stat-icon teal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.9"/></svg></div>
+      <div class="stat-content"><div class="stat-label">Totalt</div><div class="stat-value-row"><span class="stat-value" id="kpi-total">–</span></div><div class="stat-subtext">alla leads</div></div>
+    </div></div>
+    <div class="card"><div class="stat">
+      <div class="stat-icon green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 5v14M5 12h14"/></svg></div>
+      <div class="stat-content"><div class="stat-label">Nya (7 dgr)</div><div class="stat-value-row"><span class="stat-value" id="kpi-new">–</span></div><div class="stat-subtext">senaste veckan</div></div>
+    </div></div>
+    <div class="card"><div class="stat">
+      <div class="stat-icon yellow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+      <div class="stat-content"><div class="stat-label">Öppna</div><div class="stat-value-row"><span class="stat-value" id="kpi-open">–</span></div><div class="stat-subtext">ny / kontaktad / offert</div></div>
+    </div></div>
+    <div class="card"><div class="stat">
+      <div class="stat-icon purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0V4zM7 6H4v1a3 3 0 0 0 3 3M17 6h3v1a3 3 0 0 1-3 3"/></svg></div>
+      <div class="stat-content"><div class="stat-label">Vunna</div><div class="stat-value-row"><span class="stat-value" id="kpi-won">–</span></div><div class="stat-subtext">blev kunder</div></div>
+    </div></div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-title">Inkomna leads</div><span id="lead-count" style="font-size:12px;color:var(--text-muted)"></span></div>
+    <div class="card-body" style="padding:0">
+      <div style="overflow-x:auto">
+        <table class="lead-table">
+          <thead><tr><th>Datum</th><th>Lead</th><th>Kontakt</th><th>Meddelande</th><th>Status</th><th>Anteckning</th><th></th></tr></thead>
+          <tbody id="lead-rows"><tr><td colspan="7" class="lead-empty">Laddar…</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>
+</main>
+
+<script>
+(function () {
+  var API = '/api/admin/leads';
+  var STATUS = {
+    ny: 'Ny', kontaktad: 'Kontaktad', offert: 'Offert skickad', vunnen: 'Vunnen', forlorad: 'Förlorad'
+  };
+  var $ = function (id) { return document.getElementById(id); };
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+
+  function statusSelect(lead) {
+    var opts = Object.keys(STATUS).map(function (k) {
+      return '<option value="' + k + '"' + (lead.status === k ? ' selected' : '') + '>' + STATUS[k] + '</option>';
+    }).join('');
+    return '<select class="lead-status" data-id="' + lead.id + '" data-status="' + esc(lead.status) + '">' + opts + '</select>';
+  }
+
+  function row(l) {
+    var tags = (l.services || []).map(function (s) { return '<span class="lead-tag">' + esc(s) + '</span>'; }).join('');
+    var contact = '';
+    if (l.email) contact += '<a href="mailto:' + esc(l.email) + '">' + esc(l.email) + '</a>';
+    if (l.phone) contact += '<div class="lead-sub"><a href="tel:' + esc(l.phone) + '">' + esc(l.phone) + '</a></div>';
+    return '<tr>' +
+      '<td style="white-space:nowrap;color:var(--text-secondary)">' + esc((l.date || '').slice(0, 10)) + '</td>' +
+      '<td><div class="lead-name">' + esc(l.name || '—') + '</div>' +
+        (l.company ? '<div class="lead-sub">' + esc(l.company) + '</div>' : '') +
+        (tags ? '<div class="lead-tags">' + tags + '</div>' : '') + '</td>' +
+      '<td class="lead-contact">' + (contact || '<span style="color:var(--text-muted)">—</span>') + '</td>' +
+      '<td class="lead-msg"><div class="lead-msg-clamp" title="Klicka för att visa allt">' + esc(l.message || '') + '</div></td>' +
+      '<td>' + statusSelect(l) + '</td>' +
+      '<td><input class="lead-note" data-id="' + l.id + '" value="' + esc(l.note || '') + '" placeholder="lägg en notis…"></td>' +
+      '<td style="text-align:right"><button class="lead-del" data-id="' + l.id + '" title="Ta bort" aria-label="Ta bort">' +
+        '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/></svg></button></td>' +
+    '</tr>';
+  }
+
+  function render(d) {
+    var s = (d && d.summary) || {};
+    $('kpi-total').textContent = s.total || 0;
+    $('kpi-new').textContent = s.new7d || 0;
+    $('kpi-open').textContent = s.open || 0;
+    $('kpi-won').textContent = s.won || 0;
+    var leads = (d && d.leads) || [];
+    $('lead-count').textContent = leads.length + ' st';
+    var tb = $('lead-rows');
+    if (!leads.length) { tb.innerHTML = '<tr><td colspan="7" class="lead-empty">Inga leads än. De dyker upp här när någon skickar kontaktformuläret på sajten.</td></tr>'; return; }
+    tb.innerHTML = leads.map(row).join('');
+  }
+
+  function load() {
+    fetch(API, { headers: { 'Accept': 'application/json' } })
+      .then(function (r) { return r.json(); })
+      .then(render)
+      .catch(function () { $('lead-rows').innerHTML = '<tr><td colspan="7" class="lead-empty">Kunde inte ladda leads.</td></tr>'; });
+  }
+
+  function patch(id, body) {
+    return fetch(API + '/' + id, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
+      .then(function (r) { return r.json(); });
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    load();
+    var rf = $('lead-refresh'); if (rf) rf.addEventListener('click', load);
+
+    document.addEventListener('change', function (e) {
+      var sel = e.target.closest && e.target.closest('.lead-status');
+      if (sel) { sel.setAttribute('data-status', sel.value); patch(sel.dataset.id, { status: sel.value }).then(function (res) { if (res && res.summary) { $('kpi-open').textContent = res.summary.open; $('kpi-won').textContent = res.summary.won; } }); }
+    });
+
+    document.addEventListener('blur', function (e) {
+      var note = e.target.closest && e.target.closest('.lead-note');
+      if (note) { patch(note.dataset.id, { note: note.value }); }
+    }, true);
+
+    document.addEventListener('click', function (e) {
+      var clamp = e.target.closest && e.target.closest('.lead-msg-clamp');
+      if (clamp) { clamp.classList.toggle('lead-msg-clamp'); return; }
+      var del = e.target.closest && e.target.closest('.lead-del');
+      if (!del) return;
+      if (!confirm('Ta bort det här leadet?')) return;
+      fetch(API + '/' + del.dataset.id, { method: 'DELETE' }).then(function (r) { return r.json(); }).then(function (res) { if (res && res.ok) load(); });
+    });
+  });
+})();
+</script>
+</body>
+</html>

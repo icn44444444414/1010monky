@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Efterkalkyl | 1010monky</title>
+<meta name="description" content="Efterkalkyl – faktiskt utfall och timpenning på jobb i 1010monky studios adminpanel.">
+<link rel="icon" href="../images/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script type="module" src="/src/main-v4.js"></script>
+<style>
+  .ek-table { width:100%; border-collapse:collapse; font-size:13px; }
+  .ek-table th { text-align:left; font-size:11px; text-transform:uppercase; letter-spacing:.4px; color:var(--text-muted); font-weight:600; padding:10px 14px; border-bottom:1px solid var(--border-color); white-space:nowrap; }
+  .ek-table th.r, .ek-table td.r { text-align:right; }
+  .ek-table td { padding:12px 14px; border-bottom:1px solid var(--border-color-light); color:var(--text); vertical-align:middle; }
+  .ek-table tr:last-child td { border-bottom:0; }
+  .ek-plan { color:var(--text-secondary); font-size:12px; }
+  .ek-in { width:78px; font:inherit; font-size:13px; padding:6px 8px; border:1px solid var(--border-color); border-radius:var(--radius-sm); background:var(--bg-surface); color:var(--text); text-align:right; }
+  .ek-in.price { width:96px; }
+  .ek-hourly { font-weight:700; }
+  .ek-diff { font-size:11px; font-weight:600; padding:2px 7px; border-radius:20px; margin-left:6px; white-space:nowrap; }
+  .ek-diff.up { color:var(--green); background:var(--green-lt); }
+  .ek-diff.down { color:var(--red); background:var(--red-lt); }
+  .ek-diff.flat { color:var(--text-muted); background:var(--bg-surface-secondary); }
+  .ek-muted { color:var(--text-muted); }
+  .ek-empty { padding:34px 16px; text-align:center; color:var(--text-muted); font-size:13px; }
+</style>
+</head>
+<body data-shell="admin" data-page="efterkalkyl" data-breadcrumb="1010monky > Ekonomi > Efterkalkyl">
+
+<main class="main">
+<div class="page-wrapper">
+
+  <div class="page-header">
+    <div class="page-header-row">
+      <div>
+        <div class="page-pretitle">Ekonomi</div>
+        <h1 class="page-title">Efterkalkyl</h1>
+      </div>
+      <div class="page-actions">
+        <a class="btn btn-outline" href="/admin/forkalkyl">← Till förkalkyl</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="row col-4">
+    <div class="card"><div class="stat">
+      <div class="stat-icon green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+      <div class="stat-content"><div class="stat-label">Snitt timpenning</div><div class="stat-value-row"><span class="stat-value" id="kpi-hourly">–</span></div><div class="stat-subtext">faktiskt per timme</div></div>
+    </div></div>
+    <div class="card"><div class="stat">
+      <div class="stat-icon blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 12l5 5L21 4"/></svg></div>
+      <div class="stat-content"><div class="stat-label">Klara</div><div class="stat-value-row"><span class="stat-value" id="kpi-done">–</span></div><div class="stat-subtext">efterkalkylerade</div></div>
+    </div></div>
+    <div class="card"><div class="stat">
+      <div class="stat-icon teal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M9 8h6M9 12h6"/></svg></div>
+      <div class="stat-content"><div class="stat-label">Kalkyler</div><div class="stat-value-row"><span class="stat-value" id="kpi-total">–</span></div><div class="stat-subtext">totalt</div></div>
+    </div></div>
+    <div class="card"><div class="stat">
+      <div class="stat-icon purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+      <div class="stat-content"><div class="stat-label">Pipeline</div><div class="stat-value-row"><span class="stat-value" id="kpi-pipeline">–</span></div><div class="stat-subtext">summa riktpris</div></div>
+    </div></div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-title">Faktiskt utfall</div><span style="font-size:12px;color:var(--text-muted)">fyll i timmar, externa kostnader och pris du tog</span></div>
+    <div class="card-body" style="padding:0">
+      <div style="overflow-x:auto">
+        <table class="ek-table">
+          <thead><tr><th>Jobb</th><th>Plan</th><th class="r">Faktiska h</th><th class="r">Externa</th><th class="r">Pris</th><th class="r">Faktisk timpenning</th></tr></thead>
+          <tbody id="ek-rows"><tr><td colspan="6" class="ek-empty">Laddar…</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>
+</main>
+
+<script>
+(function () {
+  var API = '/api/admin/kalkyl';
+  var $ = function (id) { return document.getElementById(id); };
+  var kr = function (n) { return new Intl.NumberFormat('sv-SE').format(Math.round(Number(n) || 0)) + ' kr'; };
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+
+  function hourlyCell(k) {
+    if (!k.hasActuals) { return '<span class="ek-muted">fyll i →</span>'; }
+    var diff = k.hourlyDiff || 0;
+    var cls = diff > 0 ? 'up' : (diff < 0 ? 'down' : 'flat');
+    var sign = diff > 0 ? '+' : '';
+    return '<span class="ek-hourly">' + kr(k.actHourly) + '/h</span>' +
+      '<span class="ek-diff ' + cls + '">' + sign + kr(diff) + ' mot plan</span>';
+  }
+
+  function setSummary(s) {
+    s = s || {};
+    $('kpi-hourly').textContent = s.avgActHourly ? kr(s.avgActHourly) + '/h' : '–';
+    $('kpi-done').textContent = s.done || 0;
+    $('kpi-total').textContent = s.total || 0;
+    $('kpi-pipeline').textContent = kr(s.estPipeline);
+  }
+
+  function render(d) {
+    setSummary(d && d.summary);
+    var rows = (d && d.kalkyler) || [];
+    var tb = $('ek-rows');
+    if (!rows.length) { tb.innerHTML = '<tr><td colspan="6" class="ek-empty">Inga kalkyler än. Skapa en i <a href="/admin/forkalkyl">Förkalkyl</a> först.</td></tr>'; return; }
+    tb.innerHTML = rows.map(function (k) {
+      return '<tr data-id="' + k.id + '">' +
+        '<td><div style="font-weight:600">' + esc(k.title) + '</div><div class="ek-plan">' + esc(k.client || '') + '</div></td>' +
+        '<td class="ek-plan">' + (k.estHours || 0) + ' h × ' + kr(k.hourlyRate) + '<br>= ' + kr(k.estPrice) + '</td>' +
+        '<td class="r"><input class="ek-in act-hours" type="number" min="0" step="0.5" value="' + (k.actHours || '') + '" placeholder="' + (k.estHours || 0) + '"></td>' +
+        '<td class="r"><input class="ek-in act-ext" type="number" min="0" step="100" value="' + (k.actExternal || '') + '" placeholder="' + (k.estExternal || 0) + '"></td>' +
+        '<td class="r"><input class="ek-in price act-price" type="number" min="0" step="100" value="' + (k.actPrice || '') + '" placeholder="' + (k.estPrice || 0) + '"></td>' +
+        '<td class="r ek-result">' + hourlyCell(k) + '</td>' +
+      '</tr>';
+    }).join('');
+  }
+
+  function load() { fetch(API, { headers: { 'Accept': 'application/json' } }).then(function (r) { return r.json(); }).then(render).catch(function () { $('ek-rows').innerHTML = '<tr><td colspan="6" class="ek-empty">Kunde inte ladda.</td></tr>'; }); }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    load();
+    $('ek-rows').addEventListener('change', function (e) {
+      var tr = e.target.closest('tr[data-id]'); if (!tr) return;
+      var body = {
+        actHours: tr.querySelector('.act-hours').value || 0,
+        actExternal: tr.querySelector('.act-ext').value || 0,
+        actPrice: tr.querySelector('.act-price').value || 0
+      };
+      fetch(API + '/' + tr.dataset.id, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
+        .then(function (r) { return r.json(); })
+        .then(function (res) { if (res && res.kalkyl) { tr.querySelector('.ek-result').innerHTML = hourlyCell(res.kalkyl); setSummary(res.summary); } });
+    });
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inställningar | 1010monky</title>
+<meta name="description" content="Inställningar – konto, status och dataexport i 1010monky studios adminpanel.">
+<link rel="icon" href="../images/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script type="module" src="/src/main-v4.js"></script>
+<style>
+  .set-grid { display:grid; grid-template-columns:1fr 1fr; gap:var(--space-5); align-items:start; }
+  @media (max-width:860px){ .set-grid { grid-template-columns:1fr; } }
+  .set-form label { display:block; font-size:12px; color:var(--text-muted); margin:12px 16px 5px; }
+  .set-form input { width:calc(100% - 32px); margin:0 16px; font:inherit; font-size:13px; padding:8px 10px; border:1px solid var(--border-color); border-radius:var(--radius-sm); background:var(--bg-surface); color:var(--text); }
+  .set-form .act { padding:14px 16px; }
+  .set-msg { font-size:12.5px; margin:0 16px; }
+  .set-msg.ok { color:var(--green); } .set-msg.err { color:var(--red); }
+  .stat-rows { padding:6px 16px 14px; }
+  .stat-li { display:flex; align-items:center; justify-content:space-between; padding:10px 0; border-bottom:1px solid var(--border-color-light); font-size:13px; }
+  .stat-li:last-child { border-bottom:0; }
+  .badge2 { font-size:11px; font-weight:600; padding:3px 9px; border-radius:20px; }
+  .badge2.on { color:var(--green); background:var(--green-lt); }
+  .badge2.off { color:var(--text-muted); background:var(--bg-surface-secondary); }
+  .gdpr-p { color:var(--text-secondary); font-size:13px; line-height:1.55; padding:4px 16px 14px; }
+</style>
+</head>
+<body data-shell="admin" data-page="installningar" data-breadcrumb="1010monky > Konto > Inställningar">
+
+<main class="main">
+<div class="page-wrapper">
+
+  <div class="page-header">
+    <div class="page-header-row">
+      <div>
+        <div class="page-pretitle">Konto</div>
+        <h1 class="page-title">Inställningar</h1>
+      </div>
+    </div>
+  </div>
+
+  <div class="set-grid">
+
+    <!-- Byt lösenord -->
+    <div class="card">
+      <div class="card-header"><div class="card-title">Byt lösenord</div></div>
+      <form class="set-form" id="pw-form">
+        <label>Nuvarande lösenord</label><input type="password" name="current" autocomplete="current-password" required>
+        <label>Nytt lösenord (minst 8 tecken)</label><input type="password" name="new" autocomplete="new-password" minlength="8" required>
+        <label>Bekräfta nytt lösenord</label><input type="password" name="confirm" autocomplete="new-password" required>
+        <div class="act"><button class="btn btn-primary" type="submit">Spara nytt lösenord</button> <span class="set-msg" id="pw-msg"></span></div>
+      </form>
+    </div>
+
+    <!-- Status -->
+    <div class="card">
+      <div class="card-header"><div class="card-title">Status</div></div>
+      <div class="stat-rows" id="status-rows"><div class="stat-li"><span>Laddar…</span></div></div>
+    </div>
+
+    <!-- Integritet / GDPR -->
+    <div class="card" style="grid-column:1 / -1">
+      <div class="card-header"><div class="card-title">Integritet &amp; data (GDPR)</div></div>
+      <p class="gdpr-p">Cookie-samtycke visas för besökare på sajten och statistik laddas bara efter aktivt samtycke. Här kan du exportera all kunddata (leads, offerter, projekt, kalkyler och chattar) som en JSON-fil – för portabilitet eller backup. För att radera enskilda poster, använd respektive modul.</p>
+      <div style="padding:0 16px 16px"><a class="btn btn-outline" href="/api/admin/export" download>Exportera all data (JSON)</a></div>
+    </div>
+
+  </div>
+
+</div>
+</main>
+
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+
+  fetch('/api/admin/status').then(function (r) { return r.json(); }).then(function (s) {
+    function row(label, on, extra) {
+      return '<div class="stat-li"><span>' + label + (extra ? ' <span style="color:var(--text-muted)">' + extra + '</span>' : '') + '</span><span class="badge2 ' + (on ? 'on' : 'off') + '">' + (on ? 'På' : 'Av') + '</span></div>';
+    }
+    $('status-rows').innerHTML =
+      row('Cookie-samtycke', true) +
+      row('Google Analytics (spårning)', s.analyticsTag) +
+      row('GA-rapporter i admin', s.ga, s.ga ? '' : 'kräver Property-ID + service-konto') +
+      row('Push-notiser', s.pushEnabled, s.pushEnabled ? (s.pushSubs + ' enhet(er)') : '') +
+      row('E-post (kontaktformulär)', s.smtp);
+  }).catch(function () { $('status-rows').innerHTML = '<div class="stat-li"><span>Kunde inte ladda status.</span></div>'; });
+
+  $('pw-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var f = e.target, msg = $('pw-msg');
+    var cur = f.current.value, nw = f.new.value, conf = f.confirm.value;
+    msg.className = 'set-msg';
+    if (nw !== conf) { msg.className = 'set-msg err'; msg.textContent = 'De nya lösenorden matchar inte.'; return; }
+    fetch('/api/admin/account/password', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ current: cur, new: nw }) })
+      .then(function (r) { return r.json(); })
+      .then(function (res) {
+        if (res && res.ok) { f.reset(); msg.className = 'set-msg ok'; msg.textContent = 'Lösenordet är bytt.'; }
+        else { msg.className = 'set-msg err'; msg.textContent = (res && res.error) || 'Kunde inte byta.'; }
+      }).catch(function () { msg.className = 'set-msg err'; msg.textContent = 'Något gick fel.'; });
+  });
+})();
+</script>
+</body>
+</html>

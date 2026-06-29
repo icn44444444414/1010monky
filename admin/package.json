@@ -1,0 +1,82 @@
+{
+  "name": "gentelella",
+  "version": "4.0.2",
+  "type": "module",
+  "description": "Gentelella v4 — free admin template. 60 pages, 20 chart variants, fully interactive inbox & kanban, live theme generator, component playground, PWA-ready. Vite 8, vanilla JS, no Bootstrap, no jQuery.",
+  "scripts": {
+    "dev": "vite --clearScreen false",
+    "build": "NODE_ENV=production vite build",
+    "build:dev": "NODE_ENV=development vite build",
+    "preview": "vite preview",
+    "lint": "eslint src/",
+    "lint:fix": "eslint src/ --fix",
+    "format": "prettier --write src/",
+    "format:check": "prettier --check src/",
+    "analyze": "npm run build && open dist/stats.html",
+    "new": "node scripts/new-page.mjs",
+    "screenshots": "node scripts/screenshots.mjs",
+    "smoke": "node scripts/smoke.mjs",
+    "deploy:preview": "bash scripts/deploy-preview.sh",
+    "prepublishOnly": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ColorlibHQ/gentelella.git"
+  },
+  "keywords": [
+    "admin",
+    "dashboard",
+    "template",
+    "html",
+    "css",
+    "scss",
+    "vanilla-js",
+    "echarts",
+    "datatables",
+    "vite",
+    "modern",
+    "pwa",
+    "dark-mode",
+    "command-palette",
+    "theme-generator"
+  ],
+  "author": "Aigars Silkalns",
+  "license": "MIT",
+  "main": "src/main-v4.js",
+  "types": "types/gentelella.d.ts",
+  "exports": {
+    ".": "./src/main-v4.js",
+    "./v4/*": "./src/v4/*.js",
+    "./scss/*": "./src/scss/*",
+    "./types": "./types/gentelella.d.ts",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "src",
+    "production",
+    "types",
+    "vite.config.js"
+  ],
+  "bugs": {
+    "url": "https://github.com/ColorlibHQ/gentelella/issues"
+  },
+  "homepage": "https://github.com/ColorlibHQ/gentelella#readme",
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@playwright/test": "^1.61.0",
+    "eslint": "^10.5.0",
+    "eslint-config-prettier": "^10.1.8",
+    "playwright": "^1.61.0",
+    "prettier": "^3.8.4",
+    "rollup-plugin-visualizer": "^7.0.1",
+    "sass": "^1.101.0",
+    "terser": "^5.48.0",
+    "vite": "^8.0.16"
+  },
+  "dependencies": {
+    "datatables.net": "^2.3.8",
+    "echarts": "^6.1.0",
+    "leaflet": "^1.9.4"
+  }
+}

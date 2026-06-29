@@ -37,10 +37,16 @@ apps/contact_submissions.log
 # Dev-skarmdumpar
 screenshots/
 
-# Gentelella admin: keep the heavy source out of git, but DO commit the built
-# panel (admin/dist) that Flask serves at /admin. Source maps + stats excluded.
-admin/*
-!admin/dist
+# Gentelella admin: committa VÅR källa (src/production/public + byggkonfig) och
+# den byggda panelen (admin/dist) som Flask serverar på /admin. Uteslut tunga
+# beroenden, sourcemaps och Gentelellas upstream-cruft (docs/examples/...).
+admin/node_modules
+admin/docs
+admin/examples
+admin/tests
+admin/types
+admin/scripts
+admin/.vite
 admin/dist/**/*.map
 admin/dist/stats.html
 

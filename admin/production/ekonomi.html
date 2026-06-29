@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Intäkter | 1010monky</title>
+<meta name="description" content="Intäkter och ekonomi i 1010monky studios adminpanel.">
+<link rel="icon" href="../images/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script type="module" src="/src/main-v4.js"></script>
+<style>
+  /* Ekonomi — små tillägg ovanpå designsystemet */
+  .rev-months { display:flex; align-items:flex-end; gap:10px; height:160px; padding:8px 4px 0; }
+  .rev-months .col { flex:1; display:flex; flex-direction:column; align-items:center; gap:6px; min-width:0; }
+  .rev-months .track { width:100%; flex:1; display:flex; align-items:flex-end; }
+  .rev-months .bar { width:100%; max-width:34px; margin:0 auto; background:var(--primary); border-radius:4px 4px 0 0; transition:height .4s ease; min-height:2px; }
+  .rev-months .m { font-size:11px; color:var(--text-muted); white-space:nowrap; }
+  .rev-src { list-style:none; margin:0; padding:0; }
+  .rev-src li { display:flex; align-items:center; justify-content:space-between; gap:10px; padding:9px 0; border-bottom:1px solid var(--border-color-light); font-size:13px; }
+  .rev-src li:last-child { border-bottom:0; }
+  .rev-src .amt { font-weight:600; color:var(--text); }
+  .rev-form { display:grid; grid-template-columns:repeat(6, 1fr); gap:10px; padding:14px 16px; border-bottom:1px solid var(--border-color); }
+  .rev-form label { display:flex; flex-direction:column; gap:4px; font-size:11px; color:var(--text-muted); }
+  .rev-form input, .rev-form select { font:inherit; font-size:13px; padding:7px 9px; border:1px solid var(--border-color); border-radius:var(--radius-sm); background:var(--bg-surface); color:var(--text); }
+  .rev-form .full { grid-column:1 / -1; display:flex; gap:8px; justify-content:flex-end; }
+  @media (max-width:820px){ .rev-form { grid-template-columns:1fr 1fr; } }
+  .rev-table { width:100%; border-collapse:collapse; font-size:13px; }
+  .rev-table th { text-align:left; font-size:11px; text-transform:uppercase; letter-spacing:.4px; color:var(--text-muted); font-weight:600; padding:10px 16px; border-bottom:1px solid var(--border-color); }
+  .rev-table td { padding:11px 16px; border-bottom:1px solid var(--border-color-light); color:var(--text); }
+  .rev-table tr:last-child td { border-bottom:0; }
+  .rev-table .num { text-align:right; font-weight:600; white-space:nowrap; }
+  .rev-del { background:none; border:0; cursor:pointer; color:var(--text-muted); padding:4px; border-radius:4px; line-height:0; }
+  .rev-del:hover { color:var(--red); background:var(--red-lt); }
+  .rev-empty { padding:28px 16px; text-align:center; color:var(--text-muted); font-size:13px; }
+  .pill { font-size:11px; font-weight:600; padding:2px 8px; border-radius:20px; }
+  .pill-paid { color:var(--green); background:var(--green-lt); }
+  .pill-invoiced { color:var(--blue); background:var(--blue-lt); }
+  .pill-pending { color:var(--yellow); background:var(--yellow-lt); }
+  .pill-lead { color:var(--primary); background:var(--primary-lt); }
+</style>
+</head>
+<body data-shell="admin" data-page="intakter" data-breadcrumb="1010monky > Ekonomi > Intäkter">
+
+<main class="main">
+<div class="page-wrapper">
+
+  <div class="page-header">
+    <div class="page-header-row">
+      <div>
+        <div class="page-pretitle">Ekonomi</div>
+        <h1 class="page-title">Intäkter</h1>
+      </div>
+      <div class="page-actions">
+        <div class="segmented" role="radiogroup" id="rev-range" style="margin-right:8px">
+          <label><input type="radio" name="rng" value="7d"><span>7d</span></label>
+          <label><input type="radio" name="rng" value="30d" checked><span>30d</span></label>
+          <label><input type="radio" name="rng" value="90d"><span>90d</span></label>
+        </div>
+        <button class="btn btn-primary" id="rev-add-toggle" type="button">+ Lägg till intäkt</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- KPI -->
+  <div class="row col-4">
+    <div class="card"><div class="stat">
+      <div class="stat-icon green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 12l5 5L21 4"/></svg></div>
+      <div class="stat-content">
+        <div class="stat-label">Betalt</div>
+        <div class="stat-value-row"><span class="stat-value" id="kpi-paid">–</span></div>
+        <div class="stat-subtext" id="kpi-paid-sub">totalt inbetalt</div>
+      </div>
+    </div></div>
+    <div class="card"><div class="stat">
+      <div class="stat-icon yellow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+      <div class="stat-content">
+        <div class="stat-label">Pipeline</div>
+        <div class="stat-value-row"><span class="stat-value" id="kpi-pending">–</span></div>
+        <div class="stat-subtext">offert / faktura / lead</div>
+      </div>
+    </div></div>
+    <div class="card"><div class="stat">
+      <div class="stat-icon teal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg></div>
+      <div class="stat-content">
+        <div class="stat-label">Denna månad</div>
+        <div class="stat-value-row"><span class="stat-value" id="kpi-month">–</span></div>
+        <div class="stat-subtext">hittills</div>
+      </div>
+    </div></div>
+    <div class="card"><div class="stat">
+      <div class="stat-icon purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 19V5M4 19h16M8 16l3-4 3 2 4-6"/></svg></div>
+      <div class="stat-content">
+        <div class="stat-label">I år</div>
+        <div class="stat-value-row"><span class="stat-value" id="kpi-year">–</span></div>
+        <div class="stat-subtext" id="kpi-year-sub">ackumulerat</div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- Per månad + per källa -->
+  <div class="row col-4-8" style="--rev-flip:1">
+    <div class="card">
+      <div class="card-header"><div class="card-title">Per källa</div></div>
+      <div class="card-body"><ul class="rev-src" id="rev-sources"><li class="rev-empty">Laddar…</li></ul></div>
+    </div>
+    <div class="card">
+      <div class="card-header"><div class="card-title">Intäkt per månad</div><span style="font-size:12px;color:var(--text-muted)">senaste 12</span></div>
+      <div class="card-body"><div class="rev-months" id="rev-months"></div></div>
+    </div>
+  </div>
+
+  <!-- Tabell + lägg till -->
+  <div class="card">
+    <div class="card-header"><div class="card-title">Alla intäkter</div><span id="rev-count" style="font-size:12px;color:var(--text-muted)"></span></div>
+    <form class="rev-form" id="rev-form" hidden>
+      <label>Datum<input type="date" name="date" required></label>
+      <label>Titel / kund<input type="text" name="title" placeholder="t.ex. Hemsida Café Nord" required></label>
+      <label>Belopp (kr)<input type="number" name="amount" min="1" step="1" placeholder="12000" required></label>
+      <label>Källa<input type="text" name="source" placeholder="WordPress" value="Manuell"></label>
+      <label>Status
+        <select name="status">
+          <option value="paid">Betald</option>
+          <option value="invoiced">Fakturerad</option>
+          <option value="pending">Väntar</option>
+          <option value="lead">Lead</option>
+        </select>
+      </label>
+      <label>Notis<input type="text" name="note" placeholder="valfritt"></label>
+      <div class="full">
+        <button type="button" class="btn btn-outline" id="rev-cancel">Avbryt</button>
+        <button type="submit" class="btn btn-primary">Spara intäkt</button>
+      </div>
+    </form>
+    <div class="card-body" style="padding:0">
+      <div style="overflow-x:auto">
+        <table class="rev-table">
+          <thead><tr><th>Datum</th><th>Titel</th><th>Källa</th><th>Status</th><th class="num">Belopp</th><th></th></tr></thead>
+          <tbody id="rev-rows"><tr><td colspan="6" class="rev-empty">Laddar…</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>
+</main>
+
+<script>
+(function () {
+  var API = '/api/admin/revenue';
+  var range = '30d';
+  var fmt = function (n) { return new Intl.NumberFormat('sv-SE').format(Math.round(Number(n) || 0)) + ' kr'; };
+  var STATUS = {
+    paid: { label: 'Betald', cls: 'pill-paid' },
+    invoiced: { label: 'Fakturerad', cls: 'pill-invoiced' },
+    pending: { label: 'Väntar', cls: 'pill-pending' },
+    lead: { label: 'Lead', cls: 'pill-lead' }
+  };
+  var $ = function (id) { return document.getElementById(id); };
+
+  function renderKpis(s) {
+    $('kpi-paid').textContent = fmt(s.total);
+    $('kpi-paid-sub').textContent = s.average ? ('snitt ' + fmt(s.average)) : 'totalt inbetalt';
+    $('kpi-pending').textContent = fmt(s.pending);
+    $('kpi-month').textContent = fmt(s.monthTotal);
+    $('kpi-year').textContent = fmt(s.yearTotal);
+    $('kpi-year-sub').textContent = (s.count || 0) + ' poster';
+  }
+
+  function renderMonths(months) {
+    var el = $('rev-months');
+    el.innerHTML = '';
+    if (!months || !months.length) { el.innerHTML = '<div class="rev-empty" style="margin:auto">Ingen data än</div>'; return; }
+    var max = Math.max.apply(null, months.map(function (m) { return m.amount; })) || 1;
+    months.forEach(function (m) {
+      var pct = Math.max(2, Math.round((m.amount / max) * 100));
+      var col = document.createElement('div'); col.className = 'col';
+      var track = document.createElement('div'); track.className = 'track';
+      var bar = document.createElement('div'); bar.className = 'bar'; bar.style.height = pct + '%';
+      bar.title = m.label + ': ' + fmt(m.amount);
+      track.appendChild(bar);
+      var lbl = document.createElement('div'); lbl.className = 'm'; lbl.textContent = (m.label || '').slice(5);
+      col.appendChild(track); col.appendChild(lbl);
+      el.appendChild(col);
+    });
+  }
+
+  function renderSources(sources) {
+    var el = $('rev-sources');
+    if (!sources || !sources.length) { el.innerHTML = '<li class="rev-empty">Ingen data än</li>'; return; }
+    el.innerHTML = sources.map(function (s) {
+      return '<li><span>' + escapeHtml(s.label) + '</span><span class="amt">' + fmt(s.amount) + '</span></li>';
+    }).join('');
+  }
+
+  function renderTable(entries) {
+    var tb = $('rev-rows');
+    $('rev-count').textContent = (entries.length || 0) + ' poster';
+    if (!entries.length) { tb.innerHTML = '<tr><td colspan="6" class="rev-empty">Inga intäkter än. Klicka "Lägg till intäkt".</td></tr>'; return; }
+    tb.innerHTML = entries.map(function (e) {
+      var st = STATUS[e.status] || STATUS.paid;
+      return '<tr>' +
+        '<td style="white-space:nowrap;color:var(--text-secondary)">' + escapeHtml(e.date) + '</td>' +
+        '<td>' + escapeHtml(e.title) + (e.note ? '<div style="font-size:11px;color:var(--text-muted)">' + escapeHtml(e.note) + '</div>' : '') + '</td>' +
+        '<td style="color:var(--text-secondary)">' + escapeHtml(e.source) + '</td>' +
+        '<td><span class="pill ' + st.cls + '">' + st.label + '</span></td>' +
+        '<td class="num">' + fmt(e.amount) + '</td>' +
+        '<td style="text-align:right"><button class="rev-del" data-id="' + e.id + '" title="Ta bort" aria-label="Ta bort">' +
+          '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/></svg></button></td>' +
+      '</tr>';
+    }).join('');
+  }
+
+  function escapeHtml(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+
+  function load() {
+    fetch(API + '?range=' + range, { headers: { 'Accept': 'application/json' } })
+      .then(function (r) { return r.json(); })
+      .then(function (d) {
+        var s = (d && d.summary) || {};
+        renderKpis(s);
+        renderMonths(s.byMonth);
+        renderSources(s.bySource);
+        renderTable((d && d.entries) || []);
+      })
+      .catch(function () {
+        $('rev-rows').innerHTML = '<tr><td colspan="6" class="rev-empty">Kunde inte ladda data.</td></tr>';
+      });
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    load();
+
+    var rangeBox = $('rev-range');
+    if (rangeBox) rangeBox.addEventListener('change', function (e) {
+      if (e.target && e.target.name === 'rng') { range = e.target.value; load(); }
+    });
+
+    var form = $('rev-form');
+    var toggle = $('rev-add-toggle');
+    var cancel = $('rev-cancel');
+    if (toggle) toggle.addEventListener('click', function () {
+      form.hidden = !form.hidden;
+      if (!form.hidden) { var dt = form.querySelector('[name=date]'); if (dt && !dt.value) dt.value = new Date().toISOString().slice(0, 10); form.querySelector('[name=title]').focus(); }
+    });
+    if (cancel) cancel.addEventListener('click', function () { form.hidden = true; form.reset(); });
+
+    if (form) form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var data = Object.fromEntries(new FormData(form).entries());
+      fetch(API, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) })
+        .then(function (r) { return r.json(); })
+        .then(function (res) {
+          if (res && res.ok) { form.reset(); form.hidden = true; load(); }
+          else { alert((res && res.error) || 'Kunde inte spara.'); }
+        })
+        .catch(function () { alert('Kunde inte spara.'); });
+    });
+
+    document.addEventListener('click', function (e) {
+      var btn = e.target.closest && e.target.closest('.rev-del');
+      if (!btn) return;
+      if (!confirm('Ta bort den här intäkten?')) return;
+      fetch(API + '/' + btn.dataset.id, { method: 'DELETE' })
+        .then(function (r) { return r.json(); })
+        .then(function (res) { if (res && res.ok) load(); })
+        .catch(function () {});
+    });
+  });
+})();
+</script>
+</body>
+</html>

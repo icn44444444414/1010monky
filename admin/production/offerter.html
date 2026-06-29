@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Offerter | 1010monky</title>
+<meta name="description" content="Skapa och följ offerter i 1010monky studios adminpanel.">
+<link rel="icon" href="../images/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script type="module" src="/src/main-v4.js"></script>
+<style>
+  .of-form { padding:16px; border-bottom:1px solid var(--border-color); }
+  .of-top { display:grid; grid-template-columns:2fr 2fr 1fr 1fr; gap:10px; margin-bottom:14px; }
+  @media (max-width:760px){ .of-top { grid-template-columns:1fr 1fr; } }
+  .of-form label { display:flex; flex-direction:column; gap:4px; font-size:11px; color:var(--text-muted); }
+  .of-form input, .of-form select { font:inherit; font-size:13px; padding:7px 9px; border:1px solid var(--border-color); border-radius:var(--radius-sm); background:var(--bg-surface); color:var(--text); }
+  .of-items { width:100%; border-collapse:collapse; margin-bottom:10px; }
+  .of-items th { text-align:left; font-size:11px; text-transform:uppercase; letter-spacing:.4px; color:var(--text-muted); font-weight:600; padding:0 8px 6px; }
+  .of-items th.r, .of-items td.r { text-align:right; }
+  .of-items td { padding:3px 8px 3px 0; }
+  .of-items input { width:100%; }
+  .of-items .desc { min-width:160px; }
+  .of-rowdel { background:none; border:0; cursor:pointer; color:var(--text-muted); padding:4px; line-height:0; }
+  .of-rowdel:hover { color:var(--red); }
+  .of-foot { display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+  .of-sum { font-size:13px; color:var(--text-secondary); }
+  .of-sum b { color:var(--text); font-size:15px; }
+  .of-actions { display:flex; gap:8px; }
+  .of-table { width:100%; border-collapse:collapse; font-size:13px; }
+  .of-table th { text-align:left; font-size:11px; text-transform:uppercase; letter-spacing:.4px; color:var(--text-muted); font-weight:600; padding:10px 16px; border-bottom:1px solid var(--border-color); white-space:nowrap; }
+  .of-table th.r, .of-table td.r { text-align:right; }
+  .of-table td { padding:12px 16px; border-bottom:1px solid var(--border-color-light); color:var(--text); }
+  .of-table tr:last-child td { border-bottom:0; }
+  .of-num { font-family:var(--font-mono); font-size:12px; color:var(--text-secondary); }
+  .of-status { font:inherit; font-size:12px; font-weight:600; padding:5px 8px; border:1px solid var(--border-color); border-radius:var(--radius-sm); background:var(--bg-surface); color:var(--text); cursor:pointer; }
+  .of-status[data-status="accepterad"] { color:var(--green); border-color:var(--green); }
+  .of-status[data-status="skickad"] { color:var(--blue); border-color:var(--blue); }
+  .of-status[data-status="avbojd"] { color:var(--text-muted); }
+  .of-book { font-size:11px; font-weight:600; padding:4px 9px; border:1px solid var(--green); color:var(--green); background:var(--green-lt); border-radius:var(--radius-sm); cursor:pointer; }
+  .of-booked { font-size:11px; color:var(--text-muted); }
+  .of-del { background:none; border:0; cursor:pointer; color:var(--text-muted); padding:4px; border-radius:4px; line-height:0; }
+  .of-del:hover { color:var(--red); background:var(--red-lt); }
+  .of-empty { padding:34px 16px; text-align:center; color:var(--text-muted); font-size:13px; }
+</style>
+</head>
+<body data-shell="admin" data-page="offert" data-breadcrumb="1010monky > Kunder & affärer > Offerter">
+
+<main class="main">
+<div class="page-wrapper">
+
+  <div class="page-header">
+    <div class="page-header-row">
+      <div>
+        <div class="page-pretitle">Kunder &amp; affärer</div>
+        <h1 class="page-title">Offerter</h1>
+      </div>
+      <div class="page-actions">
+        <button class="btn btn-primary" id="of-toggle" type="button">+ Ny offert</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="row col-4">
+    <div class="card"><div class="stat">
+      <div class="stat-icon teal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 3h11l3 3v15H5z"/><path d="M9 8h6M9 12h6M9 16h4"/></svg></div>
+      <div class="stat-content"><div class="stat-label">Offerter</div><div class="stat-value-row"><span class="stat-value" id="kpi-total">–</span></div><div class="stat-subtext">totalt</div></div>
+    </div></div>
+    <div class="card"><div class="stat">
+      <div class="stat-icon blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4z"/></svg></div>
+      <div class="stat-content"><div class="stat-label">Skickade</div><div class="stat-value-row"><span class="stat-value" id="kpi-sent">–</span></div><div class="stat-subtext" id="kpi-sent-val">väntar svar</div></div>
+    </div></div>
+    <div class="card"><div class="stat">
+      <div class="stat-icon green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 12l5 5L21 4"/></svg></div>
+      <div class="stat-content"><div class="stat-label">Accepterade</div><div class="stat-value-row"><span class="stat-value" id="kpi-accepted">–</span></div><div class="stat-subtext">vunna offerter</div></div>
+    </div></div>
+    <div class="card"><div class="stat">
+      <div class="stat-icon purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+      <div class="stat-content"><div class="stat-label">Värde accepterat</div><div class="stat-value-row"><span class="stat-value" id="kpi-value">–</span></div><div class="stat-subtext">inkl. moms</div></div>
+    </div></div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-title">Offertlista</div><span id="of-count" style="font-size:12px;color:var(--text-muted)"></span></div>
+
+    <form class="of-form" id="of-form" hidden>
+      <div class="of-top">
+        <label>Kund<input type="text" name="client" placeholder="t.ex. Café Nord AB" required></label>
+        <label>E-post (valfritt)<input type="email" name="email" placeholder="kund@exempel.se"></label>
+        <label>Moms %<input type="number" name="vatRate" value="25" min="0" max="100" step="1"></label>
+        <label>Status
+          <select name="status">
+            <option value="utkast">Utkast</option>
+            <option value="skickad">Skickad</option>
+            <option value="accepterad">Accepterad</option>
+          </select>
+        </label>
+      </div>
+      <table class="of-items">
+        <thead><tr><th class="desc">Beskrivning</th><th class="r" style="width:80px">Antal</th><th class="r" style="width:120px">À-pris</th><th class="r" style="width:120px">Summa</th><th style="width:32px"></th></tr></thead>
+        <tbody id="of-rows"></tbody>
+      </table>
+      <div class="of-foot">
+        <button type="button" class="btn btn-outline" id="of-addrow">+ Rad</button>
+        <div class="of-sum">
+          Netto <b id="of-net">0 kr</b> &nbsp;·&nbsp; Moms <span id="of-vat">0 kr</span> &nbsp;·&nbsp; Totalt <b id="of-total">0 kr</b>
+          <div class="of-actions" style="margin-top:10px">
+            <button type="button" class="btn btn-outline" id="of-cancel">Avbryt</button>
+            <button type="submit" class="btn btn-primary">Spara offert</button>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <div class="card-body" style="padding:0">
+      <div style="overflow-x:auto">
+        <table class="of-table">
+          <thead><tr><th>Nr</th><th>Datum</th><th>Kund</th><th class="r">Netto</th><th class="r">Totalt</th><th>Status</th><th></th></tr></thead>
+          <tbody id="of-list"><tr><td colspan="7" class="of-empty">Laddar…</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>
+</main>
+
+<script>
+(function () {
+  var API = '/api/admin/offers';
+  var STATUS = { utkast: 'Utkast', skickad: 'Skickad', accepterad: 'Accepterad', avbojd: 'Avböjd' };
+  var $ = function (id) { return document.getElementById(id); };
+  var fmt = function (n) { return new Intl.NumberFormat('sv-SE').format(Math.round(Number(n) || 0)) + ' kr'; };
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+
+  function newRow() {
+    var tr = document.createElement('tr');
+    tr.innerHTML = '<td><input class="desc" name="desc" placeholder="t.ex. WordPress-hemsida, 5 sidor"></td>' +
+      '<td class="r"><input class="r qty" name="qty" type="number" min="0" step="0.5" value="1"></td>' +
+      '<td class="r"><input class="r price" name="price" type="number" min="0" step="100" placeholder="0"></td>' +
+      '<td class="r rowsum">0 kr</td>' +
+      '<td><button type="button" class="of-rowdel" aria-label="Ta bort rad"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 12h14"/></svg></button></td>';
+    return tr;
+  }
+
+  function recalc() {
+    var rows = $('of-rows').querySelectorAll('tr');
+    var net = 0;
+    rows.forEach(function (r) {
+      var q = parseFloat(r.querySelector('.qty').value) || 0;
+      var p = parseFloat(r.querySelector('.price').value) || 0;
+      var s = q * p; net += s;
+      r.querySelector('.rowsum').textContent = fmt(s);
+    });
+    var vatRate = parseFloat($('of-form').querySelector('[name=vatRate]').value) || 0;
+    var vat = net * vatRate / 100;
+    $('of-net').textContent = fmt(net);
+    $('of-vat').textContent = fmt(vat);
+    $('of-total').textContent = fmt(net + vat);
+  }
+
+  function render(d) {
+    var s = (d && d.summary) || {};
+    $('kpi-total').textContent = s.total || 0;
+    $('kpi-sent').textContent = s.sent || 0;
+    $('kpi-sent-val').textContent = s.outstandingValue ? fmt(s.outstandingValue) : 'väntar svar';
+    $('kpi-accepted').textContent = s.accepted || 0;
+    $('kpi-value').textContent = fmt(s.acceptedValue);
+    var offers = (d && d.offers) || [];
+    $('of-count').textContent = offers.length + ' st';
+    var tb = $('of-list');
+    if (!offers.length) { tb.innerHTML = '<tr><td colspan="7" class="of-empty">Inga offerter än. Klicka "Ny offert".</td></tr>'; return; }
+    tb.innerHTML = offers.map(function (o) {
+      var opts = Object.keys(STATUS).map(function (k) { return '<option value="' + k + '"' + (o.status === k ? ' selected' : '') + '>' + STATUS[k] + '</option>'; }).join('');
+      var book = (o.status === 'accepterad' && !o.bookedRevenue)
+        ? '<button class="of-book" data-book="' + o.id + '">Bokför som intäkt</button>'
+        : (o.bookedRevenue ? '<span class="of-booked">✓ bokförd</span>' : '');
+      return '<tr>' +
+        '<td class="of-num">' + esc(o.number) + '</td>' +
+        '<td style="white-space:nowrap;color:var(--text-secondary)">' + esc((o.date || '').slice(0, 10)) + '</td>' +
+        '<td><div style="font-weight:600">' + esc(o.client) + '</div>' + (o.email ? '<div style="font-size:11px;color:var(--text-muted)">' + esc(o.email) + '</div>' : '') + '</td>' +
+        '<td class="r">' + fmt(o.subtotal) + '</td>' +
+        '<td class="r" style="font-weight:600">' + fmt(o.total) + '</td>' +
+        '<td><select class="of-status" data-id="' + o.id + '" data-status="' + esc(o.status) + '">' + opts + '</select></td>' +
+        '<td style="text-align:right;white-space:nowrap">' + book +
+          ' <button class="of-del" data-del="' + o.id + '" title="Ta bort" aria-label="Ta bort"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/></svg></button></td>' +
+      '</tr>';
+    }).join('');
+  }
+
+  function load() {
+    fetch(API, { headers: { 'Accept': 'application/json' } }).then(function (r) { return r.json(); }).then(render)
+      .catch(function () { $('of-list').innerHTML = '<tr><td colspan="7" class="of-empty">Kunde inte ladda offerter.</td></tr>'; });
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    load();
+    var form = $('of-form');
+    $('of-rows').appendChild(newRow());
+    $('of-rows').appendChild(newRow());
+
+    $('of-toggle').addEventListener('click', function () { form.hidden = !form.hidden; if (!form.hidden) form.querySelector('[name=client]').focus(); });
+    $('of-cancel').addEventListener('click', function () { form.hidden = true; });
+    $('of-addrow').addEventListener('click', function () { $('of-rows').appendChild(newRow()); });
+    form.addEventListener('input', recalc);
+    form.addEventListener('click', function (e) {
+      var del = e.target.closest('.of-rowdel');
+      if (del) { var rows = $('of-rows').querySelectorAll('tr'); if (rows.length > 1) del.closest('tr').remove(); recalc(); }
+    });
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var items = [];
+      $('of-rows').querySelectorAll('tr').forEach(function (r) {
+        items.push({ desc: r.querySelector('.desc').value, qty: r.querySelector('.qty').value, unitPrice: r.querySelector('.price').value });
+      });
+      var fd = new FormData(form);
+      var body = { client: fd.get('client'), email: fd.get('email'), vatRate: fd.get('vatRate'), status: fd.get('status'), items: items };
+      fetch(API, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
+        .then(function (r) { return r.json(); })
+        .then(function (res) {
+          if (res && res.ok) { form.hidden = true; form.reset(); $('of-rows').innerHTML = ''; $('of-rows').appendChild(newRow()); $('of-rows').appendChild(newRow()); recalc(); load(); }
+          else { alert((res && res.error) || 'Kunde inte spara.'); }
+        }).catch(function () { alert('Kunde inte spara.'); });
+    });
+
+    document.addEventListener('change', function (e) {
+      var sel = e.target.closest && e.target.closest('.of-status');
+      if (sel) { sel.setAttribute('data-status', sel.value); fetch(API + '/' + sel.dataset.id, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ status: sel.value }) }).then(function () { load(); }); }
+    });
+
+    document.addEventListener('click', function (e) {
+      var book = e.target.closest && e.target.closest('.of-book');
+      if (book) { if (!confirm('Bokför offerten som en intäkt (fakturerad)?')) return; fetch(API + '/' + book.dataset.book + '/book', { method: 'POST' }).then(function (r) { return r.json(); }).then(function (res) { if (res && res.ok) load(); }); return; }
+      var del = e.target.closest && e.target.closest('.of-del');
+      if (del) { if (!confirm('Ta bort offerten?')) return; fetch(API + '/' + del.dataset.del, { method: 'DELETE' }).then(function (r) { return r.json(); }).then(function (res) { if (res && res.ok) load(); }); }
+    });
+  });
+})();
+</script>
+</body>
+</html>

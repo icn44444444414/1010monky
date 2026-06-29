@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Projekt | 1010monky</title>
+<meta name="description" content="Aktiva projekt och jobb i 1010monky studios adminpanel.">
+<link rel="icon" href="../images/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script type="module" src="/src/main-v4.js"></script>
+<style>
+  .pj-form { display:grid; grid-template-columns:2fr 2fr 1fr 1fr 1fr; gap:10px; padding:16px; border-bottom:1px solid var(--border-color); align-items:end; }
+  @media (max-width:860px){ .pj-form { grid-template-columns:1fr 1fr; } }
+  .pj-form label { display:flex; flex-direction:column; gap:4px; font-size:11px; color:var(--text-muted); }
+  .pj-form input, .pj-form select { font:inherit; font-size:13px; padding:7px 9px; border:1px solid var(--border-color); border-radius:var(--radius-sm); background:var(--bg-surface); color:var(--text); }
+  .pj-form .full { grid-column:1 / -1; display:flex; gap:8px; justify-content:flex-end; }
+  .pj-table { width:100%; border-collapse:collapse; font-size:13px; }
+  .pj-table th { text-align:left; font-size:11px; text-transform:uppercase; letter-spacing:.4px; color:var(--text-muted); font-weight:600; padding:10px 16px; border-bottom:1px solid var(--border-color); white-space:nowrap; }
+  .pj-table th.r, .pj-table td.r { text-align:right; }
+  .pj-table td { padding:12px 16px; border-bottom:1px solid var(--border-color-light); color:var(--text); }
+  .pj-table tr:last-child td { border-bottom:0; }
+  .pj-status { font:inherit; font-size:12px; font-weight:600; padding:5px 8px; border:1px solid var(--border-color); border-radius:var(--radius-sm); background:var(--bg-surface); color:var(--text); cursor:pointer; }
+  .pj-status[data-status="pagaende"] { color:var(--primary); border-color:var(--primary); }
+  .pj-status[data-status="levererat"] { color:var(--green); border-color:var(--green); }
+  .pj-status[data-status="pausad"] { color:var(--yellow); border-color:var(--yellow); }
+  .pj-deadline.over { color:var(--red); font-weight:600; }
+  .pj-del { background:none; border:0; cursor:pointer; color:var(--text-muted); padding:4px; border-radius:4px; line-height:0; }
+  .pj-del:hover { color:var(--red); background:var(--red-lt); }
+  .pj-empty { padding:34px 16px; text-align:center; color:var(--text-muted); font-size:13px; }
+</style>
+</head>
+<body data-shell="admin" data-page="projekt" data-breadcrumb="1010monky > Kunder & affärer > Projekt">
+
+<main class="main">
+<div class="page-wrapper">
+
+  <div class="page-header">
+    <div class="page-header-row">
+      <div>
+        <div class="page-pretitle">Kunder &amp; affärer</div>
+        <h1 class="page-title">Projekt</h1>
+      </div>
+      <div class="page-actions">
+        <button class="btn btn-primary" id="pj-toggle" type="button">+ Nytt projekt</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="row col-4">
+    <div class="card"><div class="stat">
+      <div class="stat-icon teal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></div>
+      <div class="stat-content"><div class="stat-label">Pågående</div><div class="stat-value-row"><span class="stat-value" id="kpi-active">–</span></div><div class="stat-subtext">aktiva jobb</div></div>
+    </div></div>
+    <div class="card"><div class="stat">
+      <div class="stat-icon green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 12l5 5L21 4"/></svg></div>
+      <div class="stat-content"><div class="stat-label">Levererade</div><div class="stat-value-row"><span class="stat-value" id="kpi-delivered">–</span></div><div class="stat-subtext">klara</div></div>
+    </div></div>
+    <div class="card"><div class="stat">
+      <div class="stat-icon purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+      <div class="stat-content"><div class="stat-label">Värde pågående</div><div class="stat-value-row"><span class="stat-value" id="kpi-value">–</span></div><div class="stat-subtext">i arbete</div></div>
+    </div></div>
+    <div class="card"><div class="stat">
+      <div class="stat-icon blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg></div>
+      <div class="stat-content"><div class="stat-label">Totalt</div><div class="stat-value-row"><span class="stat-value" id="kpi-total">–</span></div><div class="stat-subtext">alla projekt</div></div>
+    </div></div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-title">Projektlista</div><span id="pj-count" style="font-size:12px;color:var(--text-muted)"></span></div>
+
+    <form class="pj-form" id="pj-form" hidden>
+      <label>Projekt<input type="text" name="title" placeholder="t.ex. Hemsida Café Nord" required></label>
+      <label>Kund<input type="text" name="client" placeholder="Café Nord AB"></label>
+      <label>Värde (kr)<input type="number" name="value" min="0" step="500" placeholder="12000"></label>
+      <label>Deadline<input type="date" name="deadline"></label>
+      <label>Status
+        <select name="status">
+          <option value="pagaende">Pågående</option>
+          <option value="offert">Offert</option>
+          <option value="pausad">Pausad</option>
+          <option value="levererat">Levererat</option>
+        </select>
+      </label>
+      <div class="full">
+        <button type="button" class="btn btn-outline" id="pj-cancel">Avbryt</button>
+        <button type="submit" class="btn btn-primary">Spara projekt</button>
+      </div>
+    </form>
+
+    <div class="card-body" style="padding:0">
+      <div style="overflow-x:auto">
+        <table class="pj-table">
+          <thead><tr><th>Projekt</th><th>Kund</th><th class="r">Värde</th><th>Deadline</th><th>Status</th><th></th></tr></thead>
+          <tbody id="pj-rows"><tr><td colspan="6" class="pj-empty">Laddar…</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>
+</main>
+
+<script>
+(function () {
+  var API = '/api/admin/projects';
+  var STATUS = { offert: 'Offert', pagaende: 'Pågående', levererat: 'Levererat', pausad: 'Pausad' };
+  var $ = function (id) { return document.getElementById(id); };
+  var fmt = function (n) { return new Intl.NumberFormat('sv-SE').format(Math.round(Number(n) || 0)) + ' kr'; };
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  var today = new Date().toISOString().slice(0, 10);
+
+  function render(d) {
+    var s = (d && d.summary) || {};
+    $('kpi-active').textContent = s.active || 0;
+    $('kpi-delivered').textContent = s.delivered || 0;
+    $('kpi-value').textContent = fmt(s.activeValue);
+    $('kpi-total').textContent = s.total || 0;
+    var rows = (d && d.projects) || [];
+    $('pj-count').textContent = rows.length + ' st';
+    var tb = $('pj-rows');
+    if (!rows.length) { tb.innerHTML = '<tr><td colspan="6" class="pj-empty">Inga projekt än. Klicka "Nytt projekt".</td></tr>'; return; }
+    tb.innerHTML = rows.map(function (p) {
+      var opts = Object.keys(STATUS).map(function (k) { return '<option value="' + k + '"' + (p.status === k ? ' selected' : '') + '>' + STATUS[k] + '</option>'; }).join('');
+      var over = p.deadline && p.deadline < today && p.status === 'pagaende';
+      var deadline = p.deadline ? '<span class="pj-deadline' + (over ? ' over' : '') + '">' + esc(p.deadline) + (over ? ' ⚠' : '') + '</span>' : '<span style="color:var(--text-muted)">—</span>';
+      return '<tr>' +
+        '<td style="font-weight:600">' + esc(p.title) + (p.note ? '<div style="font-size:11px;color:var(--text-muted);font-weight:400">' + esc(p.note) + '</div>' : '') + '</td>' +
+        '<td style="color:var(--text-secondary)">' + esc(p.client || '—') + '</td>' +
+        '<td class="r">' + (p.value ? fmt(p.value) : '<span style="color:var(--text-muted)">—</span>') + '</td>' +
+        '<td>' + deadline + '</td>' +
+        '<td><select class="pj-status" data-id="' + p.id + '" data-status="' + esc(p.status) + '">' + opts + '</select></td>' +
+        '<td style="text-align:right"><button class="pj-del" data-del="' + p.id + '" title="Ta bort" aria-label="Ta bort"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/></svg></button></td>' +
+      '</tr>';
+    }).join('');
+  }
+
+  function load() {
+    fetch(API, { headers: { 'Accept': 'application/json' } }).then(function (r) { return r.json(); }).then(render)
+      .catch(function () { $('pj-rows').innerHTML = '<tr><td colspan="6" class="pj-empty">Kunde inte ladda projekt.</td></tr>'; });
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    load();
+    var form = $('pj-form');
+    $('pj-toggle').addEventListener('click', function () { form.hidden = !form.hidden; if (!form.hidden) form.querySelector('[name=title]').focus(); });
+    $('pj-cancel').addEventListener('click', function () { form.hidden = true; form.reset(); });
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var data = Object.fromEntries(new FormData(form).entries());
+      fetch(API, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) })
+        .then(function (r) { return r.json(); })
+        .then(function (res) { if (res && res.ok) { form.reset(); form.hidden = true; load(); } else { alert((res && res.error) || 'Kunde inte spara.'); } })
+        .catch(function () { alert('Kunde inte spara.'); });
+    });
+
+    document.addEventListener('change', function (e) {
+      var sel = e.target.closest && e.target.closest('.pj-status');
+      if (sel) { sel.setAttribute('data-status', sel.value); fetch(API + '/' + sel.dataset.id, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ status: sel.value }) }).then(function () { load(); }); }
+    });
+
+    document.addEventListener('click', function (e) {
+      var del = e.target.closest && e.target.closest('.pj-del');
+      if (!del) return;
+      if (!confirm('Ta bort projektet?')) return;
+      fetch(API + '/' + del.dataset.del, { method: 'DELETE' }).then(function (r) { return r.json(); }).then(function (res) { if (res && res.ok) load(); });
+    });
+  });
+})();
+</script>
+</body>
+</html>
