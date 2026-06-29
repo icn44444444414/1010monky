@@ -6,8 +6,6 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 
-  {% include 'partials/analytics.html' %}
-
   {# --- Sidans titel + beskrivning (varje sida fyller blocken) --- #}
   <title>{% block title %}{% endblock %} | 1010monky</title>
   <meta name="description" content="{% block meta_description %}1010monky Studio bygger snabba, sökoptimerade hemsidor i Eskilstuna – WordPress och skräddarsydd kod för företag i Sverige och Finland.{% endblock %}">
@@ -86,8 +84,6 @@
 
   {% block footer %}{% include 'partials/site-footer.html' %}{% endblock %}
 
-  {% include 'partials/chat_widget.html' %}
-  {% include 'partials/cookie-consent.html' %}
   <script src="{{ config.ASSETS_ROOT }}/js/site.js?v=1" defer></script>
   {% block scripts %}{% endblock %}
 </body>

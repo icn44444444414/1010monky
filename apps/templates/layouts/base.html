@@ -7,8 +7,6 @@
     <!-- Viewport (tillåt zoom: ingen maximum-scale = bättre a11y + Googles mobilkrav) -->
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 
-    {% include 'partials/analytics.html' %}
-
     <!-- SEO meta tags -->
     <title>{% block title %}{% endblock %} | 1010monky Studio</title>
     <meta name="description" content="{% block meta_description %}1010monky Studio är en webbyrå i Eskilstuna som bygger snabba, sökoptimerade hemsidor i WordPress och skräddarsydd kod – för företag i Sverige och Finland.{% endblock %}">
@@ -185,12 +183,6 @@
 
 <!-- Scroll-reveal + grön scroll-progress (global) -->
 <script src="{{ config.ASSETS_ROOT }}/js/premium-scroll.js"></script>
-
-<!-- Chatta med Matias (global widget) -->
-{% include 'partials/chat_widget.html' %}
-
-<!-- Cookie-samtycke + anonym statistik -->
-{% include 'partials/cookie-consent.html' %}
 
 </body>
 </html>

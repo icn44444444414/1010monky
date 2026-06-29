@@ -29,8 +29,8 @@ def register_maintenance(app):
         # Slapp igenom statiska filer, robots.txt + upplasningsdorren
         if path.startswith('/static') or path in ('/favicon.ico', '/bygg', '/robots.txt'):
             return
-        # Upplast via session (robust), inloggad admin, eller Basic Auth
-        if session.get('wip_unlocked') or session.get('chat_admin'):
+        # Upplast via session (robust) eller Basic Auth
+        if session.get('wip_unlocked'):
             return
         auth = request.authorization
         if auth and hmac.compare_digest(auth.password or '', wip_password):
@@ -59,7 +59,7 @@ def _set_sqlite_pragmas(dbapi_connection, connection_record):
 def register_extensions(app):
     db.init_app(app)
 
-apps = ('pages', 'chat', 'analytics',)
+apps = ('pages', 'adminpanel',)
 
 def register_blueprints(app):
     for module_name in apps:

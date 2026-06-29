@@ -22,6 +22,15 @@ venv
 
 # other
 .DS_Store
+*.sqlite3-shm
+*.sqlite3-wal
+
+# Gentelella admin: keep the heavy source out of git, but DO commit the built
+# panel (admin/dist) that Flask serves at /admin. Source maps + stats excluded.
+admin/*
+!admin/dist
+admin/dist/**/*.map
+admin/dist/stats.html
 
 # sphinx docs 
 _build
