@@ -1,7 +1,10 @@
 import os
+from dotenv import load_dotenv
 from   flask_migrate import Migrate
 from   flask_minify  import Minify
 from   sys import exit
+
+load_dotenv()
 
 from apps.config import config_dict
 from apps import create_app, db

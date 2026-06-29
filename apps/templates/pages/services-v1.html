@@ -31,13 +31,15 @@
 
 {% block content %}
 <section class="section section-alt">
-  <div class="container" style="max-width: 62ch;">
+  <div class="container">
+    <div class="page-intro page-intro--center">
     <span class="eyebrow">{{ tr('nav_services') }}</span>
     <h1 style="margin-block: var(--space-3);">{{ 'Kaikki verkkoasi varten, ' if fi else 'Allt för din webb, på ' }}<span class="text-gradient">{{ 'yhdestä paikasta' if fi else 'ett ställe' }}</span></h1>
     <p class="lead">{{ 'Sivustot WordPressillä ja räätälöidyllä koodilla – ideasta julkaisuun. Kehittäjä ja suunnittelija, Ruotsissa ja Suomessa.' if fi else 'Webbplatser i WordPress och skräddarsydd kod – från idé till lansering. En utvecklare och en designer, i Sverige och Finland.' }}</p>
     <div class="cluster" style="margin-top: var(--space-5);">
       <a class="btn btn-primary" href="{{ nav_url('contact') }}">{{ 'Pyydä tarjous' if fi else 'Få offert' }}</a>
       <a class="btn btn-ghost" href="{{ nav_url('pricing') }}">{{ 'Katso hinnat' if fi else 'Se vad det kostar' }}</a>
+    </div>
     </div>
   </div>
 </section>

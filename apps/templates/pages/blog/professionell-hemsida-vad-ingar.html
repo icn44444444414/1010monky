@@ -1,7 +1,8 @@
 {% extends 'layouts/clean.html' %}
+{% set fi = lang == 'fi' %}
 
-{% block title %}Vad ingår i en professionell hemsida?{% endblock %}
-{% block meta_description %}Vad får du egentligen när du köper en professionell hemsida? Jag går igenom strategi, design, WordPress, SEO, mätning, lansering och pris för småföretag.{% endblock %}
+{% block title %}{{ 'Mitä ammattimaiseen verkkosivuun kuuluu?' if fi else 'Vad ingår i en professionell hemsida?' }}{% endblock %}
+{% block meta_description %}{{ 'Mitä saat oikeasti kun ostat ammattimaisen verkkosivun? Käyn läpi strategian, suunnittelun, WordPressin, SEO:n, mittaamisen, julkaisun ja hinnan pienyrityksille.' if fi else 'Vad får du egentligen när du köper en professionell hemsida? Jag går igenom strategi, design, WordPress, SEO, mätning, lansering och pris för småföretag.' }}{% endblock %}
 {% block og_type %}article{% endblock %}
 {% block og_image %}https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1200&q=82{% endblock %}
 
@@ -242,6 +243,34 @@
 
 {% block jsonld %}
 <script type="application/ld+json">
+{% if fi %}
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "headline": "Mitä ammattimaiseen verkkosivuun kuuluu?",
+      "description": "Mitä saat oikeasti kun ostat ammattimaisen verkkosivun, strategiasta ja suunnittelusta WordPressiin, SEO:hon, mittaamiseen ja julkaisuun.",
+      "mainEntityOfPage": "https://1010monky.se/fi/blogi/professionell-hemsida-vad-ingar",
+      "image": "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1200&q=82",
+      "datePublished": "2026-06-29",
+      "dateModified": "2026-06-29",
+      "inLanguage": "fi-FI",
+      "author": { "@type": "Person", "name": "Matias" },
+      "publisher": { "@type": "Organization", "name": "1010monky Studio", "url": "https://1010monky.se" },
+      "keywords": ["ammattimainen verkkosivu", "mitä verkkosivuun kuuluu", "yrityksen verkkosivu", "WordPress verkkosivu"]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        { "@type": "Question", "name": "Mikä on tärkeintä ammattimaisessa verkkosivussa?", "acceptedAnswer": { "@type": "Answer", "text": "Tärkeintä on että sivu tekee yritykselle oikean asian. Sen pitää selittää tarjous selkeästi, latautua nopeasti, toimia mobiilissa, olla helppo ottaa yhteyttä ja perustua tekniikkaan jota voi ylläpitää." } },
+        { "@type": "Question", "name": "Pitääkö ammattimaisen sivun olla tehty WordPressillä?", "acceptedAnswer": { "@type": "Answer", "text": "Ei. WordPress sopii usein kun yritys haluaa itse päivittää sisältöä. Räätälöity koodi sopii paremmin kun mukana on erityistä logiikkaa, integraatioita tai sivun takana oleva järjestelmä." } },
+        { "@type": "Question", "name": "Paljonko ammattimainen verkkosivu maksaa?", "acceptedAnswer": { "@type": "Answer", "text": "Hinta riippuu sisällöstä, suunnittelusta, sivumäärästä, SEO:sta, toiminnoista ja ylläpidosta. Saat aina kiinteän hinnan ennen kuin aloitamme." } }
+      ]
+    }
+  ]
+}
+{% else %}
 {
   "@context": "https://schema.org",
   "@graph": [
@@ -301,10 +330,230 @@
     }
   ]
 }
+{% endif %}
 </script>
 {% endblock %}
 
 {% block content %}
+{% if fi %}
+<section class="post-shell">
+  <div class="container post-wrap">
+    <nav class="post-breadcrumb" aria-label="Murupolku">
+      <span><a href="/fi">Etusivu</a></span>
+      <span><a href="/fi/blogi">Blogi</a></span>
+      <span>Ammattimainen verkkosivu</span>
+    </nav>
+
+    <header class="post-head">
+      <span class="eyebrow">Verkkoprojekti</span>
+      <h1>Mitä ammattimaiseen verkkosivuun kuuluu?</h1>
+      <p class="lead">Ammattimainen verkkosivu ei ole pelkkä nätti etusivu. Sen tehtävä on auttaa asiakasta ymmärtämään mitä teet, luottamaan sinuun ja ottamaan seuraava askel ilman että pitää miettiä liikaa.</p>
+      <div class="post-meta-row">
+        <div class="post-meta" aria-label="Artikkelin tiedot">
+          <span>Kirjoittaja Matias</span>
+          <span>29. kesäkuuta 2026</span>
+          <span>Lukuaika n. 7 min</span>
+        </div>
+        <div class="post-share" aria-label="Jaa artikkeli">
+          <span>Jaa:</span>
+          <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://1010monky.se/fi/blogi/professionell-hemsida-vad-ingar" rel="noopener" target="_blank">LinkedIn</a>
+          <a href="https://www.facebook.com/sharer/sharer.php?u=https://1010monky.se/fi/blogi/professionell-hemsida-vad-ingar" rel="noopener" target="_blank">Facebook</a>
+        </div>
+      </div>
+    </header>
+
+    <img class="post-cover" src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1600&q=82" alt="Rauhallinen työpiste, kannettava ja muistiinpanoja" fetchpriority="high">
+
+    <div class="post-layout">
+      <article class="post-body">
+        <p>Tapaan usein yrittäjiä, jotka vertailevat verkkosivuja kuin kaikki olisi samaa. Yksi tarjous sanoo yhden summan, toinen moninkertaisen, ja molemmissa lukee "verkkosivu". Ei ihme, että on vaikea tietää mikä on kohtuullista.</p>
+
+        <p>Minulle ammattimainen verkkosivu ei ala väreistä tai animaatioista. Se alkaa siitä, mitä sivun pitää tehdä yrityksen hyväksi.</p>
+
+        <p>Suomessa valtaosa yrityksistä on pieniä. Tilastokeskuksen mukaan suurin osa työllistää alle kymmenen henkeä. Juuri sitä todellisuutta varten minä rakennan. Pieni yritys ei tarvitse raskasta toimistoprosessia. Se tarvitsee selkeän sivun, joka löytyy, jonka ymmärtää ja jota osaa käyttää.</p>
+
+        <h2>Ensin tarjouksen pitää tulla selväksi</h2>
+        <p>Ensimmäinen asia ei ole suunnittelu. Se on jäsentely.</p>
+
+        <p>Mitä myyt? Kenelle? Miksi juuri sinut pitäisi valita? Mitä kävijän pitäisi tehdä luettuaan? Jos nämä jäävät epäselviksi, kalliskaan suunnittelu ei pelasta tilannetta.</p>
+
+        <p>Hyvällä sivulla kävijä ymmärtää nopeasti kolme asiaa:</p>
+
+        <ul class="post-checklist">
+          <li>missä yritys auttaa</li>
+          <li>kenelle se sopii</li>
+          <li>miten otetaan yhteyttä tai mennään eteenpäin</li>
+        </ul>
+
+        <p>Kuulostaa yksinkertaiselta, mutta juuri siinä on usein eniten työtä. Moni sivu yrittää sanoa kaiken kerralla. Silloin mikään ei jää mieleen.</p>
+
+        <h2>Suunnittelun pitää tuntua luotettavalta, ei vain modernilta</h2>
+        <p>Ammattimaisen sivun pitää näyttää hyvältä, mutta suunnittelun on kannettava sisältö. Pienyritykselle toimii usein paremmin rauhallinen rakenne, hyvä luettavuus ja selkeät yhteydenottotavat kuin sivu joka yrittää tehdä vaikutuksen tehosteilla.</p>
+
+        <p>Katson erityisesti typografiaa, kontrastia, ilmavuutta, painikkeita, mobiilinäkymää ja sitä miten nopeasti silmä löytää seuraavan askeleen. Sen pitää tuntua järjestetyltä. Ei jäykältä, mutta järjestetyltä.</p>
+
+        <p>Juuri tässä monet halvat mallipohjat menettävät laadun. Ne voivat näyttää ihan hyvältä demossa, mutta kun mukaan tulee oikea sisältö, omat otsikot ja yrityksen omat kuvat, rytmi hajoaa helposti.</p>
+
+        <figure class="post-figure">
+          <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1400&q=82" alt="Mittaristo ja kaavioita kannettavan näytöllä" loading="lazy">
+          <figcaption>Ammattimaisen sivun pitää tuntua selkeältä ja olla mitattavissa järkevällä tavalla.</figcaption>
+        </figure>
+
+        <h2>Tekniikan pitää olla sopivan kehittynyttä</h2>
+        <p>WordPress on yhä monelle yritykselle hyvä valinta. W3Techsin mukaan WordPressiä käyttää 41,5 prosenttia kaikista verkkosivustoista ja 59,3 prosenttia niistä joiden julkaisujärjestelmä on tiedossa, kesäkuussa 2026 tekemäni katsauksen mukaan.</p>
+
+        <p>Se ei tarkoita, että WordPress on aina oikein. Se tarkoittaa, että se on koeteltu, siihen löytää helposti apua ja se toimii hyvin kun asiakas haluaa itse muuttaa tekstejä, kuvia ja blogikirjoituksia.</p>
+
+        <p>Mutta joskus WordPress ei riitä. Jos sivu tarvitsee varausvirran, dashboardin, asiakasportaalin, API-yhteyden tai muuta liiketoimintalogiikkaa, räätälöity koodi voi olla parempi. Silloin sivu ei ole pelkkä esite. Siitä tulee työkalu.</p>
+
+        <div class="post-note">
+          <p>Nyrkkisääntöni on yksinkertainen: WordPress kun sisältöä pitää olla helppo hoitaa. Räätälöity kun toiminto on tärkeämpi kuin julkaisutyökalu.</p>
+        </div>
+
+        <h2>SEO-pohja rakennetaan sisään alusta alkaen</h2>
+        <p>SEO ei ole jotain mitä ripotellaan sivulle julkaisun jälkeen. Ammattimainen sivu tarvitsee oikean rakenteen heti alusta.</p>
+
+        <p>Kyse on muun muassa sivujen otsikoista, väliotsikoista, sisäisistä linkeistä, kuvateksteistä, latausajasta, selkeistä palvelusivuista ja sisällöstä joka oikeasti vastaa asiakkaan kysymyksiin. Googlen oma SEO-opas korostaa hyviä otsikoita, kuvaavia linkkejä ja hyödyllistä sisältöä. Se ei ole taikuutta. Se on järjestystä.</p>
+
+        <p>Pienelle yritykselle riittää usein pitkälle että jokainen tärkeä palvelu saa oman sivunsa, että paikkakunta ja kohderyhmä mainitaan luontevasti ja että yhteydenottotapa on selkeä. Etusivu ei voi sijoittua kaikelle.</p>
+
+        <h2>Nopeus ja mobiili on otettava tosissaan</h2>
+        <p>Google kuvaa Core Web Vitals -mittareita todellisen käyttökokemuksen mittoina, esimerkiksi latautuminen, vuorovaikutus ja visuaalinen vakaus. Ne ovat teknisiä sanoja, mutta ongelma on yksinkertainen: sivu ei saa tuntua kankealta tai hyppivältä.</p>
+
+        <p>Tämä näkyy erityisesti mobiilissa. Kävijällä joka seisoo autossa, työmaalla, kaupassa tai kahden palaverin välissä ei ole kärsivällisyyttä hitaasti latautuvalle sivulle.</p>
+
+        <p>Siksi ammattimaisella sivulla pitää olla optimoidut kuvat, siisti koodi, kohtuullisen vähän skriptejä ja asettelu joka ei hyppää latautuessaan.</p>
+
+        <h2>Saavutettavuus ei ole enää pikkujuttu</h2>
+        <p>Sivun pitää olla käytettävissä näppäimistöllä, ruudunlukijalla, selkeillä kontrasteilla ja ymmärrettävällä rakenteella. Se on hyväksi ihmisille. Se on hyväksi myös bisnekselle.</p>
+
+        <p>EU:n saavutettavuusdirektiiviä (European Accessibility Act) alettiin soveltaa 28. kesäkuuta 2025. Suomessa saavutettavuutta valvoo Traficom, ja vaatimukset on koottu saavutettavuusvaatimukset.fi-sivustolle. Kaikki tavalliset yrityssivut eivät kuulu samalla tavalla soveltamisalaan, mutta suunta on selvä. Digitaalisista palveluista tehdään helpompia käyttää useammalle.</p>
+
+        <p>Pidän sitä perushygieniana. Oikea otsikkojärjestys, näkyvät kohdistustilat, alt-tekstit, klikkausalueet jotka osuu ja teksti jonka pystyy lukemaan.</p>
+
+        <h2>Mittaamisen pitää onnistua ilman että luottamus kärsii</h2>
+        <p>Mittaamista tarvitaan. Muuten arvaillaan. Mutta mittaaminen pitää pystyttää yksityisyyttä kunnioittaen.</p>
+
+        <p>Ammattimaisella sivulla pitää olla selvää mitä työkaluja käytetään, miksi evästeitä on ja miten kävijä voi tehdä valintoja. Suomessa tietosuojaa valvoo tietosuojavaltuutettu, ja GDPR koskee myös pieniä yrityksiä. Analytiikka ei ole pelkkä tekninen kysymys. Se on yksityisyyskysymys.</p>
+
+        <p>Monelle pienyritykselle riittää yksinkertainen pohja: yhteydenottolomake, konversioiden mittaus, Search Console ja analytiikka-asetus joka ei kerää enempää kuin on tarpeen.</p>
+
+        <h2>Mitä sinun pitäisi oikeasti saada</h2>
+        <p>Jos pilkkoisin ammattimaisen sivun käytännön osiin, sanoisin näin:</p>
+
+        <ul class="post-checklist">
+          <li>selkeä rakenne etusivulle ja alasivuille</li>
+          <li>tekstit jotka selittävät tarjouksen tavallisella suomella</li>
+          <li>mobiiliin sovitettu suunnittelu joka tuntuu luotettavalta</li>
+          <li>WordPress tai muu tekniikka joka sopii tarpeeseen</li>
+          <li>perus-SEO otsikoineen, väliotsikoineen ja sisäisine linkkeineen</li>
+          <li>nopea latautuminen ja optimoidut kuvat</li>
+          <li>yhteydenottolomake joka toimii ja tallentaa liidit turvallisesti</li>
+          <li>eväste- ja tietosuojapohja jos mittausta käytetään</li>
+          <li>julkaisuapu verkkotunnuksen, palvelimen ja uudelleenohjausten kanssa</li>
+          <li>suunnitelma päivityksille, tietoturvalle ja parannuksille</li>
+        </ul>
+
+        <p>Kaiken ei tarvitse olla isoa. Mutta sen pitää olla harkittua.</p>
+
+        <h2>Mikä erottaa halvan ja ammattimaisen?</h2>
+        <p>Halpa sivu voi olla aivan oikea valinta jos tarve on pieni. Tärkeää on tietää mitä ostaa.</p>
+
+        <p>Ero on yleensä esityössä, teksteissä, yksityiskohdissa ja ylläpidossa. Halvan sivun saa usein pystyyn nopeasti. Ammattimainen sivu ottaa enemmän vastuuta kokonaisuudesta. Se miettii miten asiakas löytää sinut, mitä asiakkaan pitää ymmärtää ja mitä tapahtuu julkaisun jälkeen.</p>
+
+        <p>Minulla on selkeät tasot pienestä yrityssivusta isompiin WordPress-sivuihin, ja räätälöidyt ratkaisut maksavat enemmän koska ne vaativat enemmän ajattelua, testausta ja koodia. Ajantasaiset hinnat näet <a href="/fi/hinnasto">hinnastosta</a>.</p>
+
+        <h2>Milloin kannattaa tehdä kunnolla?</h2>
+        <p>Kannattaa tehdä kunnolla silloin kun verkkosivu on osa sitä miten yritys saa asiakkaita. Jos sivu on lähinnä käyntikortti, se voi olla yksinkertainen. Jos sen pitää luoda luottamusta, näkyä Googlessa ja ottaa vastaan yhteydenottoja, se tarvitsee enemmän huolenpitoa.</p>
+
+        <p>Tämä koskee erityisesti jos myyt palveluita joissa asiakas vertailee useampaa tekijää. Silloin sivu on usein ensimmäinen kohtaaminen. Sen ei tarvitse huutaa. Sen pitää tuntua luotettavalta.</p>
+
+        <p>Jos haluat nähdä miten jaan tällaiset projektit, katso <a href="/fi/palvelut">palvelusivu</a>. Jos haluat nähdä oikeita projekteja, voit aloittaa <a href="/fi/portfolio">portfoliosta</a> – esimerkiksi GhostyMsg on rakennettu Node.js:llä ja siinä on reaaliaikainen chat.</p>
+
+        <h2>Usein kysytyt kysymykset</h2>
+
+        <h3>Mikä on tärkeintä ammattimaisessa verkkosivussa?</h3>
+        <p>Tärkeintä on että sivu tekee yritykselle oikean asian. Sen pitää selittää tarjous selkeästi, latautua nopeasti, toimia mobiilissa, olla helppo ottaa yhteyttä ja perustua tekniikkaan jota voi ylläpitää.</p>
+
+        <h3>Pitääkö ammattimaisen sivun olla tehty WordPressillä?</h3>
+        <p>Ei. WordPress sopii usein kun yritys haluaa itse päivittää sisältöä. Räätälöity koodi sopii paremmin kun mukana on erityistä logiikkaa, integraatioita tai sivun takana oleva järjestelmä.</p>
+
+        <h3>Paljonko ammattimainen verkkosivu maksaa?</h3>
+        <p>Hinta riippuu sisällöstä, suunnittelusta, sivumäärästä, SEO:sta, toiminnoista ja ylläpidosta. Saat aina kiinteän hinnan ennen kuin aloitamme. Ajantasaiset tasot näet <a href="/fi/hinnasto">hinnastosta</a>.</p>
+
+        <h2>Lähteet joihin nojaan</h2>
+        <ul class="source-list">
+          <li><a href="https://www.tilastokeskus.fi/tup/suoluk/suoluk_yritykset.html" rel="noopener" target="_blank">Tilastokeskus: Yritykset</a></li>
+          <li><a href="https://w3techs.com/technologies/details/cm-wordpress" rel="noopener" target="_blank">W3Techs: WordPressin käyttötilastot</a></li>
+          <li><a href="https://developers.google.com/search/docs/fundamentals/seo-starter-guide" rel="noopener" target="_blank">Google Search Central: SEO Starter Guide</a></li>
+          <li><a href="https://developers.google.com/search/docs/appearance/core-web-vitals" rel="noopener" target="_blank">Google Search Central: Core Web Vitals</a></li>
+          <li><a href="https://www.saavutettavuusvaatimukset.fi/" rel="noopener" target="_blank">Saavutettavuusvaatimukset.fi (Traficom)</a></li>
+          <li><a href="https://tietosuoja.fi/etusivu" rel="noopener" target="_blank">Tietosuojavaltuutetun toimisto</a></li>
+        </ul>
+
+        <div class="post-tags" aria-label="Avainsanat">
+          <span class="post-tag">WordPress</span>
+          <span class="post-tag">SEO</span>
+          <span class="post-tag">Verkkoprojekti</span>
+          <span class="post-tag">Pienyritys</span>
+        </div>
+
+        <aside class="post-author" id="author">
+          <div class="post-author__mark" aria-hidden="true">10</div>
+          <div>
+            <h2 class="h5">Matias, 1010monky Studio</h2>
+            <p>Rakennan WordPress-sivuja, uudistuksia, SEO-pohjia ja räätälöityjä verkkojärjestelmiä pienyrityksille Ruotsissa ja Suomessa.</p>
+          </div>
+          <div class="post-share" aria-label="Jaa artikkeli uudelleen">
+            <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://1010monky.se/fi/blogi/professionell-hemsida-vad-ingar" rel="noopener" target="_blank">LinkedIn</a>
+            <a href="/fi/yhteystiedot">Yhteystiedot</a>
+          </div>
+        </aside>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="related-section section-alt">
+  <div class="container">
+    <div class="related-head">
+      <div>
+        <span class="eyebrow">Seuraavaksi luettavaa</span>
+        <h2 style="margin-top: var(--space-2);">Aiheeseen liittyvää</h2>
+      </div>
+      <a class="btn btn-ghost" href="/fi/blogi">Blogiin</a>
+    </div>
+    <div class="related-grid">
+      <article class="related-card">
+        <img src="https://images.unsplash.com/photo-1483058712412-4245e9b90334?auto=format&fit=crop&w=900&q=82" alt="Kannettava siistillä työpöydällä" loading="lazy">
+        <h3>Tarvitseeko yritykseni uuden verkkosivun?</h3>
+        <p>Suunniteltu artikkeli uudistuksesta, nopeudesta, mobiilista ja luottamuksesta.</p>
+      </article>
+      <article class="related-card">
+        <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=900&q=82" alt="Koodia kannettavan näytöllä" loading="lazy">
+        <h3>WordPress vai Wix yritykselle?</h3>
+        <p>Suunniteltu vertailu pienyrityksille jotka haluavat valita oikean alustan.</p>
+      </article>
+      <article class="related-card">
+        <img src="https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=900&q=82" alt="Palaveri jossa tiimi katsoo tietokonetta" loading="lazy">
+        <h3>Kävijästä asiakkaaksi</h3>
+        <p>Suunniteltu artikkeli CTA:sta, teksteistä ja selkeämmistä yhteydenottotavoista.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container" style="max-width: 640px; text-align: center;">
+    <h2 class="h3" style="margin-bottom: var(--space-3);">Haluatko tietää mitä sinun sivullasi pitäisi olla?</h2>
+    <p class="lead" style="margin-bottom: var(--space-5);">Kerro pari riviä yrityksestäsi niin annan rehellisen ensivastauksen rakenteesta, hintatasosta ja siitä mistä kannattaa aloittaa.</p>
+    <div class="cluster" style="justify-content: center;">
+      <a class="btn btn-primary btn-lg" href="/fi/yhteystiedot">Varaa ensimmäinen puhelu</a>
+      <a class="btn btn-ghost" href="/fi/hinnasto">Katso hinnat</a>
+    </div>
+  </div>
+</section>
+{% else %}
 <section class="post-shell">
   <div class="container post-wrap">
     <nav class="post-breadcrumb" aria-label="Brödsmulor">
@@ -522,4 +771,5 @@
     </div>
   </div>
 </section>
+{% endif %}
 {% endblock %}

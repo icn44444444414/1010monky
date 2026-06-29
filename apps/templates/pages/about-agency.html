@@ -24,10 +24,12 @@
 
 {% block content %}
 <section class="section section-alt">
-  <div class="container" style="max-width: 60ch;">
+  <div class="container">
+    <div class="page-intro page-intro--center">
     <span class="eyebrow">{{ tr('nav_about') }}</span>
     <h1 style="margin-block: var(--space-3);">{{ 'Verkkotoimisto Eskilstunassa – ' if fi else 'Webbyrå i Eskilstuna – ' }}<span class="text-gradient">{{ 'kehittäjä ja suunnittelija' if fi else 'en utvecklare, en designer' }}</span></h1>
     <p class="lead">{{ 'Pieni studio Ruotsissa ja Suomessa.' if fi else 'Liten studio i Sverige och Finland.' }}</p>
+    </div>
   </div>
 </section>
 

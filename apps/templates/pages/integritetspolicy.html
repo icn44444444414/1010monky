@@ -10,10 +10,12 @@
 
 {% block content %}
 <section class="section section-alt">
-  <div class="container" style="max-width: 760px;">
+  <div class="container">
+    <div class="page-intro page-intro--center">
     <span class="eyebrow">GDPR</span>
     <h1 style="margin-block: var(--space-3) var(--space-2);">{{ 'Tietosuojaseloste' if fi else 'Integritetspolicy' }}</h1>
-    <p class="text-muted">{{ 'Päivitetty viimeksi: 27. kesäkuuta 2026' if fi else 'Senast uppdaterad: 27 juni 2026' }}</p>
+    <p class="text-muted" style="text-align:center;">{{ 'Päivitetty viimeksi: 27. kesäkuuta 2026' if fi else 'Senast uppdaterad: 27 juni 2026' }}</p>
+    </div>
   </div>
 </section>
 

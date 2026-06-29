@@ -143,3 +143,64 @@
 .lang-flag.is-active { opacity: 1; box-shadow: 0 0 0 2px var(--accent); }
 .lang-flag svg { display: block; border-radius: 3px; }
 
+/* ---------- Sidintro ---------- */
+.page-intro {
+  max-width: 62ch;
+}
+.page-intro--left {
+  margin-inline: 0 auto;
+  text-align: left;
+}
+.page-intro--center {
+  max-width: none;
+  margin-inline: 0;
+  text-align: left;
+}
+.page-intro--center .eyebrow,
+.page-intro--center h1,
+.page-intro--center .lead {
+  max-width: 62ch;
+  margin-inline: auto;
+  text-align: center;
+}
+.page-intro--center .cluster {
+  justify-content: center;
+}
+.page-intro--wide {
+  max-width: 72ch;
+}
+
+/* Luftigare hero: hero-sektionen tar mer plats, mer andrum runt eyebrow +
+   storre ingress sa rubrik och text far mer luft pa alla sidor. */
+.section:has(.page-intro) {
+  padding-block: clamp(var(--space-9), 3.5rem + 5vw, var(--space-10));
+}
+.page-intro .eyebrow {
+  margin-bottom: var(--space-4);
+}
+.page-intro .lead {
+  font-size: var(--text-2xl);
+  line-height: var(--leading-snug);
+  margin-top: var(--space-5);
+}
+
+/* ---------- Sektionsrubrik ----------
+   Eyebrow + rubrik + ingress som EN grupp ovanfor en sektions innehall.
+   Default vansterstalld; --center centrerar hela gruppen (etiketten med).
+   Anvands i stallet for losa inline-styles sa eyebrow och rubrik aldrig glider isar. */
+.section-head {
+  margin-bottom: var(--space-6);
+}
+.section-head h2 {
+  margin-block: var(--space-2) var(--space-3);
+}
+.section-head > p:last-child {
+  margin-bottom: 0;
+  color: var(--text-secondary);
+}
+.section-head--center {
+  max-width: 56ch;
+  margin-inline: auto;
+  text-align: center;
+}
+

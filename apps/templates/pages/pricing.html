@@ -52,13 +52,15 @@
 
 {% block content %}
 <section class="section section-alt">
-  <div class="container" style="max-width: 60ch;">
+  <div class="container">
+    <div class="page-intro page-intro--center">
     <span class="eyebrow">{{ tr('nav_pricing') }}</span>
     <h1 style="margin-block: var(--space-3);">{{ 'Paljonko ' if fi else 'Vad kostar ' }}<span class="text-gradient">{{ 'sivustosi maksaa?' if fi else 'din hemsida?' }}</span></h1>
     <p class="lead">{{ 'Henkilökohtainen freelancer verkkotoimiston otteella – WordPress, suunnittelu ja räätälöity koodi samassa paketissa, kiinteään hintaan. Kaikki hinnat alv 0 %.' if fi else 'Personlig frilansare med webbyråkänsla – WordPress, design och skräddarsydd kod i samma paket, till fast pris. Alla priser ex. moms.' }}</p>
     <div class="cluster" style="margin-top: var(--space-5);">
       <a class="btn btn-primary" href="{{ nav_url('calc') }}">{{ 'Laske hintasi' if fi else 'Räkna ut ditt pris' }}</a>
       <a class="btn btn-ghost" href="{{ nav_url('contact') }}">{{ 'Pyydä tarjous' if fi else 'Få offert' }}</a>
+    </div>
     </div>
   </div>
 </section>

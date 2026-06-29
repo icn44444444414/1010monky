@@ -6,11 +6,14 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 
+  {% include 'partials/analytics.html' %}
+
   {# --- Sidans titel + beskrivning (varje sida fyller blocken) --- #}
   <title>{% block title %}{% endblock %} | 1010monky</title>
   <meta name="description" content="{% block meta_description %}1010monky Studio bygger snabba, sökoptimerade hemsidor i Eskilstuna – WordPress och skräddarsydd kod för företag i Sverige och Finland.{% endblock %}">
   <meta name="author" content="1010monky Studio">
   <meta name="robots" content="{% block robots %}index, follow, max-image-preview:large, max-snippet:-1{% endblock %}">
+  {% if config.GOOGLE_SITE_VERIFICATION %}<meta name="google-site-verification" content="{{ config.GOOGLE_SITE_VERIFICATION }}">{% endif %}
   <meta name="theme-color" content="#448C74">
 
   {# --- Rätt adress till Google (en kanonisk URL per sida) --- #}
@@ -50,9 +53,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 
   {# --- Designsystemet: tokens först, sedan grund, sedan sidans egna stilar --- #}
-  <link rel="stylesheet" href="{{ config.ASSETS_ROOT }}/css/system/tokens.css?v=8">
-  <link rel="stylesheet" href="{{ config.ASSETS_ROOT }}/css/system/base.css?v=8">
-  <link rel="stylesheet" href="{{ config.ASSETS_ROOT }}/css/system/site.css?v=8">
+  <link rel="stylesheet" href="{{ config.ASSETS_ROOT }}/css/system/tokens.css?v=11">
+  <link rel="stylesheet" href="{{ config.ASSETS_ROOT }}/css/system/base.css?v=11">
+  <link rel="stylesheet" href="{{ config.ASSETS_ROOT }}/css/system/site.css?v=11">
   {% block styles %}{% endblock %}
 
   {# --- Strukturerad data: hjälper Google förstå att vi är en lokal webbyrå --- #}
@@ -84,7 +87,9 @@
 
   {% block footer %}{% include 'partials/site-footer.html' %}{% endblock %}
 
+  {% include 'partials/cookie-consent.html' %}
   <script src="{{ config.ASSETS_ROOT }}/js/site.js?v=1" defer></script>
+  {% if not config.get('MAINTENANCE_MODE') %}<script src="{{ config.ASSETS_ROOT }}/js/chat-widget.js?v=1" defer></script>{% endif %}
   {% block scripts %}{% endblock %}
 </body>
 </html>

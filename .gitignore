@@ -19,11 +19,23 @@ venv
 # secrets & local editor
 .env
 .claude/
+secrets/
+*.service-account.json
 
 # other
 .DS_Store
 *.sqlite3-shm
 *.sqlite3-wal
+
+# Runtime-datalager (admin) — innehaller kunddata, far aldrig committas
+apps/adminpanel/*_entries.json
+apps/adminpanel/chat_conversations.json
+apps/adminpanel/push_subs.json
+apps/adminpanel/account.json
+apps/contact_submissions.log
+
+# Dev-skarmdumpar
+screenshots/
 
 # Gentelella admin: keep the heavy source out of git, but DO commit the built
 # panel (admin/dist) that Flask serves at /admin. Source maps + stats excluded.

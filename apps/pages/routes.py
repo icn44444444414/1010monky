@@ -6,7 +6,7 @@ from functools import wraps
 from email.message import EmailMessage
 
 from apps.pages import blueprint
-from flask import render_template, request, jsonify, Response, redirect, session
+from flask import render_template, request, jsonify, Response, redirect, session, current_app
 from jinja2 import TemplateNotFound
 
 # Losenord for sidor under arbete (styleguide m.m.). Satt i .env pa servern.
@@ -168,6 +168,16 @@ def api_contact():
     except Exception:
         pass
 
+    # Strukturerat lead till admin-CRM (utover mejl + textlogg ovan)
+    try:
+        from apps.adminpanel.leads_data import add_lead
+        add_lead({
+            'name': name, 'email': email, 'phone': phone, 'company': company,
+            'services': services, 'message': message, 'source': 'kontaktformulär',
+        })
+    except Exception:
+        pass
+
     # Ingen autentiserad SMTP konfigurerad an -> meddelandet ar sparat i loggen ovan
     if not (SMTP_HOST and SMTP_USER and SMTP_PASS):
         return jsonify(ok=True)
@@ -189,6 +199,44 @@ def api_contact():
         return jsonify(ok=True)
     except Exception:
         return jsonify(ok=False, error='Kunde inte skicka just nu, forsok igen eller mejla info@1010monky.se.'), 500
+
+
+@blueprint.route('/api/chat/send', methods=['POST'])
+def api_chat_send():
+    data = request.get_json(silent=True) or {}
+    text = (data.get('text') or '').strip()
+    if not text:
+        return jsonify(ok=False, error='Tomt meddelande.'), 400
+    from apps.adminpanel.chat_data import visitor_send
+    conv, token = visitor_send(data.get('token'), text, data.get('name'), data.get('page'))
+    # Pling i mobilen: kor i bakgrundstrad sa natverksanropet aldrig fordrojer svaret
+    try:
+        import threading
+        app = current_app._get_current_object()
+        who = conv.get("visitorName", "Besökare")
+        preview = text[:120]
+
+        def _notify():
+            with app.app_context():
+                try:
+                    from apps.adminpanel.push_data import send_to_all
+                    send_to_all(f'Nytt chattmeddelande – {who}', preview)
+                except Exception:
+                    pass
+
+        threading.Thread(target=_notify, daemon=True).start()
+    except Exception:
+        pass
+    return jsonify(ok=True, token=token, status=conv['status'], messages=conv['messages'][-50:])
+
+
+@blueprint.route('/api/chat/poll')
+def api_chat_poll():
+    from apps.adminpanel.chat_data import visitor_poll
+    conv = visitor_poll(request.args.get('token', ''))
+    if not conv:
+        return jsonify(ok=True, status='open', messages=[])
+    return jsonify(ok=True, status=conv['status'], messages=conv['messages'][-50:])
 
 
 @blueprint.route('/bygg')
@@ -227,6 +275,13 @@ def fi_page(sub):
         return render_template('pages/' + tpl, segment=key)
     if sub == 'blogi':
         return render_template('pages/blog-grid.html', segment='blog')
+    # Finska blogginlagg: /fi/blogi/<slug> -> samma (tvasprakiga) mall som svenska
+    if sub.startswith('blogi/'):
+        slug = sub[len('blogi/'):]
+        tpl = BLOG_POSTS.get(slug)
+        if tpl:
+            return render_template('pages/blog/' + tpl, segment='blog')
+        return render_template('pages/error-404.html'), 404
     return render_template('pages/error-404.html'), 404
 
 

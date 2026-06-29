@@ -52,9 +52,14 @@ h6, .h6 { font-size: var(--text-lg);  letter-spacing: var(--tracking-normal); }
   -webkit-background-clip: text; background-clip: text; color: transparent;
 }
 
-/* Eyebrow: liten versal etikett ovanfor rubriker */
+/* Eyebrow: liten versal etikett ovanfor rubriken.
+   Etiketten hor ihop med sin rubrik och arver dess justering - star rubriken
+   centrerad centreras etiketten med, star den vanster ligger etiketten vanster.
+   Justeringen styrs darfor av rubrikgruppen (.section-head etc), inte har.
+   Fast margin-bottom ger samma luft till rubriken pa varje sida. */
 .eyebrow {
-  display: inline-block;
+  display: block;
+  margin-bottom: var(--space-3);
   font-size: var(--text-xs);
   font-weight: var(--fw-semibold);
   letter-spacing: var(--tracking-widest);

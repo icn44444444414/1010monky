@@ -8,7 +8,9 @@ flask_wtf==1.2.1
 flask_sqlalchemy==3.0.5
 sqlalchemy==2.0.45
 email_validator==2.0.0
-gunicorn==20.1.0
+gunicorn==23.0.0
 flask-restx==1.3.0
 python-dotenv==0.19.2
 Flask-Minify==0.50
+google-analytics-data==0.18.18
+pywebpush

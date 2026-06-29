@@ -7,6 +7,22 @@ class Config(object):
 
     # Assets Management
     ASSETS_ROOT = os.getenv('ASSETS_ROOT', '/static')  
+    GA_MEASUREMENT_ID = os.getenv('GA_MEASUREMENT_ID', '').strip()
+    GA_PROPERTY_ID = os.getenv('GA_PROPERTY_ID', '').strip()
+    GA_CREDENTIALS_JSON = os.getenv('GA_CREDENTIALS_JSON', '').strip()
+    GA_CREDENTIALS_FILE = os.getenv('GA_CREDENTIALS_FILE', '').strip()
+    # Google Search Console: verifieringstoken (sätts i .env nar property skapas).
+    # Tom = ingen tagg renderas. Behövs för att verifiera ägarskap + skicka in sitemap.
+    GOOGLE_SITE_VERIFICATION = os.getenv('GOOGLE_SITE_VERIFICATION', '').strip()
+
+    # Web-push (VAPID) for chatt-notiser i admin. Nycklar i .env. Tom = push av.
+    VAPID_PUBLIC_KEY = os.getenv('VAPID_PUBLIC_KEY', '').strip()
+    VAPID_PRIVATE_KEY = os.getenv('VAPID_PRIVATE_KEY', '').strip()
+    VAPID_CLAIM_EMAIL = os.getenv('VAPID_CLAIM_EMAIL', 'mailto:info@1010monky.se').strip()
+
+    # Admin-inloggning. Hash i .env (generera med werkzeug generate_password_hash).
+    ADMIN_USER = os.getenv('ADMIN_USER', 'matias').strip()
+    ADMIN_PASSWORD_HASH = os.getenv('ADMIN_PASSWORD_HASH', '').strip()
     
     # Set up the App SECRET_KEY
     SECRET_KEY  = os.getenv('SECRET_KEY', None)

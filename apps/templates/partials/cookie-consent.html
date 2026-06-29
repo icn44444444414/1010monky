@@ -1,0 +1,88 @@
+{% if config.get('GA_MEASUREMENT_ID') and not config.get('MAINTENANCE_MODE') %}
+<div class="cookie-consent" id="cookie-consent" hidden>
+  <div class="cookie-consent__panel" role="dialog" aria-live="polite" aria-label="{{ 'Cookie-val' if lang != 'fi' else 'Evastevalinnat' }}">
+    <p>
+      {% if lang == 'fi' %}
+      Käytämme välttämättömiä evästeitä sivuston toimintaan. Tilastot otetaan käyttöön vain, jos sallit ne.
+      {% else %}
+      Vi använder nödvändiga cookies för att sajten ska fungera. Statistik aktiveras bara om du tillåter det.
+      {% endif %}
+    </p>
+    <div class="cookie-consent__actions">
+      <button type="button" class="btn btn-secondary btn-sm" data-cookie-choice="necessary">{{ 'Vain välttämättömät' if lang == 'fi' else 'Endast nödvändiga' }}</button>
+      <button type="button" class="btn btn-primary btn-sm" data-cookie-choice="analytics">{{ 'Salli tilastot' if lang == 'fi' else 'Tillåt statistik' }}</button>
+    </div>
+  </div>
+</div>
+<style>
+  .cookie-consent {
+    position: fixed;
+    inset-inline: var(--gutter);
+    bottom: var(--space-4);
+    z-index: var(--z-toast);
+    display: flex;
+    justify-content: flex-start;
+    pointer-events: none;
+  }
+  .cookie-consent[hidden] { display: none; }
+  .cookie-consent__panel {
+    width: min(100%, 28rem);
+    padding: var(--space-4);
+    border-radius: var(--radius-lg);
+    background: var(--surface);
+    box-shadow: var(--shadow-xl);
+    color: var(--text-secondary);
+    pointer-events: auto;
+  }
+  .cookie-consent__panel p {
+    margin-bottom: var(--space-3);
+    font-size: var(--text-sm);
+    line-height: var(--leading-relaxed);
+  }
+  .cookie-consent__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+</style>
+<script>
+  (function () {
+    var key = 'monky_cookie_consent';
+    var banner = document.getElementById('cookie-consent');
+    if (!banner) return;
+
+    function storedChoice() {
+      try { return localStorage.getItem(key); } catch (e) { return null; }
+    }
+
+    function storeChoice(choice) {
+      try { localStorage.setItem(key, choice); } catch (e) {}
+    }
+
+    function show(force) {
+      if (force || !storedChoice()) banner.hidden = false;
+    }
+
+    function hide() {
+      banner.hidden = true;
+    }
+
+    window.monkyOpenConsent = function () {
+      show(true);
+    };
+
+    banner.addEventListener('click', function (event) {
+      var button = event.target.closest('[data-cookie-choice]');
+      if (!button) return;
+      var choice = button.getAttribute('data-cookie-choice');
+      storeChoice(choice);
+      if (choice === 'analytics' && window.monkyGrantAnalytics) {
+        window.monkyGrantAnalytics();
+      }
+      hide();
+    });
+
+    show(false);
+  })();
+</script>
+{% endif %}

@@ -127,10 +127,10 @@
 <!-- Tjänster -->
 <section class="section section-alt">
   <div class="container">
-    <div style="text-align:center; max-width: 56ch; margin-inline:auto;">
+    <div class="section-head section-head--center">
       <span class="eyebrow">{{ tr('nav_services') }}</span>
-      <h2 style="margin-block: var(--space-2) var(--space-3);">{{ 'Suunnittelu, WordPress ja koodi samassa työnkulussa' if fi else 'Design, WordPress och kod i samma arbetsflöde' }}</h2>
-      <p class="text-secondary" style="margin-bottom: var(--space-6);">{{ 'Yhdistämme UI-suunnittelun, WordPressin ja räätälöidyn kehityksen Pythonilla, PHP:llä ja modernilla frontendillä.' if fi else 'Vi kombinerar UI-design, WordPress och skräddarsydd utveckling med Python, PHP och modern frontend.' }}</p>
+      <h2>{{ 'Suunnittelu, WordPress ja koodi samassa työnkulussa' if fi else 'Design, WordPress och kod i samma arbetsflöde' }}</h2>
+      <p>{{ 'Yhdistämme UI-suunnittelun, WordPressin ja räätälöidyn kehityksen Pythonilla, PHP:llä ja modernilla frontendillä.' if fi else 'Vi kombinerar UI-design, WordPress och skräddarsydd utveckling med Python, PHP och modern frontend.' }}</p>
     </div>
     <div class="grid grid-3">
       <div class="card svc-card">
@@ -158,10 +158,12 @@
 
 <!-- Branscher & utvalda projekt (accordion + synkad bild) -->
 <section class="section" id="cases">
-  <div class="container" style="text-align:center; max-width: 56ch; margin-inline:auto;">
-    <span class="eyebrow">Portfolio</span>
-    <h2 style="margin-block: var(--space-2) var(--space-3);">{{ 'Toimialat & valitut projektit' if fi else 'Branscher & utvalda projekt' }}</h2>
-    <p class="text-secondary" style="margin-bottom: var(--space-6);">{{ 'Yrityssivustoista omiin ja kumppanivetoisiin digitaalisiin tuotteisiin.' if fi else 'Från företagswebbplatser till egna och partnerdrivna digitala produkter.' }}</p>
+  <div class="container">
+    <div class="section-head section-head--center">
+      <span class="eyebrow">Portfolio</span>
+      <h2>{{ 'Toimialat & valitut projektit' if fi else 'Branscher & utvalda projekt' }}</h2>
+      <p>{{ 'Yrityssivustoista omiin ja kumppanivetoisiin digitaalisiin tuotteisiin.' if fi else 'Från företagswebbplatser till egna och partnerdrivna digitala produkter.' }}</p>
+    </div>
   </div>
   <div class="container ind-grid">
     <div class="ind-acc">
@@ -223,10 +225,10 @@
 <!-- Paketpriser -->
 <section class="section section-alt">
   <div class="container">
-    <div style="text-align:center; max-width: 56ch; margin-inline:auto;">
+    <div class="section-head section-head--center">
       <span class="eyebrow">{{ tr('nav_pricing') }}</span>
-      <h2 style="margin-block: var(--space-2) var(--space-3);">{{ 'Selkeät pakettihinnat' if fi else 'Tydliga paketpriser' }}</h2>
-      <p class="text-secondary" style="margin-bottom: var(--space-6);">{{ 'Kiinteä hinta, ei yllätyksiä. Saat hinnan aina ennen kuin aloitamme. Alv 0 %.' if fi else 'Fast pris, inga överraskningar. Du får alltid priset innan vi börjar. Ex moms.' }}</p>
+      <h2>{{ 'Selkeät pakettihinnat' if fi else 'Tydliga paketpriser' }}</h2>
+      <p>{{ 'Kiinteä hinta, ei yllätyksiä. Saat hinnan aina ennen kuin aloitamme. Alv 0 %.' if fi else 'Fast pris, inga överraskningar. Du får alltid priset innan vi börjar. Ex moms.' }}</p>
     </div>
 
     {% set plans = [
