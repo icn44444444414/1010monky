@@ -144,7 +144,7 @@ def chat_message():
     token = (data.get('conversation_token') or data.get('token') or '').strip()
     conv = ChatConversation.query.filter_by(public_token=token).first()
     if not conv:
-        return jsonify(success=False, error='Konversationen hittades inte.'), 404
+        return jsonify(success=False, reset=True, error='Konversationen hittades inte.'), 404
 
     message = clean_text(data.get('message'), 4000)
     if not valid_message(message):
@@ -174,7 +174,7 @@ def chat_messages(token):
 
     conv = ChatConversation.query.filter_by(public_token=(token or '').strip()).first()
     if not conv:
-        return jsonify(success=False, error='Konversationen hittades inte.'), 404
+        return jsonify(success=False, reset=True, error='Konversationen hittades inte.'), 404
 
     # READ-ONLY: polling far aldrig skriva till DB (skulle ge skrivlas pa
     # varje anrop under last). Delta-polling: skicka ?after_id=N for att bara

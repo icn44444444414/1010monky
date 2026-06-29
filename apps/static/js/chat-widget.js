@@ -120,6 +120,28 @@
   }
   function updateSendState() { if (!sending) els.send.disabled = !els.input.value.trim(); }
 
+  function clearToken() {
+    token = null; lastId = 0; lastSender = null;
+    try { localStorage.removeItem(KEY); } catch (e) {}
+  }
+
+  function startConversation(text) {
+    api("/api/chat/start", { method: "POST", body: JSON.stringify({
+      message: text, source_page: location.pathname, website: els.hp.value
+    }) }).then(function (j) {
+      setSending(false);
+      if (j.success && j.conversation_token) {
+        token = j.conversation_token;
+        // Hoppa fram forbi vart eget meddelande sa pollningen inte ekar det.
+        if (j.last_id && j.last_id > lastId) lastId = j.last_id;
+        try { localStorage.setItem(KEY, token); } catch (e) {}
+        schedule();
+      } else {
+        addMessage({ sender_type: "system", body: j.network ? "Ingen anslutning. Forsok igen." : (j.error || "Nagot gick fel.") });
+      }
+    });
+  }
+
   function sendMessage(text) {
     text = (text || "").trim();
     if (!text || sending) return;
@@ -130,24 +152,14 @@
     setSending(true);
 
     if (!token) {
-      api("/api/chat/start", { method: "POST", body: JSON.stringify({
-        message: text, source_page: location.pathname, website: els.hp.value
-      }) }).then(function (j) {
-        setSending(false);
-        if (j.success && j.conversation_token) {
-          token = j.conversation_token;
-          // Hoppa fram forbi vart eget meddelande sa pollningen inte ekar det.
-          if (j.last_id && j.last_id > lastId) lastId = j.last_id;
-          try { localStorage.setItem(KEY, token); } catch (e) {}
-          schedule();
-        } else {
-          addMessage({ sender_type: "system", body: j.network ? "Ingen anslutning. Forsok igen." : (j.error || "Nagot gick fel.") });
-        }
-      });
+      startConversation(text);
     } else {
       api("/api/chat/message", { method: "POST", body: JSON.stringify({
         conversation_token: token, message: text, website: els.hp.value
       }) }).then(function (j) {
+        // Gammal/dod token (t.ex. efter en DB-rensning) -> rensa och starta en
+        // ny konversation med samma text, sa besokaren aldrig fastnar.
+        if (j.reset) { clearToken(); startConversation(text); return; }
         setSending(false);
         // Hoppa fram forbi vart eget meddelande sa pollningen inte ekar det.
         if (j.success && j.message_id && j.message_id > lastId) lastId = j.message_id;
@@ -161,7 +173,10 @@
   function poll() {
     if (!token) return;
     api("/api/chat/messages/" + encodeURIComponent(token) + "?after_id=" + lastId)
-      .then(function (j) { if (j.success && j.messages) render(j.messages); });
+      .then(function (j) {
+        if (j.reset) { clearToken(); if (pollTimer) clearInterval(pollTimer); return; }
+        if (j.success && j.messages) render(j.messages);
+      });
   }
   function schedule() {
     if (pollTimer) clearInterval(pollTimer);
@@ -215,6 +230,8 @@
       hideIntro();
       // full historik forst (renderar dolt), sen markera olasta
       api("/api/chat/messages/" + encodeURIComponent(token)).then(function (j) {
+        // Gammal token som inte finns kvar -> rensa och visa intron igen.
+        if (j.reset) { clearToken(); if (els.intro) els.intro.style.display = ""; return; }
         if (j.success && j.messages) {
           j.messages.forEach(function (m) {
             if (m.id) lastId = m.id;
