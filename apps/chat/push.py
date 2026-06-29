@@ -145,6 +145,46 @@ def push_manifest():
     })
 
 
+_INSTALL_HTML = """<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#448C74">
+<link rel="manifest" href="/admin/manifest.webmanifest">
+<link rel="icon" href="/static/app-icons/icon-192x192.png">
+<title>1010monky Chatt</title>
+<style>body{font-family:system-ui,sans-serif;background:#f6f8f9;color:#1f2a28;
+margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center}
+.box{text-align:center;padding:2rem}img{width:88px;height:88px;border-radius:20px}
+h1{font-size:1.25rem;margin:1rem 0 .25rem}p{color:#5b6a66;margin:0}</style>
+</head>
+<body>
+<div class="box">
+<img src="/static/app-icons/icon-192x192.png" alt="">
+<h1>1010monky Chatt</h1>
+<p>Administrationsapp for chatten.</p>
+</div>
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/admin/sw.js', { scope: '/admin/' });
+}
+</script>
+</body>
+</html>"""
+
+
+@blueprint.route('/admin/install')
+def push_install():
+    # Publik (ej inloggad) sida som lankar manifestet + registrerar service
+    # workern. Behovs for att PWABuilder ska kunna lasa appen och bygga APK:n;
+    # sjalva chatten ligger kvar bakom inloggning pa /admin/chat.
+    r = Response(_INSTALL_HTML, mimetype='text/html')
+    r.headers['X-Robots-Tag'] = 'noindex'
+    return r
+
+
 @blueprint.route('/.well-known/assetlinks.json')
 def assetlinks():
     # Verifierar TWA-appen (tar bort webblasar-raden). Fingeravtrycket fran
