@@ -36,6 +36,18 @@
                 <h1 class="text-2xl font-bold text-gray-900">Live besökare just nu: <span id="live-count">–</span></h1>
             </div>
 
+            <!-- Het-besökare-alert: syns bara när någon med hög köpintention är aktiv -->
+            <div id="hot-alert" class="hidden mb-6 items-center gap-4 rounded-2xl bg-red-50 border border-red-100 px-5 py-4">
+                <span class="relative flex h-3 w-3 flex-none">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
+                </span>
+                <div class="flex-1">
+                    <p class="font-semibold text-red-700"><span id="hot-count">0</span> het besökare just nu – agera snabbt</p>
+                    <p class="text-sm text-red-500">Kontakt under 5 minuter ger störst chans att vinna affären.</p>
+                </div>
+            </div>
+
             <div id="live-list" class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-5">
                 <div class="text-gray-400 col-span-full">Laddar…</div>
             </div>
@@ -45,18 +57,26 @@
     <script>
         var countEl = document.getElementById('live-count');
         var list = document.getElementById('live-list');
+        var hotAlert = document.getElementById('hot-alert');
+        var hotCountEl = document.getElementById('hot-count');
+        var seenHot = {};                 // id -> true, sa vi bara blinkar NYA heta
+        var baseTitle = document.title;
+        var flashTimer = null;
 
         function esc(s) { var d = document.createElement('div'); d.textContent = s == null ? '' : s; return d.innerHTML; }
 
         function card(s) {
+            var hot = s.status_cls === 'red';
             var flow = (s.flow || []).map(function (p) { return '<span class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-md">' + esc(p) + '</span>'; })
                 .join('<i class="fa-solid fa-arrow-right text-gray-300 text-[10px] mx-1"></i>');
             var dev = s.device === 'mobil' ? 'fa-mobile-screen' : s.device === 'surfplatta' ? 'fa-tablet-screen-button' : 'fa-desktop';
             var badge = { red: 'bg-red-50 text-red-600', amber: 'bg-amber-50 text-amber-700', blue: 'bg-blue-50 text-blue-600', gray: 'bg-gray-100 text-gray-600' }[s.status_cls] || 'bg-gray-100 text-gray-600';
+            var frame = hot ? 'ring-2 ring-red-400' : 'border border-gray-50';
+            var fire = hot ? '<i class="fa-solid fa-fire text-red-500 mr-1"></i>' : '';
             return '' +
-            '<div class="bg-white rounded-2xl border border-gray-50 shadow-[0_2px_10px_-3px_rgba(20,23,26,0.06)] p-5">' +
+            '<div class="bg-white rounded-2xl ' + frame + ' shadow-[0_2px_10px_-3px_rgba(20,23,26,0.06)] p-5">' +
                 '<div class="flex justify-between items-center mb-4">' +
-                    '<span class="font-bold text-gray-900">' + esc(s.id) + '</span>' +
+                    '<span class="font-bold text-gray-900">' + fire + esc(s.id) + '</span>' +
                     '<span class="text-xs font-medium ' + badge + ' px-2 py-1 rounded-md">' + esc(s.status) + ' · ' + esc(s.score) + '</span>' +
                 '</div>' +
                 '<div class="text-sm text-gray-500 mb-1"><i class="fa-regular fa-file w-5"></i> Sida: <span class="text-gray-800 font-medium">' + esc(s.page) + '</span></div>' +
@@ -66,13 +86,39 @@
             '</div>';
         }
 
+        function stopFlash() { if (flashTimer) { clearInterval(flashTimer); flashTimer = null; } document.title = baseTitle; }
+        function flashTitle(n) {
+            if (flashTimer) return;
+            var on = false;
+            flashTimer = setInterval(function () {
+                document.title = on ? baseTitle : '🔥 ' + n + ' het besökare!';
+                on = !on;
+            }, 1000);
+        }
+        window.addEventListener('focus', stopFlash);
+
         function render(data) {
             countEl.textContent = data.count;
-            if (!data.sessions || !data.sessions.length) {
+            // Hetast forst - du ska se vem du ska ringa overst
+            var sessions = (data.sessions || []).slice().sort(function (a, b) { return (b.score || 0) - (a.score || 0); });
+            var hot = sessions.filter(function (s) { return s.status_cls === 'red'; });
+
+            if (hot.length) {
+                hotAlert.classList.remove('hidden'); hotAlert.classList.add('flex');
+                hotCountEl.textContent = hot.length;
+                var isNew = hot.some(function (s) { return !seenHot[s.id]; });
+                hot.forEach(function (s) { seenHot[s.id] = true; });
+                if (isNew && document.hidden) flashTitle(hot.length);  // blinka bara nar fliken ar i bakgrunden
+            } else {
+                hotAlert.classList.add('hidden'); hotAlert.classList.remove('flex');
+                stopFlash();
+            }
+
+            if (!sessions.length) {
                 list.innerHTML = '<div class="text-gray-400 col-span-full py-10 text-center">Inga aktiva besökare just nu.</div>';
                 return;
             }
-            list.innerHTML = data.sessions.map(card).join('');
+            list.innerHTML = sessions.map(card).join('');
         }
 
         function poll() {
