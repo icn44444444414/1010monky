@@ -126,7 +126,7 @@
     '.pc-summary .pc-sum-v{font-weight:var(--fw-semibold);text-align:right}' +
     '.pc-restart{background:none;border:0;color:var(--text-muted);cursor:pointer;font:inherit;font-size:var(--text-sm);text-decoration:underline;padding:0}' +
     /* Modal-lage */
-    '.pc-modal{position:fixed;inset:0;z-index:1000;display:none;align-items:flex-start;justify-content:center;padding:5vh 16px;overflow-y:auto;background:rgba(20,23,26,.55);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}' +
+    '.pc-modal{position:fixed;inset:0;z-index:var(--z-modal,1050);display:none;align-items:flex-start;justify-content:center;padding:5vh 16px;overflow-y:auto;background:rgba(20,23,26,.55);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}' +
     '.pc-modal.is-open{display:flex}' +
     '.pc-modal-dialog{background:var(--surface);width:100%;max-width:660px;box-shadow:var(--shadow-xl);position:relative;animation:pc-pop .25s ease}' +
     '@keyframes pc-pop{from{opacity:0;transform:translateY(14px) scale(.98)}to{opacity:1;transform:none}}' +

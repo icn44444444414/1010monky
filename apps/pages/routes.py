@@ -60,19 +60,8 @@ SITEMAP_PATHS = [
     ('/fi/yhteystiedot', '0.7'),
     ('/fi/ehdot', '0.3'),
     ('/fi/tietosuoja', '0.3'),
-    ('/blogg', '0.7'),
-    ('/blogg/chatt-app-python-flask', '0.8'),
-    ('/blogg/chatt-app-pris', '0.8'),
-    ('/blogg/tappar-besokare-tre-sekunder', '0.7'),
-    ('/blogg/lokal-seo-smaforetag', '0.7'),
-    ('/blogg/hero-sektion-som-konverterar', '0.7'),
-    ('/blogg/wordpress-eller-skraddarsytt', '0.7'),
-    ('/blogg/misstag-i-kontaktformular', '0.7'),
-    ('/blogg/tillganglighet-ar-lag', '0.7'),
-    ('/blogg/farg-och-typografi', '0.7'),
-    ('/blogg/snabb-mobilsajt', '0.7'),
-    ('/blogg/fran-besokare-till-kund', '0.7'),
-    ('/blogg/vad-kostar-en-webbplats', '0.7'),
+    # Bloggen ar under byggnad (noindex) -> ej i sitemap an. Lagg tillbaka
+    # /blogg + inlaggen nar de konverterats till vanilla.
 ]
 
 CONTACT_TO = os.getenv('CONTACT_TO', 'info@1010monky.se')
@@ -98,10 +87,11 @@ def blog_index():
 
 @blueprint.route('/blogg/<slug>')
 def blog_post(slug):
-    try:
-        return render_template('pages/blog/' + slug + '.html', segment='blog')
-    except TemplateNotFound:
-        return render_template('pages/error-404.html'), 404
+    # Blogginlaggen ar an sa lange byggda pa det gamla Bootstrap-temat. Tills de
+    # konverterats till vanilla visar vi under-byggnad-sidan i stallet, sa ingen
+    # Bootstrap serveras nagonstans pa den publika sidan. Texterna finns kvar i
+    # pages/blog/<slug>.html och kan aterpubliceras nar de gjorts om till vanilla.
+    return render_template('pages/blog-grid.html', segment='blog')
 
 
 @blueprint.route('/robots.txt')

@@ -1,7 +1,17 @@
-{% extends 'layouts/base.html' %}
-
-{% block title %}Error 403{% endblock %}
-
+{% extends 'layouts/clean.html' %}
+{% set fi = lang == 'fi' %}
+{% block title %}{{ 'Ei käyttöoikeutta (403)' if fi else 'Ingen åtkomst (403)' }}{% endblock %}
+{% block robots %}noindex, follow{% endblock %}
 {% block content %}
-Error 403
-{% endblock content %}
+<section class="section" style="text-align:center; min-height: 50vh; display:grid; place-content:center;">
+  <div class="container" style="max-width: 48ch;">
+    <div class="text-gradient" style="font-family: var(--font-display); font-size: clamp(4rem, 12vw, 7rem); font-weight: var(--fw-bold); line-height: 1;">403</div>
+    <h1 style="margin-block: var(--space-3);">{{ 'Ei käyttöoikeutta' if fi else 'Ingen åtkomst' }}</h1>
+    <p class="lead" style="margin-bottom: var(--space-5);">{{ 'Sinulla ei ole oikeutta tälle sivulle. Jos uskot tämän olevan virhe, ota yhteyttä.' if fi else 'Du har inte behörighet till den här sidan. Tror du att det är ett misstag, hör av dig.' }}</p>
+    <div class="cluster" style="justify-content:center;">
+      <a class="btn btn-primary" href="{{ nav_url('home') }}">{{ 'Etusivulle' if fi else 'Till startsidan' }}</a>
+      <a class="btn btn-ghost" href="{{ nav_url('contact') }}">{{ 'Ota yhteyttä' if fi else 'Kontakta oss' }}</a>
+    </div>
+  </div>
+</section>
+{% endblock %}
