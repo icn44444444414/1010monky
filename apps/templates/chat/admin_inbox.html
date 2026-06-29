@@ -1,64 +1,55 @@
-{% extends 'chat/admin_base.html' %}
+{% extends 'chat/admin_shell.html' %}
 {% block title %}Inkorg{% endblock %}
+{% block topbar %}Chatt · inkorg{% endblock %}
 {% block content %}
-<div class="d-flex flex-wrap align-items-center mb-3">
-    <h1 class="h4 mb-0 me-auto">Inkorg</h1>
-    <span class="text-body-secondary fs-sm">{{ counts.all }} konversationer</span>
+<div class="flex items-end justify-between mb-6">
+    <div>
+        <h1 class="text-2xl font-bold text-gray-900">Inkorg</h1>
+        <p class="text-gray-500 text-sm">{{ counts.all }} konversationer</p>
+    </div>
 </div>
 
 <!-- Statusfilter -->
-<ul class="nav nav-pills gap-2 mb-3 fs-sm">
-    {% set tabs = [('all','Alla'),('new','Nya'),('open','Oppna'),('closed','Stangda'),('spam','Spam')] %}
+<div class="flex flex-wrap gap-2 mb-5 text-sm">
+    {% set tabs = [('all','Alla'),('new','Nya'),('open','Öppna'),('closed','Stängda'),('spam','Spam')] %}
     {% for key, label in tabs %}
-    <li class="nav-item">
-        <a class="nav-link py-1 px-3 {{ 'active btn-monky' if active_status == key else 'bg-white border' }}"
-           href="{{ url_for('chat_blueprint.admin_inbox', status=None if key=='all' else key) }}">
-            {{ label }} <span class="opacity-75">{{ counts[key] }}</span>
-        </a>
-    </li>
+    <a href="{{ url_for('chat_blueprint.admin_inbox', status=None if key=='all' else key) }}"
+       class="px-4 py-1.5 rounded-full transition-colors {{ 'bg-brand-500 text-white shadow-sm shadow-brand-500/30' if active_status == key else 'bg-white text-gray-600 hover:bg-gray-50' }}">
+        {{ label }} <span class="opacity-70 ml-1">{{ counts[key] }}</span>
+    </a>
     {% endfor %}
-</ul>
+</div>
 
-<div class="card border-0 shadow-sm">
-    <div class="table-responsive">
-        <table class="table table-hover align-middle mb-0">
-            <thead class="table-light">
-                <tr class="fs-sm text-body-secondary">
-                    <th class="ps-4">Status</th>
-                    <th>Kund</th>
-                    <th>Senaste meddelande</th>
-                    <th class="text-nowrap">Tid</th>
-                    <th class="text-center pe-4">Olasta</th>
-                </tr>
-            </thead>
-            <tbody>
-            {% for c in conversations %}
-                <tr class="conv-row {{ 'unread' if c.unread_count else '' }}"
-                    onclick="window.location='{{ url_for('chat_blueprint.admin_thread', conversation_id=c.id) }}'"
-                    style="cursor:pointer">
-                    <td class="ps-4"><span class="badge badge-status s-{{ c.status }}">{{ c.status }}</span></td>
-                    <td>
-                        <div class="fw-semibold">{{ c.visitor_name or 'Anonym' }}</div>
-                        <div class="meta">{{ c.visitor_email or '-' }}</div>
-                    </td>
-                    <td class="text-truncate" style="max-width: 360px;">
-                        {% if c.last_message %}
-                            <span class="text-body-secondary fs-sm">
-                                {% if c.last_message.sender_type == 'admin' %}<i class="ai-arrow-up-right"></i> {% endif %}
-                                {{ c.last_message.body }}
-                            </span>
-                        {% else %}<span class="meta">-</span>{% endif %}
-                    </td>
-                    <td class="meta text-nowrap">{{ c.updated_at.strftime('%Y-%m-%d %H:%M') }}</td>
-                    <td class="text-center pe-4">
-                        {% if c.unread_count %}<span class="badge rounded-pill btn-monky">{{ c.unread_count }}</span>{% endif %}
-                    </td>
-                </tr>
-            {% else %}
-                <tr><td colspan="5" class="text-center text-body-secondary py-5">Inga konversationer an.</td></tr>
-            {% endfor %}
-            </tbody>
-        </table>
+<div class="bg-white rounded-2xl shadow-sm overflow-hidden">
+    <div class="hidden md:grid grid-cols-12 gap-4 px-6 py-3 text-xs uppercase tracking-wide text-gray-400 border-b border-gray-50">
+        <div class="col-span-2">Status</div>
+        <div class="col-span-3">Kund</div>
+        <div class="col-span-5">Senaste meddelande</div>
+        <div class="col-span-2 text-right">Tid</div>
     </div>
+    {% set badge = {'new':'bg-brand-500/10 text-brand-600','open':'bg-blue-50 text-blue-600','closed':'bg-gray-100 text-gray-500','spam':'bg-red-50 text-red-500'} %}
+    {% for c in conversations %}
+    <a href="{{ url_for('chat_blueprint.admin_thread', conversation_id=c.id) }}"
+       class="grid grid-cols-12 gap-4 px-6 py-4 items-center border-b border-gray-50 last:border-0 hover:bg-gray-50/70 transition-colors {{ 'bg-brand-500/5' if c.unread_count else '' }}">
+        <div class="col-span-6 md:col-span-2">
+            <span class="inline-block px-2.5 py-1 rounded-full text-xs font-medium {{ badge.get(c.status, 'bg-gray-100 text-gray-500') }}">{{ c.status }}</span>
+        </div>
+        <div class="col-span-6 md:col-span-3 text-right md:text-left">
+            <div class="font-semibold text-gray-900">{{ c.visitor_name or 'Anonym' }}</div>
+            <div class="text-xs text-gray-400">{{ c.visitor_email or '—' }}</div>
+        </div>
+        <div class="col-span-9 md:col-span-5 text-sm text-gray-500 truncate">
+            {% if c.last_message %}
+                {% if c.last_message.sender_type == 'admin' %}<i class="fa-solid fa-reply text-gray-300 mr-1"></i>{% endif %}{{ c.last_message.body }}
+            {% else %}<span class="text-gray-300">—</span>{% endif %}
+        </div>
+        <div class="col-span-3 md:col-span-2 text-right">
+            <div class="text-xs text-gray-400 whitespace-nowrap">{{ c.updated_at.strftime('%Y-%m-%d %H:%M') }}</div>
+            {% if c.unread_count %}<span class="inline-block mt-1 px-2 py-0.5 rounded-full text-xs font-semibold bg-brand-500 text-white">{{ c.unread_count }}</span>{% endif %}
+        </div>
+    </a>
+    {% else %}
+    <div class="px-6 py-16 text-center text-gray-400">Inga konversationer än.</div>
+    {% endfor %}
 </div>
 {% endblock %}

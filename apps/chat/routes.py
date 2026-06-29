@@ -39,7 +39,20 @@ MAX_NEW_CONV_PER_IP_PER_HOUR = 8
 # Sakerhetsheaders pa ALLA chatt-svar (admin + API).
 @blueprint.after_request
 def _secure(resp):
-    return apply_security_headers(resp)
+    resp = apply_security_headers(resp)
+    # Admin-sidorna anvander Tailwind/FontAwesome via CDN (samma skal som
+    # analytics-adminen). Den strikta CSP:n (script-src 'self') skulle blockera
+    # CDN:en helt, sa latta pa CSP for /admin - sidorna ligger bakom inloggning.
+    # Publik widget + /api/chat behaller den strikta CSP:n.
+    if request.path.startswith('/admin'):
+        resp.headers['Content-Security-Policy'] = (
+            "default-src 'self'; "
+            "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.tailwindcss.com; "
+            "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; "
+            "font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; "
+            "img-src 'self' data:; frame-ancestors 'none'; base-uri 'self'; form-action 'self'"
+        )
+    return resp
 
 
 # Gor csrf_token() tillganglig i admin-templates.

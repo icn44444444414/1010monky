@@ -1,73 +1,78 @@
-{% extends 'chat/admin_base.html' %}
+{% extends 'chat/admin_shell.html' %}
 {% block title %}{{ conv.visitor_name or 'Konversation' }}{% endblock %}
+{% block topbar %}Chatt · konversation{% endblock %}
 {% block content %}
-<a href="{{ url_for('chat_blueprint.admin_inbox') }}" class="btn btn-sm btn-link px-0 mb-3"><i class="ai-arrow-left me-1"></i>Tillbaka till inkorgen</a>
+{% set badge = {'new':'bg-brand-500/10 text-brand-600','open':'bg-blue-50 text-blue-600','closed':'bg-gray-100 text-gray-500','spam':'bg-red-50 text-red-500'} %}
 
-<div class="row g-4">
-    <!-- Trad -->
-    <div class="col-lg-8">
-        <div class="card border-0 shadow-sm">
-            <div class="card-header bg-white d-flex align-items-center py-3">
-                <div>
-                    <span class="fw-semibold">{{ conv.visitor_name or 'Anonym' }}</span>
-                    <span class="badge badge-status s-{{ conv.status }} ms-2">{{ conv.status }}</span>
-                </div>
-            </div>
-            <div class="card-body" style="background:#f4f6f8;">
-                {% for m in conv.messages %}
-                    {% if m.sender_type == 'system' %}
-                        <div class="text-center my-3"><span class="bubble bubble-system">{{ m.body }}</span></div>
-                    {% else %}
-                    <div class="d-flex mb-3 {{ 'justify-content-end' if m.sender_type in ('admin','bot') else '' }}">
-                        <div>
-                            <div class="bubble bubble-{{ m.sender_type }}">{{ m.body }}</div>
-                            <div class="meta mt-1 {{ 'text-end' if m.sender_type in ('admin','bot') else '' }}">
-                                {{ {'visitor': conv.visitor_name or 'Besokare', 'admin':'Matias', 'bot':'Assistent'}.get(m.sender_type, m.sender_type) }}
-                                · {{ m.created_at.strftime('%Y-%m-%d %H:%M') }}
+<a href="{{ url_for('chat_blueprint.admin_inbox') }}" class="inline-flex items-center text-sm text-gray-500 hover:text-brand-500 mb-4">
+    <i class="fa-solid fa-arrow-left mr-2"></i> Tillbaka till inkorgen
+</a>
+
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <!-- Tråd -->
+    <div class="lg:col-span-2 bg-white rounded-2xl shadow-sm flex flex-col" style="min-height: 60vh;">
+        <div class="flex items-center justify-between px-6 py-4 border-b border-gray-50">
+            <div class="font-semibold text-gray-900">{{ conv.visitor_name or 'Anonym' }}</div>
+            <span class="px-2.5 py-1 rounded-full text-xs font-medium {{ badge.get(conv.status, 'bg-gray-100 text-gray-500') }}">{{ conv.status }}</span>
+        </div>
+
+        <div class="flex-1 overflow-y-auto px-6 py-5 space-y-4" style="background:#fbfcfc;">
+            {% for m in conv.messages %}
+                {% if m.sender_type == 'system' %}
+                    <div class="text-center"><span class="text-xs text-gray-400">{{ m.body }}</span></div>
+                {% else %}
+                    {% set mine = m.sender_type in ('admin','bot') %}
+                    <div class="flex {{ 'justify-end' if mine else 'justify-start' }}">
+                        <div class="max-w-[78%]">
+                            <div class="px-4 py-2.5 rounded-2xl text-sm leading-relaxed {{ 'bg-brand-500 text-white rounded-br-sm' if mine else 'bg-white border border-gray-100 text-gray-800 rounded-bl-sm' }}">{{ m.body }}</div>
+                            <div class="text-[11px] text-gray-400 mt-1 {{ 'text-right' if mine else '' }}">
+                                {{ {'visitor': conv.visitor_name or 'Besökare', 'admin':'Matias', 'bot':'Assistent'}.get(m.sender_type, m.sender_type) }} · {{ m.created_at.strftime('%Y-%m-%d %H:%M') }}
                             </div>
                         </div>
                     </div>
-                    {% endif %}
-                {% endfor %}
-            </div>
-            <div class="card-footer bg-white">
-                <form method="post" action="{{ url_for('chat_blueprint.admin_reply', conversation_id=conv.id) }}">
-                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                    <div class="input-group">
-                        <input class="form-control" name="body" placeholder="Svara som Matias..." autocomplete="off" required>
-                        <button class="btn btn-monky px-4" type="submit">Skicka</button>
-                    </div>
-                </form>
-            </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+        <div class="px-6 py-4 border-t border-gray-50">
+            <form method="post" action="{{ url_for('chat_blueprint.admin_reply', conversation_id=conv.id) }}" class="flex items-center gap-3">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <input name="body" required autocomplete="off" placeholder="Svara som Matias…"
+                       class="flex-1 px-4 py-2.5 bg-gray-50 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-brand-500">
+                <button type="submit" class="px-5 py-2.5 bg-brand-500 text-white rounded-full text-sm font-medium hover:bg-brand-600 transition-colors shadow-sm shadow-brand-500/30">
+                    <i class="fa-solid fa-paper-plane mr-1"></i> Skicka
+                </button>
+            </form>
         </div>
     </div>
 
     <!-- Kunduppgifter + status -->
-    <div class="col-lg-4">
-        <div class="card border-0 shadow-sm mb-4">
-            <div class="card-body">
-                <h2 class="h6 text-uppercase text-body-secondary fs-xs mb-3">Kunduppgifter</h2>
-                <dl class="row mb-0 fs-sm">
-                    <dt class="col-4 text-body-secondary fw-normal">Namn</dt><dd class="col-8">{{ conv.visitor_name or '-' }}</dd>
-                    <dt class="col-4 text-body-secondary fw-normal">E-post</dt><dd class="col-8">{{ conv.visitor_email or '-' }}</dd>
-                    <dt class="col-4 text-body-secondary fw-normal">Telefon</dt><dd class="col-8">{{ conv.visitor_phone or '-' }}</dd>
-                    <dt class="col-4 text-body-secondary fw-normal">Sida</dt><dd class="col-8">{{ conv.source_page or '-' }}</dd>
-                    <dt class="col-4 text-body-secondary fw-normal">IP</dt><dd class="col-8">{{ conv.ip_address or '-' }}</dd>
-                    <dt class="col-4 text-body-secondary fw-normal">Skapad</dt><dd class="col-8">{{ conv.created_at.strftime('%Y-%m-%d %H:%M') }}</dd>
-                </dl>
-            </div>
+    <div class="space-y-6">
+        <div class="bg-white rounded-2xl shadow-sm p-6">
+            <h2 class="text-xs uppercase tracking-wide text-gray-400 mb-4">Kunduppgifter</h2>
+            <dl class="space-y-3 text-sm">
+                {% for label, val in [('Namn', conv.visitor_name), ('E-post', conv.visitor_email), ('Telefon', conv.visitor_phone), ('Sida', conv.source_page), ('IP', conv.ip_address)] %}
+                <div class="flex justify-between gap-4">
+                    <dt class="text-gray-400">{{ label }}</dt>
+                    <dd class="text-gray-800 text-right break-all">{{ val or '—' }}</dd>
+                </div>
+                {% endfor %}
+                <div class="flex justify-between gap-4">
+                    <dt class="text-gray-400">Skapad</dt>
+                    <dd class="text-gray-800 text-right">{{ conv.created_at.strftime('%Y-%m-%d %H:%M') }}</dd>
+                </div>
+            </dl>
         </div>
-        <div class="card border-0 shadow-sm">
-            <div class="card-body">
-                <h2 class="h6 text-uppercase text-body-secondary fs-xs mb-3">Status</h2>
-                <form method="post" action="{{ url_for('chat_blueprint.admin_status', conversation_id=conv.id) }}" class="d-flex flex-wrap gap-2">
-                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                    {% for s in statuses %}
-                    <button name="status" value="{{ s }}" type="submit"
-                            class="btn btn-sm {{ 'btn-monky' if conv.status == s else 'btn-outline-secondary' }}">{{ s }}</button>
-                    {% endfor %}
-                </form>
-            </div>
+
+        <div class="bg-white rounded-2xl shadow-sm p-6">
+            <h2 class="text-xs uppercase tracking-wide text-gray-400 mb-4">Status</h2>
+            <form method="post" action="{{ url_for('chat_blueprint.admin_status', conversation_id=conv.id) }}" class="flex flex-wrap gap-2">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                {% for s in statuses %}
+                <button name="status" value="{{ s }}" type="submit"
+                        class="px-3 py-1.5 rounded-full text-sm transition-colors {{ 'bg-brand-500 text-white' if conv.status == s else 'bg-gray-100 text-gray-600 hover:bg-gray-200' }}">{{ s }}</button>
+                {% endfor %}
+            </form>
         </div>
     </div>
 </div>
