@@ -22,6 +22,8 @@ from apps import db
 from apps.chat import blueprint
 from apps.chat import models  # noqa: F401  (sakerstaller att modeller laddas)
 from apps.chat import admin_routes  # noqa: F401  (registrerar admin-routes)
+from apps.chat import push          # noqa: F401  (registrerar push-routes)
+from apps.chat.push import notify_new_message
 from apps.chat.models import ChatConversation, ChatMessage
 from apps.chat.validators import (
     clean_text, valid_message, valid_email_optional,
@@ -120,6 +122,7 @@ def chat_start():
     db.session.commit()
 
     maybe_bot_reply(conv, message)  # AI-som (inert tills M11)
+    notify_new_message(message)     # pling i mobilen (web push)
 
     # last_id = besokarens eget meddelande-id. Widgeten satter sin lastId till
     # detta sa forsta pollningen inte hamtar tillbaka och dubbelrenderar det.
@@ -161,6 +164,7 @@ def chat_message():
     db.session.commit()
 
     maybe_bot_reply(conv, message)  # AI-som (inert tills M11)
+    notify_new_message(message)     # pling i mobilen (web push)
 
     # message_id sa widgeten kan flytta fram sin lastId och inte dubbelrendera.
     return jsonify(success=True, message_id=msg.id)

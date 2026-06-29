@@ -91,3 +91,19 @@ class ChatMessage(db.Model):
 
     def __repr__(self):
         return f'<ChatMessage {self.id} {self.sender_type} conv={self.conversation_id}>'
+
+
+class PushSubscription(db.Model):
+    """En admins webb-push-prenumeration (fran mobilen/datorn). Anvands for att
+    skicka en notis nar en besokare skriver. Ingen PII; bara push-endpoint +
+    krypteringsnycklar som webblasaren gav oss."""
+    __tablename__ = 'push_subscriptions'
+
+    id = db.Column(db.Integer, primary_key=True)
+    endpoint = db.Column(db.Text, unique=True, nullable=False)
+    p256dh = db.Column(db.String(255), nullable=False)
+    auth = db.Column(db.String(255), nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
+
+    def __repr__(self):
+        return f'<PushSubscription {self.id}>'

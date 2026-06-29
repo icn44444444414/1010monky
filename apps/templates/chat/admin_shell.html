@@ -6,6 +6,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, nofollow">
+    <meta name="theme-color" content="#448C74">
+    <link rel="manifest" href="/admin/manifest.webmanifest">
     <title>{% block title %}Chatt{% endblock %} · 1010monky</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -30,9 +32,14 @@
     <main class="flex-1 flex flex-col h-full overflow-y-auto">
         <header class="h-20 flex items-center justify-between px-8 flex-shrink-0">
             <div class="text-gray-500 font-medium">{% block topbar %}Chatt{% endblock %}</div>
-            <a href="{{ url_for('chat_blueprint.admin_logout') }}" class="text-sm text-gray-500 hover:text-brand-500">
-                <i class="fa-solid fa-arrow-right-from-bracket mr-1"></i> Logga ut
-            </a>
+            <div class="flex items-center gap-5">
+                <button id="push-toggle" class="text-sm text-gray-500 hover:text-brand-500" style="display:none">
+                    <i class="fa-regular fa-bell mr-1"></i> <span id="push-label">Aktivera notiser</span>
+                </button>
+                <a href="{{ url_for('chat_blueprint.admin_logout') }}" class="text-sm text-gray-500 hover:text-brand-500">
+                    <i class="fa-solid fa-arrow-right-from-bracket mr-1"></i> Logga ut
+                </a>
+            </div>
         </header>
 
         <div class="px-8 pb-10 flex-1">
@@ -44,5 +51,54 @@
             {% block content %}{% endblock %}
         </div>
     </main>
+
+    <script>
+    // Webb-push: registrera service worker + prenumerera, sa du far en pling
+    // i mobilen nar nagon skriver. Funkar i Chrome/Android och i TWA-appen.
+    (function () {
+      var btn = document.getElementById('push-toggle');
+      var label = document.getElementById('push-label');
+      if (!btn || !('serviceWorker' in navigator) || !('PushManager' in window)) return;
+      btn.style.display = '';
+
+      function urlB64ToUint8(base64) {
+        var pad = '='.repeat((4 - base64.length % 4) % 4);
+        var b = (base64 + pad).replace(/-/g, '+').replace(/_/g, '/');
+        var raw = atob(b), arr = new Uint8Array(raw.length);
+        for (var i = 0; i < raw.length; i++) arr[i] = raw.charCodeAt(i);
+        return arr;
+      }
+
+      navigator.serviceWorker.getRegistration('/admin/').then(function (reg) {
+        if (reg) reg.pushManager.getSubscription().then(function (s) {
+          if (s) label.textContent = 'Notiser på';
+        });
+      });
+
+      btn.addEventListener('click', function () {
+        label.textContent = 'Aktiverar…';
+        navigator.serviceWorker.register('/admin/sw.js', { scope: '/admin/' })
+          .then(function (reg) {
+            return Notification.requestPermission().then(function (perm) {
+              if (perm !== 'granted') throw new Error('nekad');
+              return fetch('/admin/push/key').then(function (r) { return r.json(); }).then(function (j) {
+                return reg.pushManager.subscribe({
+                  userVisibleOnly: true,
+                  applicationServerKey: urlB64ToUint8(j.key)
+                });
+              });
+            });
+          })
+          .then(function (sub) {
+            return fetch('/admin/push/subscribe', {
+              method: 'POST', headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(sub)
+            });
+          })
+          .then(function () { label.textContent = 'Notiser på'; })
+          .catch(function () { label.textContent = 'Notiser av (tillåt i webbläsaren)'; });
+      });
+    })();
+    </script>
 </body>
 </html>
