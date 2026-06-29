@@ -40,14 +40,14 @@ SITE_URL = 'https://1010monky.se'
 # Indexerbara sidor for sitemap (utan tema-skrap/felsidor/tom blogg)
 SITEMAP_PATHS = [
     ('/', '1.0'),
-    ('/services-v1', '0.9'),
-    ('/pricing', '0.9'),
+    ('/tjanster', '0.9'),
+    ('/priser', '0.9'),
     ('/priskalkylator', '0.8'),
-    ('/portfolio-grid-v1', '0.7'),
-    ('/portfolio-single-v1', '0.6'),
-    ('/portfolio-single-askhackers', '0.6'),
-    ('/about-agency', '0.6'),
-    ('/contacts-v1', '0.8'),
+    ('/portfolio', '0.7'),
+    ('/portfolio/ghostymsg', '0.6'),
+    ('/portfolio/askhackers', '0.6'),
+    ('/om-oss', '0.6'),
+    ('/kontakt', '0.8'),
     ('/villkor', '0.3'),
     ('/integritetspolicy', '0.3'),
     # Finska versioner (sv/fi kopplas via hreflang i sidhuvudet)
@@ -238,8 +238,45 @@ def styleguide():
     return render_template('pages/styleguide.html', segment='styleguide')
 
 
+# --- Rena, sokordsvanliga URL:er (SEO) -> samma mallar som forr ---
+CLEAN_ROUTES = {
+    '/tjanster':              ('services-v1.html', 'services'),
+    '/priser':                ('pricing.html', 'pricing'),
+    '/portfolio':             ('portfolio-grid-v1.html', 'portfolio'),
+    '/portfolio/ghostymsg':   ('portfolio-single-v1.html', 'portfolio'),
+    '/portfolio/askhackers':  ('portfolio-single-askhackers.html', 'portfolio'),
+    '/kontakt':               ('contacts-v1.html', 'contact'),
+    '/om-oss':                ('about-agency.html', 'about'),
+}
+# Gamla tema-slugs -> ny ren URL (301, behaller lankkraften)
+LEGACY_REDIRECTS = {
+    '/services-v1': '/tjanster',
+    '/pricing': '/priser',
+    '/portfolio-grid-v1': '/portfolio',
+    '/portfolio-single-v1': '/portfolio/ghostymsg',
+    '/portfolio-single-askhackers': '/portfolio/askhackers',
+    '/contacts-v1': '/kontakt',
+    '/about-agency': '/om-oss',
+}
+
+
+def _clean_view(tpl, segment):
+    return render_template('pages/' + tpl, segment=segment)
+
+
+for _url, (_tpl, _seg) in CLEAN_ROUTES.items():
+    blueprint.add_url_rule(
+        _url, 'clean_' + _tpl.replace('.html', '').replace('-', '_'),
+        (lambda t=_tpl, s=_seg: _clean_view(t, s)))
+
+
 @blueprint.route('/<template>')
 def route_template(template):
+
+    # 301 fran gamla tema-slugs (/services-v1 osv) till de rena URL:erna
+    legacy = LEGACY_REDIRECTS.get('/' + template)
+    if legacy:
+        return redirect(legacy, code=301)
 
     try:
 

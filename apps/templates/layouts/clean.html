@@ -9,7 +9,7 @@
   {% include 'partials/analytics.html' %}
 
   {# --- Sidans titel + beskrivning (varje sida fyller blocken) --- #}
-  <title>{% block title %}{% endblock %} | 1010monky Studio</title>
+  <title>{% block title %}{% endblock %} | 1010monky</title>
   <meta name="description" content="{% block meta_description %}1010monky Studio bygger snabba, sökoptimerade hemsidor i Eskilstuna – WordPress och skräddarsydd kod för företag i Sverige och Finland.{% endblock %}">
   <meta name="author" content="1010monky Studio">
   <meta name="robots" content="{% block robots %}index, follow, max-image-preview:large, max-snippet:-1{% endblock %}">
@@ -32,12 +32,12 @@
   <meta property="og:site_name" content="1010monky Studio">
   <meta property="og:locale" content="{{ 'fi_FI' if lang == 'fi' else 'sv_SE' }}">
   {% if has_fi %}<meta property="og:locale:alternate" content="{{ 'sv_SE' if lang == 'fi' else 'fi_FI' }}">{% endif %}
-  <meta property="og:title" content="{{ self.title() }} | 1010monky Studio">
+  <meta property="og:title" content="{{ self.title() }} | 1010monky">
   <meta property="og:description" content="{{ self.meta_description() }}">
   <meta property="og:url" content="https://1010monky.se{{ request.path }}">
   <meta property="og:image" content="{% block og_image %}https://1010monky.se{{ config.ASSETS_ROOT }}/img/og-default.png{% endblock %}">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="{{ self.title() }} | 1010monky Studio">
+  <meta name="twitter:title" content="{{ self.title() }} | 1010monky">
   <meta name="twitter:description" content="{{ self.meta_description() }}">
   <meta name="twitter:image" content="{{ self.og_image() }}">
 

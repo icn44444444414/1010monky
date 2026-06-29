@@ -7,16 +7,16 @@ PAGES[key] = (sv-path, fi-path, mall)
 """
 
 PAGES = {
-    'home':      ('/',                  '/fi',             'landing-web-studio.html'),
-    'services':  ('/services-v1',       '/fi/palvelut',    'services-v1.html'),
-    'pricing':   ('/pricing',           '/fi/hinnasto',    'pricing.html'),
-    'about':     ('/about-agency',      '/fi/meista',      'about-agency.html'),
-    'portfolio': ('/portfolio-grid-v1', '/fi/portfolio',   'portfolio-grid-v1.html'),
-    'contact':   ('/contacts-v1',       '/fi/yhteystiedot','contacts-v1.html'),
-    'calc':      ('/priskalkylator',    '/fi/hintalaskuri','priskalkylator.html'),
-    'blog':      ('/blogg',             '/fi/blogi',       None),
-    'terms':     ('/villkor',           '/fi/ehdot',       'villkor.html'),
-    'privacy':   ('/integritetspolicy', '/fi/tietosuoja',  'integritetspolicy.html'),
+    'home':      ('/',            '/fi',             'landing-web-studio.html'),
+    'services':  ('/tjanster',    '/fi/palvelut',    'services-v1.html'),
+    'pricing':   ('/priser',      '/fi/hinnasto',    'pricing.html'),
+    'about':     ('/om-oss',      '/fi/meista',      'about-agency.html'),
+    'portfolio': ('/portfolio',   '/fi/portfolio',   'portfolio-grid-v1.html'),
+    'contact':   ('/kontakt',     '/fi/yhteystiedot','contacts-v1.html'),
+    'calc':      ('/priskalkylator', '/fi/hintalaskuri','priskalkylator.html'),
+    'blog':      ('/blogg',       '/fi/blogi',       None),
+    'terms':     ('/villkor',     '/fi/ehdot',       'villkor.html'),
+    'privacy':   ('/integritetspolicy', '/fi/tietosuoja', 'integritetspolicy.html'),
 }
 
 # Snabb uppslagning fi-path -> (key, mall)
