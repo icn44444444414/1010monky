@@ -1,20 +1,69 @@
 {% extends 'layouts/clean.html' %}
 {% set fi = lang == 'fi' %}
 
-{% block title %}{{ 'Blogi – rakenteilla' if fi else 'Blogg – under byggnad' }}{% endblock %}
-{% block meta_description %}{{ 'Blogi on rakenteilla. Pian täällä on tekstejä webistä, koodista ja projekteista joita rakennan 1010monky Studiossa.' if fi else 'Bloggen är under uppbyggnad. Snart fylls den med texter om webb, kod och projekten jag bygger på 1010monky Studio.' }}{% endblock %}
-{% block robots %}noindex, follow{% endblock %}
+{% block title %}{{ 'Blogi rakenteilla' if fi else 'Blogg om webb, WordPress och småföretag' }}{% endblock %}
+{% block meta_description %}{{ 'Blogi on rakenteilla. Pian täällä on tekstejä webistä, koodista ja projekteista joita rakennan 1010monky Studiossa.' if fi else 'Praktiska texter om hemsidor, WordPress, SEO och digitala system för småföretag i Sverige och Finland.' }}{% endblock %}
+{% block robots %}{{ 'noindex, follow' if fi else 'index, follow, max-image-preview:large, max-snippet:-1' }}{% endblock %}
+
+{% block styles %}
+<style>
+  .blog-list { display: grid; gap: var(--space-5); max-width: 760px; }
+  .blog-card {
+    display: grid;
+    gap: var(--space-3);
+    padding-block: var(--space-5);
+    border-top: 1px solid var(--hairline);
+  }
+  .blog-card:last-child { border-bottom: 1px solid var(--hairline); }
+  .blog-card h2 { font-size: var(--text-2xl); line-height: 1.18; letter-spacing: var(--tracking-normal); }
+  .blog-card p { color: var(--text-secondary); }
+  .blog-meta { display: flex; flex-wrap: wrap; gap: .65rem 1rem; color: var(--text-muted); font-size: var(--text-sm); }
+</style>
+{% endblock %}
 
 {% block content %}
+{% if fi %}
 <section class="section">
   <div class="container" style="max-width: 44rem; text-align: center;">
-    <span class="eyebrow">{{ 'Blogi' if fi else 'Blogg' }}</span>
-    <h1 style="margin-block: var(--space-3);">{{ 'Blogi on ' if fi else 'Bloggen är ' }}<span class="text-gradient">{{ 'rakenteilla' if fi else 'under byggnad' }}</span></h1>
-    <p class="lead" style="margin-inline: auto;">{{ 'Täytän blogia teksteillä webistä, koodista ja projekteista joita rakennan. Se on pian käynnissä – siihen asti tavoitat minut yhteystietojen kautta.' if fi else 'Jag håller på att fylla bloggen med texter om webb, kod och projekten jag bygger. Den är snart igång – tills dess hittar du mig gärna via kontaktsidan.' }}</p>
+    <span class="eyebrow">Blogi</span>
+    <h1 style="margin-block: var(--space-3);">Blogi on <span class="text-gradient">rakenteilla</span></h1>
+    <p class="lead" style="margin-inline: auto;">Täytän blogia teksteillä webistä, koodista ja projekteista joita rakennan. Se on pian käynnissä, siihen asti tavoitat minut yhteystietojen kautta.</p>
     <div class="cluster" style="justify-content: center; margin-top: var(--space-6);">
-      <a class="btn btn-primary btn-lg" href="{{ nav_url('contact') }}">{{ 'Ota yhteyttä' if fi else 'Hör av dig' }}</a>
-      <a class="btn btn-ghost btn-lg" href="{{ nav_url('home') }}">{{ 'Etusivulle' if fi else 'Till startsidan' }}</a>
+      <a class="btn btn-primary btn-lg" href="{{ nav_url('contact') }}">Ota yhteyttä</a>
+      <a class="btn btn-ghost btn-lg" href="{{ nav_url('home') }}">Etusivulle</a>
     </div>
   </div>
 </section>
+{% else %}
+<section class="section section-alt">
+  <div class="container" style="max-width: 720px;">
+    <span class="eyebrow">Blogg</span>
+    <h1 style="margin-block: var(--space-3);">Praktiska texter om webb som ska ge kunder</h1>
+    <p class="lead">Jag skriver om hemsidor, WordPress, SEO och små digitala system. Fokus är sådant som hjälper småföretag att fatta bättre beslut, inte trafik för trafikens skull.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container blog-list">
+    <article class="blog-card">
+      <div class="blog-meta">
+        <span>Webbprojekt</span>
+        <span>29 juni 2026</span>
+        <span>Ca 7 min läsning</span>
+      </div>
+      <h2><a href="/blogg/professionell-hemsida-vad-ingar">Vad ingår i en professionell hemsida?</a></h2>
+      <p>En genomgång av vad du faktiskt bör få när du köper en professionell hemsida: strategi, design, WordPress, SEO, mätning, lansering och pris.</p>
+      <p><a href="/blogg/professionell-hemsida-vad-ingar">Läs artikeln</a></p>
+    </article>
+  </div>
+</section>
+
+<section class="section section-alt">
+  <div class="container" style="max-width: 640px; text-align: center;">
+    <h2 class="h3" style="margin-bottom: var(--space-3);">Har du en hemsida som borde jobba hårdare?</h2>
+    <p class="lead" style="margin-bottom: var(--space-5);">Skicka länken eller beskriv projektet kort, så svarar jag med vad jag hade prioriterat först.</p>
+    <a class="btn btn-primary btn-lg" href="/kontakt">Boka första samtal</a>
+  </div>
+</section>
+{% endif %}
 {% endblock %}

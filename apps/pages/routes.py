@@ -44,6 +44,8 @@ SITEMAP_PATHS = [
     ('/priser', '0.9'),
     ('/priskalkylator', '0.8'),
     ('/tjanster/wordpress-hemsida', '0.8'),
+    ('/blogg', '0.6'),
+    ('/blogg/professionell-hemsida-vad-ingar', '0.6'),
     ('/portfolio', '0.7'),
     ('/portfolio/ghostymsg', '0.6'),
     ('/portfolio/askhackers', '0.6'),
@@ -62,8 +64,7 @@ SITEMAP_PATHS = [
     ('/fi/yhteystiedot', '0.7'),
     ('/fi/ehdot', '0.3'),
     ('/fi/tietosuoja', '0.3'),
-    # Bloggen ar under byggnad (noindex) -> ej i sitemap an. Lagg tillbaka
-    # /blogg + inlaggen nar de konverterats till vanilla.
+    # Endast publicerade vanilla-blogginlagg ligger i sitemap.
 ]
 
 CONTACT_TO = os.getenv('CONTACT_TO', 'info@1010monky.se')
@@ -87,13 +88,17 @@ def blog_index():
     return render_template('pages/blog-grid.html', segment='blog')
 
 
+BLOG_POSTS = {
+    'professionell-hemsida-vad-ingar': 'professionell-hemsida-vad-ingar.html',
+}
+
+
 @blueprint.route('/blogg/<slug>')
 def blog_post(slug):
-    # Blogginlaggen ar an sa lange byggda pa det gamla Bootstrap-temat. Tills de
-    # konverterats till vanilla visar vi under-byggnad-sidan i stallet, sa ingen
-    # Bootstrap serveras nagonstans pa den publika sidan. Texterna finns kvar i
-    # pages/blog/<slug>.html och kan aterpubliceras nar de gjorts om till vanilla.
-    return render_template('pages/blog-grid.html', segment='blog')
+    tpl = BLOG_POSTS.get(slug)
+    if not tpl:
+        return render_template('pages/error-404.html'), 404
+    return render_template('pages/blog/' + tpl, segment='blog')
 
 
 @blueprint.route('/robots.txt')
